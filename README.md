@@ -1,10 +1,5 @@
-Budget Application
+EasyMVC
 =====================
-
-Please read the wiki before starting any development:
+a PHP framework built from scratch to learn the MVC architecture for PHP web apps.
 
 https://github.com/FWAJL/BudgetApp/wiki
-
-Framework
-=====================
-LOFFY =>  Light Opensource Framework For You
