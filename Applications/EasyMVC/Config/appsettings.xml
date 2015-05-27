@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<definitions>
+  <!-- MODES : DEV or RELEASE -->
+  <define key="ApplicationMode" value="DEV" />
+  
+  <define key="base_url" value="/{{app_name}}/" />
+  <define key="BaseUrlRelease" value="/" />
+  <define key="DefaultLanguage" value="en" />
+  <define key="RootImageFolderPath" value="../ClientSide/images/" />
+  <define key="DalFolderPath" value="\Applications\{{app_name}}\Models\Dal\" />
+  <define key="RootDocumentUpload" value="../ClienSide/uploads/" />
+  <define key="LogoImageUrl" value="logo.png" />
+
+  <!-- Security -->
+  <define key="encryption_key" value="g496lJL683yFiDzju2K94f1751Lo7WSw" />
+  
+  <!-- Database connection details -->
+  <define key="Myslq_host" value="localhost" />
+  <define key="Mysql_user" value="dbuser" />
+  <define key="Mysql_pwd" value="dbpassword" />
+  <define key="Mysql_db_name" value="dbname" /> 
+  
+  <!-- Mapping -->
+  <define key="GoogleMapsCenterLat" value="0.000000" />
+  <define key="GoogleMapsCenterLng" value="0.000000" />   
+</definitions>

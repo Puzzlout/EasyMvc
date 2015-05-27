@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<routes>
+    <!-- UI routes -->
+    <route url="login" module="Authenticate" action="loadLoginView" resxfile="login" type="ui">
+        <js_files>
+          
+            <js_file use="html" value="Web/js/app/validator.js" />
+            <js_file use="html" value="Web/js/app/controllers/auth.js" />
+        </js_files>
+        <css_files>
+            <css_file value="Web/css/app/app-style.css" />
+            <css_file value="Web/css/app/app-theme.css" />
+            <css_file value="Web/css/app/theme.css" />
+        </css_files>
+    </route>
+    
+    <!-- login -->
+    <route url="logout" module="Authenticate" action="disconnect" resxfile="login" type="ui" />    
+    
+    <!-- WebService AJAX routes -->
+    <!-- INSTRUCTIONS
+  
+        The AJAX routes always require the same attributes:
+          - the url, which will need to match when you use in the JavaScript managers
+          - the module, which is the name of the Controller and is used for the dual list display
+              ex: for project, it will be ProjectController (always suffixed with "Controller")
+          - the action, which is the name of the Method in the controller class.
+              ex: for project, it will be executeAdd (always prefixed with "execute" and capitalizing the first letter of the action)
+          - the resxfile, which used to load the resx file in Applications/Your_App/Resources/Local
+          - the type, which used to differenciate a view route from a webservice ajax route
+  -->
+  <route url="auth" module="Authenticate" action="authenticate" resxfile="login" type="ws" />
+  <route url="user/create" module="Authenticate" action="create" resxfile="login" type="ws" />
+  
+  <route url="debug/view" module="Debug" action="viewSessionArrays" resxfile="debug" type="lib ws" />
+  <route url="config/get" module="Config" action="getSettingValue" resxfile="config" type="lib ws" />
+  <route url="upload" module="FileUpload" action="upload" resxfile="fileupload" type="lib ws" />
+</routes>
