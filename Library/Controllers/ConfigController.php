@@ -33,7 +33,7 @@ class ConfigController extends \Library\BaseController {
     $result = $this->InitResponseWS(
         array("directory" => "common", "resx_file" => "ws_defaults", "resx_key" => "", "step" => "error")
     );
-    $result = \Library\Utility\ConfigHelper::GetValue($this, $rq, $result);
+    $result = \Library\Helpers\ConfigHelper::GetValue($this, $rq, $result);
 
     if ($result["method"] === \Library\Enums\GenericAppKeys::GET_METHOD) {
       echo '<pre>', print_r($result), '</pre>';

@@ -26,6 +26,7 @@ abstract class AppSettingKeys {
   const BaseUrl = "base_url";
   const BaseUrlRelease = "BaseUrlRelease";
   const RootImageFolderPath = "RootImageFolderPath";
+  const RootUploadsFolderPath = "RootUploadsFolderPath";
   const DalFolderPath = "DalFolderPath";
   const RootDocumentUpload = "RootDocumentUpload";
   const Myslq_host = "Myslq_host";
@@ -35,14 +36,9 @@ abstract class AppSettingKeys {
   
   const GoogleMapsCenterLat = "GoogleMapsCenterLat";
   const GoogleMapsCenterLng = "GoogleMapsCenterLng";
-  const GoogleMapsProjectActiveIcon = "GoogleMapsProjectActiveIcon";
-  const GoogleMapsProjectInactiveIcon = "GoogleMapsProjectInactiveIcon";
-  const GoogleMapsLocationActiveIcon = "GoogleMapsLocationActiveIcon";
-  const GoogleMapsLocationInactiveIcon = "GoogleMapsLocationInactiveIcon";
-  const GoogleMapsTaskIcon = "GoogleMapsTaskIcon";
-  const GoogleMapsRulerIcon = "GoogleMapsRulerIcon";
   const GoogleMapsNoLatLngIcon = "GoogleMapsNoLatLngIcon";
 
+  const DefaultEmailDomainValue = "DefaultEmailDomainValue";
 }
 
 ?>

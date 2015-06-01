@@ -23,4 +23,6 @@
   <!-- Mapping -->
   <define key="GoogleMapsCenterLat" value="0.000000" />
   <define key="GoogleMapsCenterLng" value="0.000000" />   
+  <define key="GoogleMapsNoLatLngIcon" value="ltblu-blank_maps.png" />
+  <define key="DefaultEmailDomainValue" value="fieldworkmanager.com" />
 </definitions>

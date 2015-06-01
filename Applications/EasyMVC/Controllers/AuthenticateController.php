@@ -21,7 +21,7 @@
  * @link
  */
 
-namespace Application\Controllers;
+namespace Applications\EasyMVC\Controllers;
 
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
@@ -104,7 +104,7 @@ class AuthenticateController extends \Library\Controllers\BaseController {
       "password" => $rq->getData("pwd"),
       "pm_name" => "Demo User"
     );
-    $pm = \Applications\PMTool\Helpers\CommonHelper::PrepareUserObject($data, new \Applications\PMTool\Models\Dao\Project_manager());
+    $pm = \Library\Helpers\CommonHelper::PrepareUserObject($data, new \Applications\PMTool\Models\Dao\Project_manager());
     $pm->setPassword($protect->Encrypt($this->app->config->get("encryption_key"), $pm->password()));
 
     $loginDal = $this->managers->getManagerOf("Login");

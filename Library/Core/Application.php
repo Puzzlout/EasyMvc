@@ -23,6 +23,7 @@ abstract class Application {
   public $imageUtil;
   public $jsManager;
   public $cssManager;
+  public $auth;
 
   public function __construct() {
     $this->HttpRequest = new HttpRequest($this);
@@ -36,6 +37,7 @@ abstract class Application {
     $this->imageUtil = new \Library\Utility\ImageUtility($this);
     $this->locale = $this->HttpRequest->initLanguage($this, "browser");
     $this->name = '';
+    $this->auth = new \Library\Security\AuthenticationManager($this);
 //    $this->jsManager = new Core\Utility\JavascriptManager($this);
 //    $this->cssManager = new Core\Utility\CssManager($this);
   }
@@ -47,7 +49,10 @@ abstract class Application {
   public function getController() {
     $this->router()->setRoutesXmlPath(__ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . $this->name() . '/Config/routes.xml');
 
-    if ($this->router()->hasRoutesXmlChanged($this->user()) || !$this->user->keyExistInSession(\Library\Enums\SessionKeys::SessionRoutes)) {
+    $routes = $this->user->getAttribute(\Library\Enums\SessionKeys::UserRoutes);
+    if ($routes) {
+      $this->router()->setRoutes($routes);
+    } elseif ($this->router()->hasRoutesXmlChanged($this->user()) || !$this->user->keyExistInSession(\Library\Enums\SessionKeys::SessionRoutes)) {
       $this->router->LoadAvailableRoutes($this);
       //Store routes in session
       $this->user->setAttribute(\Library\Enums\SessionKeys::SessionRoutes, $this->router()->routes());
@@ -115,6 +120,14 @@ abstract class Application {
   public function name() {
     return $this->name;
   }
+  
+  public function css() {
+    return $this->cssManager;
+  }
+  
+  public function js() {
+    return $this->jsManager;
+  }
 
   private function FindRouteMatch() {
     try {
@@ -149,7 +162,8 @@ abstract class Application {
         . \Library\Enums\FileNameConst::ControllerSuffix;
     } else {
 //AJAX request for the Application
-      return \Library\Enums\NameSpaceName::AppsFolderName
+      return \Library\Enums\NameSpaceName::AppsFolderName . "\\"
+        . $this->name
         . \Library\Enums\NameSpaceName::AppsControllersFolderName
         . $route->module()
         . \Library\Enums\FileNameConst::ControllerSuffix;

@@ -13,30 +13,25 @@
 // ------------------------------------------------------------------------
 
 /**
- * CssManager Class
+ * UserRole Class
  *
  * @package       Library
- * @subpackage    Utility
- * @category      
+ * @subpackage    Enums
  * @author        Jeremie Litzler
  * @link		
  */
 
-namespace Library\Utility;
+namespace Library\Enums;
 
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
-class CssManager extends \Library\Core\ApplicationComponent {
-
-  /**
-   *
-   * @var array $files CSS files list
-   */
-  protected $files = array();
-
-  public function __construct(\Library\Core\Application $app) {
-    parent::__construct($app);
-  }
-
+class UserRole {
+  const Admin = 1;
+  const ProjectManager = 2;
+  const Technician = 3;
+  const Visitor = 4;
+  const Client = 5;
+  const Service = 6;
+  const TBD = 7;
 }

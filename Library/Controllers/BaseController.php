@@ -18,6 +18,7 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
   //shortcut from $app->user() also used as $this->app()->user() in controllers
   protected $user = null;
   protected $files = array();
+  protected $toolTips = array();
 
   public function __construct(\Library\Core\Application $app, $module, $action, $resxfile) {
     parent::__construct($app);
@@ -31,6 +32,10 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
     $this->setDataPost($this->app->HttpRequest()->retrievePostAjaxData(FALSE));
     $this->resxData = $this->app->i8n->getLocalResourceArray($this->resxfile);
     $this->setUploadingFiles();
+    $this->toolTips[\Library\Enums\Popup::ellipsis_tooltip_settings] =
+            \Library\Helpers\PopUpHelper::getTooltipEllipsisSettings(
+                    '{"targetcontroller":"'. $this->module .'","targetaction": "'. $this->action .'"}', 
+                    $app->name());
   }
 
   public function execute() {
@@ -47,9 +52,9 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
     $br = new UC\Breadcrumb($this->app());
     //Load controller method
     $time_log_type = Enums\ResourceKeys\GlobalAppKeys::log_controller_method_request;
-    \Library\Core\Utility\TimeLogger::StartLog($this->app(), $time_log_type);
+    Core\Utility\TimeLogger::StartLog($this->app(), $time_log_type);
     $result = $this->$method($this->app->HttpRequest());
-    \Library\Core\Utility\TimeLogger::EndLog($this->app(), $time_log_type);
+    Core\Utility\TimeLogger::EndLog($this->app(), $time_log_type);
     if ($result !== NULL) {
       $result["br"] = $br->Build();
       echo \Library\HttpResponse::encodeJson($result);
@@ -93,6 +98,10 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
 
   public function files() {
     return $this->files;
+  }
+  
+  public function toolTips() {
+    return $this->toolTips;
   }
 
   public function setModule($module) {
@@ -232,14 +241,15 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
    */
   protected function AddCommonVarsToPage() {
     //Get resources for the left menu
-    $resx_left_menu = $this->app->i8n->getCommonResourceArray(Enums\ResourceKeys\ResxFileNameKeys::MenuLeft);
+    $resx_left_menu = $this->app->i8n->getCommonResourceArray(\Library\Enums\ResourceKeys\ResxFileNameKeys::MenuLeft);
     //Init left menu
-    $leftMenu = new UC\LeftMenu($this->app(), $resx_left_menu);
+    $leftMenu = new \Library\UC\LeftMenu($this->app(), $resx_left_menu);
     //Add left menu to layout
     $this->page->addVar("leftMenu", $leftMenu->Build());
     $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($this->resxfile));
     $this->app->pageTitle = $this->app->i8n->getLocalResource($this->resxfile, "page_title");
-    $this->page->addVar("logout_url", __BASEURL__ . Enums\ResourceKeys\UrlKeys::LogoutUrl);
+    $this->page->addVar("logout_url", __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::LogoutUrl);
+    $this->page->addVar(\Library\Enums\Popup::toolTips, $this->toolTips);
   }
 
   protected function Redirect($urlPart) {

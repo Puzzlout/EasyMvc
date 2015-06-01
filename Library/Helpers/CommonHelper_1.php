@@ -2,7 +2,7 @@
 
 /**
  *
- * @package		The Loffy Framework
+ * @package		Basic MVC framework
  * @author		Jeremie Litzler
  * @copyright	Copyright (c) 2015
  * @license		
@@ -15,14 +15,14 @@
 /**
  * CommonHelper Class
  *
- * @package		Library
- * @subpackage	Utility
- * @category	
- * @author		Jeremie Litzler
+ * @package		Application/PMTool
+ * @subpackage	Helpers
+ * @category	CommonHelper
+ * @author		FWM DEV Team
  * @link		
  */
 
-namespace Library\Utility;
+namespace Applications\PMTool\Helpers;
 
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
@@ -42,6 +42,16 @@ class CommonHelper {
   public static function CleanString($string) {
     return trim($string);
   }
+  
+  /**
+  * A helper method which print_r's a formatted array nicely
+  * Mainly used for debuging / developing 
+  */
+  public static function pr($arr) {
+  	echo '<pre>';
+  	print_r($arr);
+  	echo '</pre>';
+  }
 
   public static function SetDynamicPropertyNamesForDualList($module, $property_list) {
     $dynamicPropertyNames = array();
@@ -53,9 +63,9 @@ class CommonHelper {
 
   public static function SetPropertyNamesForDualList($module) {
     return array(
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_id => $module . "_id",
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_name => $module . "_name",
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_active => $module . "_active",
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_id => $module . "_id",
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_name => $module . "_name",
+        \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_active => $module . "_active",
     );
   }
 
@@ -110,14 +120,15 @@ class CommonHelper {
    */
   public static function FindObjectByIntValue($idValue, $propName, $listOfObjects) {
     $match = FALSE;
-      foreach ($listOfObjects as $obj) {
-        if (intval($obj->$propName()) === $idValue) {
-          $match = $obj;
-          break;
-        }
+    foreach ($listOfObjects as $obj) {
+      if (intval($obj->$propName()) === $idValue) {
+        $match = $obj;
+        break;
       }
+    }
     return $match;
   }
+
   /**
    * Find an object in a list filtering by the string value of one property name of each object.
    * 
@@ -195,7 +206,7 @@ class CommonHelper {
     return $matches;
   }
 
-  public static function SetActiveTab(\Library\Core\User $user, $tab_name, $sessionKey) {
+  public static function SetActiveTab(\Library\User $user, $tab_name, $sessionKey) {
     $tabs = $user->getAttribute($sessionKey);
     foreach ($tabs as $key => $value) {
       $tabs[$key] = "";
@@ -205,7 +216,7 @@ class CommonHelper {
   }
 
   //TODO: replace with GetValueInSession
-  public static function GetTabsStatus(\Library\Core\User $user, $sessionKey) {
+  public static function GetTabsStatus(\Library\User $user, $sessionKey) {
     return $user->getAttribute($sessionKey);
   }
 
@@ -217,12 +228,53 @@ class CommonHelper {
     return $user->getAttribute($sessionKey);
   }
 
-  public static function GetObjectListFromSessionArrayBySessionKey(\Library\Core\User $user, $sessionArray, $sessionKey) {
+  public static function GetObjectListFromSessionArrayBySessionKey($sessionArray, $sessionKey) {
     $list = array();
     foreach ($sessionArray as $array) {
       array_push($list, $array[$sessionKey]);
     }
     return $list;
+  }
+
+  public static function GetValueFromArrayByKey($array, $key) {
+    return $array[$key];
+  }
+
+  public static function GetPropValueFromObjectByPropName($object, $propName, $isArray = TRUE) {
+    return
+            $isArray ?
+            $object[$propName] :
+            $object->$propName();
+  }
+
+  /**
+  * Returns the truncated text based on the passed
+  * parameters, at present the method generates the
+  * HTML markup as well which is needed for the tooltip
+  * to work properly.
+  */
+  public static function generateEllipsisAndTooltipMarkupFor($textToTruncate, $charLimit, $placement) {
+    $truncatedData = null;
+    if(strlen($textToTruncate) > intval($charLimit)) {
+      //We would have to truncate
+      $truncatedData = array(
+                        'source'    => $textToTruncate,
+                        'truncated' => substr($textToTruncate, 0, $charLimit - 3) . '...'
+                      );
+    } else {
+      //Return the string as it is
+      $truncatedData = array(
+                        'source'    => $textToTruncate,
+                        'truncated' => ''
+                      );
+    }
+
+    if(trim($truncatedData['truncated']) !== '') {
+      echo $truncatedData['truncated'];
+      echo '<input type="hidden" class="ellipsis-tooltip" value="' . $truncatedData['source'] . '" placement="' . $placement . '" >';
+    } else {
+      echo $truncatedData['source'];
+    }
   }
 
 }

@@ -109,14 +109,14 @@ class Router extends ApplicationComponent {
       $path_to_add = $this->_GetRelativePath($route->getAttribute('url'));
       // On ajoute la route au routeur.
       $route_config = array(
-          "route_xml" => $route,
-          "vars" => $vars,
-          "js_head" => $this->_GetJsFiles($route, "head", __BASEURL__),
-          "js_html" => $this->_GetJsFiles($route, "html", __BASEURL__),
-          "css" => $this->_LoadCssFiles($route, __BASEURL__),
-          "php_modules" => $this->_LoadPhpModules($route),
-          "relative_path" => $path_to_add,
-          "resxfile" => $route->getAttribute('resxfile')
+        "route_xml" => $route,
+        "vars" => $vars,
+        "js_head" => $this->_GetJsFiles($route, "head", __BASEURL__),
+        "js_html" => $this->_GetJsFiles($route, "html", __BASEURL__),
+        "css" => $this->_GetCss($route, __BASEURL__, $currentApp),
+        "php_modules" => $this->_LoadPhpModules($route),
+        "relative_path" => $path_to_add,
+        "resxfile" => $route->getAttribute('resxfile')
       );
       $this->addRoute(new Route($route_config));
     }
@@ -173,24 +173,6 @@ class Router extends ApplicationComponent {
   }
 
   /**
-   * Returns the css files urls to add to the loading view
-   * 
-   * @param DoMNode $route
-   */
-  private function _LoadCssFiles($route, $path_to_add) {
-    $css_files = "";
-    foreach ($route->getElementsByTagName('css_file') as $css_file) {
-      if ($css_file->getAttribute("use") !== "") {
-        $parent_route = $this->getRoute(__BASEURL__ . $css_file->getAttribute('use'));
-        $css_files .= $this->_GetFilesForSibbling($parent_route, "css", $path_to_add);
-      } else {
-        $css_files .= $this->_GetInternalCssTag($css_file, $path_to_add);
-      }
-    }
-    return $css_files;
-  }
-
-  /**
    * Returns the absolute file paths of PHP modules to load per route
    * There are 2 cases: 
    *  - shared modules (available to any route)
@@ -203,17 +185,15 @@ class Router extends ApplicationComponent {
     $modules = array();
     foreach ($route->getElementsByTagName('php_module') as $module) {
       if ($module->getAttribute('shared')) {
-        $modules[$module->getAttribute('key')] =
-                __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName
-                . $this->app->name()
-                . rtrim(\Library\Enums\ApplicationFolderName::ViewsFolderName, '/') . \Library\Enums\ApplicationFolderName::ModulesFolderName
-                . $module->getAttribute('file_name');
+        $modules[$module->getAttribute('key')] = __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName
+            . $this->app->name()
+            . rtrim(\Library\Enums\ApplicationFolderName::ViewsFolderName, '/') . \Library\Enums\ApplicationFolderName::ModulesFolderName
+            . $module->getAttribute('file_name');
       } else {
-        $modules[$module->getAttribute('key')] =
-                __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName
-                . $this->app->name()
-                . \Library\Enums\ApplicationFolderName::ViewsFolderName . $route->getAttribute('module') . \Library\Enums\ApplicationFolderName::ModulesFolderName
-                . $module->getAttribute('file_name');
+        $modules[$module->getAttribute('key')] = __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName
+            . $this->app->name()
+            . \Library\Enums\ApplicationFolderName::ViewsFolderName . $route->getAttribute('module') . \Library\Enums\ApplicationFolderName::ModulesFolderName
+            . $module->getAttribute('file_name');
       }
     }
     return $modules;
@@ -262,16 +242,53 @@ class Router extends ApplicationComponent {
     return '<script type="application/javascript" src="' .
         $path_to_add .
         $script->getAttribute('value') .
-        "?v" . $this->app()->config()->get(\Library\Enums\AppSettingKeys::CurrentVersion) .
+        "?v" . __VERSION_NUMBER__ .
         '"></script>';
   }
-  
+
   private function _GetInternalCssTag($css_file, $path_to_add) {
-    return '<link rel="stylesheet" type="text/css" href="' . 
-        $path_to_add . 
-        $css_file->getAttribute('value') . 
-        "?v" . $this->app()->config()->get(\Library\Enums\AppSettingKeys::CurrentVersion) .
+    return '<link rel="stylesheet" type="text/css" href="' .
+        $path_to_add .
+        $css_file->getAttribute('value') .
+        "?v" . __VERSION_NUMBER__ .
         '"/>';
   }
+  private function _GetCss($route, $path_to_add, $app) {
+    if ($app->config()->get(\Library\Enums\AppSettingKeys::ApplicationMode) == "DEV") {
+      return $this->_LoadCssFiles($route, $path_to_add);
+    } elseif ($app->config()->get(\Library\Enums\AppSettingKeys::ApplicationMode) == "RELEASE") {
+      return $this->_LoadCssFilesIntoOne($route, $path_to_add, $app);
+    }
+  }
 
+  /**
+   * Returns the css files urls to add to the loading view
+   * 
+   * @param DoMNode $route
+   */
+  private function _LoadCssFiles($route, $path_to_add) {
+    $css_files = "";
+    foreach ($route->getElementsByTagName('css_file') as $css_file) {
+      if ($css_file->getAttribute("use") !== "") {
+        $parent_route = $this->getRoute(__BASEURL__ . $css_file->getAttribute('use'));
+        $css_files .= $this->_GetFilesForSibbling($parent_route, "css", $path_to_add);
+      } else {
+        $css_files .= $this->_GetInternalCssTag($css_file, $path_to_add);
+      }
+    }
+    return $css_files;
+  }
+
+  private function _LoadCssFilesIntoOne($route, $path_to_add, $app) {
+    //  1. Check if the single Css file exists for the route in the app
+    
+    //  2. Check if the single Css file exists in the directory storing each
+    //    file per route
+    
+    //  3. Otherwise, create it from the list of css files from the current route
+    //    and the list in third_party_library_files.xml and then store the created
+    //    file to the proper location.
+    
+  }
+  
 }

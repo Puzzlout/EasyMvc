@@ -38,17 +38,21 @@ class Logger {
   }
 
   public static function PrintOutLogs($logs) {
-    \Library\Utility\DebugHelper::LogAsHtmlComment(var_export($logs));
+    \Library\Helpers\DebugHelper::LogAsHtmlComment(var_export($logs));
   }
 
   public static function AddLogToDatabase($app, $log) {
-    $db = new \Library\DAL\Managers('PDO', $app);
+    $db = new \Library\Dal\Managers('PDO', $app);
     $dal = $db->getManagerOf("Log", TRUE);
     $dal->Add($log);
   }
 
   public static function GetTime() {
     return microtime(true);
+  }
+  
+  public static function LogEx($class, $method, $typeSeparator, $message) {
+    throw new \Exception($class . $typeSeparator . $method . " ==> " . $message);
   }
 
 }
