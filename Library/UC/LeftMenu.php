@@ -69,13 +69,7 @@ class LeftMenu {
     } else {
       throw new \Exception("In " . __CLASS__ . "->" . __METHOD__);
     }
-    if($this->app->user->getAttribute(\Library\Enums\SessionKeys::UserRole) == 3) {
-      $xpath = new \DOMXPath($xml);
-      return $xpath->query('main_menu | mobile_menu');
-    } else {
-      return $xml->getElementsByTagName("main_menu");
-    }
-
+    return $xml->getElementsByTagName("main_menu");
   }
 
   private function ProcessMainMenus($main_menus) {
@@ -98,8 +92,8 @@ class LeftMenu {
           $menuHeaderOutput = $this->_AddLinkHeader($link);
         } else {
           $menuHeaderOutput = array(
-            "output" => $this->NOHEADERMENU,
-            "hasLink" => FALSE);
+              "output" => $this->NOHEADERMENU,
+              "hasLink" => FALSE);
         }
       }
     }
@@ -158,11 +152,11 @@ class LeftMenu {
       $href = $this->base_url . current(explode('?', $menuItem->getAttribute('href')));
       $routes = $this->app->user->getAttribute(\Library\Enums\SessionKeys::UserRoutes);
       $result = $routes && $menuItem->getAttribute('active') === "true" ?
-          array_reduce(
-              $routes, function ($carry, $route) use ($href) {
-            return $carry || ($href == $route->url());
-          }, false) :
-          false;
+              array_reduce(
+                      $routes, function ($carry, $route) use ($href) {
+                return $carry || ($href == $route->url());
+              }, false) :
+              false;
       return $result;
     }
     return TRUE;
@@ -171,8 +165,8 @@ class LeftMenu {
   private function _AddLinkHeader($link) {
     $elementCssClass = $link->getAttribute("cssClass");
     $cssClassPrintedOut = $elementCssClass ?
-        'class="' . \Library\Enums\LeftMenuConstants::cssClassValue . '"' :
-        "";
+            'class="' . \Library\Enums\LeftMenuConstants::cssClassValue . '"' :
+            "";
     $placeholders = $this->_BuildPlaceholderList($link);
     $formattedString = $this->_GetStringForLinkHeader($cssClassPrintedOut);
     $html["hasLink"] = FALSE;
@@ -181,23 +175,23 @@ class LeftMenu {
       $html["hasLink"] = TRUE;
     } else {
       $html["output"] = \Library\Enums\LeftMenuConstants::OPEN_SPAN .
-          $this->resx_left_menu[$link->getAttribute("resourcekey")] .
-          \Library\Enums\LeftMenuConstants::CLOSE_SPAN;
+              $this->resx_left_menu[$link->getAttribute("resourcekey")] .
+              \Library\Enums\LeftMenuConstants::CLOSE_SPAN;
     }
     return $html;
   }
 
   private function _GetStringForLinkHeader($cssClassPrintedOut) {
     return
-        '<a href="' . \Library\Enums\LeftMenuConstants::href . '">' .
-        \Library\Enums\LeftMenuConstants::OPEN_SPAN_START .
-        $cssClassPrintedOut .
-        \Library\Enums\LeftMenuConstants::CLOSE_TAG .
-        \Library\Enums\LeftMenuConstants::CLOSE_SPAN .
-        \Library\Enums\LeftMenuConstants::OPEN_SPAN .
-        \Library\Enums\LeftMenuConstants::linkText .
-        \Library\Enums\LeftMenuConstants::CLOSE_SPAN .
-        '</a>';
+            '<a href="' . \Library\Enums\LeftMenuConstants::href . '">' .
+            \Library\Enums\LeftMenuConstants::OPEN_SPAN_START .
+            $cssClassPrintedOut .
+            \Library\Enums\LeftMenuConstants::CLOSE_TAG .
+            \Library\Enums\LeftMenuConstants::CLOSE_SPAN .
+            \Library\Enums\LeftMenuConstants::OPEN_SPAN .
+            \Library\Enums\LeftMenuConstants::linkText .
+            \Library\Enums\LeftMenuConstants::CLOSE_SPAN .
+            '</a>';
   }
 
   private function _AddLinkSubMenus($link) {
@@ -208,21 +202,21 @@ class LeftMenu {
 
   private function _GetStringForSubMenuLink() {
     return
-        \Library\Enums\LeftMenuConstants::OPEN_LI .
-        '<a ' . 
-        'href="' . \Library\Enums\LeftMenuConstants::href . '"' .
-        'id="'. \Library\Enums\LeftMenuConstants::itemId .'">' .
-        \Library\Enums\LeftMenuConstants::linkText .
-        '</a>' .
-        \Library\Enums\LeftMenuConstants::CLOSE_LI;
+            \Library\Enums\LeftMenuConstants::OPEN_LI .
+            '<a ' .
+            'href="' . \Library\Enums\LeftMenuConstants::href . '"' .
+            'id="' . \Library\Enums\LeftMenuConstants::itemId . '">' .
+            \Library\Enums\LeftMenuConstants::linkText .
+            '</a>' .
+            \Library\Enums\LeftMenuConstants::CLOSE_LI;
   }
-  
+
   private function _BuildPlaceholderList($link) {
     $elementCssClass = $link->getAttribute("cssClass");
     return array(
-      \Library\Enums\LeftMenuConstants::href => $this->base_url . $link->getAttribute("href"),
-      \Library\Enums\LeftMenuConstants::linkText => $this->resx_left_menu[$link->getAttribute("resourcekey")],
-      \Library\Enums\LeftMenuConstants::cssClassValue => $elementCssClass ? $elementCssClass : ""
+        \Library\Enums\LeftMenuConstants::href => $this->base_url . $link->getAttribute("href"),
+        \Library\Enums\LeftMenuConstants::linkText => $this->resx_left_menu[$link->getAttribute("resourcekey")],
+        \Library\Enums\LeftMenuConstants::cssClassValue => $elementCssClass ? $elementCssClass : ""
     );
   }
 

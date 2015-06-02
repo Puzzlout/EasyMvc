@@ -23,7 +23,7 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
   public function __construct(\Library\Core\Application $app, $module, $action, $resxfile) {
     parent::__construct($app);
     $this->managers = new \Library\Dal\Managers('PDO', $app);
-    $this->page = new Page($app);
+    $this->page = new \Library\Core\Page($app);
     $this->user = $app->user();
     $this->setModule($module);
     $this->setAction($action);
@@ -49,17 +49,17 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
       $this->AddCommonVarsToPage();
     }
 
-    $br = new UC\Breadcrumb($this->app());
+//    $br = new \Library\UC\Breadcrumb($this->app());
     //Load controller method
-    $time_log_type = Enums\ResourceKeys\GlobalAppKeys::log_controller_method_request;
-    Core\Utility\TimeLogger::StartLog($this->app(), $time_log_type);
+    $time_log_type = \Library\Enums\ResourceKeys\GlobalAppKeys::log_controller_method_request;
+    \Library\Utility\TimeLogger::StartLog($this->app(), $time_log_type);
     $result = $this->$method($this->app->HttpRequest());
-    Core\Utility\TimeLogger::EndLog($this->app(), $time_log_type);
+    \Library\Utility\TimeLogger::EndLog($this->app(), $time_log_type);
     if ($result !== NULL) {
-      $result["br"] = $br->Build();
-      echo \Library\HttpResponse::encodeJson($result);
+//      $result["br"] = $br->Build();
+      echo \Library\Core\HttpResponse::encodeJson($result);
     } else {
-      $this->page->addVar("br", $br->Build());
+//      $this->page->addVar("br", $br->Build());
     }
   }
 
@@ -128,9 +128,9 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
     $this->view = $view;
 
     $this->page->setContentFile(
-        __ROOT__ . Enums\ApplicationFolderName::AppsFolderName
+        __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName
         . $this->app->name()
-        . Enums\ApplicationFolderName::ViewsFolderName
+        . \Library\Enums\ApplicationFolderName::ViewsFolderName
         . $this->module
         . '/'
         . $this->view . '.php');

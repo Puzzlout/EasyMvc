@@ -35,12 +35,7 @@ class AuthenticateController extends \Library\Controllers\BaseController {
    *
    * @param \Library\HttpRequest $rq: the request
    */
-  public function executeLoadLoginView(\Library\HttpRequest $rq) {
-    $resourceFileKey = "login";
-
-    $this->app->pageTitle = $this->app->i8n->getLocalResource($resourceFileKey, "page_title");
-    $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($resourceFileKey));
-    
+  public function executeLoadLoginView(\Library\Core\HttpRequest $rq) {
     $this->executeDisconnect($rq,FALSE);
   }
 
@@ -50,7 +45,7 @@ class AuthenticateController extends \Library\Controllers\BaseController {
    * @param \Library\HttpRequest $rq: the request
    * @return json object A JSON object with the result bool value and success/error message
    */
-  public function executeAuthenticate(\Library\HttpRequest $rq) {
+  public function executeAuthenticate(\Library\Core\HttpRequest $rq) {
     //Initialize the response to error.
     $result = $this->InitResponseWS();
 
@@ -85,7 +80,7 @@ class AuthenticateController extends \Library\Controllers\BaseController {
    *
    * @param \Library\HttpRequest $rq
    */
-  public function executeDisconnect(\Library\HttpRequest $rq, $redirect = TRUE) {
+  public function executeDisconnect(\Library\Core\HttpRequest $rq, $redirect = TRUE) {
     $this->app->user->setAuthenticated(FALSE);
     $this->app->user->unsetAttribute(\Library\Enums\SessionKeys::UserConnected);
     session_destroy();
@@ -97,7 +92,7 @@ class AuthenticateController extends \Library\Controllers\BaseController {
    *
    * @param \Library\HttpRequest $rq
    */
-  public function executeCreate(\Library\HttpRequest $rq) {
+  public function executeCreate(\Library\Core\HttpRequest $rq) {
     $protect = new \Library\BL\Core\Encryption();
     $data = array(
       "username" => $rq->getData("login"),
@@ -115,73 +110,27 @@ class AuthenticateController extends \Library\Controllers\BaseController {
   }
 
   /**
-   * Prepare the User Object before calling the DB.
-   * 
-   * @param array $data_sent from POST request
-   * @return \Applications\PMTool\Models\Dao\Project_manager
-   */
-  private function PrepareUserObject($data_sent) {
-    $protect = new \Library\BL\Core\Encryption();
-
-    $user = new \Applications\PMTool\Models\Dao\Project_manager();
-    $user->setPm_email($data_sent["email"]);
-    $user->setUsername($data_sent["username"]);
-    if (!isset($data_sent["encrypt_pwd"])) {
-      $user->setPassword($data_sent["pwd"]);
-    } else {
-      $user->setPassword($protect->Encrypt($this->app->config->get("encryption_key"), $data_sent["pwd"]));
-    }
-    
-    return $user;
-  }
-
-  /**
    * Method that logs in a user in the session.
    *
    */
-  private function LoginUser($pm_user) {
+  private function LoginUser($user) {
     //set authenticated flag
     $this->app->user->setAuthenticated();
     //store user in session
-    $this->app->user->setAttribute(\Library\Enums\SessionKeys::UserConnected, $pm_user);
-    //Brian
-    \Applications\PMTool\Helpers\PmHelper::StoreSessionPm($this->app()->user(), $pm_user[0], true);
-    //Test
+    $this->app->user->setAttribute(\Library\Enums\SessionKeys::UserConnected, $user);
   }
 
   /**
    * Encrypt the user password
    * 
-   * @param DAL\BaseManager $manager
-   * @param BO\ProjectManager $user_in
-   * @param array(BO\ProjectManager) $user_db
+   * @param type $manager
+   * @param type $user_in
+   * @param type $user_db
    */
   private function EncryptUserPassword($manager, $user_in, $user_db) {
-    $protect = new \Library\BL\Core\Encryption();
+    $protect = new \Library\BL\Security\Encryption();
     $user_in->setPassword($protect->Encrypt($this->app->config->get("encryption_key"), $user_in->password()));
     $user_in->pm_id = $user_db[0]->pm_id;
     $manager->update($user_in);
   }
-
-  /**
-   * 
-   * @param string $step
-   * @return array
-   */
-  public function InitResponseWS($step = "init", $user = NULL) {
-    $resourceFileKey = "login";
-    if ($step === "success") {
-      $this->LoginUser($user);
-      return array(
-        "result" => 1,
-        "message" => $this->app->i8n->getLocalResource($resourceFileKey, "message_success")
-      );
-    } else {
-      return array(
-        "result" => 0,
-        "message" => $this->app->i8n->getLocalResource($resourceFileKey, "message_error")
-      );
-    }
-  }
-
 }

@@ -184,7 +184,7 @@ class BaseManager extends \Library\Dal\Manager {
     $result = -1;
     try {
       //\Library\Helpers\DebugHelper::LogAsHtmlComment($sql_query);
-      $query = $this->dao->query($sql_query);
+      $query = $sth->execute();
       if (!$query) {
         $result = $query->errorCode();
       } else {

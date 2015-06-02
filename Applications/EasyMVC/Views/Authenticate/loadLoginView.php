@@ -1,8 +1,8 @@
-<?php if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
+<?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
 <section id="top_header">
   <section id="branding">
     <figure class="logo"><img src="<?php echo $this->app->relative_path . $this->app->logoImageUrl; ?>"></figure>
-<!--    <p class="brand"><?php //echo $resx_menu_left["brand"]; ?></p>-->
+<!--    <p class="brand"><?php //echo $resx_menu_left["brand"];  ?></p>-->
   </section>
 </section>
 <section  class="login-container">
@@ -25,7 +25,7 @@
 <!--        <input name="remember_me" type="checkbox" value="" />
         <?php echo $resx["remember_me_label"]; ?>
         <a href="#" name="forgot_pwd"  class="password">
-          <?php echo $resx["forgot_pwd_label"]; ?>
+        <?php echo $resx["forgot_pwd_label"]; ?>
         </a>-->
       </p>
       <div class="login-btn">
@@ -36,3 +36,4 @@
     </section>
   </figure>
 </section >
+

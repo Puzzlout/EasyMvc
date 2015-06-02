@@ -3,14 +3,12 @@
     <!-- UI routes -->
     <route url="login" module="Authenticate" action="loadLoginView" resxfile="login" type="ui">
         <js_files>
-          
-            <js_file use="html" value="Web/js/app/validator.js" />
-            <js_file use="html" value="Web/js/app/controllers/auth.js" />
+            <js_file use="html" value="Web/library/js/validator.js" />
+            <js_file use="html" value="Applications/EasyMvc/ClientSide/js/app/controllers/auth.js" />
         </js_files>
         <css_files>
-            <css_file value="Web/css/app/app-style.css" />
-            <css_file value="Web/css/app/app-theme.css" />
-            <css_file value="Web/css/app/theme.css" />
+            <css_file value="Applications/EasyMvc/ClientSide/css/app/app-style.css" />
+            <css_file value="Applications/EasyMvc/ClientSide/css/app/app-theme.css" />
         </css_files>
     </route>
     

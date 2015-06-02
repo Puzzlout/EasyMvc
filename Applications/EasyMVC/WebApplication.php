@@ -45,7 +45,7 @@ class WebApplication extends \Library\Core\Application {
 
     //Get add the Project Manager object to the page
     //The variable PM will be available accross the application
-    $this->AddGlobalAppVariables();
+    $this->AddGlobalAppVariables($controller);
     
     $controller->execute();
 
@@ -53,7 +53,7 @@ class WebApplication extends \Library\Core\Application {
     $this->httpResponse->send();
   }
 
-  private function AddGlobalAppVariables() {
+  private function AddGlobalAppVariables($controller) {
     $user = $controller->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
     $controller->page()->addVar('user', $user[0]);
     
