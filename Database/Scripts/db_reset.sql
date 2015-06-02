@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `account` (
     `account_desc` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
     `account_active` tinyint(1) DEFAULT NULL,
     `account_visible` tinyint(1) DEFAULT NULL,
-    PRIMARY KEY (`account_id`),
+    PRIMARY KEY (`account_id`)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT=1;
 
 -- Table structure for table `budget_account
