@@ -33,7 +33,7 @@ class UserHelper {
   }
 
   public static function GetUserConnectedSession($user) {
-    return $user->keyExistInSession(\Library\Enums\SessionKeys::UserConnected) ?
+    return $user->getAttribute(\Library\Enums\SessionKeys::UserConnected) ?
         $user->getAttribute(\Library\Enums\SessionKeys::UserConnected) : FALSE;
   }
 
@@ -72,7 +72,7 @@ class UserHelper {
    */
   public static function GetAndStoreUsersInSession($caller) {
     $users = array();
-    if (!$caller->app()->user()->keyExistInSession(\Library\Enums\SessionKeys::AllUsers)) {
+    if (!$caller->app()->user()->getAttribute(\Library\Enums\SessionKeys::AllUsers)) {
       $manager = $caller->managers()->getManagerOf($caller->module());
       $users = $manager->selectAllUsers();
 

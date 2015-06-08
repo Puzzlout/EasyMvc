@@ -4,7 +4,10 @@ namespace Library\Security;
 
 
 use Library\Interfaces\IUser;
-
+use Library\Enums\SessionKeys;
+/**
+ * <p> Provides the methods to manage user authentication. </p>
+ */
 class AuthenticationManager
 {
   private $app;
@@ -14,21 +17,26 @@ class AuthenticationManager
     $this->app = $app;
   }
 
+  /**
+   * <p> Authenticates a user from the given object. </p>
+   * @param \Library\Interfaces\IUser $user <p>
+   * User object holding all the values necessary to connect the user. </p> 
+   */
   public function authenticate(IUser $user)
   {
-    $this->app->user->setAuthenticated();
     //set role
-    $this->app->user->setRole($user->getRole());
+    $this->app->user->setAttribute(SessionKeys::UserRole, $user->getRole());
     //store user in session
-    $this->app->user->setAttribute(\Library\Enums\SessionKeys::UserConnected, $user);
-    $this->app->user->setUserType($user->getType());
-    $this->app->user->setUserTypeId($user->getTypeValue());
+    $this->app->user->setAttribute(SessionKeys::UserConnected, $user);
   }
 
+  /**
+   * <p> Deauthenticate a user from current session. 
+   * Then the session is detroyed. </p>
+   */
   public function deauthenticate()
   {
-    $this->app->user->setAuthenticated(FALSE);
-    $this->app->user->unsetAttribute(\Library\Enums\SessionKeys::UserConnected);
+    $this->app->user->unsetAttribute(SessionKeys::UserConnected);
     session_destroy();
   }
 } 

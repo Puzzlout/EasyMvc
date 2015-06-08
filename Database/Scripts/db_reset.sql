@@ -43,8 +43,6 @@ CREATE TABLE IF NOT EXISTS `user` (
     `user_password` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
     `user_hint` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
     `user_email` VARCHAR(50) NOT NULL COMMENT 'User email that is unique and must be set',
-    `user_type` varchar(50) NOT NULL COMMENT 'Possible values: pm_id, technician_id, service_id',
-    `user_value` int(11) NOT NULL COMMENT 'ID value corresponding to the user_type',
     `user_role_id` smallint(2) NOT NULL COMMENT 'Look up the table user_role for details about the roles',
     `user_session_id` VARCHAR(50) NULL COMMENT 'Hashed session ID',
     UNIQUE INDEX `un_user_login` (`user_login` ASC),

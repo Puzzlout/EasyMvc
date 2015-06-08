@@ -33,6 +33,9 @@ abstract class SessionKeys {
   const UserFlash = 'user_flash';
   const UserConnected = "user_connected";
   const UserRoutes = "user_routes";
+  const UserRole = "user_role";
+  const UserType = "user_type";
+  const UserTypeId = "user_type_id";
   //Routing
   const SessionRoutes = "app_routes";
   const SessionRoutesXmlLastModified = "app_routes_last_modified";

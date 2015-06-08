@@ -34,8 +34,8 @@ class Page extends ApplicationComponent {
 
     ob_start();
 
-    //Set page layout based on user status: authenticated or not
-    if ($this->app->user()->isAuthenticated()) {
+    //Set page layout based on user status: connected or not
+    if ($this->app->user()->isConnected()) {
       /**
        * FOR AUTHENTICATED USERS
        */

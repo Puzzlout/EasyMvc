@@ -20,8 +20,7 @@ try {
   if (isset($_GET["debug"]) 
       || strstr($app->HttpRequest->requestURI(), "login") !== FALSE
       || strstr($app->HttpRequest->requestURI(), "auth") !== FALSE
-      || strstr($app->HttpRequest->requestURI(), "serviceprovider/discussion") !== FALSE
-      || $app->user->isAuthenticated()) {
+      || $app->user->isConnected()) {
     $app->run();
   } else {//Otherwise, redirect to login page :)
     header('Location: ' . __BASEURL__ . "login");

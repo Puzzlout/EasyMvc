@@ -81,9 +81,7 @@ class AuthenticateController extends \Library\Controllers\BaseController {
    * @param \Library\HttpRequest $rq
    */
   public function executeDisconnect(\Library\Core\HttpRequest $rq, $redirect = TRUE) {
-    $this->app->user->setAuthenticated(FALSE);
-    $this->app->user->unsetAttribute(\Library\Enums\SessionKeys::UserConnected);
-    session_destroy();
+    $this->app()->auth->deauthenticate();
     if ($redirect) { $this->Redirect("login"); }
   }
   
@@ -114,8 +112,6 @@ class AuthenticateController extends \Library\Controllers\BaseController {
    *
    */
   private function LoginUser($user) {
-    //set authenticated flag
-    $this->app->user->setAuthenticated();
     //store user in session
     $this->app->user->setAttribute(\Library\Enums\SessionKeys::UserConnected, $user);
   }

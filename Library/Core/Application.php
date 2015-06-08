@@ -2,6 +2,8 @@
 
 namespace Library\Core;
 
+use Library\Enums;
+
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
@@ -28,13 +30,13 @@ abstract class Application {
   public function __construct() {
     $this->HttpRequest = new HttpRequest($this);
     $this->httpResponse = new HttpResponse($this);
-
-    $this->router = new Router($this);
     $this->user = new User($this);
     $this->config = new Config($this);
     $this->context = new Context($this);
     $this->i8n = new Globalization($this);
     $this->imageUtil = new \Library\Utility\ImageUtility($this);
+
+    $this->router = new Router($this);
     $this->locale = $this->HttpRequest->initLanguage($this, "browser");
     $this->name = '';
     $this->auth = new \Library\Security\AuthenticationManager($this);
@@ -47,18 +49,7 @@ abstract class Application {
   }
 
   public function getController() {
-    $this->router()->setRoutesXmlPath(__ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . $this->name() . '/Config/routes.xml');
-
-    $routes = $this->user->getAttribute(\Library\Enums\SessionKeys::UserRoutes);
-    if ($routes) {
-      $this->router()->setRoutes($routes);
-    } elseif ($this->router()->hasRoutesXmlChanged($this->user()) || !$this->user->keyExistInSession(\Library\Enums\SessionKeys::SessionRoutes)) {
-      $this->router->LoadAvailableRoutes($this);
-      //Store routes in session
-      $this->user->setAttribute(\Library\Enums\SessionKeys::SessionRoutes, $this->router()->routes());
-    } else {
-      $this->router()->setRoutes($this->user->getAttribute(\Library\Enums\SessionKeys::SessionRoutes));
-    }
+    
     $this->router()->setSelectedRoute($this->FindRouteMatch());
     $this->relative_path = $this->router()->selectedRoute()->relative_path;
     $this->globalResources["js_files_head"] = $this->router()->selectedRoute()->headJsScripts();

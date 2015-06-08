@@ -2,79 +2,92 @@
 
 namespace Library\Core;
 
-if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+  exit('No direct script access allowed');
 session_start();
 
 class User extends ApplicationComponent {
 
-  public function getAttribute($attr) {
-    return isset($_SESSION[$attr]) ? $_SESSION[$attr] : null;
-  }
+  private $appPrefix = "";
 
-  public function getFlash() {
-    $flash = $_SESSION[\Library\Enums\SessionKeys::UserFlash];
-    unset($_SESSION[\Library\Enums\SessionKeys::UserFlash]);
-
-    return $flash;
-  }
-
-  public function hasFlash() {
-    return isset($_SESSION[\Library\Enums\SessionKeys::UserFlash]);
-  }
-
-  public function isAuthenticated() {
-    return isset($_SESSION[\Library\Enums\SessionKeys::UserAuthenticated]) && $_SESSION[\Library\Enums\SessionKeys::UserAuthenticated] === true;
-  }
-  
-  public function setRole($role) {
-    $_SESSION[\Library\Enums\SessionKeys::UserRole] = $role;
-  }
-
-  public function getRole() {
-    return isset($_SESSION[\Library\Enums\SessionKeys::UserRole])?$_SESSION[\Library\Enums\SessionKeys::UserRole]:null;
-  }
-
-  public function setUserType($type) {
-    $_SESSION[\Library\Enums\SessionKeys::UserType] = $type;
-  }
-
-  public function getUserType() {
-    return isset($_SESSION[\Library\Enums\SessionKeys::UserType])?$_SESSION[\Library\Enums\SessionKeys::UserType]:null;
-  }
-
-  public function setUserTypeId($userTypeId) {
-    $_SESSION[\Library\Enums\SessionKeys::UserTypeId] = $userTypeId;
-  }
-
-  public function getUserTypeId() {
-    return isset($_SESSION[\Library\Enums\SessionKeys::UserTypeId])?$_SESSION[\Library\Enums\SessionKeys::UserTypeId]:null;
-  }
-
-  public function setAttribute($attr, $value) {
-    $_SESSION[$attr] = $value;
-  }
-
-  public function setAuthenticated($authenticated = true) {
-    if (!is_bool($authenticated)) {
-      throw new \InvalidArgumentException('Value of method User::setAuthenticated() must be a boolean');
-    }
-
-    $_SESSION[\Library\Enums\SessionKeys::UserAuthenticated] = $authenticated;
-  }
-
-  public function setFlash($value) {
-    $_SESSION[\Library\Enums\SessionKeys::UserFlash] = $value;
-  }
   /**
-   * Unset a session item of given key
-   * 
-   * @param string $key (\Library\Enums\SessionKeys)
+   * <p> Constructor: set the appPrefix to set in front of all session values </p>
+   * @param \Library\Core\Application $app
+   */
+  public function __construct(Application $app) {
+    parent::__construct($app);
+    $this->appPrefix = strtolower(__APPNAME__);
+  }
+
+  /**
+   * <p> Set a value in current session. </p>
+   * @param string $sessionKey <p>
+   * The session key value under which the value is stored. The set of values is
+   *  found in the class(es) \Library\Enums\SessionKeys (Framework) or
+   *  \Application\YourApp\Resources\Enums\SessionKeys (Application) </p>
+   * @param mixed $value <p>
+   * The value can any type: int, string, array, object instance of any class. </p>
+   */
+  public function setAttribute($sessionKey, $value) {
+    $_SESSION[$this->GetKey($sessionKey)] = $value;
+  }
+
+  /**
+   * <p> Get a key from a given value. </p>
+   * @param string $key <p>
+   * The set of values is found in the class(es) \Library\Enums\SessionKeys (Framework) or
+   *  \Application\YourApp\Resources\Enums\SessionKeys (Application) </p>
+   * @return string <p>
+   * The computed value of $appPrefix and $key. </p>
+   */
+  public function GetKey($key) {
+    return $this->appPrefix . "::" . $key;
+  }
+
+  /**
+   * <p> Get a value in current session from a given key. </p>
+   * @param sring $sessionKey <p>
+   * The key to use to find the associated value. The set of values is found in 
+   * the class(es) \Library\Enums\SessionKeys (Framework) or
+   * \Application\YourApp\Resources\Enums\SessionKeys (Application) </p>
+   * @return mixed <p>
+   * The value can any type: int, string, array, object instance of any class.
+   * If value is not set, then return FALSE. </p>
+   */
+  public function getAttribute($sessionKey) {
+    return
+            isset($_SESSION[$this->GetKey($sessionKey)]) ?
+            $_SESSION[$this->GetKey($sessionKey)] :
+            FALSE;
+  }
+
+  /**
+   * <p> Remove a session-stored variable based on a given key. </p>
+   * @param string $key <p>
+   * A string value using the set of values is found in the class(es) 
+   * \Library\Enums\SessionKeys (Framework) or
+   *  \Application\YourApp\Resources\Enums\SessionKeys (Application). </p>
    */
   public function unsetAttribute($key) {
-    unset($_SESSION[$key]);
+    unset($_SESSION[$this->GetKey($key)]);
   }
 
-  public function keyExistInSession($key) {
-    return isset($_SESSION[$key]);
+  /**
+   * <p> Checks if the current user is connected. </p>
+   * @return bool <p>
+   * Values: TRUE or FALSE </p>
+   */
+  public function isConnected() {
+    return $this->getAttribute(\Library\Enums\SessionKeys::UserConnected);
   }
+
+  /**
+   * <p> Gets the user role. </p>
+   * @return string <p>
+   * Role value of the current user. </p>
+   */
+  public function getRole() {
+    return $this->getAttribute(\Library\Enums\SessionKeys::UserRole);
+  }
+
 }
