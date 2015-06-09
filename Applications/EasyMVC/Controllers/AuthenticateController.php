@@ -98,7 +98,7 @@ class AuthenticateController extends \Library\Controllers\BaseController {
       "pm_name" => "Demo User"
     );
     $pm = \Library\Helpers\CommonHelper::PrepareUserObject($data, new \Applications\PMTool\Models\Dao\Project_manager());
-    $pm->setPassword($protect->Encrypt($this->app->config->get("encryption_key"), $pm->password()));
+    $pm->setPassword($protect->HashValue($this->app->config->get("encryption_key"), $pm->password()));
 
     $loginDal = $this->managers->getManagerOf("Login");
     $id = $loginDal->add($pm);
@@ -117,7 +117,7 @@ class AuthenticateController extends \Library\Controllers\BaseController {
   }
 
   /**
-   * Encrypt the user password
+   * HashValue the user password
    * 
    * @param type $manager
    * @param type $user_in
@@ -125,7 +125,7 @@ class AuthenticateController extends \Library\Controllers\BaseController {
    */
   private function EncryptUserPassword($manager, $user_in, $user_db) {
     $protect = new \Library\BL\Security\Encryption();
-    $user_in->setPassword($protect->Encrypt($this->app->config->get("encryption_key"), $user_in->password()));
+    $user_in->setPassword($protect->HashValue($this->app->config->get("encryption_key"), $user_in->password()));
     $user_in->pm_id = $user_db[0]->pm_id;
     $manager->update($user_in);
   }

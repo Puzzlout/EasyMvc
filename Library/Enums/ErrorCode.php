@@ -6,14 +6,14 @@
  */
 
 /**
- * Description of ErrorCodes
+ * Description of ErrorCode
  *
  * @author jl
  */
 namespace Library\Enums;
 if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 
-abstract class ErrorCodes {
+abstract class ErrorCode {
 
   /*
    * Standards HTTP error codes

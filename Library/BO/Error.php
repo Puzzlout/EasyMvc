@@ -29,46 +29,71 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 class Error {
 
   public
+          /**
+           * Error identifier
+           * See: Library\Enums\ErrorCode.php
+           */
           $errorId = 0,
-          $errorType = "",
+          /**
+           * Error origin
+           * See: Library\Enums\ErrorOrigin.php
+           */
+          $errorOrigin = "",
+          /**
+           * 
+           */
           $errorDynamicValue = "",
+          /**
+           * 
+           */
           $errorTitle = "",
+          /**
+           * 
+           */
           $errorMessage = "";
 
   //GETTERS
   public function errorId() {
     return $this->errorId;
   }
-  public function errorType() {
-    return $this->errorType;
+
+  public function errorOrigin() {
+    return $this->errorOrigin;
   }
+
   public function errorDynamicValue() {
     return $this->errorDynamicValue;
   }
+
   public function errorTitle() {
     return $this->errorTitle;
   }
+
   public function errorMessage() {
     return $this->errorMessage;
   }
 
   //SETTERS
   public function setErrorId($errorId) {
-    $this->errorId = $errorId;
+    $this->errorId = is_int($errorId) ? $errorId : FALSE;
   }
-  public function setErrorType($errorType) {
-    $this->errorType = $errorType;
+
+  public function setErrorOrigin($errorOrigin) {
+    $this->errorOrigin = $errorOrigin;
   }
+
   public function setErrorDynamicValue($errorDynamicValue) {
     $this->errorDynamicValue = $errorDynamicValue;
   }
+
   public function setErrorTitle($errorTitle) {
     $this->errorTitle = $errorTitle;
   }
+
   public function setErrorMessage($errorMessage) {
     $this->errorMessage = $errorMessage;
   }
-  
+
   /**
    * 
    * @param type $id
@@ -76,10 +101,11 @@ class Error {
    * @param type $title
    * @param type $dynamicValue
    */
-  public function __construct($id, $type, $title, $message) {
+  public function __construct($id, $origin, $title, $message) {
     $this->setErrorId($id);
-    $this->setErrorType($type);
+    $this->setErrorOrigin($origin);
     $this->setErrorTitle($title);
     $this->setErrorMessage($message);
   }
+
 }

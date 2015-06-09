@@ -65,8 +65,8 @@ abstract class Application {
     $controllerClass = $this->BuildControllerClass($this->router()->selectedRoute());
     if (!file_exists(__ROOT__ . str_replace('\\', '/', $controllerClass) . \Library\Enums\FileNameConst::Extension)) {
       $error = new \Library\BO\Error(
-              \Library\Enums\ErrorCodes::ControllerNotExist, 
-              "controller", 
+              \Library\Enums\ErrorCode::ControllerNotExist, 
+              Enums\ErrorOrigin::Library, 
               "Controller not found",
               "The controller ". $controllerClass . " doesn't exist.");
       $this->httpResponse->displayError($error);
@@ -128,7 +128,7 @@ abstract class Application {
       if ($e->getCode() == \Library\Core\Router::NO_ROUTE) {
         // Si aucune route ne correspond, c'est que la page demandée n'existe pas.
         $error = new \Library\BO\Error(
-                \Library\Enums\ErrorCodes::PageNotFound,
+                \Library\Enums\ErrorCode::PageNotFound,
                 "routing",
                 "Page not found",
                 "The route " . $this->HttpRequest->requestURI() . " is not found."

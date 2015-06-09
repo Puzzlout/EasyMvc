@@ -124,7 +124,7 @@ class UserHelper {
     $user->setUser_login($dataPost['user_login']);
     $user->setUser_email($dataPost['pm_email']);
     if($setPass==TRUE) {
-      $user->setUser_password($protect->Encrypt($config->get("encryption_key"), $dataPost['user_password']));
+      $user->setUser_password($protect->HashValue($config->get("encryption_key"), $dataPost['user_password']));
     }
 
     return $user;
@@ -152,7 +152,7 @@ class UserHelper {
     );
     $user = CommonHelper::PrepareUserObject($generatedDataPost, new \Library\BO\User());
     $protect = new \Library\BL\Security\Encryption();
-    $user->setUser_password($protect->Encrypt($caller->app()->config()->get("encryption_key"), $user->user_password()));
+    $user->setUser_password($protect->HashValue($caller->app()->config()->get("encryption_key"), $user->user_password()));
     return $manager->add($user);
   }
   public static function GetEmailForUser($caller, $dataPost, $user_type, $user_value) {

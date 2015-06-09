@@ -30,23 +30,22 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 class Encryption {
 
   /**
-   * Encrypt some data
+   * <p> Hash some data using Sha1 method. </p>
    * 
-   * @param string $public_key
-   * @param object $data
+   * @param string $publicKey <p>
+   * The value is stored in the Applications/CurrentApp/Config/appsettings.xml <p>
+   * @param string $data <p>
+   * The value to hash using sha1 method and the $publicKey. </p>
    * @return string
    */
-  public function Encrypt($public_key, $data) {
-    return substr(sha1($data) . $public_key, 0, 50);
-    //Below: mcrypt method (NOT USED FOR THE MOMENT)
-    //    $args = $this->InitEncryption($public_key);
-    //    $enc = $this->mcrypt_encode($args, $data, $public_key);
-    //    return base64_encode($enc);
+  public function HashValue($publicKey, $data) {
+    return substr(sha1($data) . $publicKey, 0, 50);
   }
 
   /**
    * Encrypt using Mcrypt
-   *
+   * TODO: to be implemented.
+   * 
    * @access	public
    * @param	string
    * @param	string
@@ -60,6 +59,7 @@ class Encryption {
 
   /**
    * Decrypt some data with mcrypt (NOT USED FOR THE MOMENT)
+   * TODO: to be implemented.
    * 
    * @param string $public_key
    * @param object $data
@@ -82,6 +82,7 @@ class Encryption {
 
   /**
    * Initialize the values to encrypt
+   * TODO: to be implemented.
    * 
    * @param string $public_key
    * @return array
