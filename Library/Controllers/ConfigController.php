@@ -2,7 +2,7 @@
 
 /**
  *
- * @package		The Loffy Framework
+ * @package		Easy MVC Framework
  * @author		Jeremie Litzler
  * @copyright	Copyright (c) 2015
  * @license

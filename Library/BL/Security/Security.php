@@ -3,7 +3,7 @@
  *
  * An open source application development framework for PHP 5.1.6 or newer
  *
- * @package		The Loffy Framework
+ * @package		Easy MVC Framework
  * @author		Jeremie Litzler
  * @copyright	Copyright (c) 2015
  * @license		
