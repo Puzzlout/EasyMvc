@@ -13,10 +13,10 @@
 // ------------------------------------------------------------------------
 
 /**
- * ErrorType Class
+ * ErrorOrigin Class
  *
- * @package       
- * @subpackage    
+ * @package       Library
+ * @subpackage    Enums
  * @author        Jeremie Litzler
  * @link		
  */

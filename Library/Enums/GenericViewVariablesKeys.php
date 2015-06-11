@@ -14,13 +14,11 @@
 /**
  * GenericViewVariablesKeys Class
  *
- * @package		Applications/PMTool
- * @subpackage	Resources/Enum
- * @category	ViewVariablesKeys
+ * @package		Library
+ * @subpackage	Enums
  * @author		Jeremie Litzler
  * @link		
  */
-
 
 namespace Library\Enums;
 if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
@@ -58,5 +56,3 @@ class GenericViewVariablesKeys {
   //Mapping
   const map_module = "map_module";
 }
-
-?>

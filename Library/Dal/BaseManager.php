@@ -1,5 +1,27 @@
 <?php
 
+/**
+ *
+ * @package     Easy MVC Framework
+ * @author      Jeremie Litzler
+ * @copyright   Copyright (c) 2015
+ * @license		
+ * @link		
+ * @since		
+ * @filesource
+ */
+// ------------------------------------------------------------------------
+
+/**
+ * BaseManager Class
+ *
+ * @package       Library
+ * @subpackage    Dal
+ * @category      
+ * @author        Jeremie Litzler
+ * @link		
+ */
+
 namespace Library\Dal;
 
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))

@@ -13,20 +13,20 @@
 // ------------------------------------------------------------------------
 
 /**
- * UserRole Class
+ * UrlKeys Class
  *
  * @package       Library
  * @subpackage    Enums
+ * @category      
  * @author        Jeremie Litzler
  * @link		
  */
 
 namespace Library\Enums;
+if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
-  exit('No direct script access allowed');
-
-class UserRole {
-  const Admin = 1;
-  const Visitor = 2;
+class UrlKeys {
+  const LoginUrl = "login";
+  const LogoutUrl = "logout";
+  const AuthenticationUrl = "auth";
 }

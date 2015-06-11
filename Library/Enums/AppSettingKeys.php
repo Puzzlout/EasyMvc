@@ -25,6 +25,7 @@ abstract class AppSettingKeys {
   const DefaultLanguage = "DefaultLanguage";
   const BaseUrl = "base_url";
   const BaseUrlRelease = "BaseUrlRelease";
+  const DefaultPage = "DefaultPage";
   const RootImageFolderPath = "RootImageFolderPath";
   const RootUploadsFolderPath = "RootUploadsFolderPath";
   const DalFolderPath = "DalFolderPath";
@@ -39,6 +40,5 @@ abstract class AppSettingKeys {
   const GoogleMapsNoLatLngIcon = "GoogleMapsNoLatLngIcon";
 
   const DefaultEmailDomainValue = "DefaultEmailDomainValue";
+  const ErrorLoggingMethod = "ErrorLoggingMethod";
 }
-
-?>

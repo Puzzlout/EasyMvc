@@ -2,7 +2,7 @@
 
 /**
  *
- * @package     Easy MVC Framework
+ * @package     EasyMVC Framework
  * @author      Jeremie Litzler
  * @copyright   Copyright (c) 2015
  * @license		
@@ -13,20 +13,21 @@
 // ------------------------------------------------------------------------
 
 /**
- * UserRole Class
+ * ErrorHelper Class
  *
  * @package       Library
- * @subpackage    Enums
+ * @subpackage    Helpers
  * @author        Jeremie Litzler
  * @link		
  */
 
-namespace Library\Enums;
+namespace Library\Helpers;
 
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
-class UserRole {
-  const Admin = 1;
-  const Visitor = 2;
+class ErrorHelper {
+  public static function EchoError(\Exception $ex) {
+    
+  }
 }

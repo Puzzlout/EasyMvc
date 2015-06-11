@@ -10,6 +10,8 @@
   <define key="DalFolderPath" value="\Applications\{{app_name}}\Models\Dal\" />
   <define key="RootDocumentUpload" value="../ClienSide/uploads/" />
   <define key="LogoImageUrl" value="logo.png" />
+  <define key="DefaultPage" value="login" />
+  <define key="ErrorLoggingMethod" value="echo" />
 
   <!-- Security -->
   <define key="encryption_key" value="g496lJL683yFiDzju2K94f1751Lo7WSw" />

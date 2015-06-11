@@ -28,10 +28,5 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class UserRoleType {
   const Admin = "administrator_id";
-  const ProjectManager = "pm_id";
-  const Technician = "technician_id";
   const Visitor = "";
-  const Client = "client_id";
-  const Service = "service_id";
-  const TBD = "";
 }

@@ -16,7 +16,6 @@
  *
  * @package		Library
  * @subpackage	Enums
- * @category	GenericAppKeys
  * @author		Jeremie Litzler
  * @link		
  */
@@ -31,5 +30,3 @@ abstract class GenericAppKeys {
     const POST_METHOD = "post";
     const PUT_METHOD = "put";
 }
-
-?>

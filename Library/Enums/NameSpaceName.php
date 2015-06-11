@@ -1,18 +1,27 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *
+ * @package     Easy MVC Framework
+ * @author      Jeremie Litzler
+ * @copyright   Copyright (c) 2015
+ * @license		
+ * @link		
+ * @since		
+ * @filesource
  */
+// ------------------------------------------------------------------------
 
 /**
- * Description of NamespaceName
+ * NameSpaceName Class
  *
- * @author jl
+ * @package       Library
+ * @subpackage    Enums
+ * @category      
+ * @author        Jeremie Litzler
+ * @link		
  */
-/**
- * Constants to load dynamically the classes
- */
+
 namespace Library\Enums;
 if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 

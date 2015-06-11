@@ -13,11 +13,10 @@
 // ------------------------------------------------------------------------
 
 /**
- * AppsAndWebFolderName Class
+ * ApplicationFolderName Class
  *
  * @package       Library
  * @subpackage    Enums
- * @category      AppsAndWebFolderName
  * @author        Jeremie Litzler
  * @link		
  */

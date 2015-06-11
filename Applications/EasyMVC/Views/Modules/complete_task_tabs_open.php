@@ -8,18 +8,18 @@
       </a>
     </li>
     <li class="tab <?php echo $tab[Applications\PMTool\Resources\Enums\TaskTabKeys::CompleteTaskMapTab]; ?>" data-form-id="live_task_map">
-      <a href="<?php echo __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::CompleteTaskMap; ?>">
+      <a href="<?php echo __BASEURL__ . \Library\Enums\UrlKeys::CompleteTaskMap; ?>">
         <?php echo $resx["task_tab_map"]; ?>
       </a>
     </li>
     <li class="tab <?php echo $tab[Applications\PMTool\Resources\Enums\TaskTabKeys::CompleteInspFormsTab]; ?>" id="tab2" data-form-id="live_task_insp_info">
-      <a href="<?php echo __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::CompleteTaskInspForms; ?>">
+      <a href="<?php echo __BASEURL__ . \Library\Enums\UrlKeys::CompleteTaskInspForms; ?>">
         <?php echo $resx["task_tab_forms"]; ?>
       </a>
     </li> 
 <!--    Note: The COC, if =used, is not just a form on the forms list.-->
     <li class="tab <?php echo $tab[Applications\PMTool\Resources\Enums\TaskTabKeys::CompleteTaskServicesTab]; ?>" id="tab7" data-form-id="live_task_services">
-      <a href="<?php echo __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::CompleteTaskServices; ?>">
+      <a href="<?php echo __BASEURL__ . \Library\Enums\UrlKeys::CompleteTaskServices; ?>">
         <?php echo $resx["task_tab_services"]; ?>
       </a>
     </li>

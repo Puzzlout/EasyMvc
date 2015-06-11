@@ -1,14 +1,25 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *
+ * @package     Easy MVC Framework
+ * @author      Jeremie Litzler
+ * @copyright   Copyright (c) 2015
+ * @license		
+ * @link		
+ * @since		
+ * @filesource
  */
+// ------------------------------------------------------------------------
 
 /**
- * Description of FileNameConst
+ * FileNameConst Class
  *
- * @author jl
+ * @package       Library
+ * @subpackage    Enums
+ * @category      
+ * @author        Jeremie Litzler
+ * @link		
  */
 
 namespace Library\Enums;
@@ -35,5 +46,3 @@ abstract class FileNameConst {
   const MenuLeftTemplate = "/Templates/menus/left.php";
   const BreadcrumbTemplate = "/Templates/breadcrumb.php";
 }
-
-?>

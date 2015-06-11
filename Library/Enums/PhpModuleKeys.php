@@ -34,5 +34,3 @@ class PhpModuleKeys {
   const group_list_left = "group_list_left";
   const group_list_right = "group_list_right";
 }
-
-?>

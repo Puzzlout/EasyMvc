@@ -22,7 +22,7 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
 
   public function __construct(\Library\Core\Application $app, $module, $action, $resxfile) {
     parent::__construct($app);
-    $this->managers = new \Library\Dal\Managers('PDO', $app);
+    $this->managers = $app->dal();
     $this->page = new \Library\Core\Page($app);
     $this->user = $app->user();
     $this->setModule($module);
@@ -248,7 +248,7 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
     $this->page->addVar("leftMenu", $leftMenu->Build());
     $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($this->resxfile));
     $this->app->pageTitle = $this->app->i8n->getLocalResource($this->resxfile, "page_title");
-    $this->page->addVar("logout_url", __BASEURL__ . \Library\Enums\ResourceKeys\UrlKeys::LogoutUrl);
+    $this->page->addVar("logout_url", __BASEURL__ . \Library\Enums\UrlKeys::LogoutUrl);
     $this->page->addVar(\Library\Enums\Popup::toolTips, $this->toolTips);
   }
 

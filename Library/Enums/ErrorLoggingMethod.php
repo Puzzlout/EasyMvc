@@ -2,7 +2,7 @@
 
 /**
  *
- * @package     Easy MVC Framework
+ * @package     EasyMVC Framework
  * @author      Jeremie Litzler
  * @copyright   Copyright (c) 2015
  * @license		
@@ -13,7 +13,7 @@
 // ------------------------------------------------------------------------
 
 /**
- * UserRole Class
+ * ErrorLoggingMethod Class
  *
  * @package       Library
  * @subpackage    Enums
@@ -26,7 +26,9 @@ namespace Library\Enums;
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
-class UserRole {
-  const Admin = 1;
-  const Visitor = 2;
+class ErrorLoggingMethod {
+  const EchoString = "error-log-type-echo";
+  const Alert = "error-log-type-alert";
+  const File = "error-log-type-file";
+  const Database = "error-log-type-db";
 }

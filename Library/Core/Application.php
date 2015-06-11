@@ -26,6 +26,7 @@ abstract class Application {
   public $jsManager;
   public $cssManager;
   public $auth;
+  public $dal;
 
   public function __construct() {
     $this->HttpRequest = new HttpRequest($this);
@@ -40,6 +41,7 @@ abstract class Application {
     $this->locale = $this->HttpRequest->initLanguage($this, "browser");
     $this->name = '';
     $this->auth = new \Library\Security\AuthenticationManager($this);
+    $this->dal = new \Library\Dal\Managers('PDO', $this);
 //    $this->jsManager = new Core\Utility\JavascriptManager($this);
 //    $this->cssManager = new Core\Utility\CssManager($this);
   }
@@ -120,6 +122,9 @@ abstract class Application {
     return $this->jsManager;
   }
 
+  public function dal() {
+    return $this->dal;
+  }
   private function FindRouteMatch() {
     try {
       // On récupère la route correspondante à l'URL.

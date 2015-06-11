@@ -17,7 +17,6 @@
  *
  * @package       Library
  * @subpackage    Enums
- * @category      LibraryFolderName
  * @author        Jeremie Litzler
  * @link		
  */

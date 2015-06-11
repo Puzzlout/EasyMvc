@@ -31,5 +31,3 @@ abstract class QueryStringKeys {
   const EditionModeAdd = "add";
   const EditionModeEdit = "edit";
 }
-
-?>
