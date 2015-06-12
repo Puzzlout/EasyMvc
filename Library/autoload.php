@@ -13,10 +13,11 @@ function autoload($class) {
 
 /**
  * The application name which needs to match the folder name in Applications folder
+ * It also is the prefix for the Application class found in Applications/YourAppName/YourAppNameApplication.php
  * 
- * The correct tree structure should be: Applications > AppName
+ * The correct tree structure should be: Applications/YourAppName
  */
-define('__APPNAME__', 'EasyMVC');
+define('__APPNAME__', 'EasyMvc');
 
 define('__EXECUTION_ACCESS_RESTRICTION__', true);
 define('__BASEURL__', '/' . __APPNAME__ . '/');
@@ -25,6 +26,8 @@ define('__ROOT__', dirname(dirname(__FILE__)) . '/');
 /**
  * Class name of the application to load
  */
-$appClassName = "\Applications\\" . __APPNAME__ . "\WebApplication";
+
+$placeholder = array("{{appname}}" => __APPNAME__);
+$appClassName =  strtr("\Applications\\{{appname}}\\{{appname}}Application", $placeholder);
 
 spl_autoload_register('autoload');

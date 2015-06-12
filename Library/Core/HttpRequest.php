@@ -56,7 +56,7 @@ class HttpRequest {
       return $currentApp->config()->get(Enums\AppSettingKeys::DefaultLanguage);
     }
     if ($type === "browser") {
-      return substr(strtok($_SERVER['HTTP_ACCEPT_LANGUAGE'], '?'), 0, 2);
+      return substr(strtok($_SERVER['HTTP_ACCEPT_LANGUAGE'], '?'), 0, 5);
     }
   }
 

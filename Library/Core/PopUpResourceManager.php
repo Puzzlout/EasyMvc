@@ -16,31 +16,32 @@
  * PopUpHelper Class
  *
  * @package		Library
- * @subpackage	Helpers
+ * @subpackage	Core
  * @author		Souvik Ghosh
  * @link		
  */
 
-namespace Library\Helpers;
+namespace Library\Core;
 
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
-class PopUpHelper {
+class PopUpResourceManager extends \Library\Core\ApplicationComponent {
 
-  public static $appname;
 
+  private $xmlContent = null;
+  public function __construct(Application $app) {
+    parent::__construct($app);
+    $this->loadToolTipMessagefromXML();
+  }
   /**
    * Fetches all messages associated with a particular
    * attribute passed through the JSON var param.
    */
-  public static function getTooltipMsgForAttribute($param, $appname) {
-
-    PopUpHelper::$appname = $appname;
+  public function getTooltipMsgForAttribute($param) {
     $param_arr = json_decode($param, true);
     $msg_array = array();
-    $resourcesFromXml = self::loadToolTipMessagefromXML();
-    foreach ($resourcesFromXml as $msg) {
+    foreach ($this->xmlContent as $msg) {
       if ($msg->getAttribute('uicomponent') == 'tooltip' &&
               $msg->getAttribute('targetcontroller') == $param_arr['targetcontroller'] &&
               $msg->getAttribute('targetaction') == $param_arr['targetaction'] &&
@@ -68,12 +69,10 @@ class PopUpHelper {
    * Accepts a json of the form:
    * {targetcontroller: the_controller, targetaction: the_action, operation: the_operation}
    */
-  public static function getConfirmBoxMsg($param, $appname) {
-    PopUpHelper::$appname = $appname;
+  public function getConfirmBoxMsg($param) {
     $param_arr = json_decode($param, true);
     $msg_array = array();
-    $resourcesFromXml = self::loadToolTipMessagefromXML();
-    foreach ($resourcesFromXml as $msg) {
+    foreach ($this->xmlContent as $msg) {
       if (($msg->getAttribute('uicomponent') == 'confirm' || $msg->getAttribute('uicomponent') == 'alert') &&
               $msg->getAttribute('targetcontroller') == $param_arr['targetcontroller'] &&
               $msg->getAttribute('targetaction') == $param_arr['targetaction'] &&
@@ -91,12 +90,10 @@ class PopUpHelper {
    * Accepts a json of the form:
    * {targetcontroller: the_controller, targetaction: the_action, operation: the_operation}
    */
-  public static function getPromptBoxMsg($param, $appname) {
-    PopUpHelper::$appname = $appname;
+  public function getPromptBoxMsg($param) {
     $param_arr = json_decode($param, true);
     $msg_array = array();
-    $resourcesFromXml = self::loadToolTipMessagefromXML();
-    foreach ($resourcesFromXml as $msg) {
+    foreach ($this->xmlContent as $msg) {
       if ($msg->getAttribute('uicomponent') == 'prompt' &&
               $msg->getAttribute('targetcontroller') == $param_arr['targetcontroller'] &&
               $msg->getAttribute('targetaction') == $param_arr['targetaction'] &&
@@ -114,12 +111,10 @@ class PopUpHelper {
   * tooltip would be shown where the text is truncated due
   * to insufficient space
   */
-  public static function getTooltipEllipsisSettings($param, $appname) {
-    PopUpHelper::$appname = $appname;
+  public function getTooltipEllipsisSettings($param) {
     $param_arr = json_decode($param, true);
     $msg_array = array();
-    $resourcesFromXml = self::loadToolTipMessagefromXML();
-    foreach ($resourcesFromXml as $msg) {
+    foreach ($this->xmlContent as $msg) {
       if ($msg->getAttribute('uicomponent') == 'tooltip_ellipsis' &&
               $msg->getAttribute('targetcontroller') == $param_arr['targetcontroller'] &&
               $msg->getAttribute('targetaction') == $param_arr['targetaction']
@@ -131,15 +126,23 @@ class PopUpHelper {
     return $msg_array;
   }
 
-  public static function loadToolTipMessagefromXML() {
+  public function loadToolTipMessagefromXML() {
+    $appName = is_null($this->app->name()) || empty($this->app->name())?
+            __APPNAME__ :
+            $this->app->name();
     $xml = new \DOMDocument;
-    $filename = __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . PopUpHelper::$appname . '/Resources/Common/tooltipandpopupstrings.en.xml';
+    $filename =
+            __ROOT__ . 
+            \Library\Enums\ApplicationFolderName::AppsFolderName . 
+            $appName . 
+            str_replace("{{currentCulture}}", $this->app()->locale, $this->app()->config()->get(\Library\Enums\AppSettingKeys::TooltipsXmlFileName));
+    
     if (file_exists($filename)) {
       $xml->load($filename);
     } else {
-      throw new \Exception("In " . __CLASS__ . " > Method: " . __METHOD__);
+      throw new \Exception("In " . __CLASS__ . "->" . __METHOD__ . " ==> File not found: " . $filename);
     }
-    return $xml->getElementsByTagName("resource");
+    $this->xmlContent = $xml->getElementsByTagName("resource");
   }
 
 }

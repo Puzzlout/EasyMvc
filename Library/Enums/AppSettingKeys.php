@@ -30,6 +30,8 @@ abstract class AppSettingKeys {
   const RootUploadsFolderPath = "RootUploadsFolderPath";
   const DalFolderPath = "DalFolderPath";
   const RootDocumentUpload = "RootDocumentUpload";
+  const TooltipsXmlFileName = "TooltipsXmlFileName";
+  
   const Myslq_host = "Myslq_host";
   const Mysql_user = "Mysql_user";
   const Mysql_pwd = "Mysql_pwd";

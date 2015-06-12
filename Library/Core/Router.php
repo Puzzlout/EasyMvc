@@ -245,7 +245,7 @@ class Router extends ApplicationComponent {
         return FALSE;
       } else {
         $result = $currentLastModifiedTime > $user->getAttribute(\Library\Enums\SessionKeys::SessionRoutesXmlLastModified);
-        if (($result === TRUE)) {
+        if ($result) {
           $user->setAttribute(\Library\Enums\SessionKeys::SessionRoutesXmlLastModified, $currentLastModifiedTime);
         }
         return $result;

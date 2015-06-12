@@ -15,13 +15,13 @@
 /**
  * Authenticate controller Class
  *
- * @package		Application
+ * @package		Applications\EasyMvc
  * @subpackage	Controllers
  * @author		Jeremie Litzler
  * @link
  */
 
-namespace Applications\EasyMVC\Controllers;
+namespace Applications\EasyMvc\Controllers;
 
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');

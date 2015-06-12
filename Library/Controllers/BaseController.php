@@ -29,13 +29,11 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
     $this->setAction($action);
     $this->setView($action);
     $this->setResxFile($resxfile);
-    $this->setDataPost($this->app->HttpRequest()->retrievePostAjaxData(FALSE));
+    $this->setDataPost($this->app->httpRequest()->retrievePostAjaxData(FALSE));
     $this->resxData = $this->app->i8n->getLocalResourceArray($this->resxfile);
     $this->setUploadingFiles();
     $this->toolTips[\Library\Enums\Popup::ellipsis_tooltip_settings] =
-            \Library\Helpers\PopUpHelper::getTooltipEllipsisSettings(
-                    '{"targetcontroller":"'. $this->module .'","targetaction": "'. $this->action .'"}', 
-                    $app->name());
+            $this->app()->toolTip()->getTooltipEllipsisSettings('{"targetcontroller":"'. $this->module .'","targetaction": "'. $this->action .'"}');
   }
 
   public function execute() {
@@ -53,7 +51,7 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
     //Load controller method
     $time_log_type = \Library\Enums\ResourceKeys\GlobalAppKeys::log_controller_method_request;
     \Library\Utility\TimeLogger::StartLog($this->app(), $time_log_type);
-    $result = $this->$method($this->app->HttpRequest());
+    $result = $this->$method($this->app->httpRequest());
     \Library\Utility\TimeLogger::EndLog($this->app(), $time_log_type);
     if ($result !== NULL) {
 //      $result["br"] = $br->Build();

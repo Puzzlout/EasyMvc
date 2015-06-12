@@ -13,21 +13,20 @@
 // ------------------------------------------------------------------------
 
 /**
- * WebApplication Class
+ * EasyMvcApplication Class
  *
- * @package		Application
- * @subpackage	
- * @category	
+ * @package		Applications\EasyMvc
+ * @subpackage	EasyMvcApplication
  * @author		Jeremie Litzler
  * @link		
  */
 
-namespace Applications\EasyMVC;
+namespace Applications\EasyMvc;
 
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
-class WebApplication extends \Library\Core\Application {
+class EasyMvcApplication extends \Library\Core\Application {
 
   public function __construct() {
     parent::__construct();

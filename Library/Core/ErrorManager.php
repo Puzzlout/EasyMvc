@@ -2,7 +2,7 @@
 
 /**
  *
- * @package     EasyMVC Framework
+ * @package     EasyMvc Framework
  * @author      Jeremie Litzler
  * @copyright   Copyright (c) 2015
  * @license		
@@ -34,11 +34,15 @@ class ErrorManager extends ApplicationComponent{
   public function errorObj() {
     return $this->errorObj;
   }
-  public function __construct(Application $app, \Exception $exc) {
+  public function __construct(Application $app, \Exception $exc) {//, \Library\Enums\ErrorOrigin $origin, $title) {
     parent::__construct($app);
     $this->errorLoggingMethod = $app->config()->get(\Library\Enums\AppSettingKeys::ErrorLoggingMethod);
     $this->exception = $exc;
-    $this->errorObj = new \Library\BO\Error();
+//    $this->errorObj = new \Library\BO\Error(
+//            $exc->getCode(),
+//            $origin,
+//            $title,
+//            $exc->getTraceAsString());
   }
   
   public function LogError() {

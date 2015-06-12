@@ -73,7 +73,7 @@ class Globalization extends ApplicationComponent {
     $path_to_substr = explode("/", $path);
     $file_to_params = explode(".", $path_to_substr[count($path_to_substr) - 1], -1);
     if (count($file_to_params) <> 2) {
-      throw new \Exception("File name is wrong! The locale is missing. File path given is <" . $path . ">", NULL, NULL);
+      throw new \Exception("File name is incorrect! The locale is missing. File path given is <" . $path . ">", NULL, NULL);
     } else {
       return array("source" => $file_to_params[0], "locale" => $file_to_params[1]);
     }
@@ -95,8 +95,7 @@ class Globalization extends ApplicationComponent {
         }
         break;
       default:
-        throw new Exception("Type is wrong!!! common and local are the only values allowed", NULL, NULL);
-        break;
+        throw new Exception("Type is incorrect!!! common and local are the only values allowed", NULL, NULL);
     }
   }
 

@@ -5,14 +5,14 @@
   
   <define key="base_url" value="/{{app_name}}/" />
   <define key="BaseUrlRelease" value="/" />
-  <define key="DefaultLanguage" value="en" />
+  <define key="DefaultLanguage" value="en-US" />
   <define key="RootImageFolderPath" value="Web/images/" />
   <define key="DalFolderPath" value="\Applications\{{app_name}}\Models\Dal\" />
   <define key="RootDocumentUpload" value="../ClienSide/uploads/" />
   <define key="LogoImageUrl" value="logo.png" />
   <define key="DefaultPage" value="login" />
-  <define key="ErrorLoggingMethod" value="echo" />
-
+  <define key="ErrorLoggingMethod" value="error-log-type-echo" />
+  <define key="TooltipsXmlFileName" value="/Resources/Common/tooltipandpopupstrings.{{currentCulture}}.xml" />
   <!-- Security -->
   <define key="encryption_key" value="g496lJL683yFiDzju2K94f1751Lo7WSw" />
   

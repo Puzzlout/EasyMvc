@@ -37,8 +37,8 @@ class Breadcrumb {
     $this->app = $app;
     $this->resx = $this->app->i8n->getCommonResourceArray("breadcrumb");
     $this->url = $this->app->config->get("base_url") === "/" ?
-            substr($this->app->HttpRequest->requestURI(), 1) : //remove first / if base url is only a /
-            str_replace($this->app->config->get("base_url"), "", $this->app->HttpRequest->requestURI());
+            substr($this->app->httpRequest->requestURI(), 1) : //remove first / if base url is only a /
+            str_replace($this->app->config->get("base_url"), "", $this->app->httpRequest->requestURI());
   }
 
   /**

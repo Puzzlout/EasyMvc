@@ -27,9 +27,10 @@ abstract class Application {
   public $cssManager;
   public $auth;
   public $dal;
+  public $toolTip;
 
   public function __construct() {
-    $this->HttpRequest = new HttpRequest($this);
+    $this->httpRequest = new HttpRequest($this);
     $this->httpResponse = new HttpResponse($this);
     $this->user = new User($this);
     $this->config = new Config($this);
@@ -38,10 +39,11 @@ abstract class Application {
     $this->imageUtil = new \Library\Utility\ImageUtility($this);
 
     $this->router = new Router($this);
-    $this->locale = $this->HttpRequest->initLanguage($this, "browser");
+    $this->locale = $this->httpRequest->initLanguage($this, "browser");
     $this->name = '';
     $this->auth = new \Library\Security\AuthenticationManager($this);
     $this->dal = new \Library\Dal\Managers('PDO', $this);
+    $this->toolTip = new PopUpResourceManager($this);
 //    $this->jsManager = new Core\Utility\JavascriptManager($this);
 //    $this->cssManager = new Core\Utility\CssManager($this);
   }
@@ -79,7 +81,7 @@ abstract class Application {
   abstract public function run();
 
   public function HttpRequest() {
-    return $this->HttpRequest;
+    return $this->httpRequest;
   }
 
   public function httpResponse() {
@@ -125,10 +127,13 @@ abstract class Application {
   public function dal() {
     return $this->dal;
   }
+  public function toolTip() {
+    return $this->toolTip;
+  }
   private function FindRouteMatch() {
     try {
       // On récupère la route correspondante à l'URL.
-      return $this->router->getRoute($this->HttpRequest->requestURI());
+      return $this->router->getRoute($this->httpRequest->requestURI());
     } catch (\RuntimeException $e) {
       if ($e->getCode() == \Library\Core\Router::NO_ROUTE) {
         // Si aucune route ne correspond, c'est que la page demandée n'existe pas.
@@ -136,7 +141,7 @@ abstract class Application {
                 \Library\Enums\ErrorCode::PageNotFound,
                 "routing",
                 "Page not found",
-                "The route " . $this->HttpRequest->requestURI() . " is not found."
+                "The route " . $this->httpRequest->requestURI() . " is not found."
                 );
         $this->httpResponse->displayError($error);
       }

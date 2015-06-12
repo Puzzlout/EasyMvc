@@ -43,15 +43,15 @@ class TimeLogger extends Logger {
   public static function StartLog(\Library\Core\Application $app, $type) {
     $log = new \Library\BO\Log();
     $log->setLog_type($type);
-    $log->setLog_request_id($app->HttpRequest()->requestId());
+    $log->setLog_request_id($app->httpRequest()->requestId());
     $log->setLog_start(Logger::GetTime());
-    $log->setLog_filter($app->HttpRequest()->requestURI());
+    $log->setLog_filter($app->httpRequest()->requestURI());
     self::SetLog($app->user(), $log);
   }
 
   public static function EndLog(\Library\Core\Application $app, $type) {
     $logs = Logger::GetLogs($app->user());
-    $log = $logs[$type][$app->HttpRequest()->requestID()];
+    $log = $logs[$type][$app->httpRequest()->requestID()];
     $log->setLog_end(Logger::GetTime());
     $log->setLog_execution_time(
         ($log->log_end - $log->log_start()) * 1000
