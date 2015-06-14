@@ -15,14 +15,14 @@
  * ViewVariablesKeys Class
  *
  * @package		Applications/PMTool
- * @subpackage	Resources/Enum
+ * @category	Resources/Enum
  * @category	ViewVariablesKeys
  * @author		Jeremie Litzler
  * @link		
  */
 
 
-namespace Applications\PMTool\Resources\Enums;
+namespace Applications\EasyMvc\Resources\Enums;
 if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 
 class ViewVariablesKeys {

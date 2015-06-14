@@ -16,7 +16,7 @@
  * EasyMvcApplication Class
  *
  * @package		Applications\EasyMvc
- * @subpackage	EasyMvcApplication
+ * @category	EasyMvcApplication
  * @author		Jeremie Litzler
  * @link		
  */

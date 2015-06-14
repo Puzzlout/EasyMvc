@@ -17,15 +17,15 @@
 * LogDal Class
 *
 * @package     Library
-* @subpackage  DAL\Modules
+* @category  Dal\Modules
 * @category    LogDal
 * @author      Jeremie Litzler
 * @link
 */
 
-namespace Library\DAL\Modules;
+namespace Library\Dal\Modules;
 if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 
-class LogDal extends \Library\DAL\BaseManager {
-  //Common implementation is done Library\DAL\BaseManager
+class LogDal extends \Library\Dal\BaseManager {
+  //Common implementation is done Library\Dal\BaseManager
 }

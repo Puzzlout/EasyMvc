@@ -16,13 +16,13 @@
  * MapHelper Class
  *
  * @package		Application/PMTool
- * @subpackage	Helpers
+ * @category	Helpers
  * @category	MapHelper
  * @author		Jeremie Litzler
  * @link		
  */
 
-namespace Applications\PMTool\Helpers;
+namespace Applications\EasyMvc\Helpers;
 
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');

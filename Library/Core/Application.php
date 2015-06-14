@@ -15,7 +15,6 @@ abstract class Application {
   public $locale;
   public $localeDefault;
   public $pageTitle;
-  public $pageUrls;
   public $logoImageUrl;
   public $globalResources;
   public $relative_path;
@@ -54,19 +53,19 @@ abstract class Application {
 
   public function getController() {
     
-    $this->router()->setSelectedRoute($this->FindRouteMatch());
-    $this->relative_path = $this->router()->selectedRoute()->relative_path;
-    $this->globalResources["js_files_head"] = $this->router()->selectedRoute()->headJsScripts();
-    $this->globalResources["js_files_html"] = $this->router()->selectedRoute()->htmlJsScripts();
-    $this->globalResources["css_files"] = $this->router()->selectedRoute()->cssFiles();
+    $this->router()->setCurrentRoute($this->FindRouteMatch());
+    $this->relative_path = $this->router()->currentRoute()->relative_path;
+    $this->globalResources["js_files_head"] = $this->router()->currentRoute()->headJsScripts();
+    $this->globalResources["js_files_html"] = $this->router()->currentRoute()->htmlJsScripts();
+    $this->globalResources["css_files"] = $this->router()->currentRoute()->cssFiles();
 
-    if (preg_match("`.*ws$`",$this->router()->selectedRoute()->type())) {//is the route used for AJAX calls?
+    if (preg_match("`.*ws$`",$this->router()->currentRoute()->type())) {//is the route used for AJAX calls?
       $this->router()->isWsCall = true;
     }
     // On ajoute les variables de l'URL au tableau $_GET.
-    $_GET = array_merge($_GET, $this->router()->selectedRoute()->vars());
+    $_GET = array_merge($_GET, $this->router()->currentRoute()->vars());
 
-    $controllerClass = $this->BuildControllerClass($this->router()->selectedRoute());
+    $controllerClass = $this->BuildControllerClass($this->router()->currentRoute());
     if (!file_exists(__ROOT__ . str_replace('\\', '/', $controllerClass) . \Library\Enums\FileNameConst::Extension)) {
       $error = new \Library\BO\Error(
               \Library\Enums\ErrorCode::ControllerNotExist, 
@@ -75,7 +74,7 @@ abstract class Application {
               "The controller ". $controllerClass . " doesn't exist.");
       $this->httpResponse->displayError($error);
     }
-    return new $controllerClass($this, $this->router()->selectedRoute()->module(), $this->router()->selectedRoute()->action(), $this->router()->selectedRoute()->resxfile());
+    return new $controllerClass($this, $this->router()->currentRoute()->module(), $this->router()->currentRoute()->action(), $this->router()->currentRoute()->resxfile());
   }
 
   abstract public function run();
@@ -102,10 +101,6 @@ abstract class Application {
 
   public function i8n() {
     return $this->i8n;
-  }
-
-  public function pageUrls() {
-    return array();
   }
 
   public function router() {

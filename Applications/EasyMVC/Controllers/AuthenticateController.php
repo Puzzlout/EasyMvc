@@ -15,8 +15,8 @@
 /**
  * Authenticate controller Class
  *
- * @package		Applications\EasyMvc
- * @subpackage	Controllers
+ * @subpackage  Applications\EasyMvc
+ * @category 	Controllers
  * @author		Jeremie Litzler
  * @link
  */
@@ -97,11 +97,12 @@ class AuthenticateController extends \Library\Controllers\BaseController {
       "password" => $rq->getData("pwd"),
       "pm_name" => "Demo User"
     );
-    $pm = \Library\Helpers\CommonHelper::PrepareUserObject($data, new \Applications\PMTool\Models\Dao\Project_manager());
-    $pm->setPassword($protect->HashValue($this->app->config->get("encryption_key"), $pm->password()));
+    //TODO: implement user creation
+    $user = \Library\Helpers\CommonHelper::PrepareUserObject($data, new Library\BO\User());
+    $user->setPassword($protect->HashValue($this->app->config->get("encryption_key"), $user->password()));
 
     $loginDal = $this->managers->getManagerOf("Login");
-    $id = $loginDal->add($pm);
+    $id = $loginDal->add($user);
     $redirect = intval($id) > 0 ? TRUE : FALSE;
     
     if ($redirect) { $this->Redirect("login"); }

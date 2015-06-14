@@ -17,7 +17,7 @@
  * All the Session Keys that can be used generically, independantly of the application
  *
  * @package		Library
- * @subpackage	Enums
+ * @category	Enums
  * @category	SessionKeys
  * @author		Jeremie Litzler
  * @link		
@@ -37,7 +37,7 @@ abstract class SessionKeys {
   const UserType = "user_type";
   const UserTypeId = "user_type_id";
   //Routing
-  const SessionRoutes = "app_routes";
+  const AllApplicationsRoutes = "app_routes";
   const SessionRoutesXmlLastModified = "app_routes_last_modified";
   
   //Tabs

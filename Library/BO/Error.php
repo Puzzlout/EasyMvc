@@ -16,7 +16,7 @@
  * Error Class
  *
  * @package       Library
- * @subpackage    BO
+ * @category    BO
  * @author        Jeremie Litzler
  * @link		
  */

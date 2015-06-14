@@ -15,13 +15,13 @@
  * _Template Class
  *
  * @package		Applications
- * @subpackage	Resources\Enums\ViewVariables
+ * @category	Resources\Enums\ViewVariables
  * @author		Jeremie Litzler
  * @link		
  */
 
 
-namespace Application\Resources\Enums\ViewVariables;
+namespace Applications\EasyMvc\Resources\Enums\ViewVariables;
 if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 
 class _Template {

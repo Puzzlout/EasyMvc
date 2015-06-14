@@ -19,7 +19,7 @@ class Managers {
     $this->api = $api;
     $this->dao = PDOFactory::getMysqlConnexion($app);
     $this->dal_folder_path = str_replace(\Library\Enums\AppSettingKeys::ApplicationNamePlaceHolder, __APPNAME__, $app->config()->get("DalFolderPath"));
-    $this->core_dal_folder_path = "\Library\DAL\Modules\\";
+    $this->core_dal_folder_path = "\Library\Dal\Modules\\";
   }
 
   /**
@@ -36,7 +36,7 @@ class Managers {
    * $isCoreModule: Define if the module is to be load from the Library/DAL/Modules 
    * directory instead of the Applications/CurrentApp/Models/Dal. </p>
    * @return object <p>
-   * Variable of type \Library\DAL\BaseManager for the requested module. </p>
+   * Variable of type \Library\Dal\BaseManager for the requested module. </p>
    * @throws \InvalidArgumentException <p>
    * Thrown if the module isn't given in $module parameter. </p>
    */

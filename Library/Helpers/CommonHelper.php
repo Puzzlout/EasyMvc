@@ -16,7 +16,7 @@
  * CommonHelper Class
  *
  * @package		Library
- * @subpackage	Utility
+ * @category	Utility
  * @category	
  * @author		Jeremie Litzler
  * @link		
@@ -46,16 +46,16 @@ class CommonHelper {
   public static function SetDynamicPropertyNamesForDualList($module, $property_list) {
     $dynamicPropertyNames = array();
     foreach ($property_list as $key => $value) {
-      $dynamicPropertyNames[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_key . $key] = $module . "_" . $value;
+      $dynamicPropertyNames[\Applications\EasyMvc\Resources\Enums\ViewVariablesKeys::property_key . $key] = $module . "_" . $value;
     }
     return $dynamicPropertyNames;
   }
 
   public static function SetPropertyNamesForDualList($module) {
     return array(
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_id => $module . "_id",
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_name => $module . "_name",
-      \Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_active => $module . "_active",
+      \Applications\EasyMvc\Resources\Enums\ViewVariablesKeys::property_id => $module . "_id",
+      \Applications\EasyMvc\Resources\Enums\ViewVariablesKeys::property_name => $module . "_name",
+      \Applications\EasyMvc\Resources\Enums\ViewVariablesKeys::property_active => $module . "_active",
     );
   }
 

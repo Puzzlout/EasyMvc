@@ -15,7 +15,7 @@
  * QueryStringKeys Class
  *
  * @package		Library
- * @subpackage	Enums
+ * @category	Enums
  * @category	QueryStringKeys
  * @author		Jeremie Litzler
  * @link		

@@ -16,7 +16,7 @@
  * FileManager Class
  *
  * @package       Library
- * @subpackage    Core
+ * @category    Core
  * @category      FileManager
  * @author        Jeremie Litzler
  * @link		

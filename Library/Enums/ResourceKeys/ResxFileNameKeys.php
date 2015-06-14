@@ -16,7 +16,7 @@
  * These are used for the framework level resources (found Application/Your_App/Resources/Common)
  *
  * @package		Library
- * @subpackage	Enums/ResourceKeys
+ * @category	Enums/ResourceKeys
  * @category	ResxFileNameKeys
  * @author		Jeremie Litzler
  * @link		

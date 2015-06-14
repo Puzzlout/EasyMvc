@@ -13,21 +13,21 @@
 	  }
 	}
 
-    foreach ($data[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::objects] as $object) {
+    foreach ($data[\Applications\EasyMvc\Resources\Enums\ViewVariablesKeys::objects] as $object) {
       if (!$object->
-              $data[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties]
-              [\Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_active]) {
+              $data[\Applications\EasyMvc\Resources\Enums\ViewVariablesKeys::properties]
+              [\Applications\EasyMvc\Resources\Enums\ViewVariablesKeys::property_active]) {
         echo
         "<li data-"
-        . $data[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::module]
+        . $data[\Applications\EasyMvc\Resources\Enums\ViewVariablesKeys::module]
         . "-id=\""
         . $object->
-        $data[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties]
-        [\Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_id]
+        $data[\Applications\EasyMvc\Resources\Enums\ViewVariablesKeys::properties]
+        [\Applications\EasyMvc\Resources\Enums\ViewVariablesKeys::property_id]
         . "\" class=\"select_item ui-widget-content\"". $tooltip_configstr .">"
         . $object->
-        $data[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::properties]
-        [\Applications\PMTool\Resources\Enums\ViewVariablesKeys::property_name]
+        $data[\Applications\EasyMvc\Resources\Enums\ViewVariablesKeys::properties]
+        [\Applications\EasyMvc\Resources\Enums\ViewVariablesKeys::property_name]
         . "</li>";
       }
     }

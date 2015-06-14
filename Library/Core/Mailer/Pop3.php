@@ -30,7 +30,7 @@
  * Pop3 Class
  *
  * @package       Library
- * @subpackage    Core/Mailer
+ * @category    Core/Mailer
  * @author        Jeremie Litzler
  * @link		
  */

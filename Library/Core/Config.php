@@ -9,13 +9,10 @@ class Config extends ApplicationComponent {
 
   protected $settings = array();
 
-  public function get($key) {
-    $appName = is_null($this->app->name()) || empty($this->app->name())?
-            __APPNAME__ :
-            $this->app->name();
+  public function get($key) {    
     if (!$this->settings) {
       $xml = new \DOMDocument;
-      $xml->load(__ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . $appName . '/Config/appsettings.xml');
+      $xml->load(__ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . __APPNAME__ . '/Config/appsettings.xml');
 
       $elements = $xml->getElementsByTagName('define');
 

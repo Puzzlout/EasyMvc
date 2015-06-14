@@ -16,7 +16,7 @@
  *  Interface IJsonSerializable
  *
  * @package     Library	
- * @subpackage	Interfaces
+ * @category	Interfaces
  * @author		Jeremie Litzler
  * @link		
  */

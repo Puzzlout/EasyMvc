@@ -16,7 +16,7 @@
  * DalFilters Class
  *
  * @package		Library
- * @subpackage	DAL
+ * @category	DAL
  * @category	DalFilters
  * @author		Jeremie Litzler
  * @link		

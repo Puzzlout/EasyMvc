@@ -16,7 +16,7 @@
  * LeftMenu Class
  *
  * @package		Library
- * @subpackage	UC
+ * @category	UC
  * @category	LeftMenu
  * @author		Jeremie Litzler
  * @link		

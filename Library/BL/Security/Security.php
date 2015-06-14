@@ -18,7 +18,7 @@
  * Security Class
  *
  * @package		
- * @subpackage	BL
+ * @category	BL
  * @category	Security
  * @author		Jeremie Litzler
  * @link		

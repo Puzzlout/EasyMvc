@@ -28,7 +28,7 @@
  * FileManager Class
  *
  * @package       Library
- * @subpackage    Core/Mailer
+ * @category    Core/Mailer
  * @author        Jeremie Litzler
  * @link		
  */
@@ -3541,7 +3541,7 @@ class Emailer
  * PHPMailer exception handler
  * @package PHPMailer
  */
-class phpmailerException extends Exception
+class phpmailerException extends \Exception
 {
     /**
      * Prettify error message output

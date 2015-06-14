@@ -16,7 +16,7 @@
  * Breadcrumb Class
  *
  * @package		Library
- * @subpackage	UC
+ * @category	UC
  * @category	Breadcrumb
  * @author		Jeremie Litzler
  * @link		

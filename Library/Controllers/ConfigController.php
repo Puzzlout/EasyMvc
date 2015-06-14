@@ -16,7 +16,7 @@
  * Config controller Class
  *
  * @package		Library
- * @subpackage	Controllers
+ * @category	Controllers
  * @category	ConfigController
  * @author		Jeremie Litzler
  * @link
@@ -27,7 +27,7 @@ namespace Library\Controllers;
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
-class ConfigController extends \Library\BaseController {
+class ConfigController extends \Library\Controllers\BaseController {
 
   public function executeGetSettingValue(\Library\HttpRequest $rq) {
     $result = $this->InitResponseWS(

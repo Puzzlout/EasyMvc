@@ -1,6 +1,6 @@
 <?php
 
-namespace Library\DAL\Modules;
+namespace Library\Dal\Modules;
 
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
@@ -47,15 +47,15 @@ class UserDal extends \Library\Dal\BaseManager {
       switch ($user_out->user_type()){
         case 'technician_id':
           $sql = "SELECT t.* FROM `technician` t WHERE t.`technician_id` = :user_value_id";
-          $user_type_class = '\Applications\PMTool\Models\Dao\Technician';
+          $user_type_class = '\Applications\EasyMvc\Models\Dao\Technician';
           break;
         case 'service_id':
           $sql = "SELECT s.* FROM `service` s WHERE s.`service_id` = :user_value_id";
-          $user_type_class = '\Applications\PMTool\Models\Dao\Service';
+          $user_type_class = '\Applications\EasyMvc\Models\Dao\Service';
           break;
         case 'pm_id':
           $sql = "SELECT p.* FROM `project_manager` p WHERE p.`pm_id` = :user_value_id";
-          $user_type_class = '\Applications\PMTool\Models\Dao\Project_manager';
+          $user_type_class = '\Applications\EasyMvc\Models\Dao\Project_manager';
           break;
         default:
           return false;

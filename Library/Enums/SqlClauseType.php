@@ -16,7 +16,7 @@
  * SqlClauseType Class
  *
  * @package		Library
- * @subpackage	Enums
+ * @category	Enums
  * @author		Jeremie Litzler
  * @link		
  */

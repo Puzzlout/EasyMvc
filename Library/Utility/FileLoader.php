@@ -16,7 +16,7 @@
  * FileLoader Class
  *
  * @package		Library
- * @subpackage	Utility
+ * @category	Utility
  * @category	
  * @author		Jeremie Litzler
  * @link		

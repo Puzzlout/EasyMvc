@@ -16,7 +16,7 @@
  * UserHelper Class
  *
  * @package		Library
- * @subpackage	Helpers
+ * @category	Helpers
  * @author		Jeremie Litzler
  * @link		
  */
@@ -176,7 +176,7 @@ class UserHelper {
     //
     //
     //Then update email from given value
-    //$user = new \Applications\PMTool\Models\Dao\User();
+    //$user = new \Applications\EasyMvc\Models\Dao\User();
     //
     //$user->setUser_email($dataPost[$type + "_email"]);
   }

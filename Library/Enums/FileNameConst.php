@@ -16,7 +16,7 @@
  * FileNameConst Class
  *
  * @package       Library
- * @subpackage    Enums
+ * @category    Enums
  * @category      
  * @author        Jeremie Litzler
  * @link		

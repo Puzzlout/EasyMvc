@@ -159,7 +159,7 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
    * 
    * @param string $resxKey
    * @param string $step
-   * @param \Applications\PMTool\Models\Dao\Project_manager $user
+   * @param \Applications\EasyMvc\Models\Dao\Project_manager $user
    * @return aeeay
    */
   public function InitResponseWS($params = array("resx_file" => "ws_defaults", "resx_key" => "", "step" => "error")) {
@@ -185,7 +185,7 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
    * 
    * @param string $resxKey
    * @param string $step
-   * @param \Applications\PMTool\Models\Dao\Project_manager $user
+   * @param \Applications\EasyMvc\Models\Dao\Project_manager $user
    * @return aeeay
    */
   public function SendResponseWS($result, $params) {

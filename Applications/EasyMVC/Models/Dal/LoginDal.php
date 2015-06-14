@@ -1,11 +1,11 @@
 <?php
 
-namespace Applications\PMTool\Models\Dal;
+namespace Applications\EasyMvc\Models\Dal;
 
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
-class LoginDal extends \Library\DAL\BaseManager {
+class LoginDal extends \Library\Dal\BaseManager {
 
   /**
    * Select a PM from its username or password
@@ -22,7 +22,7 @@ class LoginDal extends \Library\DAL\BaseManager {
       return NULL;
     }
     $query = $this->dao->query($sql);
-    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\PMTool\Models\Dao\Project_manager');
+    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Applications\EasyMvc\Models\Dao\Project_manager');
 
     $pm_out = $query->fetchAll();
     $query->closeCursor();

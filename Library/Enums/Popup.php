@@ -15,7 +15,7 @@
  * Popup Class
  *
  * @package		Library
- * @subpackage	Enums
+ * @category	Enums
  * @author		FWM DEV Team
  * @link		
  */

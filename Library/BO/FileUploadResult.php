@@ -15,9 +15,8 @@
 /**
  *  FileUploadResult Class
  *
- * @package		Library
- * @subpackage	Core
- * @category	
+ * @subpackage  Library
+ * @category	Core
  * @author		Jeremie Litzler
  * @link		
  */

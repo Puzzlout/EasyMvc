@@ -17,7 +17,7 @@
 * User_role Dao Class
 *
 * @package     Library
-* @subpackage  BO
+* @category  BO
 * @author      FWM DEV Team
 * @link
 */

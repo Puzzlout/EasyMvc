@@ -16,7 +16,7 @@
  * ErrorHelper Class
  *
  * @package       Library
- * @subpackage    Helpers
+ * @category    Helpers
  * @author        Jeremie Litzler
  * @link		
  */

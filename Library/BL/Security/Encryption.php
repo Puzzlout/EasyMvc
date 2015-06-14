@@ -16,7 +16,7 @@
  * Encryption Class
  *
  * @package     Library
- * @subpackage	BL
+ * @category	BL
  * @category	Security
  * @author      Jeremie Litzler
  * @link		

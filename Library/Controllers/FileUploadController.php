@@ -16,7 +16,7 @@
  * FileUploadController controller Class
  *
  * @package		Library
- * @subpackage	Controllers
+ * @category	Controllers
  * @category	FileUploadController
  * @author		Jeremie Litzler
  * @link		
@@ -27,7 +27,7 @@ namespace Library\Controllers;
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
-class FileController extends \Library\BaseController {
+class FileController extends \Library\Controllers\BaseController {
 
 
   public function executeLoadOne(\Library\HttpRequest $rq) {
@@ -36,7 +36,7 @@ class FileController extends \Library\BaseController {
     $manager = $this->managers()->getManagerOf("Document");
     $manager->setRootDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::RootDocumentUpload));
     $manager->setWebDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::BaseUrl) . $this->app()->config()->get(\Library\Enums\AppSettingKeys::RootUploadsFolderPath));
-    $document = new \Applications\PMTool\Models\Dao\Document();
+    $document = new \Applications\EasyMvc\Models\Dao\Document();
     $document->setDocument_id($dataPost['id']);
     $document = $manager->selectOne($document);
     if(!is_null($document)) {
@@ -95,7 +95,7 @@ class FileController extends \Library\BaseController {
       $list = $manager->selectManyByCategoryAndId($dataPost['itemCategory'],$dataPost['itemId']);
     }
     $manager->setFilenamePrefix($dataPost['itemId'].'_');
-    $document = new \Applications\PMTool\Models\Dao\Document();
+    $document = new \Applications\EasyMvc\Models\Dao\Document();
     $document->setDocument_category($dataPost['itemCategory']);
     if(isset($dataPost['title']) && $dataPost['title']!="") {
       $document->setDocument_title($dataPost['title']);
@@ -127,7 +127,7 @@ class FileController extends \Library\BaseController {
     $manager->setWebDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::BaseUrl) . $this->app()->config()->get(\Library\Enums\AppSettingKeys::RootUploadsFolderPath));
     $directory = str_replace("_id", "", $dataPost['itemCategory']);
     $manager->setObjectDirectory($directory);
-    $document = new \Applications\PMTool\Models\Dao\Document();
+    $document = new \Applications\EasyMvc\Models\Dao\Document();
     $document->setDocument_id($dataPost['document_id']);
     $document = $manager->selectOne($document);
 
@@ -162,7 +162,7 @@ class FileController extends \Library\BaseController {
       $list = $manager->selectManyByCategoryAndId($dataPost['itemCategory'],$dataPost['itemId']);
     }
     $manager->setFilenamePrefix($dataPost['itemId'] . '_');
-    $document = new \Applications\PMTool\Models\Dao\Document();
+    $document = new \Applications\EasyMvc\Models\Dao\Document();
     $document->setDocument_category($dataPost['itemCategory']);
     if(isset($dataPost['title']) && $dataPost['title']!="") {
       $document->setDocument_title($dataPost['title']);

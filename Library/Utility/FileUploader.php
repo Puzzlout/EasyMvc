@@ -16,7 +16,7 @@
  * FileUploader Class
  *
  * @package		Library
- * @subpackage	Core
+ * @category	Core
  * @category	
  * @author		Jeremie Litzler
  * @link		
@@ -105,7 +105,7 @@ class FileUploader extends \Library\Core\ApplicationComponent {
   }
 
   private function InitDocumentObject() {
-    $document = new \Applications\PMTool\Models\Dao\Document();
+    $document = new \Applications\EasyMvc\Models\Dao\Document();
     $document->setDocument_category($this->dataPost["itemCategory"]);
     $document->setDocument_content_type($this->GetExtension());
     $document->setDocument_value($this->GetFileNameToSaveInDatabase());
@@ -114,7 +114,7 @@ class FileUploader extends \Library\Core\ApplicationComponent {
   }
 
   private function AddDocumentToDatabase($document) {
-    $db = new \Library\DAL\Managers('PDO', $this->app());
+    $db = new \Library\Dal\Managers('PDO', $this->app());
     $dal = $db->getManagerOf("Document", TRUE);
     $dal->add($document);
   }

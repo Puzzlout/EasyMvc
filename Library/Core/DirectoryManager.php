@@ -16,7 +16,7 @@
  * DirectoryManager Class
  *
  * @package       Library
- * @subpackage    Core
+ * @category    Core
  * @category      
  * @author        Jeremie Litzler
  * @link		

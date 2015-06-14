@@ -4,7 +4,7 @@
   <div class="content-container container-fluid">
     <div class="row">
       <div class="col-lg-12 col-md-12">
-        <?php require $form_modules[\Applications\PMTool\Resources\Enums\ViewVariablesKeys::map_module]; ?>
+        <?php require $form_modules[\Applications\EasyMvc\Resources\Enums\ViewVariablesKeys::map_module]; ?>
       </div>
     </div>
   </div>

@@ -17,16 +17,16 @@
 * DocumentDal Class
 *
 * @package     Library
-* @subpackage  DAL
+* @category  DAL
 * @category    Modules
 * @author      Jeremie Litzler
 * @link
 */
 
-namespace Library\DAL\Modules;
+namespace Library\Dal\Modules;
 if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 
-class DocumentDal extends \Library\DAL\BaseManager {
+class DocumentDal extends \Library\Dal\BaseManager {
 
   public $rootDirectory,$webDirectory;
   public $filenamePrefix = "";

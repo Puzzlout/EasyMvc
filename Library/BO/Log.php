@@ -17,7 +17,7 @@
 * Log Dao Class
 *
 * @package     Library
-* @subpackage  BO
+* @category  BO
 * @category    
 * @author      Jeremie Litzler
 * @link

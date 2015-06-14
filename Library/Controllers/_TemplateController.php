@@ -16,15 +16,15 @@
  * Template controller Class
  *
  * @package		Library
- * @subpackage	Controllers
+ * @category	Controllers
  * @category	TemplateController
  * @author		Jeremie Litzler
  * @link		
  */
-namespace Libray\Controllers;
+namespace Library\Controllers;
 if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 
-class TemplateController extends \Library\BaseController {
+class TemplateController extends \Library\Controllers\BaseController {
 
   public function executeIndex(\Library\HttpRequest $rq) {
   }

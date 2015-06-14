@@ -12,7 +12,7 @@ class Router extends ApplicationComponent {
   public $routesXmlPath;
   protected $routes = array();
   protected $lastModified = 0; //of the routes xml file
-  protected $selectedRoute;
+  protected $currentRoute;
   private $routesXml;
 
   const NO_ROUTE = 1;
@@ -26,71 +26,110 @@ class Router extends ApplicationComponent {
     $this->setRoutesXmlPath(__ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . __APPNAME__ . '/Config/routes.xml');
 
     $routes = $this->app->user()->getAttribute(\Library\Enums\SessionKeys::UserRoutes);
-    $this->app()->user()->setAttribute(\Library\Enums\SessionKeys::UserRoutes, NULL);
     if (!$this->hasRoutesXmlChanged($this->app()->user()) && $routes) {
       $this->setRoutes($routes);
-    } elseif ($this->hasRoutesXmlChanged($this->app()->user()) || !$this->app()->user()->getAttribute(\Library\Enums\SessionKeys::SessionRoutes)) {
+    } elseif ($this->hasRoutesXmlChanged($this->app()->user()) || !$this->app()->user()->getAttribute(\Library\Enums\SessionKeys::AllApplicationsRoutes)) {
       $this->LoadAvailableRoutes($this->app());
       //Store routes in session
-      $this->app()->user()->setAttribute(\Library\Enums\SessionKeys::SessionRoutes, $this->routes());
+      $this->app()->user()->setAttribute(\Library\Enums\SessionKeys::AllApplicationsRoutes, $this->routes());
     } else {
-      $this->setRoutes($this->app()->user()->getAttribute(\Library\Enums\SessionKeys::SessionRoutes));
+      $this->setRoutes($this->app()->user()->getAttribute(\Library\Enums\SessionKeys::AllApplicationsRoutes));
     }
   }
 
-  // SET AND GET $selectedRoute
-  // @type \Library\Core\Route
-  public function setSelectedRoute($route) {
-    $this->selectedRoute = $route;
+  /**
+   * <p> Set the route of the current request. </p>
+   * @param \Library\Core\Route $route
+   */
+  public function setCurrentRoute($currentRoute) {
+    $this->currentRoute = $currentRoute;
   }
 
-  public function selectedRoute() {
-    return $this->selectedRoute;
+  /**
+   * <p> Get the route of the current request. </p>
+   * @param \Library\Core\Route $route
+   */
+  public function currentRoute() {
+    return $this->currentRoute;
   }
 
-  // SET AND GET $lastModified
-  public function setLastModified($time_updated) {
-    $this->lastModified = $time_updated;
+  /**
+   * <p> Set the timestamp of the last modification of the routes.xml. </p>
+   * @param timestamp $lastModifiedTime
+   */
+  public function setLastModified($lastModifiedTime) {
+    $this->lastModified = $lastModifiedTime;
   }
 
+  /**
+   * <p> Get the timestamp of the last modification of the routes.xml. </p>
+   * @param timestamp $lastModifiedTime
+   */
   public function lastModified() {
     return $this->lastModified;
   }
 
-  // SET AND GET RoutesXmlPath
+  /**
+   * <p> Set the path of the routes.xml. </p>
+   * @param string $path
+   */
   public function setRoutesXmlPath($path) {
     $this->routesXmlPath = $path;
   }
 
+  /**
+   * <p> Get the path of the routes.xml. </p>
+   * @param string $path
+   */
   public function routesXmlPath() {
     return $this->routesXmlPath;
   }
 
-  // SET AND GET Routes
+  /**
+   * <p> Set the array of route objects. </p>
+   * @param array $routes
+   */
   public function setRoutes($routes) {
     $this->routes = $routes;
   }
 
+  /**
+   * <p> Get the array of route objects. </p>
+   * @param array $routes
+   */
   public function routes() {
     return $this->routes;
   }
 
+  /**
+   * Add a route to the array of routes if not already in the array.
+   * 
+   * @param \Library\Core\Route $route
+   */
   public function addRoute(Route $route) {
     if (!in_array($route, $this->routes)) {
       $this->routes[] = $route;
     }
   }
 
+  /**
+   * Search for a mathc route in the last of routes based on a relative url from
+   * the current request.
+   * 
+   * @param type $url <p>
+   * Relative url of current request. </p>
+   * @return mixed \Library\Core\Route | \RuntimeException
+   * @throws \RuntimeException <p>
+   * Exception is thrown if no route is found. A 404 error page will be rendered. </p>
+   */
   public function getRoute($url) {
     foreach ($this->routes as $route) {
-      // Si la route correspond à l'URL.
       if (($varsValues = $route->match($url)) !== false) {
-        $varsNames = $route->varsNames();
-        $listVars = array();
-        $this->createListOfVars($varsValues, $varsNames, $listVars);
-
-        // On assigne ce tableau de variables à la route.
-        $route->setVars($listVars);
+        //$varsNames = $route->varsNames();
+        //$listVars = array();
+        //$this->createListOfVars($varsValues, $varsNames, $listVars);
+        // We add variables to the route found.
+        //$route->setVars($listVars);
         return $route;
       }
     }
@@ -98,37 +137,38 @@ class Router extends ApplicationComponent {
     throw new \RuntimeException('No route match for URL:' . $url, self::NO_ROUTE);
   }
 
-  private function createListOfVars($varsValues, $varsNames, $listVars) {
-    // On créé un nouveau tableau clé/valeur.
-    // (Clé = nom de la variable, valeur = sa valeur.)
-    foreach ($varsValues as $key => $match) {
-      // La première valeur contient entièrement la chaine capturée (voir la doc sur preg_match).
-      if ($key !== 0) {
-        $listVars[$varsNames[$key - 1]] = $match;
-      }
-    }
-    return $listVars;
-  }
+//  private function createListOfVars($varsValues, $varsNames, $listVars) {
+//    // On créé un nouveau tableau clé/valeur.
+//    // (Clé = nom de la variable, valeur = sa valeur.)
+//    foreach ($varsValues as $key => $match) {
+//      // La première valeur contient entièrement la chaine capturée (voir la doc sur preg_match).
+//      if ($key !== 0) {
+//        $listVars[$varsNames[$key - 1]] = $match;
+//      }
+//    }
+//    return $listVars;
+//  }
 
+  /**
+   * Read the routes.xml file to build a Route object for each route found.
+   * 
+   * @param \Library\Core\Application $currentApp
+   */
   public function LoadAvailableRoutes(Application $currentApp) {
     $xml = new \DOMDocument;
     $xml->load($this->routesXmlPath);
 
     $this->routesXml = $xml->getElementsByTagName('route');
-    // On parcourt les routes du fichier XML.
     foreach ($this->routesXml as $route) {
       $vars = array();
 
-      // On regarde si des variables sont présentes dans l'URL.
+      // Unused
       if ($route->hasAttribute('vars')) {
         $vars = explode(',', $route->getAttribute('vars'));
       }
-      // We store the page Url to be used globally in the app
-      $this->pageUrls[$route->getAttribute('url') . "Url"] = $route->getAttribute('url');
-
-      // Get and calculate the relative path to add to add js and css to view properly
+      // Get and calculate the relative path to add to js and css files.
       $path_to_add = $this->_GetRelativePath($route->getAttribute('url'));
-      // On ajoute la route au routeur.
+
       $route_config = array(
           "route_xml" => $route,
           "vars" => $vars,
@@ -144,10 +184,18 @@ class Router extends ApplicationComponent {
   }
 
   /**
-   * Returns the script urls to add to the loading view or to the head element
+   * Retrieve the JavaScript urls to add to the loading view or to the head element
    * 
-   * @param DoMNode $route
-   * @return string
+   * @param DOMNode $route <p>
+   * The route xml node to read for the JavaScript file names. </p>
+   * @param string $destination <p>
+   * Either: </br>
+   *    - "head": to add the script tags in the head HTML element.</br>
+   *    - "html": being the very end of the html page being loaded. </p>
+   * @param string $path_to_add <p>
+   * Relative path to add to the file names read. </p>
+   * @return string <p>
+   * A string representation of the script tag to be added to the HTML code. </p>
    */
   private function _GetJsFiles($route, $destination, $path_to_add) {
     $scripts = "";
@@ -172,12 +220,17 @@ class Router extends ApplicationComponent {
    * in the routes list to set
    * the script or css for the sibbling route. 
    * 
-   * @param type $route \Library\Core\Route
-   * @param type $destination
-   * @param type $path_to_add
-   * @return type
+   * @param \Library\Core\Route $route
+   * @param string $destination <p>
+   * Either: </br>
+   *    - "head": to add the script tags in the head HTML element.</br>
+   *    - "html": being the very end of the html page being loaded. </p>
+   * @param string $path_to_add <p>
+   * Relative path to add to the file names read. </p>
+   * @return string $files <p>
+   * A string representation of the script tag to be added to the HTML code. </p>
    */
-  private function _GetFilesForSibbling($route, $destination, $path_to_add) {
+  private function _GetFilesForSibbling(Route $route, $destination, $path_to_add) {
     $files = "";
     switch ($destination) {
       case "head":
@@ -194,13 +247,16 @@ class Router extends ApplicationComponent {
   }
 
   /**
-   * Returns the absolute file paths of PHP modules to load per route
-   * There are 2 cases: 
-   *  - shared modules (available to any route)
-   *  - dedicated modules (to the module specified in the route config)
+   * <p> Returns the absolute file paths of PHP modules to load per route. </p>
+   * <p> There are 2 cases: <p><ul>
+   *  <li>with the shared attribute, shared modules will be found in
+   *  in "Applications/YourApp/Views/Modules"</li>
+   *  <li>dedicated modules (to the module specified in the route) will be found
+   *  in "Application/YourApp/Views/CurrentRoute/Modules".</li>
    * 
-   * @param DoMNode $route
-   * @return array
+   * @param DOMNode $route
+   * @return array <p>
+   * The list of PHP modules available for the current route. </p>
    */
   public function _LoadPhpModules($route) {
     $modules = array();

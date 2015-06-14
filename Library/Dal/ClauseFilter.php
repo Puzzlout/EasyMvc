@@ -16,7 +16,7 @@
  * ClauseFilter Class
  *
  * @package     Library
- * @subpackage	DAL
+ * @category	DAL
  * @author		Jeremie Litzler
  * @link		
  */

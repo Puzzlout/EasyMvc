@@ -16,7 +16,7 @@
  * _TemplateClass Class
  *
  * @package		Library
- * @subpackage	Utility
+ * @category	Utility
  * @category	_TemplateClass
  * @author		Jeremie Litzler
  * @link		

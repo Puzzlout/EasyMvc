@@ -16,7 +16,7 @@
  * ErrorManager Class
  *
  * @package       Library
- * @subpackage    Core
+ * @category    Core
  * @author        Jeremie Litzler
  * @link		
  */

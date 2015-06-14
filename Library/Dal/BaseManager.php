@@ -16,7 +16,7 @@
  * BaseManager Class
  *
  * @package       Library
- * @subpackage    Dal
+ * @category    Dal
  * @category      
  * @author        Jeremie Litzler
  * @link		

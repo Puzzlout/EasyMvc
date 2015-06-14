@@ -16,7 +16,7 @@
  * PopUpHelper Class
  *
  * @package		Library
- * @subpackage	Core
+ * @category	Core
  * @author		Souvik Ghosh
  * @link		
  */
@@ -127,14 +127,11 @@ class PopUpResourceManager extends \Library\Core\ApplicationComponent {
   }
 
   public function loadToolTipMessagefromXML() {
-    $appName = is_null($this->app->name()) || empty($this->app->name())?
-            __APPNAME__ :
-            $this->app->name();
     $xml = new \DOMDocument;
     $filename =
             __ROOT__ . 
             \Library\Enums\ApplicationFolderName::AppsFolderName . 
-            $appName . 
+            __APPNAME__ . 
             str_replace("{{currentCulture}}", $this->app()->locale, $this->app()->config()->get(\Library\Enums\AppSettingKeys::TooltipsXmlFileName));
     
     if (file_exists($filename)) {
