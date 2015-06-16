@@ -2,8 +2,9 @@
 
 namespace Library\Core;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
 class HttpResponse extends ApplicationComponent {
 
@@ -14,7 +15,7 @@ class HttpResponse extends ApplicationComponent {
   }
 
   public function redirect($location) {
-    \Library\Core\Utility\TimeLogger::EndLog($this->app(), \Library\Enums\ResourceKeys\GlobalAppKeys::log_http_request);
+    \Library\Utility\TimeLogger::EndLog($this->app(), \Library\Enums\ResourceKeys\GlobalAppKeys::log_http_request);
     header('Location: ' . $location);
     exit;
   }
@@ -38,7 +39,7 @@ class HttpResponse extends ApplicationComponent {
       exit($this->page->getGeneratedPage());
     } else {
       //Since we are doing a AJAX call, we just exit.
-      \Library\Core\Utility\TimeLogger::EndLog($this->app, \Library\Enums\ResourceKeys\GlobalAppKeys::log_http_request);
+      \Library\Utility\TimeLogger::EndLog($this->app, \Library\Enums\ResourceKeys\GlobalAppKeys::log_http_request);
       die();
     }
     die();
@@ -64,7 +65,7 @@ class HttpResponse extends ApplicationComponent {
    */
   public function setCookie($params) {
     setcookie(
-        $params['name'], $params['value'], $params['expire'], $params['path'], $params['domain'], $params['secure'], $params['httpOnly']
+            $params['name'], $params['value'], $params['expire'], $params['path'], $params['domain'], $params['secure'], $params['httpOnly']
     );
   }
 

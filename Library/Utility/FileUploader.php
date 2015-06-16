@@ -24,18 +24,19 @@
 
 namespace Library\Utility;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
 class FileUploader extends \Library\Core\ApplicationComponent {
 
   public
-      $rootDirectory = "",
-      $uploadDirectory = "",
-      $currentFile = null,
-      $files = array(),
-      $dataPost = array(),
-      $resultJson = array();
+          $rootDirectory = "",
+          $uploadDirectory = "",
+          $currentFile = null,
+          $files = array(),
+          $dataPost = array(),
+          $resultJson = array();
 
   public function __construct(\Library\Core\Application $app, $data) {
     parent::__construct($app);
@@ -82,9 +83,9 @@ class FileUploader extends \Library\Core\ApplicationComponent {
 
   private function GetFileNameToSaveInDatabase() {
     return
-        $this->dataPost["itemId"]
-        . "_" . UUID::v4()
-        . "." . $this->GetExtension();
+            $this->dataPost["itemId"]
+            . "_" . UUID::v4()
+            . "." . $this->GetExtension();
   }
 
   private function GetExtension() {
@@ -94,11 +95,11 @@ class FileUploader extends \Library\Core\ApplicationComponent {
   private function GetUploadDirectory() {
     return $this->rootDirectory . $this->GetCategory();
   }
-  
+
   private function GetCategory() {
     return str_replace("_id", "", $this->dataPost["itemCategory"]);
   }
-  
+
   private function GetSizeInKb() {
     $sizeInBytes = intval($this->files["file"]["size"]);
     return $sizeInBytes / 1024;

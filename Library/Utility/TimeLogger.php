@@ -24,8 +24,9 @@
 
 namespace Library\Utility;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
 class TimeLogger extends Logger {
 
@@ -39,7 +40,7 @@ class TimeLogger extends Logger {
     $logs[$log->log_type()][$log->log_request_id()] = $log;
     Logger::StoreLogs($user, $logs);
   }
-  
+
   public static function StartLog(\Library\Core\Application $app, $type) {
     $log = new \Library\BO\Log();
     $log->setLog_type($type);
@@ -54,8 +55,8 @@ class TimeLogger extends Logger {
     $log = $logs[$type][$app->httpRequest()->requestID()];
     $log->setLog_end(Logger::GetTime());
     $log->setLog_execution_time(
-        ($log->log_end - $log->log_start()) * 1000
-        );
+            ($log->log_end - $log->log_start()) * 1000
+    );
     $log->setLog_start(gmdate("Y-m-d H:i:s", $log->log_start()));
     $log->setLog_end(gmdate("Y-m-d H:i:s", $log->log_end()));
     Logger::AddLogToDatabase($app, $log);

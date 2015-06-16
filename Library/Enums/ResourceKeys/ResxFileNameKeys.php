@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * @package		Easy MVC Framework
@@ -23,9 +24,13 @@
  */
 
 namespace Library\Enums\ResourceKeys;
-if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
+
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+  exit('No direct script access allowed');
+}
 
 abstract class ResxFileNameKeys {
+
   /**
    * Common file names
    */
@@ -34,6 +39,7 @@ abstract class ResxFileNameKeys {
   const WsDefaults = "ws_defaults";
   const Config = "config";
   const FileUpload = "fileupload";
+
 }
 
 ?>

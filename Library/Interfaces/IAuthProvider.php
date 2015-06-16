@@ -1,14 +1,15 @@
 <?php
 
-namespace Library\Security;
+namespace Library\Interfaces;
 
 use Library\Interfaces\IUser;
 
-interface IAuthProvider
-{
+interface IAuthProvider {
+
   /**
    * @return IUser
    */
   public function getUser();
+
   public function getUserType();
-} 
+}

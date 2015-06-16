@@ -23,8 +23,9 @@
 
 namespace Library\Enums;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
 class PhpModuleKeys {
 
@@ -33,4 +34,5 @@ class PhpModuleKeys {
   const popup_msg = "popup_msg_module";
   const group_list_left = "group_list_left";
   const group_list_right = "group_list_right";
+
 }

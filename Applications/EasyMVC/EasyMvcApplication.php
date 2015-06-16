@@ -23,8 +23,9 @@
 
 namespace Applications\EasyMvc;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
 class EasyMvcApplication extends \Library\Core\Application {
 
@@ -45,7 +46,7 @@ class EasyMvcApplication extends \Library\Core\Application {
     //Get add the Project Manager object to the page
     //The variable PM will be available accross the application
     $this->AddGlobalAppVariables($controller);
-    
+
     $controller->execute();
 
     $this->httpResponse->setPage($controller->page());
@@ -55,7 +56,7 @@ class EasyMvcApplication extends \Library\Core\Application {
   private function AddGlobalAppVariables($controller) {
     $user = $controller->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
     $controller->page()->addVar('user', $user[0]);
-    
+
     //Just other variables if needed.
   }
 

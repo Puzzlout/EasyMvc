@@ -4,8 +4,9 @@ namespace Library\Core;
 
 use Library\Enums;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
 abstract class Application {
 
@@ -52,14 +53,14 @@ abstract class Application {
   }
 
   public function getController() {
-    
+
     $this->router()->setCurrentRoute($this->FindRouteMatch());
     $this->relative_path = $this->router()->currentRoute()->relative_path;
     $this->globalResources["js_files_head"] = $this->router()->currentRoute()->headJsScripts();
     $this->globalResources["js_files_html"] = $this->router()->currentRoute()->htmlJsScripts();
     $this->globalResources["css_files"] = $this->router()->currentRoute()->cssFiles();
 
-    if (preg_match("`.*ws$`",$this->router()->currentRoute()->type())) {//is the route used for AJAX calls?
+    if (preg_match("`.*ws$`", $this->router()->currentRoute()->type())) {//is the route used for AJAX calls?
       $this->router()->isWsCall = true;
     }
     // On ajoute les variables de l'URL au tableau $_GET.
@@ -68,10 +69,7 @@ abstract class Application {
     $controllerClass = $this->BuildControllerClass($this->router()->currentRoute());
     if (!file_exists(__ROOT__ . str_replace('\\', '/', $controllerClass) . \Library\Enums\FileNameConst::Extension)) {
       $error = new \Library\BO\Error(
-              \Library\Enums\ErrorCode::ControllerNotExist, 
-              Enums\ErrorOrigin::Library, 
-              "Controller not found",
-              "The controller ". $controllerClass . " doesn't exist.");
+              \Library\Enums\ErrorCode::ControllerNotExist, Enums\ErrorOrigin::Library, "Controller not found", "The controller " . $controllerClass . " doesn't exist.");
       $this->httpResponse->displayError($error);
     }
     return new $controllerClass($this, $this->router()->currentRoute()->module(), $this->router()->currentRoute()->action(), $this->router()->currentRoute()->resxfile());
@@ -110,11 +108,11 @@ abstract class Application {
   public function name() {
     return $this->name;
   }
-  
+
   public function css() {
     return $this->cssManager;
   }
-  
+
   public function js() {
     return $this->jsManager;
   }
@@ -122,9 +120,11 @@ abstract class Application {
   public function dal() {
     return $this->dal;
   }
+
   public function toolTip() {
     return $this->toolTip;
   }
+
   private function FindRouteMatch() {
     try {
       // On récupère la route correspondante à l'URL.
@@ -133,16 +133,13 @@ abstract class Application {
       if ($e->getCode() == \Library\Core\Router::NO_ROUTE) {
         // Si aucune route ne correspond, c'est que la page demandée n'existe pas.
         $error = new \Library\BO\Error(
-                \Library\Enums\ErrorCode::PageNotFound,
-                "routing",
-                "Page not found",
-                "The route " . $this->httpRequest->requestURI() . " is not found."
-                );
+                \Library\Enums\ErrorCode::PageNotFound, "routing", "Page not found", "The route " . $this->httpRequest->requestURI() . " is not found."
+        );
         $this->httpResponse->displayError($error);
       }
     }
   }
-  
+
   /**
    * Build the string of the controller class to load for the current route
    * 
@@ -152,17 +149,17 @@ abstract class Application {
   private function BuildControllerClass(\Library\Core\Route $route) {
     if (preg_match("`^lib.*$`", $route->type())) {
 //AJAX request for the Framework
-      return \Library\Enums\NameSpaceName::LibFolderName 
-        . \Library\Enums\NameSpaceName::LibControllersFolderName
-        . $route->module()
-        . \Library\Enums\FileNameConst::ControllerSuffix;
+      return \Library\Enums\NameSpaceName::LibFolderName
+              . \Library\Enums\NameSpaceName::LibControllersFolderName
+              . $route->module()
+              . \Library\Enums\FileNameConst::ControllerSuffix;
     } else {
 //AJAX request for the Application
       return \Library\Enums\NameSpaceName::AppsFolderName . "\\"
-        . $this->name
-        . \Library\Enums\NameSpaceName::AppsControllersFolderName
-        . $route->module()
-        . \Library\Enums\FileNameConst::ControllerSuffix;
+              . $this->name
+              . \Library\Enums\NameSpaceName::AppsControllersFolderName
+              . $route->module()
+              . \Library\Enums\FileNameConst::ControllerSuffix;
     }
   }
 

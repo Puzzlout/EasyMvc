@@ -24,14 +24,15 @@
 
 namespace Library\Controllers;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
 class ConfigController extends \Library\Controllers\BaseController {
 
   public function executeGetSettingValue(\Library\HttpRequest $rq) {
     $result = $this->InitResponseWS(
-        array("directory" => "common", "resx_file" => "ws_defaults", "resx_key" => "", "step" => "error")
+            array("directory" => "common", "resx_file" => "ws_defaults", "resx_key" => "", "step" => "error")
     );
     $result = \Library\Helpers\ConfigHelper::GetValue($this, $rq, $result);
 
@@ -39,14 +40,14 @@ class ConfigController extends \Library\Controllers\BaseController {
       echo '<pre>', print_r($result), '</pre>';
     } else {
       $this->SendResponseWS(
-          $result, array(
-        "directory" => "common",
-        "resx_file" => \Library\Enums\ResourceKeys\ResxFileNameKeys::Config,
-        "resx_key" => $this->action(),
-        "step" =>
-        $result[$rq->getData("key")] !== NULL || $result[$rq->getData("key")] !== "" > 0 ?
-            "success" : "error"
-          )
+              $result, array(
+          "directory" => "common",
+          "resx_file" => \Library\Enums\ResourceKeys\ResxFileNameKeys::Config,
+          "resx_key" => $this->action(),
+          "step" =>
+          $result[$rq->getData("key")] !== NULL || $result[$rq->getData("key")] !== "" > 0 ?
+                  "success" : "error"
+              )
       );
     }
   }

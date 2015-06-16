@@ -24,8 +24,9 @@
 
 namespace Library\UC;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
 class Breadcrumb {
 
@@ -51,7 +52,7 @@ class Breadcrumb {
     $breadcrumbs = $this->_LoadXml();
     foreach ($breadcrumbs as $breadcrumb) {
       if ($breadcrumb->getAttribute("href") === $this->url) {
-        
+
         $out = $this->_AddLevels($breadcrumb);
       }
     }
@@ -75,7 +76,7 @@ class Breadcrumb {
     }
     return $xml->getElementsByTagName("breadcrumb");
   }
-  
+
   /**
    * Add the levels based on selected breadcrumb.
    * 

@@ -2,10 +2,12 @@
 
 namespace Library\Core;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
 class HttpRequest {
+
   public $requestId;
 
   public function __construct() {
@@ -15,10 +17,11 @@ class HttpRequest {
   public function requestId() {
     return $this->requestId;
   }
+
   public function setRequestId($requestId) {
     $this->requestId = $requestId;
   }
-  
+
   public function cookieData($key) {
     return isset($_COOKIE[$key]) ? $_COOKIE[$key] : null;
   }
@@ -74,11 +77,11 @@ class HttpRequest {
     if (file_get_contents('php://input') != "") {
       // Create an array from the JSON object in the POST request
       $json_decode = json_decode(file_get_contents('php://input'));
-      if(!is_null($json_decode)) {
+      if (!is_null($json_decode)) {
         $post_raw = get_object_vars($json_decode);
       }
       // Check if a field has been provided
-      if (! empty($post_raw)) {
+      if (!empty($post_raw)) {
         foreach (array_keys($post_raw) as $key) {
           $post_cleaned[$key] = $this->_fetch_from_array($post_raw, $key, TRUE);
         }
@@ -120,4 +123,5 @@ class HttpRequest {
 
     return $array[$index];
   }
+
 }

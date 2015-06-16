@@ -23,17 +23,19 @@
 
 namespace Library\Core;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
 class PopUpResourceManager extends \Library\Core\ApplicationComponent {
 
-
   private $xmlContent = null;
+
   public function __construct(Application $app) {
     parent::__construct($app);
     $this->loadToolTipMessagefromXML();
   }
+
   /**
    * Fetches all messages associated with a particular
    * attribute passed through the JSON var param.
@@ -107,10 +109,10 @@ class PopUpResourceManager extends \Library\Core\ApplicationComponent {
   }
 
   /**
-  * Gets the settings for a module on the basis of which a 
-  * tooltip would be shown where the text is truncated due
-  * to insufficient space
-  */
+   * Gets the settings for a module on the basis of which a 
+   * tooltip would be shown where the text is truncated due
+   * to insufficient space
+   */
   public function getTooltipEllipsisSettings($param) {
     $param_arr = json_decode($param, true);
     $msg_array = array();
@@ -128,12 +130,11 @@ class PopUpResourceManager extends \Library\Core\ApplicationComponent {
 
   public function loadToolTipMessagefromXML() {
     $xml = new \DOMDocument;
-    $filename =
-            __ROOT__ . 
-            \Library\Enums\ApplicationFolderName::AppsFolderName . 
-            __APPNAME__ . 
+    $filename = __ROOT__ .
+            \Library\Enums\ApplicationFolderName::AppsFolderName .
+            __APPNAME__ .
             str_replace("{{currentCulture}}", $this->app()->locale, $this->app()->config()->get(\Library\Enums\AppSettingKeys::TooltipsXmlFileName));
-    
+
     if (file_exists($filename)) {
       $xml->load($filename);
     } else {

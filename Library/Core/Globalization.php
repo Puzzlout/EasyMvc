@@ -29,8 +29,9 @@
 
 namespace Library\Core;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
 class Globalization extends ApplicationComponent {
 
@@ -125,8 +126,8 @@ class Globalization extends ApplicationComponent {
       return $this->res_local[$this->app->locale][$page_name][$key];
     } else {//always display placeholder for missing locale resource
       return (array_key_exists($page_name, $this->res_local[$this->app->context->defaultLang])) ?
-          $this->res_local[$this->app->context->defaultLang][$page_name][$key] :
-          'Missing resource: {' . $this->app->locale . '}{' . $page_name . '}{' . $key . '}';
+              $this->res_local[$this->app->context->defaultLang][$page_name][$key] :
+              'Missing resource: {' . $this->app->locale . '}{' . $page_name . '}{' . $key . '}';
       //return 'Missing resource: {'.$this->app->locale.'}{'.$page_name.'}{'.$key.'}';
     }
 
@@ -142,12 +143,12 @@ class Globalization extends ApplicationComponent {
   public function getLocalResourceArray($page_name) {
     if (isset($this->res_local[$this->app->locale][$page_name])) {
       return (array_key_exists($page_name, $this->res_local[$this->app->locale])) ?
-          $this->res_local[$this->app->locale][$page_name] :
-          $this->getCommonResourceArray($page_name);
+              $this->res_local[$this->app->locale][$page_name] :
+              $this->getCommonResourceArray($page_name);
     } else {//always display placeholder for missing locale resource
       return (array_key_exists($page_name, $this->res_local[$this->app->context->defaultLang])) ?
-          $this->res_local[$this->app->context->defaultLang][$page_name] :
-          $this->getCommonResourceArray($page_name);
+              $this->res_local[$this->app->context->defaultLang][$page_name] :
+              $this->getCommonResourceArray($page_name);
     }
   }
 

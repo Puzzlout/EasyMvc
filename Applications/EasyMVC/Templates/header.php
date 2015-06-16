@@ -1,4 +1,6 @@
-<?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
+<?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+  exit('No direct script access allowed');
+} ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->app->locale; ?>">
   <head>
@@ -12,7 +14,7 @@
     <?php echo $this->app->globalResources["css_files"]; ?>    
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/library/js/core/jquery.js"></script>
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/library/js/core/jquery-ui.js"></script>
-    <?php echo $this->app->globalResources["js_files_head"]; ?>
+<?php echo $this->app->globalResources["js_files_head"]; ?>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>

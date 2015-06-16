@@ -21,17 +21,19 @@
  * @link		
  */
 
-namespace Library\DAL;
+namespace Library\Dal;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
 class ClauseFilter {
+
   public $clauseDefault = array(
-      
   );
-  
+
   public function __construct() {
     ;
   }
+
 }

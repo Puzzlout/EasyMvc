@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Custom error handler to catch all the error and process them.
  */
@@ -55,9 +56,8 @@ define('__BASEURL__', '/' . __APPNAME__ . '/');
  * Class name of the application to load.
  */
 $placeholder = array("{{appname}}" => __APPNAME__);
-$appClassName =  strtr(
-        "\Applications\\{{appname}}\\{{appname}}Application", 
-        $placeholder);
+$appClassName = strtr(
+        "\Applications\\{{appname}}\\{{appname}}Application", $placeholder);
 
 /**
  * Autoload defines global variables.
@@ -66,16 +66,9 @@ require '../Library/autoload.php';
 
 $app = new $appClassName();
 try {
-  if (
-          strstr($app->httpRequest->requestURI(), Library\Enums\UrlKeys::LoginUrl) !== FALSE ||
-          strstr($app->httpRequest->requestURI(), Library\Enums\UrlKeys::AuthenticationUrl) !== FALSE ||
-          $app->user->isConnected()) {
-    $app->run();
-  } else {//Otherwise, redirect to default page set in Applications/YourApp/Config/appsettings.xml
-    header('Location: ' . __BASEURL__ . $app->config()->get(Library\Enums\AppSettingKeys::DefaultPage));
-    die();
-  }
+  $app->run();
 } catch (\Exception $exc) {
   $errorLogger = new Library\Core\ErrorManager($app, $exc);
   $errorLogger->LogError($exc);
+  die();
 }

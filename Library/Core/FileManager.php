@@ -24,8 +24,9 @@
 
 namespace Library\Core;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
 class FileManager {
 
@@ -42,6 +43,7 @@ class FileManager {
   public function __construct($filePath) {
     $this->filePath = $filePath;
   }
+
   /**
    * Get content of the file
    * @return array
@@ -49,6 +51,5 @@ class FileManager {
   public function GetFileContent() {
     
   }
-  
 
 }

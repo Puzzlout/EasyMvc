@@ -1,4 +1,4 @@
-<?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed'); ?>
+<?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) { exit('No direct script access allowed'); } ?>
 <section id="top_header">
   <section id="branding">
     <figure class="logo"><img src="<?php echo $this->app->relative_path . $this->app->logoImageUrl; ?>"></figure>

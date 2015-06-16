@@ -23,15 +23,19 @@
  */
 
 namespace Library\Enums;
-if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
+
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+  exit('No direct script access allowed');
+}
 
 abstract class FileNameConst {
+
   /**
    * File name suffixes
    */
-
   const ControllerSuffix = "Controller";
   const Extension = ".php";
+
   /**
    * File name prefixes
    */
@@ -45,4 +49,5 @@ abstract class FileNameConst {
   const MenuTopTemplate = "/Templates/menus/top.php";
   const MenuLeftTemplate = "/Templates/menus/left.php";
   const BreadcrumbTemplate = "/Templates/breadcrumb.php";
+
 }

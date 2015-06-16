@@ -24,8 +24,9 @@
 
 namespace Applications\EasyMvc\Helpers;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
 class MapHelper {
 
@@ -79,8 +80,9 @@ class MapHelper {
     }
     return $coordinates;
   }
-  
+
   private static function CheckCoordinateValue($value) {
     return $value !== "" && $value !== "0.000000";
   }
+
 }

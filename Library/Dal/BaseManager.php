@@ -24,10 +24,12 @@
 
 namespace Library\Dal;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
 class BaseManager extends \Library\Dal\Manager {
+
   public function __construct($dao, $filters) {
     parent::__construct($dao, $filters);
   }
@@ -72,26 +74,27 @@ class BaseManager extends \Library\Dal\Manager {
     }
 
     $order_by = "";
-    if($object->getOrderByField() !== FALSE) {
-      $order_by = "ORDER BY ".$object->getOrderByField();
+    if ($object->getOrderByField() !== FALSE) {
+      $order_by = "ORDER BY " . $object->getOrderByField();
     }
     $select_clause = "SELECT ";
     foreach ($object as $key => $value) {
       $select_clause .= $key . ", ";
     }
     $select_clause = rtrim($select_clause, ", ");
-    $select_clause .= " FROM ".$this->GetTableName($object).$where_clause." ".$order_by;
+    $select_clause .= " FROM " . $this->GetTableName($object) . $where_clause . " " . $order_by;
     $sth = $this->dao->prepare($select_clause);
-    if($where_filter_id !== "") {
-      if($filter_as_string) {
-        $sth->bindValue(':where_filter_id',$object->$where_filter_id(),\PDO::PARAM_STR);
+    if ($where_filter_id !== "") {
+      if ($filter_as_string) {
+        $sth->bindValue(':where_filter_id', $object->$where_filter_id(), \PDO::PARAM_STR);
       } else {
-        $sth->bindValue(':where_filter_id',$object->$where_filter_id(),\PDO::PARAM_INT);
+        $sth->bindValue(':where_filter_id', $object->$where_filter_id(), \PDO::PARAM_INT);
       }
     }
 
     return $this->ExecuteQuery($sth, $params);
   }
+
   /**
    * Select method for many items
    * 
@@ -110,17 +113,17 @@ class BaseManager extends \Library\Dal\Manager {
     $params = array("type" => "SELECT", "dao_class" => \Library\Helpers\CommonHelper::GetFullClassName($object));
     $select_clause = "SELECT ";
     //TODO: implement building the where clause with one or many filters
-    $where_clause = "";//$this->BuildWhereClause($where_filters);
+    $where_clause = ""; //$this->BuildWhereClause($where_filters);
     foreach ($object as $key => $value) {
       $select_clause .= $key . ", ";
     }
     $select_clause = rtrim($select_clause, ", ");
-    $select_clause.=" FROM ".$this->GetTableName($object);
+    $select_clause.=" FROM " . $this->GetTableName($object);
     $order_by = "";
-    if($object->getOrderByField() !== FALSE) {
-      $order_by = "ORDER BY ".$object->getOrderByField();
+    if ($object->getOrderByField() !== FALSE) {
+      $order_by = "ORDER BY " . $object->getOrderByField();
     }
-    $select_clause .= $where_clause." ".$order_by;
+    $select_clause .= $where_clause . " " . $order_by;
 
     $sth = $this->dao->prepare($select_clause);
     return $this->ExecuteQuery($sth, $params);
@@ -150,10 +153,10 @@ class BaseManager extends \Library\Dal\Manager {
     }
     $columns = rtrim($columns, ", ");
     $values = rtrim($values, ", ");
-    $insert_clause = "INSERT INTO `".$this->GetTableName($object)."` ($columns) VALUES ($values);";
+    $insert_clause = "INSERT INTO `" . $this->GetTableName($object) . "` ($columns) VALUES ($values);";
     $sth = $this->dao->prepare($insert_clause);
-    foreach($object as $key=>$value) {
-      $sth->bindValue(":$key",$value,\PDO::PARAM_STR);
+    foreach ($object as $key => $value) {
+      $sth->bindValue(":$key", $value, \PDO::PARAM_STR);
     }
     return $this->ExecuteQuery($sth, $params);
   }
@@ -169,8 +172,8 @@ class BaseManager extends \Library\Dal\Manager {
     foreach ($object as $key => $value) {
       if ($key === $where_filter_id) {
         $where_clause = "$key = :$key";
-      } else if($value=== null){
-
+      } else if ($value === null) {
+        
       } else {
         $set_clause .= "`$key` = :$key,";
       }
@@ -179,8 +182,8 @@ class BaseManager extends \Library\Dal\Manager {
     $update_clause = "UPDATE `" . $this->GetTableName($object) . "` SET $set_clause  WHERE $where_clause;";
     $sth = $this->dao->prepare($update_clause);
     foreach ($object as $key => $value) {
-      if($value!==null){
-        $sth->bindValue(":$key",$value,\PDO::PARAM_STR);
+      if ($value !== null) {
+        $sth->bindValue(":$key", $value, \PDO::PARAM_STR);
       }
     }
     return $this->ExecuteQuery($sth, $params);
@@ -202,7 +205,7 @@ class BaseManager extends \Library\Dal\Manager {
     return \Library\Helpers\CommonHelper::GetShortClassName($object);
   }
 
-  private function ExecuteQuery($sth, $params) {
+  protected function ExecuteQuery($sth, $params) {
     $result = -1;
     try {
       //\Library\Helpers\DebugHelper::LogAsHtmlComment($sql_query);
@@ -224,16 +227,25 @@ class BaseManager extends \Library\Dal\Manager {
           case "INSERT":
             $result = $this->dao->lastInsertId();
             break;
+          case "TABLES":
+            $result = $sth->fetchAll(\PDO::FETCH_NUM);
+            break;
+          case "COLUMNNAMES":
+            $result = $sth->fetchAll(\PDO::FETCH_COLUMN);
+            break;
+          case  "COLUMNMETAS":
+            $result = $sth->fetchAll();
+            break;
           default:
+
             break;
         }
-        
       }
       $sth->closeCursor();
     } catch (\PDOException $pdo_ex) {
       json_encode($pdo_ex);
       //echo "<!--" . $pdo_ex->getMessage() . "-->";
-      $result *=  $pdo_ex->getCode();
+      $result *= $pdo_ex->getCode();
     }
     return $result;
   }

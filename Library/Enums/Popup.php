@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * @package		Basic MVC framework
@@ -20,21 +21,24 @@
  * @link		
  */
 
-
 namespace Library\Enums;
-if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
+
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+  exit('No direct script access allowed');
+}
 
 class Popup {
+
   const popup_prompt_list = "popup_prompt_list";
   //Modules keys
   const popup_prompt_module = "popup_prompt_module";
-    //For tooltip
+  //For tooltip
   const tooltip_message = "tooltip_message";
   const ellipsis_tooltip_settings = "ellipsis_tooltip_settings";
   //The module for populating the tooltip hiddens
-  const tooltip_message_module = "tooltip_message_module"; 
+  const tooltip_message_module = "tooltip_message_module";
   //For messages in confirm boxes
-  const confirm_message = "confirm_message"; 
+  const confirm_message = "confirm_message";
   //For messages in prompt boxes
   const prompt_message = "prompt_message";
   const popup_msg = "popup_msg_module";
@@ -42,5 +46,5 @@ class Popup {
   const prompt_projectselect = "prompt_projectselect_module";
   const popup_selector = "popup_selector";
   const toolTips = "toolTips";
-}
 
+}

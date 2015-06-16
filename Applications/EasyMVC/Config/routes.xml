@@ -30,6 +30,7 @@
   <route url="auth" module="Authenticate" action="authenticate" resxfile="login" type="ws" />
   <route url="user/create" module="Authenticate" action="create" resxfile="login" type="ws" />
   
+  <route url="buildDao" module="Generator" action="createDaoClasses" resxfile="generator" type="lib ws" />
   <route url="debug/view" module="Debug" action="viewSessionArrays" resxfile="debug" type="lib ws" />
   <route url="config/get" module="Config" action="getSettingValue" resxfile="config" type="lib ws" />
   <route url="upload" module="FileUpload" action="upload" resxfile="fileupload" type="lib ws" />

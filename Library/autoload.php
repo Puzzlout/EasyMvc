@@ -1,6 +1,8 @@
 <?php
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
 /**
  * Finds and load a class from its full name, e.g. namespace + class name.

@@ -21,13 +21,14 @@
  * @link		
  */
 
-
 namespace Library\Enums;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
 abstract class LibraryFolderName {
+
   const Library = "Library/";
   const BL = "BL/";
   const Core = "Core/";
@@ -39,5 +40,5 @@ abstract class LibraryFolderName {
   const Enums = "Enums/";
   const ResourceKeys = "ResourceKeys/";
   const UC = "UC/";
-  
+
 }

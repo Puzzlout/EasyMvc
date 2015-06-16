@@ -24,8 +24,9 @@
 
 namespace Applications\EasyMvc\Helpers;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
 class CommonHelper {
 
@@ -42,15 +43,15 @@ class CommonHelper {
   public static function CleanString($string) {
     return trim($string);
   }
-  
+
   /**
-  * A helper method which print_r's a formatted array nicely
-  * Mainly used for debuging / developing 
-  */
+   * A helper method which print_r's a formatted array nicely
+   * Mainly used for debuging / developing 
+   */
   public static function pr($arr) {
-  	echo '<pre>';
-  	print_r($arr);
-  	echo '</pre>';
+    echo '<pre>';
+    print_r($arr);
+    echo '</pre>';
   }
 
   public static function SetDynamicPropertyNamesForDualList($module, $property_list) {
@@ -248,28 +249,28 @@ class CommonHelper {
   }
 
   /**
-  * Returns the truncated text based on the passed
-  * parameters, at present the method generates the
-  * HTML markup as well which is needed for the tooltip
-  * to work properly.
-  */
+   * Returns the truncated text based on the passed
+   * parameters, at present the method generates the
+   * HTML markup as well which is needed for the tooltip
+   * to work properly.
+   */
   public static function generateEllipsisAndTooltipMarkupFor($textToTruncate, $charLimit, $placement) {
     $truncatedData = null;
-    if(strlen($textToTruncate) > intval($charLimit)) {
+    if (strlen($textToTruncate) > intval($charLimit)) {
       //We would have to truncate
       $truncatedData = array(
-                        'source'    => $textToTruncate,
-                        'truncated' => substr($textToTruncate, 0, $charLimit - 3) . '...'
-                      );
+          'source' => $textToTruncate,
+          'truncated' => substr($textToTruncate, 0, $charLimit - 3) . '...'
+      );
     } else {
       //Return the string as it is
       $truncatedData = array(
-                        'source'    => $textToTruncate,
-                        'truncated' => ''
-                      );
+          'source' => $textToTruncate,
+          'truncated' => ''
+      );
     }
 
-    if(trim($truncatedData['truncated']) !== '') {
+    if (trim($truncatedData['truncated']) !== '') {
       echo $truncatedData['truncated'];
       echo '<input type="hidden" class="ellipsis-tooltip" value="' . $truncatedData['source'] . '" placement="' . $placement . '" >';
     } else {

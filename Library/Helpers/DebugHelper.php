@@ -24,11 +24,14 @@
 
 namespace Library\Utility;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
 class DebugHelper {
+
   public static function LogAsHtmlComment($data_to_print) {
-    echo '<!--'.$data_to_print.'-->';
+    echo '<!--' . $data_to_print . '-->';
   }
+
 }
