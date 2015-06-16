@@ -1,39 +1,42 @@
 <?php
 
 /**
-*
-* @package    Easy MVC Framework
-* @author     Jeremie Litzler
-* @copyright  Copyright (c) 2015
-* @license
-* @link
-* @since
-* @filesource
-*/
+ *
+ * @package    Easy MVC Framework
+ * @author     Jeremie Litzler
+ * @copyright  Copyright (c) 2015
+ * @license
+ * @link
+ * @since
+ * @filesource
+ */
 // ------------------------------------------------------------------------
 
 /**
-*
-* DocumentDal Class
-*
-* @package     Library
-* @category  DAL
-* @category    Modules
-* @author      Jeremie Litzler
-* @link
-*/
+ *
+ * DocumentDal Class
+ *
+ * @package     Library
+ * @category  DAL
+ * @category    Modules
+ * @author      Jeremie Litzler
+ * @link
+ */
 
 namespace Library\Dal\Modules;
-if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
+
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+  exit('No direct script access allowed');
+}
 
 class DocumentDal extends \Library\Dal\BaseManager {
 
-  public $rootDirectory,$webDirectory;
+  public $rootDirectory, $webDirectory;
   public $filenamePrefix = "";
   public $objectDirectory = "";
 
   public function __construct($dao, $filters) {
-    parent::__construct($dao,$filters);
+    parent::__construct($dao, $filters);
   }
 
   public function setRootDirectory($rootDirectory) {
@@ -52,27 +55,27 @@ class DocumentDal extends \Library\Dal\BaseManager {
     $this->filenamePrefix = $prefix;
   }
 
-  public function selectMany($object, $where_filter_id, $filter_as_string = false){
+  public function selectMany($object, $where_filter_id, $filter_as_string = false) {
     $list = parent::selectMany($object, $where_filter_id, $filter_as_string);
     $list = $this->AddFilePathToObjectList($list);
     return $list;
   }
 
   public function addWithFile($object, $file) {
-    if($object instanceof \Library\Interfaces\IDocument) {
+    if ($object instanceof \Library\Interfaces\IDocument) {
       $object->setFilename($this->GetFileNameToSaveInDatabase($file));
       $fileExists = \Library\Core\DirectoryManager::FileExists($this->GetUploadDirectory($object) . "/" . $object->Filename());
       $extensions = $object->ValidExtensions();
-      if(is_array($extensions)) {
+      if (is_array($extensions)) {
         $validExtension = $this->CheckExtension($file, $extensions);
       } else {
         $validExtension = true;
       }
-      if(!$fileExists && $validExtension) {
+      if (!$fileExists && $validExtension) {
         \Library\Core\DirectoryManager::CreateDirectory($this->GetUploadDirectory($object));
         $object->setContentSize($this->GetSizeInKb($file));
         $object->setContentType($this->GetExtension($file));
-        $this->UploadAFile($file['tmp_name'],$this->GetUploadDirectory($object) . "/" . $object->Filename());
+        $this->UploadAFile($file['tmp_name'], $this->GetUploadDirectory($object) . "/" . $object->Filename());
         return parent::add($object);
       } else {
         return -1;
@@ -81,28 +84,28 @@ class DocumentDal extends \Library\Dal\BaseManager {
   }
 
   /**
-  * Location specific PDF document requirement
-  * Copies the file which is passed to it, with 
-  * the generated name
-  */
+   * Location specific PDF document requirement
+   * Copies the file which is passed to it, with 
+   * the generated name
+   */
   public function copyWithFile($object, $file) {
-    if($object instanceof \Library\Interfaces\IDocument) {
+    if ($object instanceof \Library\Interfaces\IDocument) {
       $object->setFilename($this->GetFileNameToSaveInDatabase($file));
       $fileExists = \Library\Core\DirectoryManager::FileExists($this->GetUploadDirectory($object) . "/" . $object->Filename());
       $extensions = $object->ValidExtensions();
-      if(is_array($extensions)) {
+      if (is_array($extensions)) {
         $validExtension = $this->CheckExtension($file, $extensions);
       } else {
         $validExtension = true;
       }
-      if(!$fileExists && $validExtension) {
+      if (!$fileExists && $validExtension) {
         \Library\Core\DirectoryManager::CreateDirectory($this->GetUploadDirectory($object));
         $object->setContentSize($this->GetSizeInKb($file));
         $object->setContentType($this->GetExtension($file));
 
         //LEt's copy the file
-        if(copy($file['tmp_name'], $this->GetUploadDirectory($object) . '/' . $object->Filename())){
-          return parent::add($object);  
+        if (copy($file['tmp_name'], $this->GetUploadDirectory($object) . '/' . $object->Filename())) {
+          return parent::add($object);
         }
       } else {
         return -1;
@@ -111,9 +114,9 @@ class DocumentDal extends \Library\Dal\BaseManager {
   }
 
   public function deleteWithFile($object, $where_filter_id) {
-    if($object instanceof \Library\Interfaces\IDocument) {
+    if ($object instanceof \Library\Interfaces\IDocument) {
       $fileExists = \Library\Core\DirectoryManager::FileExists($this->GetUploadDirectory($object) . "/" . $object->Filename());
-      if($fileExists) {
+      if ($fileExists) {
         $this->DeleteAFile($this->GetUploadDirectory($object) . "/" . $object->Filename());
       }
       return parent::delete($object, $where_filter_id);
@@ -121,12 +124,12 @@ class DocumentDal extends \Library\Dal\BaseManager {
   }
 
   /**
-  * V2 is used to separate it from deleteWithFile 
-  */
+   * V2 is used to separate it from deleteWithFile 
+   */
   public function deleteWithFileV2($object, $where_filter_id) {
-    if($object instanceof \Library\Interfaces\IDocument) {
+    if ($object instanceof \Library\Interfaces\IDocument) {
       $fileExists = \Library\Core\DirectoryManager::FileExists('./uploads/' . $this->GetUploadDirectory($object) . "/" . $object->Filename());
-      if($fileExists) {
+      if ($fileExists) {
         $this->DeleteAFile('./uploads/' . $this->GetUploadDirectory($object) . "/" . $object->Filename());
       }
       return parent::delete($object, $where_filter_id);
@@ -135,20 +138,20 @@ class DocumentDal extends \Library\Dal\BaseManager {
 
   public function DeleteObjectsWithFile($objects, $where_filter_id) {
     $return = array();
-    foreach($objects as $object){
-      if($object instanceof \Library\Interfaces\IDocument) {
+    foreach ($objects as $object) {
+      if ($object instanceof \Library\Interfaces\IDocument) {
         $fileExists = \Library\Core\DirectoryManager::FileExists($this->GetUploadDirectory($object) . "/" . $object->Filename());
-        if($fileExists) {
+        if ($fileExists) {
           $this->DeleteAFile($this->GetUploadDirectory($object) . "/" . $object->Filename());
         }
         $return[] = parent::delete($object, $where_filter_id);
       }
     }
-    return !in_array(-1,$return);
+    return !in_array(-1, $return);
   }
 
   private function GetUploadDirectory($object) {
-    if(isset($this->objectDirectory) and $this->objectDirectory!=""){
+    if (isset($this->objectDirectory) and $this->objectDirectory != "") {
       $directory = $this->objectDirectory;
     } else {
       $directory = strtolower($this->GetClassName($object));
@@ -157,7 +160,7 @@ class DocumentDal extends \Library\Dal\BaseManager {
   }
 
   private function GetWebUploadDirectory($object) {
-    if(isset($this->objectDirectory) and $this->objectDirectory!=""){
+    if (isset($this->objectDirectory) and $this->objectDirectory != "") {
       $directory = $this->objectDirectory;
     } else {
       $directory = strtolower($this->GetClassName($object));
@@ -205,16 +208,16 @@ class DocumentDal extends \Library\Dal\BaseManager {
   }
 
   private function CheckExtension($file, $extensions) {
-    return in_array($this->GetExtension($file),$extensions);
+    return in_array($this->GetExtension($file), $extensions);
   }
 
   protected function AddFilePathToObjectList($list) {
-    if(is_array($list)) {
-      foreach($list as &$object) {
-        if($object instanceof \Library\Interfaces\IDocument) {
+    if (is_array($list)) {
+      foreach ($list as &$object) {
+        if ($object instanceof \Library\Interfaces\IDocument) {
           $filePath = $this->GetUploadDirectory($object) . "/" . $object->Filename();
           $fileExists = \Library\Core\DirectoryManager::FileExists($filePath);
-          if($fileExists){
+          if ($fileExists) {
             $object->setWebPath($this->GetWebUploadDirectory($object) . "/" . $object->Filename());
           }
         }
@@ -222,4 +225,5 @@ class DocumentDal extends \Library\Dal\BaseManager {
     }
     return $list;
   }
+
 }

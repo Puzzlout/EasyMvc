@@ -23,8 +23,8 @@
 
 namespace Applications\EasyMvc\Controllers;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
-  exit('No direct script access allowed');
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+  exit('No direct script access allowed'); }
 
 class AuthenticateController extends \Library\Controllers\BaseController {
 
@@ -99,7 +99,7 @@ class AuthenticateController extends \Library\Controllers\BaseController {
     );
     //TODO: implement user creation
     $user = \Library\Helpers\CommonHelper::PrepareUserObject($data, new Library\BO\User());
-    $user->setPassword($protect->HashValue($this->app->config->get("encryption_key"), $user->password()));
+    $user->setPassword($protect->HashValue($this->app->config->get("PaswordSalt"), $user->password()));
 
     $loginDal = $this->managers->getManagerOf("Login");
     $id = $loginDal->add($user);
@@ -126,7 +126,7 @@ class AuthenticateController extends \Library\Controllers\BaseController {
    */
   private function EncryptUserPassword($manager, $user_in, $user_db) {
     $protect = new \Library\BL\Security\Encryption();
-    $user_in->setPassword($protect->HashValue($this->app->config->get("encryption_key"), $user_in->password()));
+    $user_in->setPassword($protect->HashValue($this->app->config->get("PaswordSalt"), $user_in->password()));
     $user_in->pm_id = $user_db[0]->pm_id;
     $manager->update($user_in);
   }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * @package		Easy MVC Framework
@@ -21,9 +22,13 @@
  */
 
 namespace Library\Enums;
-if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
+
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+  exit('No direct script access allowed');
+}
 
 class GenericViewVariablesKeys {
+
   //Generic keys
   const data = "data";
   const data_left = "data_left";
@@ -43,16 +48,14 @@ class GenericViewVariablesKeys {
   const property_name = "prop_name";
   const property_active = "prop_active";
   //For tooltip
-  const tooltip_message = "tooltip_message"; 
-	//Form messages in confirm boxes
-	const confirm_message = "confirm_message"; 
-
+  const tooltip_message = "tooltip_message";
+  //Form messages in confirm boxes
+  const confirm_message = "confirm_message";
   const tabStatus = "tab";
-
   const active_list = "active_list_module";
   const inactive_list = "inactive_list_module";
   const popup_msg = "popup_msg_module";
-    
   //Mapping
   const map_module = "map_module";
+
 }

@@ -2,8 +2,7 @@
 
 namespace Library\Interfaces;
 
+interface IUser {
 
-interface IUser
-{
   public function getRole();
-} 
+}

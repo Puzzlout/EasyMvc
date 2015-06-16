@@ -24,8 +24,9 @@
 
 namespace Library\Utility;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
 class JavascriptManager extends \Library\Core\ApplicationComponent {
 
@@ -38,7 +39,7 @@ class JavascriptManager extends \Library\Core\ApplicationComponent {
   public function __construct(\Library\Core\Application $app) {
     parent::__construct($app);
     $this->files = \Library\Core\DirectoryManager::GetFilesNamesRecursively(
-            __ROOT__ . \Library\Enums\ApplicationFolderName::WebJs, "js");
+                    __ROOT__ . \Library\Enums\ApplicationFolderName::WebJs, "js");
   }
 
 }

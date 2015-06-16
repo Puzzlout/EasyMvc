@@ -23,10 +23,12 @@
 
 namespace Library\Enums;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
 abstract class ApplicationFolderName {
+
   const AppsFolderName = "Applications/";
   const ControllersFolderName = "/Controllers/";
   const ViewsFolderName = "/Views/";
@@ -37,5 +39,5 @@ abstract class ApplicationFolderName {
   const WebJs = "Web/js/";
   const WebCss = "Web/css/";
   const ModulesFolderName = "/Modules/";
-}
 
+}

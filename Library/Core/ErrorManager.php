@@ -23,17 +23,20 @@
 
 namespace Library\Core;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
-class ErrorManager extends ApplicationComponent{
+class ErrorManager extends ApplicationComponent {
+
   private $errorLoggingMethod = null;
   private $exception = null;
   private $errorObj = null;
-  
+
   public function errorObj() {
     return $this->errorObj;
   }
+
   public function __construct(Application $app, \Exception $exc) {//, \Library\Enums\ErrorOrigin $origin, $title) {
     parent::__construct($app);
     $this->errorLoggingMethod = $app->config()->get(\Library\Enums\AppSettingKeys::ErrorLoggingMethod);
@@ -44,7 +47,7 @@ class ErrorManager extends ApplicationComponent{
 //            $title,
 //            $exc->getTraceAsString());
   }
-  
+
   public function LogError() {
     switch ($this->errorLoggingMethod) {
       case \Library\Enums\ErrorLoggingMethod::EchoString:
@@ -56,4 +59,5 @@ class ErrorManager extends ApplicationComponent{
         break;
     }
   }
+
 }

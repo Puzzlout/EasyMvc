@@ -23,8 +23,9 @@
 
 namespace Applications\EasyMvc\Controllers;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
 class AuthenticateController extends \Library\Controllers\BaseController {
 
@@ -36,7 +37,7 @@ class AuthenticateController extends \Library\Controllers\BaseController {
    * @param \Library\HttpRequest $rq: the request
    */
   public function executeLoadLoginView(\Library\Core\HttpRequest $rq) {
-    $this->executeDisconnect($rq,FALSE);
+    $this->executeDisconnect($rq, FALSE);
   }
 
   /**
@@ -82,30 +83,34 @@ class AuthenticateController extends \Library\Controllers\BaseController {
    */
   public function executeDisconnect(\Library\Core\HttpRequest $rq, $redirect = TRUE) {
     $this->app()->auth->deauthenticate();
-    if ($redirect) { $this->Redirect("login"); }
+    if ($redirect) {
+      $this->Redirect("login");
+    }
   }
-  
-    /**
+
+  /**
    * Method that logout a user from the session and then redirect him to Login page.
    *
    * @param \Library\HttpRequest $rq
    */
   public function executeCreate(\Library\Core\HttpRequest $rq) {
-    $protect = new \Library\BL\Core\Encryption();
+    $protect = new \Library\Security\Encryption($this->app()->config());
     $data = array(
-      "username" => $rq->getData("login"),
-      "password" => $rq->getData("pwd"),
-      "pm_name" => "Demo User"
+        "username" => $rq->getData("login"),
+        "password" => $rq->getData("pwd"),
+        "pm_name" => "Demo User"
     );
     //TODO: implement user creation
     $user = \Library\Helpers\CommonHelper::PrepareUserObject($data, new Library\BO\User());
-    $user->setPassword($protect->HashValue($this->app->config->get("encryption_key"), $user->password()));
+    $user->setPassword($protect->HashValue($this->app->config->get("PaswordSalt"), $user->password()));
 
     $loginDal = $this->managers->getManagerOf("Login");
     $id = $loginDal->add($user);
     $redirect = intval($id) > 0 ? TRUE : FALSE;
-    
-    if ($redirect) { $this->Redirect("login"); }
+
+    if ($redirect) {
+      $this->Redirect("login");
+    }
   }
 
   /**
@@ -125,9 +130,10 @@ class AuthenticateController extends \Library\Controllers\BaseController {
    * @param type $user_db
    */
   private function EncryptUserPassword($manager, $user_in, $user_db) {
-    $protect = new \Library\BL\Security\Encryption();
-    $user_in->setPassword($protect->HashValue($this->app->config->get("encryption_key"), $user_in->password()));
+    $protect = new \Library\Security\Encryption($this->app()->config());
+    $user_in->setPassword($protect->HashValue($this->app->config->get("PaswordSalt"), $user_in->password()));
     $user_in->pm_id = $user_db[0]->pm_id;
     $manager->update($user_in);
   }
+
 }

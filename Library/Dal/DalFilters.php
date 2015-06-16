@@ -24,16 +24,17 @@
 
 namespace Library\Dal;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
 class DalFilters {
 
   protected
-      $select_filters = array(),
-      $where_filters = array(),
-      $order_by_filters = array(),
-      $join_filters = array();
+          $select_filters = array(),
+          $where_filters = array(),
+          $order_by_filters = array(),
+          $join_filters = array();
 
   // SETTERS //
   public function setSelect_Filters($select_filters) {

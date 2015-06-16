@@ -2,8 +2,9 @@
 
 namespace Library\Controllers;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
 abstract class BaseController extends \Library\Core\ApplicationComponent {
 
@@ -32,8 +33,7 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
     $this->setDataPost($this->app->httpRequest()->retrievePostAjaxData(FALSE));
     $this->resxData = $this->app->i8n->getLocalResourceArray($this->resxfile);
     $this->setUploadingFiles();
-    $this->toolTips[\Library\Enums\Popup::ellipsis_tooltip_settings] =
-            $this->app()->toolTip()->getTooltipEllipsisSettings('{"targetcontroller":"'. $this->module .'","targetaction": "'. $this->action .'"}');
+    $this->toolTips[\Library\Enums\Popup::ellipsis_tooltip_settings] = $this->app()->toolTip()->getTooltipEllipsisSettings('{"targetcontroller":"' . $this->module . '","targetaction": "' . $this->action . '"}');
   }
 
   public function execute() {
@@ -97,7 +97,7 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
   public function files() {
     return $this->files;
   }
-  
+
   public function toolTips() {
     return $this->toolTips;
   }
@@ -126,12 +126,12 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
     $this->view = $view;
 
     $this->page->setContentFile(
-        __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName
-        . $this->app->name()
-        . \Library\Enums\ApplicationFolderName::ViewsFolderName
-        . $this->module
-        . '/'
-        . $this->view . '.php');
+            __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName
+            . $this->app->name()
+            . \Library\Enums\ApplicationFolderName::ViewsFolderName
+            . $this->module
+            . '/'
+            . $this->view . '.php');
   }
 
   public function setResxFile($resxfile) {
@@ -165,17 +165,17 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
   public function InitResponseWS($params = array("resx_file" => "ws_defaults", "resx_key" => "", "step" => "error")) {
     if ($params["step"] === "success") {
       return array(
-        "result" => 1,
-        "message" => $params["resx_file"] === "ws_defaults" ?
-            $this->app->i8n->getCommonResource($params["resx_file"], "message_success" . $params["resx_key"]) :
-            $this->app->i8n->getLocalResource($params["resx_file"], "message_success" . $params["resx_key"])
+          "result" => 1,
+          "message" => $params["resx_file"] === "ws_defaults" ?
+                  $this->app->i8n->getCommonResource($params["resx_file"], "message_success" . $params["resx_key"]) :
+                  $this->app->i8n->getLocalResource($params["resx_file"], "message_success" . $params["resx_key"])
       );
     } else {
       return array(
-        "result" => 0,
-        "message" => $params["resx_file"] === "ws_defaults" ?
-            $this->app->i8n->getCommonResource($params["resx_file"], "message_error" . $params["resx_key"]) :
-            $this->app->i8n->getLocalResource($params["resx_file"], "message_error" . $params["resx_key"])
+          "result" => 0,
+          "message" => $params["resx_file"] === "ws_defaults" ?
+                  $this->app->i8n->getCommonResource($params["resx_file"], "message_error" . $params["resx_key"]) :
+                  $this->app->i8n->getLocalResource($params["resx_file"], "message_error" . $params["resx_key"])
       );
     }
   }
@@ -192,13 +192,13 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
     if ($params["step"] === "success") {
       $result["result"] = 1;
       $result["message"] = ($params["resx_file"] === "ws_defaults" || (array_key_exists("directory", $params) && $params["directory"] === "common")) ?
-          $this->app->i8n->getCommonResource($params["resx_file"], "message_success_" . $params["resx_key"]) :
-          $this->app->i8n->getLocalResource($params["resx_file"], "message_success_" . $params["resx_key"]);
+              $this->app->i8n->getCommonResource($params["resx_file"], "message_success_" . $params["resx_key"]) :
+              $this->app->i8n->getLocalResource($params["resx_file"], "message_success_" . $params["resx_key"]);
     } else {
       $result["result"] = 0;
       $result["message"] = ($params["resx_file"] === "ws_defaults" || (array_key_exists("directory", $params) && $params["directory"] === "common")) ?
-          $this->app->i8n->getCommonResource($params["resx_file"], "message_error_" . $params["resx_key"]) :
-          $this->app->i8n->getLocalResource($params["resx_file"], "message_error_" . $params["resx_key"]);
+              $this->app->i8n->getCommonResource($params["resx_file"], "message_error_" . $params["resx_key"]) :
+              $this->app->i8n->getLocalResource($params["resx_file"], "message_error_" . $params["resx_key"]);
     }
     echo \Library\HttpResponse::encodeJson($result);
   }
@@ -251,7 +251,7 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
   }
 
   protected function Redirect($urlPart) {
-    \Library\Core\Utility\TimeLogger::EndLog($this->app(), \Library\Enums\ResourceKeys\GlobalAppKeys::log_http_request);
+    \Library\Utility\TimeLogger::EndLog($this->app(), \Library\Enums\ResourceKeys\GlobalAppKeys::log_http_request);
     $url = __BASEURL__ . $urlPart;
     header('Location: ' . $url);
     exit();

@@ -23,10 +23,12 @@
 
 namespace Library\Enums;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
 class SqlClauseType {
+
   const WHERE = "WHERE";
   const ORDERBY = "ORDER_BY";
   const GROUPBY = "GROUP_BY";
@@ -34,5 +36,5 @@ class SqlClauseType {
   const INNERJOIN = "INNER_JOIN";
   const LEFTJOIN = "LEFT_JOIN";
   const RIGHTJOIN = "RIGHT_JOIN";
-  
+
 }

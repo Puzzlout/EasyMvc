@@ -23,10 +23,13 @@
 
 namespace Library\Enums;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
 class UserRoleType {
+
   const Admin = "administrator_id";
   const Visitor = "";
+
 }

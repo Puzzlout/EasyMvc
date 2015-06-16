@@ -22,7 +22,7 @@
 
 
 namespace Applications\EasyMvc\Resources\Enums\ViewVariables;
-if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
+if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) { exit('No direct script access allowed'); }
 
 class _Template {
   //Modules keys

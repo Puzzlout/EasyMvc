@@ -24,8 +24,9 @@
 
 namespace Library\Helpers;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
 class CommonHelper {
 
@@ -53,9 +54,9 @@ class CommonHelper {
 
   public static function SetPropertyNamesForDualList($module) {
     return array(
-      \Applications\EasyMvc\Resources\Enums\ViewVariablesKeys::property_id => $module . "_id",
-      \Applications\EasyMvc\Resources\Enums\ViewVariablesKeys::property_name => $module . "_name",
-      \Applications\EasyMvc\Resources\Enums\ViewVariablesKeys::property_active => $module . "_active",
+        \Applications\EasyMvc\Resources\Enums\ViewVariablesKeys::property_id => $module . "_id",
+        \Applications\EasyMvc\Resources\Enums\ViewVariablesKeys::property_name => $module . "_name",
+        \Applications\EasyMvc\Resources\Enums\ViewVariablesKeys::property_active => $module . "_active",
     );
   }
 
@@ -110,14 +111,15 @@ class CommonHelper {
    */
   public static function FindObjectByIntValue($idValue, $propName, $listOfObjects) {
     $match = FALSE;
-      foreach ($listOfObjects as $obj) {
-        if (intval($obj->$propName()) === $idValue) {
-          $match = $obj;
-          break;
-        }
+    foreach ($listOfObjects as $obj) {
+      if (intval($obj->$propName()) === $idValue) {
+        $match = $obj;
+        break;
       }
+    }
     return $match;
   }
+
   /**
    * Find an object in a list filtering by the string value of one property name of each object.
    * 
@@ -237,28 +239,28 @@ class CommonHelper {
   }
 
   /**
-  * Returns the truncated text based on the passed
-  * parameters, at present the method generates the
-  * HTML markup as well which is needed for the tooltip
-  * to work properly.
-  */
+   * Returns the truncated text based on the passed
+   * parameters, at present the method generates the
+   * HTML markup as well which is needed for the tooltip
+   * to work properly.
+   */
   public static function generateEllipsisAndTooltipMarkupFor($textToTruncate, $charLimit, $placement) {
     $truncatedData = null;
-    if(strlen($textToTruncate) > intval($charLimit)) {
+    if (strlen($textToTruncate) > intval($charLimit)) {
       //We would have to truncate
       $truncatedData = array(
-                        'source'    => $textToTruncate,
-                        'truncated' => substr($textToTruncate, 0, $charLimit - 3) . '...'
-                      );
+          'source' => $textToTruncate,
+          'truncated' => substr($textToTruncate, 0, $charLimit - 3) . '...'
+      );
     } else {
       //Return the string as it is
       $truncatedData = array(
-                        'source'    => $textToTruncate,
-                        'truncated' => ''
-                      );
+          'source' => $textToTruncate,
+          'truncated' => ''
+      );
     }
 
-    if(trim($truncatedData['truncated']) !== '') {
+    if (trim($truncatedData['truncated']) !== '') {
       echo $truncatedData['truncated'];
       echo '<input type="hidden" class="ellipsis-tooltip" value="' . $truncatedData['source'] . '" placement="' . $placement . '" >';
     } else {

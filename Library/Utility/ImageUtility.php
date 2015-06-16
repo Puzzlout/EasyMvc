@@ -1,7 +1,10 @@
 <?php
 
 namespace Library\Utility;
-if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
+
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+  exit('No direct script access allowed');
+}
 
 class ImageUtility extends \Library\Core\ApplicationComponent {
 
@@ -15,6 +18,7 @@ class ImageUtility extends \Library\Core\ApplicationComponent {
     }
     throw \InvalidArgumentException("Missing Image name!");
   }
+
   public function buildImageTag($params) {
     
   }

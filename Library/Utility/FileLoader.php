@@ -24,19 +24,20 @@
 
 namespace Library\Utility;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
 class FileLoader extends \Library\Core\ApplicationComponent {
 
   public
-    $rootDirectory = "",
-    $webDirectory = "",
-    $uploadDirectory = "",
-    $currentFile = null,
-    $files = array(),
-    $dataPost = array(),
-    $resultJson = array();
+          $rootDirectory = "",
+          $webDirectory = "",
+          $uploadDirectory = "",
+          $currentFile = null,
+          $files = array(),
+          $dataPost = array(),
+          $resultJson = array();
 
   function __construct(\Library\Core\Application $app, $data) {
     parent::__construct($app);
@@ -49,12 +50,12 @@ class FileLoader extends \Library\Core\ApplicationComponent {
     $this->uploadDirectory = $this->GetUploadDirectory();
     $this->resultJson["fileResults"] = array();
     $documents = $this->LoadDocumentObjects();
-    foreach($documents as &$document) {
+    foreach ($documents as &$document) {
       $this->currentFile = new \Library\BO\FileUploadResult($document->document_value());
       $this->currentFile->setFilePath($this->uploadDirectory . "/" . $document->document_value());
       $this->currentFile->setWebPath($this->GetWebUploadDirectory() . "/" . $document->document_value());
       $fileExists = \Library\Core\DirectoryManager::FileExists($this->currentFile->filePath());
-      if($fileExists) {
+      if ($fileExists) {
         $this->currentFile->setDoesExist(true);
         array_push($this->resultJson["fileResults"], $this->currentFile);
       }
@@ -77,11 +78,11 @@ class FileLoader extends \Library\Core\ApplicationComponent {
   private function LoadDocumentObjects() {
     $db = new \Library\Dal\Managers('PDO', $this->app());
     $dal = $db->getManagerOf("Document", false);
-    if(isset($this->dataPost["itemCategory"]) and isset($this->dataPost["itemId"]) and is_numeric($this->dataPost["itemId"]))
-    {
-      return $dal->selectManyByCategoryAndId($this->dataPost["itemCategory"],$this->dataPost["itemId"]);
+    if (isset($this->dataPost["itemCategory"]) and isset($this->dataPost["itemId"]) and is_numeric($this->dataPost["itemId"])) {
+      return $dal->selectManyByCategoryAndId($this->dataPost["itemCategory"], $this->dataPost["itemId"]);
     } else {
       return array();
     }
   }
+
 }

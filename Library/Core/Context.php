@@ -1,7 +1,10 @@
 <?php
 
 namespace Library\Core;
-if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
+
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+  exit('No direct script access allowed');
+}
 
 class Context extends ApplicationComponent {
 
@@ -10,7 +13,9 @@ class Context extends ApplicationComponent {
   public function __construct(Application $app) {
     parent::__construct($app);
   }
+
   public function setLanguage() {
     $this->defaultLang = $this->app->config()->get(\Library\Enums\AppSettingKeys::DefaultLanguage);
   }
+
 }

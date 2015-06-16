@@ -23,8 +23,9 @@
 
 namespace Library\Enums;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
 class LeftMenuConstants {
   /* Placeholders used at execution to build the menu items */
@@ -36,7 +37,6 @@ class LeftMenuConstants {
   const itemId = "{{itemId}}";
 
   /* Html tag helpers */
-
   const CLOSE_TAG = ">";
   const OPEN_LI = "<li>";
   const OPEN_LI_START = "<li ";

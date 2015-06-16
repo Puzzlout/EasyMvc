@@ -1,4 +1,5 @@
 <?php
+
 /**
  * XmlLoader class
  * 
@@ -7,29 +8,34 @@
  * @link http://jeremielitzler.net/Blog
  * 
  */
+
 namespace Library\Utility;
-if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
 
-class XmlLoader
-{
-    /**
-     * path to xml file to load
-     * 
-     * @var string 
-     */
-    public $filePath = "";
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+  exit('No direct script access allowed');
+}
 
-    function __construct($filePath) {
-        $this->filePath= $filePath;
+class XmlLoader {
+
+  /**
+   * path to xml file to load
+   * 
+   * @var string 
+   */
+  public $filePath = "";
+
+  function __construct($filePath) {
+    $this->filePath = $filePath;
+  }
+
+  public function Load() {
+    $xml = NULL;
+    if (file_exists($this->filePath)) {
+      $xml = simplexml_load_file($this->filePath);
+    } else {
+      error_log('Failed to open ' . $this->filePath);
     }
-    
-    public function Load() {
-        $xml = NULL;
-        if (file_exists($this->filePath)) {
-            $xml = simplexml_load_file($this->filePath);
-        } else {
-            error_log('Failed to open '.$this->filePath);
-        }
-        return $xml;
-    }
+    return $xml;
+  }
+
 }

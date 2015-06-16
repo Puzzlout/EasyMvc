@@ -1,7 +1,10 @@
 <?php
 
 namespace Library\Core;
-if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');
+
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+  exit('No direct script access allowed');
+}
 
 class Route {
 
@@ -27,7 +30,7 @@ class Route {
     $this->setRole($config['route_xml']->getAttribute('role'));
 
     $this->setVarsNames($config['vars']);
-    
+
     $this->setJsScripts($config['js_head'], TRUE);
     $this->setJsScripts($config['js_html'], FALSE);
     $this->setCssFiles($config['css']);
@@ -84,23 +87,23 @@ class Route {
       $this->type = $type;
     }
   }
-  
+
   public function setJsScripts($js_scripts, $forHead) {
     if ($forHead) {
-     return $this->headJsScripts = $js_scripts; 
+      return $this->headJsScripts = $js_scripts;
     } else {
-     return $this->htmlJsScripts = $js_scripts; 
+      return $this->htmlJsScripts = $js_scripts;
     }
   }
 
   public function setCssFiles($css_files) {
     return $this->cssFiles = $css_files;
   }
-  
+
   public function setRelativePath($path) {
     return $this->relative_path = $path;
   }
-  
+
   public function setPhpModules($php_modules) {
     return $this->phpModules = $php_modules;
   }
@@ -109,7 +112,6 @@ class Route {
     return $this->resxfile = $resxfile;
   }
 
-
   public function setRole($roleString) {
     if ($roleString == '' || strtolower($roleString) == 'all') {
       $this->role = array();
@@ -117,7 +119,7 @@ class Route {
       $this->role = explode(",", $roleString);
     }
   }
-  
+
   public function action() {
     return $this->action;
   }
@@ -137,27 +139,33 @@ class Route {
   public function type() {
     return $this->type;
   }
+
   public function headJsScripts() {
     return $this->headJsScripts;
   }
+
   public function htmlJsScripts() {
     return $this->htmlJsScripts;
   }
+
   public function cssFiles() {
     return $this->cssFiles;
   }
+
   public function relative_path() {
     return $this->relative_path;
   }
+
   public function phpModules() {
     return $this->phpModules;
   }
+
   public function resxfile() {
     return $this->resxfile;
   }
 
-  public function role(){
+  public function role() {
     return $this->role;
   }
-  
+
 }

@@ -1,0 +1,37 @@
+<?php
+
+/**
+ *
+ * @package		Easy MVC Framework
+ * @author		Jeremie Litzler
+ * @copyright	Copyright (c) 2015
+ * @license		
+ * @link		
+ * @since		
+ * @filesource
+ */
+// ------------------------------------------------------------------------
+
+/**
+ * GeneratorController controller Class
+ *
+ * @package		Library
+ * @category	Controllers
+ * @author		Jeremie Litzler
+ * @link		
+ */
+
+namespace Library\Controllers;
+
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+  exit('No direct script access allowed');
+}
+
+class GeneratorController extends \Library\Controllers\BaseController {
+
+  public function executeCreateDaoClasses(\Library\Core\HttpRequest $rq) {
+    $generator = new \Library\Dal\Generator\GeneratorManager($this->app());
+    $generator->GenerateDaoClasses();
+  }
+
+}

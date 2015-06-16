@@ -24,8 +24,9 @@
 
 namespace Library\Core;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
 class DirectoryManager {
 
@@ -55,7 +56,7 @@ class DirectoryManager {
     $dir_iterator = new \RecursiveDirectoryIterator($dirName);
     $iterator = new \RecursiveIteratorIterator($dir_iterator, \RecursiveIteratorIterator::SELF_FIRST);
     foreach ($iterator as $file) {
-      if (preg_match('~^.*'.$extension.'$~', $file->getFileName())) {
+      if (preg_match('~^.*' . $extension . '$~', $file->getFileName())) {
         array_push($files, $file);
       }
     }
@@ -98,4 +99,5 @@ class DirectoryManager {
       return TRUE;
     }
   }
+
 }

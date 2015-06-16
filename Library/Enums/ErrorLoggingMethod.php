@@ -23,12 +23,15 @@
 
 namespace Library\Enums;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
+}
 
 class ErrorLoggingMethod {
+
   const EchoString = "error-log-type-echo";
   const Alert = "error-log-type-alert";
   const File = "error-log-type-file";
   const Database = "error-log-type-db";
+
 }
