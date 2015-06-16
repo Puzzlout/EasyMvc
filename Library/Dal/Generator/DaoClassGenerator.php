@@ -16,16 +16,36 @@ namespace Library\Dal\Generator;
 
 class DaoClassGenerator {
 
-  protected $file_name, $writer;
+  protected $className, $fileName, $dir, $writer;
   public $file_contents;
   private $_CRLF = "\n\r", $_LF = "\r", $_TAB2 = "  ", $_TAB4 = "    ", $_TAB6 = "      ", $_TAB8 = "        ";
-  
+  private $placeholders;
+  private $isFrameworkClass = true;
+  private $baseClass = "\Library\Entity";
+
   public function __construct($params) {
-    $this->file_name = $params["file_name"];
+    $this->dir = $params["dir"];
+    $this->fileName = $params["file_name"];
+    $this->className = trim($this->fileName,".php");
+    $this->placeholders = array(
+        PhpDocPlaceholder::AUTHOR => "Jeremie Litzler",
+        PhpDocPlaceholder::COPYRIGHT_YEAR => date("Y"),
+        PhpDocPlaceholder::LICENCE => "",
+        PhpDocPlaceholder::LINK => "",
+        PhpDocPlaceholder::PACKAGE => $this->fileName,
+        PhpDocPlaceholder::SUBPACKAGE => "",
+        PhpDocPlaceholder::VERSION_NUMBER => __VERSION_NUMBER__,
+        "{{namespace_framework}}" => "\\Library\\Dal\\Modules\\",
+        "{{namespace_app}}" => "\\Applications\\". __APPNAME__ ."\\Models\\Dao\\"
+    );
+    $this->isFrameworkClass = $params["type"] === \Library\Enums\GenericAppKeys::APP_DB_TABLE ? FALSE : TRUE;
   }
 
-  public function OpenWriter($params) {
-    $this->writer = fopen($params["file_name"], 'w') or die("can't open file");
+  public function OpenWriter() {
+    $filePath = $this->dir . $this->fileName;
+    echo $filePath . "<br />";
+
+    $this->writer = fopen($filePath, 'w') or die("can't open file");
   }
 
   public function CloseWriter($params) {
@@ -36,37 +56,32 @@ class DaoClassGenerator {
     fwrite($this->writer, "<?php" . $this->_CRLF);
   }
 
-  public function AddNameSpace($namespace) {
-    fwrite($this->writer, "namespace " . $namespace . ";");
+  public function AddNameSpace() {
+    if($this->isFrameworkClass) {
+      fwrite($this->writer, strtr(CodeSnippets::SNIPPET_NAMESPACE_FRAMEWORK, $this->placeholders) . $this->className);
+    } else {
+      fwrite($this->writer, strtr(CodeSnippets::SNIPPET_NAMESPACE_APP, $this->placeholders) . $this->className);
+    }
+    
   }
 
   public function AddFileDescription($table_name) {
-    fwrite($this->writer, "/**" . $this->_LF . "*" . $this->_LF);
-    fwrite($this->writer, "* @author     Jeremie Litzler" . $this->_LF);
-    fwrite($this->writer, "* @copyright  Copyright (c) " . date("Y") . $this->_LF);
-    fwrite($this->writer, "* @license" . $this->_LF);
-    fwrite($this->writer, "* @link" . $this->_LF);
-    fwrite($this->writer, "* @since" . $this->_LF);
-    fwrite($this->writer, "* @filesource" . $this->_LF);
-    fwrite($this->writer, "*/" . $this->_LF);
-    fwrite($this->writer, "// ------------------------------------------------------------------------" . $this->_CRLF);
-    fwrite($this->writer, "/**" . $this->_LF . "*" . $this->_LF);
-    fwrite($this->writer, "* " . ucfirst($table_name) ." Dao Class" . $this->_LF);
-    fwrite($this->writer, "*" . $this->_LF);
-    fwrite($this->writer, "* @package     Application/PMTool" . $this->_LF);
-    fwrite($this->writer, "* @subpackage  Models/Dao" . $this->_LF);
-    fwrite($this->writer, "* @category    " . ucfirst($table_name) . $this->_LF);
-    fwrite($this->writer, "* @author      FWM DEV Team" . $this->_LF);
-    fwrite($this->writer, "* @link" . $this->_LF);
-    fwrite($this->writer, "*/" . $this->_CRLF);
+    fwrite($this->writer, PhpDocConstants::OPENING . $this->_LF . PhpDocConstants::SINGLESTART . $this->_LF);
+    fwrite($this->writer, strtr(PhpDocConstants::AUTHOR, $this->placeholders) . $this->_LF);
+    fwrite($this->writer, strtr(PhpDocConstants::COPYRIGHT, $this->placeholders) . $this->_LF);
+    fwrite($this->writer, strtr(PhpDocPlaceholder::LICENCE, $this->placeholders) . $this->_LF);
+    fwrite($this->writer, strtr(PhpDocConstants::LINK, $this->placeholders) . $this->_LF);
+    fwrite($this->writer, strtr(PhpDocConstants::SINCE, $this->placeholders) . $this->_LF);
+    fwrite($this->writer, strtr(PhpDocConstants::PACKAGE, $this->placeholders) . $this->_LF);
+    fwrite($this->writer, PhpDocConstants::CLOSING . $this->_CRLF);
   }
 
   public function AddScriptNotAllowedLine() {
-    fwrite($this->writer, $this->_LF . "if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) exit('No direct script access allowed');");
+    fwrite($this->writer, $this->_LF . "if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) { exit('No direct script access allowed'); }");
   }
 
-  public function ClassStart($params) {
-    $output = $this->_CRLF . "class " . ucfirst($params['class_name']) . " extends " . $params['base_class'] . "{" . $this->_LF;
+    public function ClassStart() {
+    $output = $this->_CRLF . "class " . ucfirst($this->className) . " extends " . $this->baseClass  . " {". $this->_LF;
     fwrite($this->writer, $output);
   }
 
@@ -74,7 +89,25 @@ class DaoClassGenerator {
     fwrite($this->writer, $this->_LF . "}");
   }
 
-  public function AddPropertiesAndConsts($columns) {
+  public function BuildClassHeader($table_name) {
+    $this->OpenWriter();
+    $this->AddPhpOpenTag();
+    $this->AddFileDescription($table_name);
+    $this->AddNameSpace();
+    $this->AddScriptNotAllowedLine();
+    $this->ClassStart();
+  }
+
+  public function BuildClassBody($table_col_metas) {
+    //Build the properties
+    $this->AddPropertiesAndConsts($table_col_metas);
+    //Add setters
+    $this->AddSetters($table_col_metas);
+    //Add getters
+    $this->AddGetters($table_col_metas);
+  }
+
+  private function AddPropertiesAndConsts($columns) {
     //Write the public properties
     fwrite($this->writer, $this->_TAB2 . "public " . $this->_LF);
     $columnCount = 0;
@@ -99,7 +132,7 @@ class DaoClassGenerator {
     }
   }
 
-  public function AddSetters($columns) {
+  private function AddSetters($columns) {
     fwrite($this->writer, $this->_TAB2 . "// SETTERS //" . $this->_LF);
     foreach ($columns as $columnName => $columnMeta) {
       $output = $this->_TAB2 . "public function set" . ucfirst($columnMeta[0]["Field"]) . "($" . $columnMeta[0]["Field"] . ") {" . $this->_LF;
@@ -113,7 +146,7 @@ class DaoClassGenerator {
     }
   }
 
-  public function AddGetters($columns) {
+  private function AddGetters($columns) {
     fwrite($this->writer, $this->_TAB2 . "// GETTERS //" . $this->_LF);
     foreach ($columns as $columnName => $columnMeta) {
       $output = $this->_TAB2 . "public function " . $columnMeta[0]["Field"] . "() {" . $this->_LF;

@@ -28,17 +28,15 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
 class PhpDocConstants {
-  const PACKAGE_PRIMARY = "Basic MVC framework";
-  const AUTHOR = "Jeremie Litzler";
-  const COPYRIGHT = "Copyright (c)";
-  const LICENCE = "";
-  const LINK = "";
-  const SINCE = "";
-  const FILESOURCE = "";
+  const OPENING = "/**";
+  const SINGLESTART = "*";
+  const CLOSING = "*/";
+  const PACKAGE = "* @package {{phpdoc_package}}";
+  const AUTHOR = "* @author {{phpdoc_author}}";
+  const COPYRIGHT = "* @copyright Copyright (c) {{phpdoc_copyright_year}}";
+  const LICENCE = "* @licence {{phpdoc_licence}}";
+  const LINK = "* @link {{phpdoc_link}}";
+  const SINCE = "* @since Version {{phpdoc_version_number}}";
   
-  const PACKAGE_SECONDARY = "";
-  const SUBPACKAGE = "";
-  const CATEGORY = "";
-  const AUTHOR_SECONDARY = "";
-  const LINK_SECONDARY = "";
+  const SUBPACKAGE = "* @subpackage {{phpdoc_subpackage}}";
 }
