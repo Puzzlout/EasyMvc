@@ -37,6 +37,7 @@ class PhpDocConstants {
   const LICENCE = "* @licence {{phpdoc_licence}}";
   const LINK = "* @link {{phpdoc_link}}";
   const SINCE = "* @since Version {{phpdoc_version_number}}";
-  
+  const SET_PROPERTY_SUMMARY = "* Sets {{phpdoc_property_set}} if the value passed match the type expected, otherwise throws an exception.";
+  const GET_PROPERTY_SUMMARY = "* Gets {{phpdoc_property_get}}.";
   const SUBPACKAGE = "* @subpackage {{phpdoc_subpackage}}";
 }

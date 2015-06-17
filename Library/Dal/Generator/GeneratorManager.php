@@ -37,13 +37,12 @@ class GeneratorManager extends \Library\Core\ApplicationComponent {
         $table_name = $table[0];
         $tableColumnNames = $dal->GetTableColumnNames($table[0]);
         $tableColumnMeta = $dal->GetTableColumnsMeta($table[0], $tableColumnNames);
-        $file_name = ucfirst($table_name) . ".php";
         $dao = new DaoClassGenerator(
                 array(
-                    "file_name" => $file_name, 
+                    "className" => ucfirst($table_name), 
                     "dir" => __ROOT__ . "Library/Dal/Generator/output/",
                     "type" => 
-                      (strpos($table_name, "c_") !== FALSE ? 
+                      (!preg_match("`".\Library\Enums\GenericAppKeys::PREFIX_FRAMEWORK_TABLE.".*$`", $table_name) ? 
                       \Library\Enums\GenericAppKeys::APP_DB_TABLE : 
                       \Library\Enums\GenericAppKeys::FRAMEWORK_DB_TABLE)
                     )

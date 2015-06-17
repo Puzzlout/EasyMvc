@@ -24,4 +24,6 @@ class PhpDocPlaceholder {
   const LINK = "{{phpdoc_link}}";
   const VERSION_NUMBER = "{{phpdoc_version_number}}";
   const SUBPACKAGE = "{{phpdoc_subpackage}}";
+  const SET_PROPERTY = "{{phpdoc_property_set}}";
+  const GET_PROPERTY = "{{phpdoc_property_get}}";
 }
