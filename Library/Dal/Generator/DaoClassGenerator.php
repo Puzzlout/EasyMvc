@@ -44,7 +44,7 @@ class DaoClassGenerator {
         PhpDocPlaceholder::PACKAGE => $this->className,
         PhpDocPlaceholder::SUBPACKAGE => "",
         PhpDocPlaceholder::VERSION_NUMBER => __VERSION_NUMBER__,
-        CodeSnippetConstants::NAMESPACE_FRAMEWORK => "\\Library\\Dal\\Modules",
+        CodeSnippetConstants::NAMESPACE_FRAMEWORK => "\Library\BO",
         CodeSnippetConstants::NAMESPACE_APP => "\\Applications\\" . __APPNAME__ . "\\Models\\Dao",
         CodeSnippetConstants::CLASS_NAME => $this->className
     );

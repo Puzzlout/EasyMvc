@@ -35,30 +35,30 @@ class TimeLogger extends Logger {
 //    $this->logs[\Library\Enums\ResourceKeys\GlobalAppKeys::log_controller_method_request] = array();
 //  }
 
-  public static function SetLog($user, \Library\BO\Log $log) {
+  public static function SetLog($user, \Library\BO\F_log $log) {
     $logs = Logger::GetLogs($user);
     $logs[$log->log_type()][$log->log_request_id()] = $log;
     Logger::StoreLogs($user, $logs);
   }
 
   public static function StartLog(\Library\Core\Application $app, $type) {
-    $log = new \Library\BO\Log();
-    $log->setLog_type($type);
-    $log->setLog_request_id($app->httpRequest()->requestId());
-    $log->setLog_start(Logger::GetTime());
-    $log->setLog_filter($app->httpRequest()->requestURI());
+    $log = new \Library\BO\F_log();
+    $log->setF_log_type($type);
+    $log->setF_log_request_id($app->httpRequest()->requestId());
+    $log->setF_log_start(Logger::GetTime());
+    $log->setF_log_filter($app->httpRequest()->requestURI());
     self::SetLog($app->user(), $log);
   }
 
   public static function EndLog(\Library\Core\Application $app, $type) {
     $logs = Logger::GetLogs($app->user());
     $log = $logs[$type][$app->httpRequest()->requestID()];
-    $log->setLog_end(Logger::GetTime());
-    $log->setLog_execution_time(
-            ($log->log_end - $log->log_start()) * 1000
+    $log->setF_log_end(Logger::GetTime());
+    $log->setF_log_execution_time(
+            ($log->f_log_end() - $log->f_log_start()) * 1000
     );
-    $log->setLog_start(gmdate("Y-m-d H:i:s", $log->log_start()));
-    $log->setLog_end(gmdate("Y-m-d H:i:s", $log->log_end()));
+    $log->setF_log_start(gmdate("Y-m-d H:i:s", $log->f_log_start()));
+    $log->setF_log_end(gmdate("Y-m-d H:i:s", $log->f_log_end()));
     Logger::AddLogToDatabase($app, $log);
     Logger::StoreLogs($app->user(), $logs);
   }
