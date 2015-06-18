@@ -1,7 +1,7 @@
 <?php
-/*** @author Jeremie Litzler* @copyright Copyright (c) 2015* @licence * @link https://github.com/WebDevJL/EasyMVC* @since Version 1.0.0* @package F_account*/
-namespace \Library\Dal\Modules;if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) { exit('No direct script access allowed'); }
-class F_account extends \Library\Entity {  public     $f_account_id,    $f_account_name,    $f_account_desc,    $f_account_active,    $f_account_visible,    $f_user_id;
+/*** @author Jeremie Litzler* @copyright Copyright (c) 2015* @licence http://opensource.org/licenses/gpl-license.php GNU Public License* @link https://github.com/WebDevJL/EasyMVC* @since Version 1.0.0* @package F_account*/
+namespace \Library\BO;if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) { exit('No direct script access allowed'); }
+class F_account extends \Library\Core\Entity {  public     $f_account_id,    $f_account_name,    $f_account_desc,    $f_account_active,    $f_account_visible,    $f_user_id;
   /**    * Sets f_account_id if the value passed match the type expected, otherwise throws an exception.  */  public function setF_account_id($f_account_id) {      $this->f_account_id = $f_account_id;  }
   /**    * Sets f_account_name if the value passed match the type expected, otherwise throws an exception.  */  public function setF_account_name($f_account_name) {      $this->f_account_name = $f_account_name;  }
   /**    * Sets f_account_desc if the value passed match the type expected, otherwise throws an exception.  */  public function setF_account_desc($f_account_desc) {      $this->f_account_desc = $f_account_desc;  }

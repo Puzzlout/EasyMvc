@@ -30,7 +30,7 @@ class DaoClassGenerator {
           $_TAB8 = "        ",
           $placeholders,
           $isFrameworkClass = true,
-          $baseClass = "\Library\Entity";
+          $baseClass = "\Library\Core\Entity";
 
   public function __construct($params) {
     $this->dir = $params["dir"];
@@ -39,7 +39,7 @@ class DaoClassGenerator {
     $this->placeholders = array(
         PhpDocPlaceholder::AUTHOR => "Jeremie Litzler",
         PhpDocPlaceholder::COPYRIGHT_YEAR => date("Y"),
-        PhpDocPlaceholder::LICENCE => "",
+        PhpDocPlaceholder::LICENCE => "http://opensource.org/licenses/gpl-license.php GNU Public License",
         PhpDocPlaceholder::LINK => "https://github.com/WebDevJL/EasyMVC",
         PhpDocPlaceholder::PACKAGE => $this->className,
         PhpDocPlaceholder::SUBPACKAGE => "",

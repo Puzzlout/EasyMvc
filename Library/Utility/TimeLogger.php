@@ -37,7 +37,7 @@ class TimeLogger extends Logger {
 
   public static function SetLog($user, \Library\BO\F_log $log) {
     $logs = Logger::GetLogs($user);
-    $logs[$log->log_type()][$log->log_request_id()] = $log;
+    $logs[$log->f_log_type()][$log->f_log_request_id()] = $log;
     Logger::StoreLogs($user, $logs);
   }
 

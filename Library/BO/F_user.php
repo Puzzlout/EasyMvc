@@ -1,7 +1,7 @@
 <?php
-/*** @author Jeremie Litzler* @copyright Copyright (c) 2015* @licence * @link https://github.com/WebDevJL/EasyMVC* @since Version 1.0.0* @package F_user*/
-namespace \Library\Dal\Modules;if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) { exit('No direct script access allowed'); }
-class F_user extends \Library\Entity {  public     $f_user_id,    $f_user_login,    $f_user_password,    $f_user_salt,    $f_user_hint,    $f_user_email,    $f_user_role_id,    $f_user_session_id;
+/*** @author Jeremie Litzler* @copyright Copyright (c) 2015* @licence http://opensource.org/licenses/gpl-license.php GNU Public License* @link https://github.com/WebDevJL/EasyMVC* @since Version 1.0.0* @package F_user*/
+namespace \Library\BO;if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) { exit('No direct script access allowed'); }
+class F_user extends \Library\Core\Entity {  public     $f_user_id,    $f_user_login,    $f_user_password,    $f_user_salt,    $f_user_hint,    $f_user_email,    $f_user_role_id,    $f_user_session_id;
   /**    * Sets f_user_id if the value passed match the type expected, otherwise throws an exception.  */  public function setF_user_id($f_user_id) {      $this->f_user_id = $f_user_id;  }
   /**    * Sets f_user_login if the value passed match the type expected, otherwise throws an exception.  */  public function setF_user_login($f_user_login) {      $this->f_user_login = $f_user_login;  }
   /**    * Sets f_user_password if the value passed match the type expected, otherwise throws an exception.  */  public function setF_user_password($f_user_password) {      $this->f_user_password = $f_user_password;  }
