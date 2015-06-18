@@ -1,26 +1,13 @@
 <?php
 
 /**
- *
- * @package		Basic MVC framework
- * @author		Jeremie Litzler
- * @copyright	Copyright (c) 2015
- * @license		
- * @link		
- * @since		
- * @filesource
- */
-// ------------------------------------------------------------------------
-
-/**
- *  Constants Class
- *
- * @package		SqlToDao
- * @subpackage	
- * @category	
- * @author		Jeremie Litzler
- * @link		
- */
+* @author Jeremie Litzler
+* @copyright Copyright (c) 2015
+* @licence http://opensource.org/licenses/gpl-license.php GNU Public License
+* @link https://github.com/WebDevJL/EasyMVC
+* @since Version 1.0.0
+* @package PhpDocConstants
+*/
 
 namespace Library\Dal\Generator;
 
@@ -37,7 +24,7 @@ class PhpDocConstants {
   const LICENCE = "* @licence {{phpdoc_licence}}";
   const LINK = "* @link {{phpdoc_link}}";
   const SINCE = "* @since Version {{phpdoc_version_number}}";
-  const SET_PROPERTY_SUMMARY = "* Sets {{phpdoc_property_set}} if the value passed match the type expected, otherwise throws an exception.";
+  const SET_PROPERTY_SUMMARY = "* Sets {{phpdoc_property_set}}.";
   const GET_PROPERTY_SUMMARY = "* Gets {{phpdoc_property_get}}.";
   const SUBPACKAGE = "* @subpackage {{phpdoc_subpackage}}";
 }

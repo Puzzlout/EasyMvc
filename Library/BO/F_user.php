@@ -1,15 +1,15 @@
 <?php
 /*** @author Jeremie Litzler* @copyright Copyright (c) 2015* @licence http://opensource.org/licenses/gpl-license.php GNU Public License* @link https://github.com/WebDevJL/EasyMVC* @since Version 1.0.0* @package F_user*/
-namespace \Library\BO;if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) { exit('No direct script access allowed'); }
-class F_user extends \Library\Core\Entity {  public     $f_user_id,    $f_user_login,    $f_user_password,    $f_user_salt,    $f_user_hint,    $f_user_email,    $f_user_role_id,    $f_user_session_id;
-  /**    * Sets f_user_id if the value passed match the type expected, otherwise throws an exception.  */  public function setF_user_id($f_user_id) {      $this->f_user_id = $f_user_id;  }
-  /**    * Sets f_user_login if the value passed match the type expected, otherwise throws an exception.  */  public function setF_user_login($f_user_login) {      $this->f_user_login = $f_user_login;  }
-  /**    * Sets f_user_password if the value passed match the type expected, otherwise throws an exception.  */  public function setF_user_password($f_user_password) {      $this->f_user_password = $f_user_password;  }
-  /**    * Sets f_user_salt if the value passed match the type expected, otherwise throws an exception.  */  public function setF_user_salt($f_user_salt) {      $this->f_user_salt = $f_user_salt;  }
-  /**    * Sets f_user_hint if the value passed match the type expected, otherwise throws an exception.  */  public function setF_user_hint($f_user_hint) {      $this->f_user_hint = $f_user_hint;  }
-  /**    * Sets f_user_email if the value passed match the type expected, otherwise throws an exception.  */  public function setF_user_email($f_user_email) {      $this->f_user_email = $f_user_email;  }
-  /**    * Sets f_user_role_id if the value passed match the type expected, otherwise throws an exception.  */  public function setF_user_role_id($f_user_role_id) {      $this->f_user_role_id = $f_user_role_id;  }
-  /**    * Sets f_user_session_id if the value passed match the type expected, otherwise throws an exception.  */  public function setF_user_session_id($f_user_session_id) {      $this->f_user_session_id = $f_user_session_id;  }
+namespace Library\BO;if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) { exit('No direct script access allowed'); }
+class F_user extends \Library\Core\Entity {  protected     $f_user_id,    $f_user_login,    $f_user_password,    $f_user_salt,    $f_user_hint,    $f_user_email,    $f_user_role_id,    $f_user_session_id;
+  /**    * Sets f_user_id.  */  public function setF_user_id($f_user_id) {      $this->f_user_id = $f_user_id;  }
+  /**    * Sets f_user_login.  */  public function setF_user_login($f_user_login) {      $this->f_user_login = $f_user_login;  }
+  /**    * Sets f_user_password.  */  public function setF_user_password($f_user_password) {      $this->f_user_password = $f_user_password;  }
+  /**    * Sets f_user_salt.  */  public function setF_user_salt($f_user_salt) {      $this->f_user_salt = $f_user_salt;  }
+  /**    * Sets f_user_hint.  */  public function setF_user_hint($f_user_hint) {      $this->f_user_hint = $f_user_hint;  }
+  /**    * Sets f_user_email.  */  public function setF_user_email($f_user_email) {      $this->f_user_email = $f_user_email;  }
+  /**    * Sets f_user_role_id.  */  public function setF_user_role_id($f_user_role_id) {      $this->f_user_role_id = $f_user_role_id;  }
+  /**    * Sets f_user_session_id.  */  public function setF_user_session_id($f_user_session_id) {      $this->f_user_session_id = $f_user_session_id;  }
   /**    * Gets f_user_id.  */  public function F_user_id() {    return $this->f_user_id;  }
   /**    * Gets f_user_login.  */  public function F_user_login() {    return $this->f_user_login;  }
   /**    * Gets f_user_password.  */  public function F_user_password() {    return $this->f_user_password;  }

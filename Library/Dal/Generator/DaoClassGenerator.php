@@ -1,16 +1,13 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of dao_generator
- *
- * @author x666207
- */
+* @author Jeremie Litzler
+* @copyright Copyright (c) 2015
+* @licence http://opensource.org/licenses/gpl-license.php GNU Public License
+* @link https://github.com/WebDevJL/EasyMVC
+* @since Version 1.0.0
+* @package DaoClassGenerator
+*/
 
 namespace Library\Dal\Generator;
 
@@ -44,9 +41,9 @@ class DaoClassGenerator {
         PhpDocPlaceholder::PACKAGE => $this->className,
         PhpDocPlaceholder::SUBPACKAGE => "",
         PhpDocPlaceholder::VERSION_NUMBER => __VERSION_NUMBER__,
-        CodeSnippetConstants::NAMESPACE_FRAMEWORK => "\Library\BO",
-        CodeSnippetConstants::NAMESPACE_APP => "\\Applications\\" . __APPNAME__ . "\\Models\\Dao",
-        CodeSnippetConstants::CLASS_NAME => $this->className
+        CodeSnippetPlaceholders::NAMESPACE_FRAMEWORK => "Library\BO",
+        CodeSnippetPlaceholders::NAMESPACE_APP => "Applications\\" . __APPNAME__ . "\Models\Dao",
+        CodeSnippetPlaceholders::CLASS_NAME => $this->className
     );
     $this->isFrameworkClass = $params["type"] === \Library\Enums\GenericAppKeys::APP_DB_TABLE ? FALSE : TRUE;
   }
@@ -112,16 +109,16 @@ class DaoClassGenerator {
 
   public function BuildClassBody($table_col_metas) {
     //Build the properties
-    $this->AddPropertiesAndConsts($table_col_metas);
+    $this->AddFields($table_col_metas);
     //Add setters
     $this->AddSetters($table_col_metas);
     //Add getters
     $this->AddGetters($table_col_metas);
   }
 
-  private function AddPropertiesAndConsts($columns) {
-    //Write the public properties
-    $output = $this->_TAB2 . "public " . $this->_LF;
+  private function AddFields($columns) {
+    //Write the protected fields
+    $output = $this->_TAB2 . "protected " . $this->_LF;
     $columnCount = 0;
     foreach ($columns as $columnName => $columnMeta) {
       if (count($columns) - 1 === $columnCount) {
@@ -139,14 +136,14 @@ class DaoClassGenerator {
     foreach ($columns as $columnName => $columnMeta) {
       $output .= $this->AddPropertyPhpDoc($columnMeta);
       $placeholders = array(
-          CodeSnippetConstants::PROPERTY_NAME_FIRST_CAP => ucfirst($columnMeta[0]["Field"]),
-          CodeSnippetConstants::PROPERTY_NAME => $columnMeta[0]["Field"]);
+          CodeSnippetPlaceholders::PROPERTY_NAME_FIRST_CAP => ucfirst($columnMeta[0]["Field"]),
+          CodeSnippetPlaceholders::PROPERTY_NAME => $columnMeta[0]["Field"]);
       $output .=
               $this->_TAB2 .
               strtr(CodeSnippets::SNIPPET_SET_PROPERTY_START, $placeholders) . $this->_LF;
       $output .=
               $this->_TAB6 .
-              strtr(CodeSnippets::SNIPPET_SET_PROPERTY_MIDDLE, $placeholders) .
+              strtr(CodeSnippets::SNIPPET_SET_PROPERTY_ASSIGNMENT, $placeholders) .
               $this->_LF;
       $output .= $this->_TAB2 . CodeSnippets::SNIPPET_CLOSING_CURLY_BRACKET . $this->_CRLF;
     }
@@ -158,8 +155,8 @@ class DaoClassGenerator {
     foreach ($columns as $columnName => $columnMeta) {
       $output .= $this->AddPropertyPhpDoc($columnMeta, FALSE);
       $placeholders = array(
-          CodeSnippetConstants::PROPERTY_NAME_FIRST_CAP => ucfirst($columnMeta[0]["Field"]),
-          CodeSnippetConstants::PROPERTY_NAME => $columnMeta[0]["Field"]);
+          CodeSnippetPlaceholders::PROPERTY_NAME_FIRST_CAP => ucfirst($columnMeta[0]["Field"]),
+          CodeSnippetPlaceholders::PROPERTY_NAME => $columnMeta[0]["Field"]);
 
       $output .= $this->_TAB2 .
               strtr(CodeSnippets::SNIPPET_GET_PROPERTY_START, $placeholders) .

@@ -1,16 +1,14 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of dal_generator
- *
- * @author x666207
- */
+* @author Jeremie Litzler
+* @copyright Copyright (c) 2015
+* @licence http://opensource.org/licenses/gpl-license.php GNU Public License
+* @link https://github.com/WebDevJL/EasyMVC
+* @since Version 1.0.0
+* @package DalClassGenerator
+*/
+
 namespace Library\Dal\Generator;
 
 class DalClassGenerator {

@@ -1,25 +1,15 @@
 <?php
 
 /**
- *
- * @package    Easy MVC Framework
- * @author     Jeremie Litzler
- * @copyright  Copyright (c) 2015
- * @license
- * @link
- * @since
- * @filesource
- */
-// ------------------------------------------------------------------------
-
-/**
- *
- * CommonDal Class
- *
- * @package     Library
- * @category    Dal\Modules
- * @author      Jeremie Litzler
- * @link
+ * Provides methods to query the database for some generic queries that have
+ * nothing to with the database tables.
+ * 
+ * @author Jeremie Litzler
+ * @copyright Copyright (c) 2015
+ * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link https://github.com/WebDevJL/EasyMVC
+ * @since Version 1.0.0
+ * @package CommonDal
  */
 
 namespace Library\Dal\Modules;

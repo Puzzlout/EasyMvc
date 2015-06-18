@@ -1,22 +1,20 @@
 <?php
 
 /**
- * List the template of code for the Dal generators.
- * 
- * @author		Jeremie Litzler
- * @copyright	Copyright (c) 2015
- * @license		
- * @link		
- * @since		v1.0.0
- * @package		CodeSnippetConstants
- */
+* @author Jeremie Litzler
+* @copyright Copyright (c) 2015
+* @licence http://opensource.org/licenses/gpl-license.php GNU Public License
+* @link https://github.com/WebDevJL/EasyMVC
+* @since Version 1.0.0
+* @package CodeSnippetPlaceholders
+*/
 
 namespace Library\Dal\Generator;
 
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
-class CodeSnippetConstants {
+class CodeSnippetPlaceholders {
   const NAMESPACE_FRAMEWORK = "{{namespace_framework}}";
   const NAMESPACE_APP = "{{namespace_app}}";
   const CLASS_NAME = "{{class_name}}";
