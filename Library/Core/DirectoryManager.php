@@ -33,10 +33,10 @@ class DirectoryManager {
   /**
    * Get the file paths for the current directory
    * 
-   * @param string $dir <p>
-   * Directory value to scan.</p>
-   * @return array <p>
-   * List of files found in directory scanned.</p>
+   * @param string $dir
+   * Directory value to scan.
+   * @return array
+   * List of files found in directory scanned.
    */
   public static function GetFileNames($dir) {
     return array_diff(scandir($dir), array('..', '.'));
@@ -44,12 +44,12 @@ class DirectoryManager {
 
   /**
    * 
-   * @param type $dirName <p>
-   * Directory value to scan.</p>
-   * @param type $type <p>
-   * File extension to find.</p>
-   * @return array(of SplFileInfo) <p>
-   * List of SplFileInfo objects scanned in the top-level directory.</p>
+   * @param type $dirName
+   * Directory value to scan.
+   * @param type $type
+   * File extension to find.
+   * @return array(of SplFileInfo)
+   * List of SplFileInfo objects scanned in the top-level directory.
    */
   public static function GetFilesNamesRecursively($dirName, $extension) {
     $files = array();
@@ -64,14 +64,14 @@ class DirectoryManager {
   }
 
   /**
-   * <p>
+   *
    * Create a directory if doesn't exist.
    * Return True if file exists, otherwise False after creation of directory.
-   * </p>
-   * @param string <p>
-   * $dir Value of directory to create. </p>
-   * @return boolean <p>
-   * File exists or not. </p>
+   * 
+   * @param string
+   * $dir Value of directory to create. 
+   * @return boolean
+   * File exists or not. 
    */
   public static function CreateDirectory($dir) {
     if (!file_exists($dir) && !is_dir($dir)) {
@@ -83,14 +83,14 @@ class DirectoryManager {
   }
 
   /**
-   * <p>
+   *
    * Check if file exists.
    * Return True if file exists, otherwise False after creation of directory.
-   * </p>
-   * @param string <p>
-   * $filePath File path </p>
-   * @return boolean <p>
-   * File exists or not. </p>
+   * 
+   * @param string
+   * $filePath File path 
+   * @return boolean
+   * File exists or not. 
    */
   public static function FileExists($filePath) {
     if (!file_exists($filePath)) {

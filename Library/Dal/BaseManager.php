@@ -55,15 +55,15 @@ class BaseManager extends \Library\Dal\Manager {
   /**
    * Select method for many items
    * 
-   * @param object <p> 
+   * @param object 
    * $object: Dao object
-   * @param mixed <p>
+   * @param mixed
    * $where_filter_id: a string or integer value
    * representing the column name to filter the data on. It is used in the WHERE clause.
-   * @param bool <p>
-   * $filter_as_string: TRUE or FALSE to know if a where filter is a string or a integer </p>
-   * @return mixed <p>
-   * Can be a bool (TRUE,FALSE), a integer or a list of Dao objects (of type  $dao_class) </p>
+   * @param bool
+   * $filter_as_string: TRUE or FALSE to know if a where filter is a string or a integer 
+   * @return mixed
+   * Can be a bool (TRUE,FALSE), a integer or a list of Dao objects (of type  $dao_class) 
    */
   public function selectMany($object, $where_filter_id, $filter_as_string = false) {
     $params = array("type" => "SELECT", "dao_class" => \Library\Helpers\CommonHelper::GetFullClassName($object));
@@ -98,16 +98,16 @@ class BaseManager extends \Library\Dal\Manager {
   /**
    * Select method for many items
    * 
-   * @param object <p> 
+   * @param object 
    * $object: Dao object
-   * @param array <p>
+   * @param array
    * $where_filters: an array following structure:
    * 
    * representing the column name to filter the data on. It is used in the WHERE clause.
-   * @param bool <p>
-   * $filter_as_string: TRUE or FALSE to know if a where filter is a string or a integer </p>
-   * @return mixed <p>
-   * Can be a bool (TRUE,FALSE), a integer or a list of Dao objects (of type  $dao_class) </p>
+   * @param bool
+   * $filter_as_string: TRUE or FALSE to know if a where filter is a string or a integer 
+   * @return mixed
+   * Can be a bool (TRUE,FALSE), a integer or a list of Dao objects (of type  $dao_class) 
    */
   public function selectManyComplex($object, $where_filters) {
     $params = array("type" => "SELECT", "dao_class" => \Library\Helpers\CommonHelper::GetFullClassName($object));
@@ -169,6 +169,7 @@ class BaseManager extends \Library\Dal\Manager {
   public function edit($object, $where_filter_id) {
     $params = array("type" => "UPDATE");
     $where_clause = $set_clause = "";
+    \Library\Helpers\DebugHelper::WriteObject($object);
     foreach ($object as $key => $value) {
       if ($key === $where_filter_id) {
         $where_clause = "$key = :$key";
@@ -186,6 +187,7 @@ class BaseManager extends \Library\Dal\Manager {
         $sth->bindValue(":$key", $value, \PDO::PARAM_STR);
       }
     }
+    \Library\Helpers\DebugHelper::WriteString($update_clause);
     return $this->ExecuteQuery($sth, $params);
   }
 
@@ -201,14 +203,14 @@ class BaseManager extends \Library\Dal\Manager {
     return $this->ExecuteQuery($sth, $params);
   }
 
-  private function GetTableName($object) {
+  protected function GetTableName($object) {
     return \Library\Helpers\CommonHelper::GetShortClassName($object);
   }
 
   protected function ExecuteQuery($sth, $params) {
     $result = -1;
     try {
-      //\Library\Helpers\DebugHelper::LogAsHtmlComment($sql_query);
+      //\Library\Helpers\DebugHelper::WriteString($sql_query);
       $query = $sth->execute();
       if (!$query) {
         $result = $query->errorCode();
@@ -233,7 +235,7 @@ class BaseManager extends \Library\Dal\Manager {
           case "COLUMNNAMES":
             $result = $sth->fetchAll(\PDO::FETCH_COLUMN);
             break;
-          case  "COLUMNMETAS":
+          case "COLUMNMETAS":
             $result = $sth->fetchAll();
             break;
           default:

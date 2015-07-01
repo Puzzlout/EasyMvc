@@ -1,5 +1,5 @@
 <?php
-/*** @author Jeremie Litzler* @copyright Copyright (c) 2015* @licence http://opensource.org/licenses/gpl-license.php GNU Public License* @link https://github.com/WebDevJL/EasyMVC* @since Version 1.0.0* @package F_account*/
+/*** @author Jeremie Litzler* @copyright Copyright (c) 2015* @licence http://opensource.org/licenses/gpl-license.php GNU Public License* @link https://github.com/WebDevJL/* @since Version 1.0.0* @package F_account*/
 namespace Library\BO;if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) { exit('No direct script access allowed'); }
 class F_account extends \Library\Core\Entity {  protected     $f_account_id,    $f_account_name,    $f_account_desc,    $f_account_active,    $f_account_visible,    $f_user_id;
   /**    * Sets f_account_id.  */  public function setF_account_id($f_account_id) {      $this->f_account_id = $f_account_id;  }

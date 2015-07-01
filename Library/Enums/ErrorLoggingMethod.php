@@ -1,24 +1,14 @@
 <?php
 
 /**
- *
- * @package     EasyMvc Framework
- * @author      Jeremie Litzler
- * @copyright   Copyright (c) 2015
- * @license		
- * @link		
- * @since		
- * @filesource
- */
-// ------------------------------------------------------------------------
-
-/**
- * ErrorLoggingMethod Class
- *
- * @package       Library
- * @category    Enums
- * @author        Jeremie Litzler
- * @link		
+ * List the methods available to log error and information. 
+ * 
+ * @author Jeremie Litzler
+ * @copyright Copyright (c) 2015
+ * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link https://github.com/WebDevJL/
+ * @since Version 1.0.0
+ * @package ErrorLoggingMethod
  */
 
 namespace Library\Enums;

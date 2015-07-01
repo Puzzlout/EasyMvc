@@ -2,7 +2,7 @@
 
 /**
  *
- * @package     EasyMvc Framework
+ * @package      Framework
  * @author      Jeremie Litzler
  * @copyright   Copyright (c) 2015
  * @license		

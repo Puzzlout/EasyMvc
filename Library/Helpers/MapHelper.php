@@ -22,7 +22,7 @@
  * @link		
  */
 
-namespace Applications\EasyMvc\Helpers;
+namespace \Applications\EasyMvc\Helpers;
 
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
@@ -31,15 +31,15 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
 class MapHelper {
 
   /**
-   * <p> Retrieve the lattitude and longitude from the appsettings.xml
-   * to build an associative array in the Google Maps API format </p>
+   * Retrieve the lattitude and longitude from the appsettings.xml
+   * to build an associative array in the Google Maps API format 
    * 
-   * @param object $configManager <p>
+   * @param object $configManager
    * The object of Library\Config that read the appconfig.xml
-   * </p>
-   * @return array  $coordinates <p>
+   * 
+   * @return array  $coordinates
    * The array in Google Maps API format
-   * </p>
+   * 
    */
   public static function GetCoordinatesToCenterOverARegion($configManager) {
     return array(
@@ -49,23 +49,23 @@ class MapHelper {
   }
 
   /**
-   * <p> Retrieve the lattitudes and longitudes from a list of objects
+   * Retrieve the lattitudes and longitudes from a list of objects
    * based the lattitude and longitude property names filter.
-   * </p>
-   * <p> Build as an output an associative array in the Google Maps API format
-   * </p>
-   * @param array $objects <p>
+   * 
+   * Build as an output an associative array in the Google Maps API format
+   * 
+   * @param array $objects
    * The array of objects of a given type
-   * </p>
-   * @param string $latPropName <p>
+   * 
+   * @param string $latPropName
    * The lattitude property name of a given object type
-   * </p>
-   * @param string $lngPropName <p>
+   * 
+   * @param string $lngPropName
    * The longitude property name of a given object type
-   * </p>
-   * @return array $coordinates <p>
+   * 
+   * @return array $coordinates
    * The array in Google Maps API format
-   * </p>
+   * 
    */
   public static function BuildLatAndLongCoordFromGeoObjects($objects, $latPropName, $lngPropName) {
     $coordinates = array();

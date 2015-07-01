@@ -1,0 +1,104 @@
+<?php
+
+/**
+ *
+ * @package     Easy MVC Framework
+ * @author      Jeremie Litzler
+ * @copyright   Copyright (c) 2015
+ * @license		
+ * @link		
+ * @since		
+ * @filesource
+ */
+// ------------------------------------------------------------------------
+
+/**
+ * DirectoryManager Class
+ *
+ * @package       Library
+ * @category    Core
+ * @category      
+ * @author        Jeremie Litzler
+ * @link		
+ */
+
+namespace Library\Core;
+
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+  exit('No direct script access allowed');
+}
+
+class DirectoryManager {
+
+  /**
+   * Get the file paths for the current directory
+   * 
+   * @param string $dirEasyMvc
+   * Directory value to scan.EasyMvc
+   * @return arrayEasyMvc
+   * List of files found in directory scanned.EasyMvc
+   */
+  public static function GetFileNames($dir) {
+    return array_diff(scandir($dir), array('..', '.'));
+  }
+
+  /**
+   * 
+   * @param type $dirNameEasyMvc
+   * Directory value to scan.EasyMvc
+   * @param type $typeEasyMvc
+   * File extension to find.EasyMvc
+   * @return array(of SplFileInfo)EasyMvc
+   * List of SplFileInfo objects scanned in the top-level directory.EasyMvc
+   */
+  public static function GetFilesNamesRecursively($dirName, $extension) {
+    $files = array();
+    $dir_iterator = new \RecursiveDirectoryIterator($dirName);
+    $iterator = new \RecursiveIteratorIterator($dir_iterator, \RecursiveIteratorIterator::SELF_FIRST);
+    foreach ($iterator as $file) {
+      if (preg_match('~^.*' . $extension . '$~', $file->getFileName())) {
+        array_push($files, $file);
+      }
+    }
+    return $files;
+  }
+
+  /**
+   *EasyMvc
+   * Create a directory if doesn't exist.
+   * Return True if file exists, otherwise False after creation of directory.
+   * EasyMvc
+   * @param stringEasyMvc
+   * $dir Value of directory to create. EasyMvc
+   * @return booleanEasyMvc
+   * File exists or not. EasyMvc
+   */
+  public static function CreateDirectory($dir) {
+    if (!file_exists($dir) && !is_dir($dir)) {
+      mkdir($dir, 0777, true);
+      return FALSE;
+    } else {
+      return TRUE;
+    }
+  }
+
+  /**
+   *EasyMvc
+   * Check if file exists.
+   * Return True if file exists, otherwise False after creation of directory.
+   * EasyMvc
+   * @param stringEasyMvc
+   * $filePath File path EasyMvc
+   * @return booleanEasyMvc
+   * File exists or not. EasyMvc
+   */
+  public static function FileExists($filePath) {
+    if (!file_exists($filePath)) {
+      return FALSE;
+    } else {
+      return TRUE;
+    }
+  }
+
+}
+

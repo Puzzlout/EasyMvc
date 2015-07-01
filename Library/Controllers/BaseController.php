@@ -200,7 +200,7 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
               $this->app->i8n->getCommonResource($params["resx_file"], "message_error_" . $params["resx_key"]) :
               $this->app->i8n->getLocalResource($params["resx_file"], "message_error_" . $params["resx_key"]);
     }
-    echo \Library\HttpResponse::encodeJson($result);
+    echo \Library\Core\HttpResponse::encodeJson($result);
   }
 
   /**
@@ -245,7 +245,7 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
     //Add left menu to layout
     $this->page->addVar("leftMenu", $leftMenu->Build());
     $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($this->resxfile));
-    $this->app->pageTitle = $this->app->i8n->getLocalResource($this->resxfile, "page_title");
+    $this->app->pageTitle = $this->app->i8n->getLocalResource($this->resxfile, "page_title") . " - " .  __APPNAME__;
     $this->page->addVar("logout_url", __BASEURL__ . \Library\Enums\UrlKeys::LogoutUrl);
     $this->page->addVar(\Library\Enums\Popup::toolTips, $this->toolTips);
   }

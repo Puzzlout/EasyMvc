@@ -56,7 +56,7 @@ class HttpRequest {
 
   public function initLanguage(Application $currentApp, $type) {
     if ($type === "default") {
-      return $currentApp->config()->get(Enums\AppSettingKeys::DefaultLanguage);
+      return $currentApp->config()->get(Enums\AppSettingKeys::DefaultCulture);
     }
     if ($type === "browser") {
       return substr(strtok($_SERVER['HTTP_ACCEPT_LANGUAGE'], '?'), 0, 5);

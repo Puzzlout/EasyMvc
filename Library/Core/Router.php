@@ -39,7 +39,7 @@ class Router extends ApplicationComponent {
   }
 
   /**
-   * <p> Set the route of the current request. </p>
+   * Set the route of the current request. 
    * @param \Library\Core\Route $route
    */
   public function setCurrentRoute($currentRoute) {
@@ -47,7 +47,7 @@ class Router extends ApplicationComponent {
   }
 
   /**
-   * <p> Get the route of the current request. </p>
+   * Get the route of the current request. 
    * @param \Library\Core\Route $route
    */
   public function currentRoute() {
@@ -55,7 +55,7 @@ class Router extends ApplicationComponent {
   }
 
   /**
-   * <p> Set the timestamp of the last modification of the routes.xml. </p>
+   * Set the timestamp of the last modification of the routes.xml. 
    * @param timestamp $lastModifiedTime
    */
   public function setLastModified($lastModifiedTime) {
@@ -63,7 +63,7 @@ class Router extends ApplicationComponent {
   }
 
   /**
-   * <p> Get the timestamp of the last modification of the routes.xml. </p>
+   * Get the timestamp of the last modification of the routes.xml. 
    * @param timestamp $lastModifiedTime
    */
   public function lastModified() {
@@ -71,7 +71,7 @@ class Router extends ApplicationComponent {
   }
 
   /**
-   * <p> Set the path of the routes.xml. </p>
+   * Set the path of the routes.xml. 
    * @param string $path
    */
   public function setRoutesXmlPath($path) {
@@ -79,7 +79,7 @@ class Router extends ApplicationComponent {
   }
 
   /**
-   * <p> Get the path of the routes.xml. </p>
+   * Get the path of the routes.xml. 
    * @param string $path
    */
   public function routesXmlPath() {
@@ -87,7 +87,7 @@ class Router extends ApplicationComponent {
   }
 
   /**
-   * <p> Set the array of route objects. </p>
+   * Set the array of route objects. 
    * @param array $routes
    */
   public function setRoutes($routes) {
@@ -95,7 +95,7 @@ class Router extends ApplicationComponent {
   }
 
   /**
-   * <p> Get the array of route objects. </p>
+   * Get the array of route objects. 
    * @param array $routes
    */
   public function routes() {
@@ -117,11 +117,11 @@ class Router extends ApplicationComponent {
    * Search for a mathc route in the last of routes based on a relative url from
    * the current request.
    * 
-   * @param type $url <p>
-   * Relative url of current request. </p>
+   * @param type $url
+   * Relative url of current request. 
    * @return mixed \Library\Core\Route | \RuntimeException
-   * @throws \RuntimeException <p>
-   * Exception is thrown if no route is found. A 404 error page will be rendered. </p>
+   * @throws \RuntimeException
+   * Exception is thrown if no route is found. A 404 error page will be rendered. 
    */
   public function getRoute($url) {
     foreach ($this->routes as $route) {
@@ -187,16 +187,16 @@ class Router extends ApplicationComponent {
   /**
    * Retrieve the JavaScript urls to add to the loading view or to the head element
    * 
-   * @param DOMNode $route <p>
-   * The route xml node to read for the JavaScript file names. </p>
-   * @param string $destination <p>
+   * @param DOMNode $route
+   * The route xml node to read for the JavaScript file names. 
+   * @param string $destination
    * Either: </br>
    *    - "head": to add the script tags in the head HTML element.</br>
-   *    - "html": being the very end of the html page being loaded. </p>
-   * @param string $path_to_add <p>
-   * Relative path to add to the file names read. </p>
-   * @return string <p>
-   * A string representation of the script tag to be added to the HTML code. </p>
+   *    - "html": being the very end of the html page being loaded. 
+   * @param string $path_to_add
+   * Relative path to add to the file names read. 
+   * @return string
+   * A string representation of the script tag to be added to the HTML code. 
    */
   private function _GetJsFiles($route, $destination, $path_to_add) {
     $scripts = "";
@@ -222,14 +222,14 @@ class Router extends ApplicationComponent {
    * the script or css for the sibbling route. 
    * 
    * @param \Library\Core\Route $route
-   * @param string $destination <p>
+   * @param string $destination
    * Either: </br>
    *    - "head": to add the script tags in the head HTML element.</br>
-   *    - "html": being the very end of the html page being loaded. </p>
-   * @param string $path_to_add <p>
-   * Relative path to add to the file names read. </p>
-   * @return string $files <p>
-   * A string representation of the script tag to be added to the HTML code. </p>
+   *    - "html": being the very end of the html page being loaded. 
+   * @param string $path_to_add
+   * Relative path to add to the file names read. 
+   * @return string $files
+   * A string representation of the script tag to be added to the HTML code. 
    */
   private function _GetFilesForSibbling(Route $route, $destination, $path_to_add) {
     $files = "";
@@ -248,16 +248,16 @@ class Router extends ApplicationComponent {
   }
 
   /**
-   * <p> Returns the absolute file paths of PHP modules to load per route. </p>
-   * <p> There are 2 cases: <p><ul>
+   * Returns the absolute file paths of PHP modules to load per route. 
+   * There are 2 cases:<ul>
    *  <li>with the shared attribute, shared modules will be found in
    *  in "Applications/YourApp/Views/Modules"</li>
    *  <li>dedicated modules (to the module specified in the route) will be found
    *  in "Application/YourApp/Views/CurrentRoute/Modules".</li>
    * 
    * @param DOMNode $route
-   * @return array <p>
-   * The list of PHP modules available for the current route. </p>
+   * @return array
+   * The list of PHP modules available for the current route. 
    */
   public function _LoadPhpModules($route) {
     $modules = array();

@@ -39,36 +39,36 @@ class Encryption {
   public function __construct(\Library\Core\Config $config) {
     $this->iv = mcrypt_create_iv(mcrypt_get_iv_size($this->encryptionType, $this->encryptionMode), MCRYPT_DEV_URANDOM);
     $this->encryptionKey = strrev($config->get(\Library\Enums\AppSettingKeys::EncryptionKey));
-    $this->hashSalt = strrev($config->get(\Library\Enums\AppSettingKeys::PaswordSalt));
+    $this->hashSalt = strrev($config->get(\Library\Enums\AppSettingKeys::PasswordSalt));
   }
 
   /**
-   * <p> Hash some data using Sha1 method with the encryption key.
-   * A dynamic salt generated at the request is used to create the hash.  </p>
+   * Hash some data using Sha1 method with the encryption key.
+   * A dynamic salt generated at the request is used to create the hash.  
    * 
-   * @param string $dynamicSalt <p>
-   * The value is stored in the Applications/CurrentApp/Config/appsettings.xml <p>
-   * @param string $data <p>
-   * The value to hash using sha1 method and the $publicKey. </p>
+   * @param string $dynamicSalt
+   * The value is stored in the Applications/CurrentApp/Config/appsettings.xml
+   * @param string $data
+   * The value to hash using sha1 method and the $publicKey. 
    * @return string
    */
   public function HashValue($dynamicSalt, $data, $hashLength = NULL) {
     $separator = "$%*{//}*%$";
     return
             is_null($hashLength) && is_int($hashLength) ?
-            substr(sha1($this->encryptionKey . $separator . $dynamicSalt . $separator . $data), 0, $hashLength) :
-            sha1($this->encryptionKey . $separator . $dynamicSalt . $separator . $data);
+            substr(sha1($this->hashSalt . $separator . $dynamicSalt . $separator . $data), 0, $hashLength) :
+            sha1($this->hashSalt . $separator . $dynamicSalt . $separator . $data);
   }
 
   /**
-   * <p> Encrypt a string using the MCRYPT_RIJNDAEL_128 encryption and 
+   * Encrypt a string using the MCRYPT_RIJNDAEL_128 encryption and 
    * MCRYPT_MODE_CBC and encode the result in a base64 string so it can be stored
-   * in a database or file without the hassle of encoding. </p>
+   * in a database or file without the hassle of encoding. 
    * 
-   * @param string $noncryptedData <p>
-   * The string to encrypt. </p>
-   * @return string <p>
-   * The encrypted string encoded in base64 to allow safe storage. </p>
+   * @param string $noncryptedData
+   * The string to encrypt. 
+   * @return string
+   * The encrypted string encoded in base64 to allow safe storage. 
    */
   public function Encrypt($noncryptedData) {
     $encrypted = mcrypt_encrypt(
@@ -78,13 +78,13 @@ class Encryption {
   }
   
   /**
-   * <p> Decrypt a encoded base64 string using the MCRYPT_RIJNDAEL_128 encryption and 
-   * MCRYPT_MODE_CBC </p>
+   * Decrypt a encoded base64 string using the MCRYPT_RIJNDAEL_128 encryption and 
+   * MCRYPT_MODE_CBC 
    * 
-   * @param type $encryptedData <p>
-   * The base64 encoded string to decrypt. </p>
-   * @return string <p>
-   * The decrypted string. </p>
+   * @param type $encryptedData
+   * The base64 encoded string to decrypt. 
+   * @return string
+   * The decrypted string. 
    */
   public function Decrypt($encryptedData) {
     $decoded = base64_decode($encryptedData, TRUE);

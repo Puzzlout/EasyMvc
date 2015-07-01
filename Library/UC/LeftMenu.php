@@ -39,7 +39,7 @@ class LeftMenu {
   public function __construct($app, $resx_left_menu) {
     $this->app = $app;
     $this->resx_left_menu = $resx_left_menu;
-    $this->base_url = str_replace(\Library\Enums\AppSettingKeys::ApplicationNamePlaceHolder, __APPNAME__, $this->app->config->get("base_url"));
+    $this->base_url = str_replace(\Library\Enums\FrameworkPlaceholders::ApplicationNamePlaceHolder, __APPNAME__, $this->app->config->get("base_url"));
   }
 
   /**

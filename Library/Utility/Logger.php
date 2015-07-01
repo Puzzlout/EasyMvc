@@ -39,13 +39,11 @@ class Logger {
   }
 
   public static function PrintOutLogs($logs) {
-    \Library\Helpers\DebugHelper::LogAsHtmlComment(var_export($logs));
+    \Library\Helpers\DebugHelper::WriteString(var_export($logs));
   }
 
   public static function AddLogToDatabase($app, $log) {
-    $db = new \Library\Dal\Managers('PDO', $app);
-    $dal = $db->getManagerOf("Log", TRUE);
-    $dal->Add($log);
+    $app->dal()->getManagerOf()->Add($log);
   }
 
   public static function GetTime() {

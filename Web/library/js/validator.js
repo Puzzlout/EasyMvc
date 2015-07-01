@@ -21,7 +21,7 @@
         }
         //and finally return result to client
         return !valid ?
-                validator.emptyInputToast($(this).attr("name")) : true;
+                validator.emptyInputToast($(this).attr("data-input-label").replace(":","")) : true;
       });
     });
   };

@@ -28,6 +28,7 @@ abstract class Application {
   public $auth;
   public $dal;
   public $toolTip;
+  protected $security;
 
   public function __construct() {
     $this->httpRequest = new HttpRequest($this);
@@ -44,6 +45,7 @@ abstract class Application {
     $this->auth = new \Library\Security\AuthenticationManager($this);
     $this->dal = new \Library\Dal\Managers('PDO', $this);
     $this->toolTip = new PopUpResourceManager($this);
+    $this->security = new \Library\Security\Encryption($this->config);
 //    $this->jsManager = new Core\Utility\JavascriptManager($this);
 //    $this->cssManager = new Core\Utility\CssManager($this);
   }
@@ -117,6 +119,9 @@ abstract class Application {
     return $this->jsManager;
   }
 
+  public function auth() {
+    return $this->auth;
+  }
   public function dal() {
     return $this->dal;
   }
@@ -125,6 +130,9 @@ abstract class Application {
     return $this->toolTip;
   }
 
+  public function security() {
+    return $this->security;
+  }
   private function FindRouteMatch() {
     try {
       // On récupère la route correspondante à l'URL.

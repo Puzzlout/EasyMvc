@@ -22,7 +22,7 @@
  * @link		
  */
 
-namespace Library\Utility;
+namespace Library\Helpers;
 
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
@@ -30,8 +30,26 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
 
 class DebugHelper {
 
-  public static function LogAsHtmlComment($data_to_print) {
-    echo '<!--' . $data_to_print . '-->';
+  /**
+   * Print out a string.
+   * 
+   * @param string $stringData
+   */
+  public static function WriteString($stringData, $useJson = FALSE) {
+    if ($useJson) {
+      echo json_encode('{"data":' . $stringData . '}');
+    } else {
+      echo '<!-- ' . $stringData . ' -->';
+    }
+  }
+
+  public static function WriteObject($object, $useJson = FALSE) {
+    if ($useJson) {
+      echo json_encode('{"data":' . var_dump($object) . '}');
+    } else {
+      echo '<!-- ' . var_dump($object) . ' -->';
+    }
+    
   }
 
 }

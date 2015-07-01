@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Custom error handler to catch all the error and process them.
  */
@@ -57,7 +56,7 @@ define('__BASEURL__', '/' . __APPNAME__ . '/');
  */
 $placeholder = array("{{appname}}" => __APPNAME__);
 $appClassName = strtr(
-        "\Applications\\{{appname}}\\{{appname}}Application", $placeholder);
+        "\Applications\{{appname}}\\{{appname}}Application", $placeholder);
 
 /**
  * Autoload defines global variables.

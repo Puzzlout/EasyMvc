@@ -1,14 +1,14 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of AppSettings
- *
- * @author jl
+ * Lists the constants of the Application settings keys. 
+ * 
+ * @author Jeremie Litzler
+ * @copyright Copyright (c) 2015
+ * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link https://github.com/WebDevJL/
+ * @since Version 1.0.0
+ * @package AppSettingKeys
  */
 
 namespace Library\Enums;
@@ -18,29 +18,90 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
 }
 
 abstract class AppSettingKeys {
+  /**
+   * Application mode defines DEV or LIVE mode. 
+   */
 
-  const ApplicationNamePlaceHolder = "{{app_name}}";
   const ApplicationMode = "ApplicationMode";
-  const CurrentVersion = "CurrentVersion";
-  const DefaultLanguage = "DefaultLanguage";
-  const BaseUrl = "base_url";
-  const BaseUrlRelease = "BaseUrlRelease";
+  /**
+   * Default culture of the application. 
+   */
+  const DefaultCulture = "DefaultCulture";
+  /**
+   * ApplicationBaseUrl value when the WebApp is not at the root of the public 
+   * directory but when it is "publicRoot/MySite".<br />
+   * When the url is http://mydomain.net/, the BaseUrl value is "/".<br />
+   * When the url is http://mydomain.net/MySite, the BaseUrl value 
+   * is "/MySite/".<br />
+   */
+  const BaseUrl = "ApplicationBaseUrl";
+  /**
+   * Default page to load.
+   */
   const DefaultPage = "DefaultPage";
+  /**
+   * Path to the images in the project. 
+   */
   const RootImageFolderPath = "RootImageFolderPath";
-  const RootUploadsFolderPath = "RootUploadsFolderPath";
-  const DalFolderPath = "DalFolderPath";
+  /**
+   * Path to the uploaded files in the project. 
+   */
   const RootDocumentUpload = "RootDocumentUpload";
+  /**
+   * Path to the Dal classes of the Application. 
+   */
+  const DalFolderPath = "DalFolderPath";
+  /**
+   *Path to the Tooltips definition file. 
+   */
   const TooltipsXmlFileName = "TooltipsXmlFileName";
+  /**
+   * Host used for the MySQL connection. 
+   */
   const Myslq_host = "Myslq_host";
+  /**
+   * User used for the MySQL connection. 
+   */
   const Mysql_user = "Mysql_user";
+  /**
+   * User's password used for the MySQL connection. 
+   */
   const Mysql_pwd = "Mysql_pwd";
+  /**
+   * Target database used for the MySQL connection. 
+   */
   const Mysql_db_name = "Mysql_db_name";
+  /**
+   * Default lattitude Coordinates to center Google Maps. 
+   */
   const GoogleMapsCenterLat = "GoogleMapsCenterLat";
+  /**
+   * Default longitude Coordinates to center Google Maps. 
+   */
   const GoogleMapsCenterLng = "GoogleMapsCenterLng";
+  /**
+   * Default icon image path when a marker has no lattitude and longitude
+   * in Google Maps. 
+   */
   const GoogleMapsNoLatLngIcon = "GoogleMapsNoLatLngIcon";
+  /**
+   * Default domain to use in build email addresses. 
+   */
   const DefaultEmailDomainValue = "DefaultEmailDomainValue";
+  /**
+   * Method using to log error. 
+   * @see /Library/Enums/ErrorLoggingMethod.php
+   */
   const ErrorLoggingMethod = "ErrorLoggingMethod";
+  /**
+   * Public encryption key to use mcrypt. 
+   * @see /Library/Security/Encryption.php
+   */
   const EncryptionKey = "EncryptionKey";
-  const PaswordSalt = "PaswordSalt";
+  /**
+   * Public static salt value used to hash user passwords. 
+   * @see /Library/Security/Encryption.php
+   */
+  const PasswordSalt = "PaswordSalt";
 
 }
