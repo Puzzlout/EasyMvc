@@ -29,7 +29,7 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
 
 class GeneratorController extends \Library\Controllers\BaseController {
 
-  public function executeCreateDaoClasses(\Library\Core\HttpRequest $rq) {
+  public function CreateDaoClasses() {
     $generator = new \Library\Dal\Generator\GeneratorManager($this->app());
     $generator->GenerateDaoClasses();
   }

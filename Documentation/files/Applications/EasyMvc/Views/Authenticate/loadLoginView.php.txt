@@ -13,15 +13,12 @@
         <label><?php echo $resx["email_label"]; ?></label>
         <input autocomplete="on" name="f_user_email" type="text" class="field" data-input-label="<?php echo $resx["email_label"]; ?>" placeholder="<?php echo $resx["email_ph_text"]; ?>">
       </p>
-     EasyMvc
         <label><?php echo $resx["username_label"]; ?></label>
         <input autocomplete="on" name="f_user_login" type="text" class="field" data-input-label="<?php echo $resx["username_label"]; ?>" placeholder="<?php echo $resx["username_ph_text"]; ?>">
       </p>
-     EasyMvc
         <label><?php echo $resx["pwd_label"]; ?></label>
         <input autocomplete="on" name="f_user_password" type="password" class="field" data-input-label="<?php echo $resx["pwd_label"]; ?>" placeholder="<?php echo $resx["pwd_ph_text"]; ?>">
       </p>
-     EasyMvc
 <!--        <input name="remember_me" type="checkbox" value="" />
         <?php echo $resx["remember_me_label"]; ?>
         <a href="#" name="forgot_pwd"  class="password">
@@ -29,7 +26,6 @@
         </a>-->
       </p>
       <div class="login-btn">
-       EasyMvc
           <input id="btn_login" class="btn btn-primary btn-lg" role="button" type="button" value="<?php echo $resx["login_btn_text"]; ?>" />
         </p>
       </div> 

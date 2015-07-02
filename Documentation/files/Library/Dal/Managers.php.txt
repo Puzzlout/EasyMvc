@@ -9,38 +9,38 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
 class Managers {
 
   /**
-   *EasyMvc By default, the framework doesn't use another API than PDO but if you need
-   * you can use mysql or mysqli. EasyMvc
-   * @var stringEasyMvc
-   * The API used to query the database. EasyMvc
+   * By default, the framework doesn't use another API than PDO but if you need
+   * you can use mysql or mysqli. 
+   * @var string
+   * The API used to query the database. 
    */
   protected $databaseApi = null;
 
   /**
    *
-   * @var objectEasyMvc
-   * The database connection object. EasyMvc
+   * @var object
+   * The database connection object. 
    */
   protected $databaseConnection = null;
 
   /**
    *
-   * @var stringEasyMvc
-   * The namespace to use in the case of a dal instance in the Applications. EasyMvc
+   * @var string
+   * The namespace to use in the case of a dal instance in the Applications. 
    */
   protected $dalApplicationsNamespace = "";
 
   /**
    *
-   * @var stringEasyMvc
-   * The namespace to use in the case of a dal instance in the Framework. EasyMvc
+   * @var string
+   * The namespace to use in the case of a dal instance in the Framework. 
    */
   protected $dalFrameworkNameSpace = "";
 
   /**
    *
-   * @var arrayEasyMvc
-   * Array containing the dal instances. EasyMvc
+   * @var array
+   * Array containing the dal instances. 
    */
   protected $managers = array();
   /**
@@ -51,10 +51,10 @@ class Managers {
   public $filters = array();
 
   /**
-   *EasyMvc Magic method construct.EasyMvc
-   * @param string $apiEasyMvc
-   * The SQL API to use. EasyMvc
-   * @param \Library\Core\Application $appEasyMvc
+   * Magic method construct.
+   * @param string $api
+   * The SQL API to use. 
+   * @param \Library\Core\Application $app
    * Instance of \Library\Core\Application to 
    * @todo Build an interface to use any API. Basically a MYSQL factory or a 
    * MYSQLI factory class must be built to use those API. The default is PDO.
@@ -67,26 +67,26 @@ class Managers {
   }
 
   /**
-   *EasyMvc
+   *
    * Retrieve the Dal instance for a given module. Otherwise, uses the CommonDal
    * module as a default
-   * EasyMvc
-   *EasyMvc
+   * 
+   *
    * A module is the name of the Dal Class, either found in Library/DAL/Modules
    * if $isCoreModule = TRUE or in Applications/CurrentApp/Models/Dal otherwise.
-   * EasyMvc
-   * @param stringEasyMvc
+   * 
+   * @param string
    * $module: Name of the module to load. By default, it is null and load the
-   * CommonDal module. EasyMvc
-   * @param typeEasyMvc
+   * CommonDal module. 
+   * @param type
    * $isCoreModule: Define if the module is to be load from the Library/DAL/Modules 
-   * directory instead of the Applications/CurrentApp/Models/Dal. EasyMvc
-   * @return objectEasyMvc
-   * Variable of type \Library\Dal\BaseManager for the requested module. EasyMvc
-   * @throws \InvalidArgumentExceptionEasyMvc
-   * Thrown if the module isn't given in $module parameter. EasyMvc
+   * directory instead of the Applications/CurrentApp/Models/Dal. 
+   * @return object
+   * Variable of type \Library\Dal\BaseManager for the requested module. 
+   * @throws \InvalidArgumentException
+   * Thrown if the module isn't given in $module parameter. 
    */
-  public function getManagerOf($module = NULL, $isCoreModule = FALSE) {
+  public function getDalInstance($module = NULL, $isCoreModule = FALSE) {
     if (is_null($module)) {
       $module = "Common";
       $isCoreModule = true;

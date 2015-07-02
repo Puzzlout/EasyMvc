@@ -116,7 +116,7 @@ class FileUploader extends \Library\Core\ApplicationComponent {
 
   private function AddDocumentToDatabase($document) {
     $db = new \Library\Dal\Managers('PDO', $this->app());
-    $dal = $db->getManagerOf("Document", TRUE);
+    $dal = $db->getDalInstance("Document", TRUE);
     $dal->add($document);
   }
 

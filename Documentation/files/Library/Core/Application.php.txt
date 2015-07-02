@@ -119,6 +119,9 @@ abstract class Application {
     return $this->jsManager;
   }
 
+  public function auth() {
+    return $this->auth;
+  }
   public function dal() {
     return $this->dal;
   }

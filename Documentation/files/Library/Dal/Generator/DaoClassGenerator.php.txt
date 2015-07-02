@@ -4,7 +4,7 @@
 * @author Jeremie Litzler
 * @copyright Copyright (c) 2015
 * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
-* @link https://github.com/WebDevJL/EasyMVC
+* @link https://github.com/WebDevJL/
 * @since Version 1.0.0
 * @package DaoClassGenerator
 */
@@ -37,12 +37,12 @@ class DaoClassGenerator {
         PhpDocPlaceholder::AUTHOR => "Jeremie Litzler",
         PhpDocPlaceholder::COPYRIGHT_YEAR => date("Y"),
         PhpDocPlaceholder::LICENCE => "http://opensource.org/licenses/gpl-license.php GNU Public License",
-        PhpDocPlaceholder::LINK => "https://github.com/WebDevJL/EasyMVC",
+        PhpDocPlaceholder::LINK => "https://github.com/WebDevJL/",
         PhpDocPlaceholder::PACKAGE => $this->className,
         PhpDocPlaceholder::SUBPACKAGE => "",
         PhpDocPlaceholder::VERSION_NUMBER => __VERSION_NUMBER__,
         CodeSnippetPlaceholders::NAMESPACE_FRAMEWORK => "Library\BO",
-        CodeSnippetPlaceholders::NAMESPACE_APP => "Applications\\" . __APPNAME__ . "\Models\Dao",
+        CodeSnippetPlaceholders::NAMESPACE_APP => "\Applications\"" . __APPNAME__ . "\Models\Dao",
         CodeSnippetPlaceholders::CLASS_NAME => $this->className
     );
     $this->isFrameworkClass = $params["type"] === \Library\Enums\GenericAppKeys::APP_DB_TABLE ? FALSE : TRUE;

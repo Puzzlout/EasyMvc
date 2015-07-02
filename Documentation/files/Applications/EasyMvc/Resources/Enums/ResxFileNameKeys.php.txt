@@ -1,7 +1,7 @@
 <?php
 
 /**
- *EasyMvc List the names of the resource files found in Applications/EasyMvc/Resources. EasyMvc
+ * List the names of the resource files found in Applications/EasyMvc/Resources. 
  * 
  * @author Jeremie Litzler
  * @copyright Copyright (c) 2015
@@ -15,6 +15,6 @@
 namespace Applications\EasyMvc\Resources\Enums;
 if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) { exit('No direct script access allowed'); }
 
-abstract class ResxFileNameKeys {
+class ResxFileNameKeys {
   const Login = "login";
 }

@@ -6,7 +6,7 @@
   <body>
     <div class="error">
       <h3><?php echo $error->errorTitle(); ?></h3>
-     EasyMvc<?php echo $error->errorMessage(); ?></p>
+     <?php echo $error->errorMessage(); ?></p>
     </div>
   </body>
 </html>

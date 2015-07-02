@@ -13,7 +13,7 @@ namespace Library\BO;
 if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) { exit('No direct script access allowed'); }
 
 class F_user extends \Library\Core\Entity implements \Library\Interfaces\IUser {
-  protected 
+  public 
     $f_user_id,
     $f_user_login,
     $f_user_password,

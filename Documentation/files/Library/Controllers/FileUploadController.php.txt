@@ -30,10 +30,10 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
 
 class FileController extends \Library\Controllers\BaseController {
 
-  public function executeLoadOne(\Library\HttpRequest $rq) {
+  public function LoadOne() {
     $result = $this->InitResponseWS();
     $dataPost = $this->dataPost();
-    $manager = $this->managers()->getManagerOf("Document");
+    $manager = $this->managers()->getDalInstance("Document");
     $manager->setRootDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::RootDocumentUpload));
     $manager->setWebDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::BaseUrl) . $this->app()->config()->get(\Library\Enums\AppSettingKeys::RootUploadsFolderPath));
     $document = new \Applications\EasyMvc\Models\Dao\Document();
@@ -57,11 +57,11 @@ class FileController extends \Library\Controllers\BaseController {
     ));
   }
 
-  public function executeLoad(\Library\HttpRequest $rq) {
+  public function Load() {
     $result = $this->InitResponseWS();
     $dataPost = $this->dataPost();
 
-    $manager = $this->managers()->getManagerOf("Document");
+    $manager = $this->managers()->getDalInstance("Document");
     $manager->setRootDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::RootDocumentUpload));
     $manager->setWebDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::BaseUrl) . $this->app()->config()->get(\Library\Enums\AppSettingKeys::RootUploadsFolderPath));
     $directory = str_replace("_id", "", $dataPost['itemCategory']);
@@ -81,11 +81,11 @@ class FileController extends \Library\Controllers\BaseController {
     ));
   }
 
-  public function executeUpload(\Library\HttpRequest $rq) {
+  public function Upload() {
     $result = $this->InitResponseWS();
     $dataPost = $this->dataPost();
     $files = $this->files();
-    $manager = $this->managers()->getManagerOf("Document");
+    $manager = $this->managers()->getDalInstance("Document");
     $manager->setRootDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::RootDocumentUpload));
     $manager->setWebDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::BaseUrl) . $this->app()->config()->get(\Library\Enums\AppSettingKeys::RootUploadsFolderPath));
     $directory = str_replace("_id", "", $dataPost['itemCategory']);
@@ -117,11 +117,11 @@ class FileController extends \Library\Controllers\BaseController {
     ));
   }
 
-  public function executeRemove(\Library\HttpRequest $rq) {
+  public function Remove() {
     $result = $this->InitResponseWS();
     $dataPost = $this->dataPost();
 
-    $manager = $this->managers()->getManagerOf("Document");
+    $manager = $this->managers()->getDalInstance("Document");
     $manager->setRootDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::RootDocumentUpload));
     $manager->setWebDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::BaseUrl) . $this->app()->config()->get(\Library\Enums\AppSettingKeys::RootUploadsFolderPath));
     $directory = str_replace("_id", "", $dataPost['itemCategory']);
@@ -151,7 +151,7 @@ class FileController extends \Library\Controllers\BaseController {
    */
   public static function copyFile($files, $dataPost, $caller) {
 
-    $manager = $caller->managers()->getManagerOf("Document");
+    $manager = $caller->managers()->getDalInstance("Document");
     $manager->setRootDirectory($caller->app()->config()->get(\Library\Enums\AppSettingKeys::RootDocumentUpload));
     $manager->setWebDirectory($caller->app()->config()->get(\Library\Enums\AppSettingKeys::BaseUrl) . $caller->app()->config()->get(\Library\Enums\AppSettingKeys::RootUploadsFolderPath));
     $directory = str_replace("_id", "", $dataPost['itemCategory']);

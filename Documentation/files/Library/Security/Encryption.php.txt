@@ -43,13 +43,13 @@ class Encryption {
   }
 
   /**
-   *EasyMvc Hash some data using Sha1 method with the encryption key.
-   * A dynamic salt generated at the request is used to create the hash.  EasyMvc
+   * Hash some data using Sha1 method with the encryption key.
+   * A dynamic salt generated at the request is used to create the hash.  
    * 
-   * @param string $dynamicSaltEasyMvc
-   * The value is stored in the Applications/CurrentApp/Config/appsettings.xmlEasyMvc
-   * @param string $dataEasyMvc
-   * The value to hash using sha1 method and the $publicKey. EasyMvc
+   * @param string $dynamicSalt
+   * The value is stored in the Applications/CurrentApp/Config/appsettings.xml
+   * @param string $data
+   * The value to hash using sha1 method and the $publicKey. 
    * @return string
    */
   public function HashValue($dynamicSalt, $data, $hashLength = NULL) {
@@ -61,14 +61,14 @@ class Encryption {
   }
 
   /**
-   *EasyMvc Encrypt a string using the MCRYPT_RIJNDAEL_128 encryption and 
+   * Encrypt a string using the MCRYPT_RIJNDAEL_128 encryption and 
    * MCRYPT_MODE_CBC and encode the result in a base64 string so it can be stored
-   * in a database or file without the hassle of encoding. EasyMvc
+   * in a database or file without the hassle of encoding. 
    * 
-   * @param string $noncryptedDataEasyMvc
-   * The string to encrypt. EasyMvc
-   * @return stringEasyMvc
-   * The encrypted string encoded in base64 to allow safe storage. EasyMvc
+   * @param string $noncryptedData
+   * The string to encrypt. 
+   * @return string
+   * The encrypted string encoded in base64 to allow safe storage. 
    */
   public function Encrypt($noncryptedData) {
     $encrypted = mcrypt_encrypt(
@@ -78,13 +78,13 @@ class Encryption {
   }
   
   /**
-   *EasyMvc Decrypt a encoded base64 string using the MCRYPT_RIJNDAEL_128 encryption and 
-   * MCRYPT_MODE_CBC EasyMvc
+   * Decrypt a encoded base64 string using the MCRYPT_RIJNDAEL_128 encryption and 
+   * MCRYPT_MODE_CBC 
    * 
-   * @param type $encryptedDataEasyMvc
-   * The base64 encoded string to decrypt. EasyMvc
-   * @return stringEasyMvc
-   * The decrypted string. EasyMvc
+   * @param type $encryptedData
+   * The base64 encoded string to decrypt. 
+   * @return string
+   * The decrypted string. 
    */
   public function Decrypt($encryptedData) {
     $decoded = base64_decode($encryptedData, TRUE);

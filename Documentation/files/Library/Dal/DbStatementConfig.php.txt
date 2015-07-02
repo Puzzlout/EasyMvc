@@ -1,0 +1,152 @@
+<?php
+
+/**
+ * Class to prepare to execute the query.
+ * 
+ * @author Jeremie Litzler
+ * @copyright Copyright (c) 2015
+ * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link https://github.com/WebDevJL/EasyMVC
+ * @since Version 1.0.0
+ * @package DbStatementConfig
+ */
+
+namespace Library\Dal;
+
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+  exit('No direct script access allowed');
+
+class DbStatementConfig {
+  protected $tableName;
+  protected $type;
+  protected $query;
+  protected $daoClassName;
+  protected $whereClause = "";
+  protected $insertColumnsClause = "";
+  protected $insertValuesClause = "";
+  protected $updateClause = "";
+  protected $selectClause = "";
+  protected $joinClause = "";
+  protected $orderByClause = "";
+  protected $groupByClause = "";
+
+  public function tableName() {
+    return $this->tableName;
+  }
+  
+  public function type() {
+    return $this->type;
+  }
+
+  public function query() {
+    return $this->query;
+  }
+
+  public function daoClassName() {
+    return $this->daoClassName;
+  }
+
+  public function whereClause() {
+    return $this->whereClause;
+  }
+
+  public function insertColumnsClause() {
+    return $this->insertColumnsClause;
+  }
+  
+  public function insertValuesClause() {
+    return $this->insertValuesClause;
+  }
+  
+  public function updateClause() {
+    return $this->updateClause;
+  }
+
+  public function selectClause() {
+    return $this->selectClause;
+  }
+
+  public function joinClause() {
+    return $this->joinClause;
+  }
+
+  public function orderByClause() {
+    return $this->orderByClause;
+  }
+
+  public function groupByClause() {
+    return $this->groupByClause;
+  }
+  
+  public function setTableName($tableName) {
+    $this->tableName = $tableName;
+  }
+
+  public function setType($type) {
+    $this->type = $type;
+  }
+
+  public function setQuery($query) {
+    $this->query = $query;
+  }
+
+  public function setDaoClassName($className) {
+    $this->daoClassName = $className;
+  }
+
+  public function setWhereClause($whereClause) {
+    $this->whereClause = $whereClause;
+  }
+
+  public function setInsertColumnsClause($insertColumnsClause) {
+    $this->insertColumnsClause = $insertColumnsClause;
+  }
+  
+  public function setInsertValuesClause($insertValuesClause) {
+    $this->insertValuesClause = $insertValuesClause;
+  }
+  
+  public function setUpdateClause($updateClause) {
+    $this->updateClause = $updateClause;
+  }
+
+  public function setSelectClause($selectClause) {
+    $this->selectClause = $selectClause;
+  }
+
+  public function setJoinClause($joinClause) {
+    $this->joinClause = $joinClause;
+  }
+
+  public function setOrderByClause($orderByClause) {
+    $this->orderByClause = $orderByClause;
+  }
+
+  public function setGroupByClause($groupByClause) {
+    $this->groupByClause = $groupByClause;
+  }
+  
+  public function BuildUpdateQuery() {
+    $this->query = 
+            $this->type() 
+            . " `" 
+            . $this->tableName()
+            . "` SET" 
+            . $this->updateClause()
+            . " WHERE " 
+            . $this->whereClause()
+            . ";";
+  }
+  
+  public function BuildInsertQuery() {
+    $this->query = 
+            $this->type()
+            . " INTO `" 
+            . $this->tableName() 
+            . "` ("
+            . $this->insertColumnsClause()
+            . ") VALUES ("
+            . $this->insertValuesClause()
+            . ");";
+  }
+}

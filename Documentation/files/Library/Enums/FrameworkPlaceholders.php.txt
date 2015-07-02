@@ -6,7 +6,7 @@
  * @author Jeremie Litzler
  * @copyright Copyright (c) 2015
  * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
- * @link https://github.com/WebDevJL/EasyMVC
+ * @link https://github.com/WebDevJL/
  * @since Version 1.0.0
  * @package FrameworkPlaceholders
  */
@@ -18,7 +18,7 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
 
 class FrameworkPlaceholders {
 /**
- *EasyMvc For Application name. EasyMvc 
+ * For Application name.  
  */
   const ApplicationNamePlaceHolder = "{{app_name}}";
 }

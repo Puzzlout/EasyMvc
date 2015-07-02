@@ -1,42 +1,30 @@
 <?php
 
-/**
- *
- * @package		Easy MVC Framework
- * @author		Jeremie Litzler
- * @copyright	Copyright (c) 2015
- * @license		
- * @link		
- * @since		
- * @filesource
- */
-// ------------------------------------------------------------------------
-
-/**
- * GeneratorManager controller Class
- *
- * @package		Library
- * @category	Controllers
- * @author		Jeremie Litzler
- * @link		
- */
-
 namespace Library\Dal\Generator;
 
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
 }
 
+/**
+ * Generates the DAO Classes from a database schema.
+ * 
+ * @author Jeremie Litzler
+ * @copyright Copyright (c) 2015
+ * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link https://github.com/WebDevJL/
+ * @since Version 1.0.0
+ * @package GeneratorManager
+ */
 class GeneratorManager extends \Library\Core\ApplicationComponent {
 
   public function GenerateDaoClasses() {
-    $dal = $this->app()->dal()->getManagerOf("Common", TRUE);
-    $tableList = $dal->GetListOfTablesInDatabase();
+    $tableList = $this->app()->dal()->getDalInstance()->GetListOfTablesInDatabase();
     if ($tableList > 0) {
       foreach ($tableList as $table) {
         $table_name = $table[0];
-        $tableColumnNames = $dal->GetTableColumnNames($table[0]);
-        $tableColumnMeta = $dal->GetTableColumnsMeta($table[0], $tableColumnNames);
+        $tableColumnNames = $this->app()->dal()->getDalInstance()->GetTableColumnNames($table[0]);
+        $tableColumnMeta = $this->app()->dal()->getDalInstance()->GetTableColumnsMeta($table[0], $tableColumnNames);
         $dao = new DaoClassGenerator(
                 array(
                     "className" => ucfirst($table_name), 
@@ -52,7 +40,7 @@ class GeneratorManager extends \Library\Core\ApplicationComponent {
         $dao->ClassEnd();
       }
     } else {
-      throw new Exception("No tables in database!", 0, NULL);
+      throw new \Exception("No tables in database!", 0, NULL);
     }
   }
 }

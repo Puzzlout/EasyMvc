@@ -43,10 +43,22 @@ class AuthenticationManager {
    * @return \Library\BO\F_user
    */
   public function HashUserPassword(\Library\BO\F_user $user) {
-    $user->setF_user_salt(\Library\Utility\UUID::v4());
+    $user->setF_user_salt($user->F_user_password_is_hashed() ? $user->F_user_salt() : \Library\Utility\UUID::v4());
     $user->setF_user_password($this->app->security()->HashValue($user->F_user_salt(), $user->F_user_password()));
     $user->setF_user_password_is_hashed(1);
     return $user;
+  }
+
+  public function CheckPassword($passwordGiven, \Library\BO\F_user $user, $isFirstLogin = FALSE) {
+    $userToCheck = new \Library\BO\F_user();
+    $userToCheck->setF_user_password($passwordGiven);
+    if ($user->F_user_password_is_hashed() || !$isFirstLogin) {
+      $userToCheck->setF_user_salt($user->F_user_salt());
+      $userToCheck->setF_user_password_is_hashed(1);
+      $userToCheck = $this->HashUserPassword($userToCheck);
+    }
+
+    return strcmp($user->f_user_password(), $userToCheck->f_user_password()) === 0 ? $user : FALSE;
   }
 
 }

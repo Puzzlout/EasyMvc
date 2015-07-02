@@ -8,37 +8,18 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
 
 abstract class Entity implements \ArrayAccess {
 
-  protected $errors = array(),
-          $id;
-
   public function __construct(array $donnees = array()) {
     if (!empty($donnees)) {
       $this->hydrate($donnees);
     }
   }
 
-  public function isNew() {
-    return empty($this->id);
-  }
+  public function hydrate(array $data) {
+    foreach ($data as $propertyName => $value) {
+      $setProperty = 'set' . ucfirst($propertyName);
 
-  public function errors() {
-    return $this->errors;
-  }
-
-  public function id() {
-    return $this->id;
-  }
-
-  public function setId($id) {
-    $this->id = (int) $id;
-  }
-
-  public function hydrate(array $donnees) {
-    foreach ($donnees as $attribut => $valeur) {
-      $methode = 'set' . ucfirst($attribut);
-
-      if (is_callable(array($this, $methode))) {
-        $this->$methode($valeur);
+      if (is_callable(array($this, $setProperty))) {
+        $this->$setProperty($value);
       }
     }
   }
@@ -62,7 +43,7 @@ abstract class Entity implements \ArrayAccess {
   }
 
   public function offsetUnset($var) {
-    throw new \Exception('Impossible de supprimer une quelconque valeur');
+    throw new \Exception('Impossible to delete $var.');
   }
 
 }

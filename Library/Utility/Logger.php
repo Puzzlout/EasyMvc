@@ -43,7 +43,7 @@ class Logger {
   }
 
   public static function AddLogToDatabase($app, $log) {
-    $app->dal()->getManagerOf()->Add($log);
+    $app->dal()->getDalInstance()->Add($log);
   }
 
   public static function GetTime() {

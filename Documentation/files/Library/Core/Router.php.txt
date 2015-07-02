@@ -20,10 +20,10 @@ class Router extends ApplicationComponent {
 
   public function __construct(Application $app) {
     parent::__construct($app);
-    $this->InitRoutes();
+    $this->InitRoutesFromXml();
   }
 
-  public function InitRoutes() {
+  public function InitRoutesFromXml() {
     $this->setRoutesXmlPath(__ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . __APPNAME__ . '/Config/routes.xml');
 
     $routes = $this->app->user()->getAttribute(\Library\Enums\SessionKeys::UserRoutes);
@@ -38,8 +38,14 @@ class Router extends ApplicationComponent {
     }
   }
 
+  public function InitRoutesFromDatabase() {
+    //Find the controller classes
+    
+    //Find the view folders
+    
+  }
   /**
-   *EasyMvc Set the route of the current request. EasyMvc
+   * Set the route of the current request. 
    * @param \Library\Core\Route $route
    */
   public function setCurrentRoute($currentRoute) {
@@ -47,7 +53,7 @@ class Router extends ApplicationComponent {
   }
 
   /**
-   *EasyMvc Get the route of the current request. EasyMvc
+   * Get the route of the current request. 
    * @param \Library\Core\Route $route
    */
   public function currentRoute() {
@@ -55,7 +61,7 @@ class Router extends ApplicationComponent {
   }
 
   /**
-   *EasyMvc Set the timestamp of the last modification of the routes.xml. EasyMvc
+   * Set the timestamp of the last modification of the routes.xml. 
    * @param timestamp $lastModifiedTime
    */
   public function setLastModified($lastModifiedTime) {
@@ -63,7 +69,7 @@ class Router extends ApplicationComponent {
   }
 
   /**
-   *EasyMvc Get the timestamp of the last modification of the routes.xml. EasyMvc
+   * Get the timestamp of the last modification of the routes.xml. 
    * @param timestamp $lastModifiedTime
    */
   public function lastModified() {
@@ -71,7 +77,7 @@ class Router extends ApplicationComponent {
   }
 
   /**
-   *EasyMvc Set the path of the routes.xml. EasyMvc
+   * Set the path of the routes.xml. 
    * @param string $path
    */
   public function setRoutesXmlPath($path) {
@@ -79,7 +85,7 @@ class Router extends ApplicationComponent {
   }
 
   /**
-   *EasyMvc Get the path of the routes.xml. EasyMvc
+   * Get the path of the routes.xml. 
    * @param string $path
    */
   public function routesXmlPath() {
@@ -87,7 +93,7 @@ class Router extends ApplicationComponent {
   }
 
   /**
-   *EasyMvc Set the array of route objects. EasyMvc
+   * Set the array of route objects. 
    * @param array $routes
    */
   public function setRoutes($routes) {
@@ -95,7 +101,7 @@ class Router extends ApplicationComponent {
   }
 
   /**
-   *EasyMvc Get the array of route objects. EasyMvc
+   * Get the array of route objects. 
    * @param array $routes
    */
   public function routes() {
@@ -117,11 +123,11 @@ class Router extends ApplicationComponent {
    * Search for a mathc route in the last of routes based on a relative url from
    * the current request.
    * 
-   * @param type $urlEasyMvc
-   * Relative url of current request. EasyMvc
+   * @param type $url
+   * Relative url of current request. 
    * @return mixed \Library\Core\Route | \RuntimeException
-   * @throws \RuntimeExceptionEasyMvc
-   * Exception is thrown if no route is found. A 404 error page will be rendered. EasyMvc
+   * @throws \RuntimeException
+   * Exception is thrown if no route is found. A 404 error page will be rendered. 
    */
   public function getRoute($url) {
     foreach ($this->routes as $route) {
@@ -187,16 +193,16 @@ class Router extends ApplicationComponent {
   /**
    * Retrieve the JavaScript urls to add to the loading view or to the head element
    * 
-   * @param DOMNode $routeEasyMvc
-   * The route xml node to read for the JavaScript file names. EasyMvc
-   * @param string $destinationEasyMvc
+   * @param DOMNode $route
+   * The route xml node to read for the JavaScript file names. 
+   * @param string $destination
    * Either: </br>
    *    - "head": to add the script tags in the head HTML element.</br>
-   *    - "html": being the very end of the html page being loaded. EasyMvc
-   * @param string $path_to_addEasyMvc
-   * Relative path to add to the file names read. EasyMvc
-   * @return stringEasyMvc
-   * A string representation of the script tag to be added to the HTML code. EasyMvc
+   *    - "html": being the very end of the html page being loaded. 
+   * @param string $path_to_add
+   * Relative path to add to the file names read. 
+   * @return string
+   * A string representation of the script tag to be added to the HTML code. 
    */
   private function _GetJsFiles($route, $destination, $path_to_add) {
     $scripts = "";
@@ -222,14 +228,14 @@ class Router extends ApplicationComponent {
    * the script or css for the sibbling route. 
    * 
    * @param \Library\Core\Route $route
-   * @param string $destinationEasyMvc
+   * @param string $destination
    * Either: </br>
    *    - "head": to add the script tags in the head HTML element.</br>
-   *    - "html": being the very end of the html page being loaded. EasyMvc
-   * @param string $path_to_addEasyMvc
-   * Relative path to add to the file names read. EasyMvc
-   * @return string $filesEasyMvc
-   * A string representation of the script tag to be added to the HTML code. EasyMvc
+   *    - "html": being the very end of the html page being loaded. 
+   * @param string $path_to_add
+   * Relative path to add to the file names read. 
+   * @return string $files
+   * A string representation of the script tag to be added to the HTML code. 
    */
   private function _GetFilesForSibbling(Route $route, $destination, $path_to_add) {
     $files = "";
@@ -248,16 +254,16 @@ class Router extends ApplicationComponent {
   }
 
   /**
-   *EasyMvc Returns the absolute file paths of PHP modules to load per route. EasyMvc
-   *EasyMvc There are 2 cases:EasyMvc<ul>
+   * Returns the absolute file paths of PHP modules to load per route. 
+   * There are 2 cases:<ul>
    *  <li>with the shared attribute, shared modules will be found in
    *  in "Applications/YourApp/Views/Modules"</li>
    *  <li>dedicated modules (to the module specified in the route) will be found
    *  in "Application/YourApp/Views/CurrentRoute/Modules".</li>
    * 
    * @param DOMNode $route
-   * @return arrayEasyMvc
-   * The list of PHP modules available for the current route. EasyMvc
+   * @return array
+   * The list of PHP modules available for the current route. 
    */
   public function _LoadPhpModules($route) {
     $modules = array();

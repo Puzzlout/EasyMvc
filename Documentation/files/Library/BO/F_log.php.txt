@@ -1,5 +1,5 @@
 <?php
-/*** @author Jeremie Litzler* @copyright Copyright (c) 2015* @licence http://opensource.org/licenses/gpl-license.php GNU Public License* @link https://github.com/WebDevJL/EasyMVC* @since Version 1.0.0* @package F_log*/
+/*** @author Jeremie Litzler* @copyright Copyright (c) 2015* @licence http://opensource.org/licenses/gpl-license.php GNU Public License* @link https://github.com/WebDevJL/* @since Version 1.0.0* @package F_log*/
 namespace Library\BO;if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) { exit('No direct script access allowed'); }
 class F_log extends \Library\Core\Entity {  protected     $f_log_id,    $f_log_request_id,    $f_log_start,    $f_log_end,    $f_log_execution_time,    $f_log_type,    $f_log_filter,    $f_log_value;
   /**    * Sets f_log_id.  */  public function setF_log_id($f_log_id) {      $this->f_log_id = $f_log_id;  }

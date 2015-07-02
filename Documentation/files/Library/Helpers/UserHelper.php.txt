@@ -74,7 +74,7 @@ class UserHelper {
   public static function GetAndStoreUsersInSession($caller) {
     $users = array();
     if (!$caller->app()->user()->getAttribute(\Library\Enums\SessionKeys::AllUsers)) {
-      $manager = $caller->managers()->getManagerOf($caller->module());
+      $manager = $caller->managers()->getDalInstance($caller->module());
       $users = $manager->selectAllUsers();
 
       $caller->app()->user->setAttribute(
@@ -141,7 +141,7 @@ class UserHelper {
     }
     $dataPost = $caller->dataPost();
     $userEmail = self::GetEmailForUser($caller, $dataPost, $user_type, $user_value);
-    $manager = $caller->managers()->getManagerOf('User');
+    $manager = $caller->managers()->getDalInstance('User');
     $generatedDataPost = array(
         'user_login' => $userEmail,
         'user_password' => $userEmail,

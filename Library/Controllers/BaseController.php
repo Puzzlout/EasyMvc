@@ -8,6 +8,7 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
 
 abstract class BaseController extends \Library\Core\ApplicationComponent {
 
+  protected $currentRequest = null;
   protected $action = '';
   protected $module = '';
   protected $page = null;
@@ -37,27 +38,21 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
   }
 
   public function execute() {
-    $method = 'execute' . ucfirst($this->action);
-
-    if (!is_callable(array($this, $method))) {
-      throw new \RuntimeException('The action "' . $this->action . '" is not defined for this module');
+    $action = $this->action();
+    if (!is_callable(array($this, $action))) {
+      throw new \RuntimeException('The action "' . $action . '" is not defined for this module');
     }
     //
     if ($this->resxfile !== NULL) {
       $this->AddCommonVarsToPage();
     }
 
-//    $br = new \Library\UC\Breadcrumb($this->app());
-    //Load controller method
     $time_log_type = \Library\Enums\ResourceKeys\GlobalAppKeys::log_controller_method_request;
     \Library\Utility\TimeLogger::StartLog($this->app(), $time_log_type);
-    $result = $this->$method($this->app->httpRequest());
+    $result = $this->$action();
     \Library\Utility\TimeLogger::EndLog($this->app(), $time_log_type);
     if ($result !== NULL) {
-//      $result["br"] = $br->Build();
       echo \Library\Core\HttpResponse::encodeJson($result);
-    } else {
-//      $this->page->addVar("br", $br->Build());
     }
   }
 
@@ -100,6 +95,14 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
 
   public function toolTips() {
     return $this->toolTips;
+  }
+  
+  /**
+   * Returns the current request.
+   * @return \Library\Core\HttpRequest
+   */
+  public function currentRequest() {
+    return $this->currentRequest;
   }
 
   public function setModule($module) {
@@ -153,7 +156,12 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
   public function setUploadingFiles() {
     $this->files = $_FILES;
   }
-
+  /**
+   * Sets the current request.
+   */
+  public function setCurrentRequest() {
+    $this->currentRequest = $this->app()->httpRequest();
+  }
   /**
    * Set the default response from WS
    * 

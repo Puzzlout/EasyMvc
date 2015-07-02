@@ -15,7 +15,7 @@ set_error_handler(function($errno, $errstr, $errfile, $errline, array $errcontex
  * Version number global variable definition
  * It is used to allow automatic client refresh of the JavaScript and CSS files.
  */
-define('__VERSION_NUMBER__', '1.0.0');
+define('__VERSION_NUMBER__', '1.0.0.2');
 
 /**
  * Prevents the PHP files to be excecuted directly.

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<routes version="1.0.1.5">
+<routes>
     <!-- UI routes -->
-    <route url="login" module="Authenticate" action="loadLoginView" resxfile="login" type="ui">
+    <route url="login" module="Authenticate" action="LoadLoginView" resxfile="login" type="ui">
         <js_files>
             <js_file use="html" value="Web/library/js/validator.js" />
             <js_file use="html" value="Applications/EasyMvc/ClientSide/js/app/controllers/auth.js" />
@@ -13,7 +13,17 @@
     </route>
     
     <!-- login -->
-    <route url="logout" module="Authenticate" action="disconnect" resxfile="login" type="ui" />    
+    <route url="logout" module="Authenticate" action="Disconnect" resxfile="login" type="ui" />    
+
+    <!-- Developer routes -->
+    <route url="configRoutes" module="Config" action="configureRoutes" resxfile="config" type="lib">
+        <js_files />
+        <css_files />
+        <php_modules>
+            <!-- attributes: key, file_name, shared  -->
+            <php_module key="project_tabs_open" file_name="project_tabs_open.php" />
+        </php_modules>
+    </route>
     
     <!-- WebService AJAX routes -->
     <!-- INSTRUCTIONS
@@ -27,11 +37,11 @@
           - the resxfile, which used to load the resx file in Applications/Your_App/Resources/Local
           - the type, which used to differenciate a view route from a webservice ajax route
   -->
-  <route url="auth" module="Authenticate" action="authenticate" resxfile="login" type="ws" />
+  <route url="auth" module="Authenticate" action="Authenticate" resxfile="login" type="ws" />
   <route url="user/create" module="Authenticate" action="create" resxfile="login" type="ws" />
   
-  <route url="buildDao" module="Generator" action="createDaoClasses" resxfile="generator" type="lib ws" />
+  <route url="buildDao" module="Generator" action="CreateDaoClasses" resxfile="generator" type="lib ws" />
   <route url="debug/view" module="Debug" action="viewSessionArrays" resxfile="debug" type="lib ws" />
-  <route url="config/get" module="Config" action="getSettingValue" resxfile="config" type="lib ws" />
-  <route url="upload" module="FileUpload" action="upload" resxfile="fileupload" type="lib ws" />
+  <route url="config/get" module="Config" action="GetSettingValue" resxfile="config" type="lib ws" />
+  <route url="upload" module="FileUpload" action="Upload" resxfile="fileupload" type="lib ws" />
 </routes>

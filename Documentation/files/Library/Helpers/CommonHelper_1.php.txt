@@ -22,7 +22,7 @@
  * @link		
  */
 
-namespace Applications\EasyMvc\Helpers;
+namespace \Applications\EasyMvc\Helpers;
 
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
@@ -110,14 +110,14 @@ class CommonHelper {
   /**
    * Find an object in a list filtering by the id value of  given property name of each object.
    * 
-   * @param string $idValueEasyMvc
-   * The id value used to compare with the property name given of each object of the list. EasyMvc
-   * @param string $propNameEasyMvc
-   * The property name to build the property getter function to perform a comparaison with the id value provided. EasyMvc
-   * @param array (of object) $listOfObjectsEasyMvc
-   * The list of objects of type T to look into. T is defined by the caller. EasyMvc
-   * @return mixed{boolean,object}EasyMvc
-   * The object if found or FALSE otherwise. EasyMvc
+   * @param string $idValue
+   * The id value used to compare with the property name given of each object of the list. 
+   * @param string $propName
+   * The property name to build the property getter function to perform a comparaison with the id value provided. 
+   * @param array (of object) $listOfObjects
+   * The list of objects of type T to look into. T is defined by the caller. 
+   * @return mixed{boolean,object}
+   * The object if found or FALSE otherwise. 
    */
   public static function FindObjectByIntValue($idValue, $propName, $listOfObjects) {
     $match = FALSE;
@@ -133,17 +133,17 @@ class CommonHelper {
   /**
    * Find an object in a list filtering by the string value of one property name of each object.
    * 
-   * @param string $filterEasyMvc
-   * The filter used to compare with the property name of each object of the list. EasyMvc
-   * @param string $propNameEasyMvc
-   * The property name to build the property getter function to perform a comparaison with the filter value provided. EasyMvc
-   * @param array (of object) $list_of_objEasyMvc
-   * The list of objects of type T to look into. EasyMvc
-   * @param string $keyEasyMvc
+   * @param string $filter
+   * The filter used to compare with the property name of each object of the list. 
+   * @param string $propName
+   * The property name to build the property getter function to perform a comparaison with the filter value provided. 
+   * @param array (of object) $list_of_obj
+   * The list of objects of type T to look into. 
+   * @param string $key
    * The key to read the value in an associative array if the list of object
    * is a list of associative arrays.
-   * @return mixed{boolean,object}EasyMvc
-   * The object if found or FALSE otherwise. EasyMvc
+   * @return mixed{boolean,object}
+   * The object if found or FALSE otherwise. 
    */
   public static function FindObjectByStringValue($filter, $propName, $listOfObjects, $key = NULL) {
     $match = FALSE;

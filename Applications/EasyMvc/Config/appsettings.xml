@@ -17,7 +17,8 @@
   <!-- Security -->
   <define key="EncryptionKey" value="4lx81277pVi606I4X77Q258bT7ua1GMZ" />
   <define key="PasswordSalt" value="g496lJL683yFiDzju2K94f1751Lo7WSw" />
-
+  <define key="UseEmailLinkForFirstLogin" value="TRUE" />
+  
   <!-- Database connection details -->
   <define key="Myslq_host" value="localhost" />
   <define key="Mysql_user" value="easymvc" />

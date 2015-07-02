@@ -11,6 +11,6 @@
   <resource key="remember_me_label">Remember me</resource>
   <resource key="forgot_pwd_label">Forgot password</resource>
   <resource key="login_btn_text">Login now</resource>
-  <resource key="message_error_authenticate">User not found! Please check your credentials.</resource>
-  <resource key="message_success_authenticate">Logging-in... Please wait.</resource>
+  <resource key="message_error_Authenticate">User not found! Please check your credentials.</resource>
+  <resource key="message_success_Authenticate">Logging-in... Please wait.</resource>
 </resources>

@@ -102,6 +102,14 @@ abstract class AppSettingKeys {
    * Public static salt value used to hash user passwords. 
    * @see /Library/Security/Encryption.php
    */
-  const PasswordSalt = "PaswordSalt";
+  const PasswordSalt = "PasswordSalt";
+  /**
+   * File name of the brand image
+   */
+  const LogoImageUrl = "LogoImageUrl";
 
+  /**
+   * Boolean value to use when changing password at first line
+   */
+  const UseEmailLinkForFirstLogin = "UseEmailLinkForFirstLogin";
 }

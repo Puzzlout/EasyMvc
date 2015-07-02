@@ -20,10 +20,10 @@ class Router extends ApplicationComponent {
 
   public function __construct(Application $app) {
     parent::__construct($app);
-    $this->InitRoutes();
+    $this->InitRoutesFromXml();
   }
 
-  public function InitRoutes() {
+  public function InitRoutesFromXml() {
     $this->setRoutesXmlPath(__ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . __APPNAME__ . '/Config/routes.xml');
 
     $routes = $this->app->user()->getAttribute(\Library\Enums\SessionKeys::UserRoutes);
@@ -38,6 +38,12 @@ class Router extends ApplicationComponent {
     }
   }
 
+  public function InitRoutesFromDatabase() {
+    //Find the controller classes
+    
+    //Find the view folders
+    
+  }
   /**
    * Set the route of the current request. 
    * @param \Library\Core\Route $route

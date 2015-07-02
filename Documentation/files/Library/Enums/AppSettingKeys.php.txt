@@ -1,12 +1,12 @@
 <?php
 
 /**
- *EasyMvc Lists the constants of the Application settings keys. EasyMvc
+ * Lists the constants of the Application settings keys. 
  * 
  * @author Jeremie Litzler
  * @copyright Copyright (c) 2015
  * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
- * @link https://github.com/WebDevJL/EasyMVC
+ * @link https://github.com/WebDevJL/
  * @since Version 1.0.0
  * @package AppSettingKeys
  */
@@ -19,20 +19,20 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
 
 abstract class AppSettingKeys {
   /**
-   *EasyMvc Application mode defines DEV or LIVE mode. EasyMvc
+   * Application mode defines DEV or LIVE mode. 
    */
 
   const ApplicationMode = "ApplicationMode";
   /**
-   *EasyMvc Default culture of the application. EasyMvc
+   * Default culture of the application. 
    */
   const DefaultCulture = "DefaultCulture";
   /**
-   *EasyMvc ApplicationBaseUrl value when the WebApp is not at the root of the public 
+   * ApplicationBaseUrl value when the WebApp is not at the root of the public 
    * directory but when it is "publicRoot/MySite".<br />
    * When the url is http://mydomain.net/, the BaseUrl value is "/".<br />
    * When the url is http://mydomain.net/MySite, the BaseUrl value 
-   * is "/MySite/".<br />EasyMvc
+   * is "/MySite/".<br />
    */
   const BaseUrl = "ApplicationBaseUrl";
   /**
@@ -40,69 +40,77 @@ abstract class AppSettingKeys {
    */
   const DefaultPage = "DefaultPage";
   /**
-   *EasyMvc Path to the images in the project. EasyMvc
+   * Path to the images in the project. 
    */
   const RootImageFolderPath = "RootImageFolderPath";
   /**
-   *EasyMvc Path to the uploaded files in the project. EasyMvc
+   * Path to the uploaded files in the project. 
    */
   const RootDocumentUpload = "RootDocumentUpload";
   /**
-   *EasyMvc Path to the Dal classes of the Application. EasyMvc
+   * Path to the Dal classes of the Application. 
    */
   const DalFolderPath = "DalFolderPath";
   /**
-   *EasyMvcPath to the Tooltips definition file. EasyMvc
+   *Path to the Tooltips definition file. 
    */
   const TooltipsXmlFileName = "TooltipsXmlFileName";
   /**
-   *EasyMvc Host used for the MySQL connection. EasyMvc
+   * Host used for the MySQL connection. 
    */
   const Myslq_host = "Myslq_host";
   /**
-   *EasyMvc User used for the MySQL connection. EasyMvc
+   * User used for the MySQL connection. 
    */
   const Mysql_user = "Mysql_user";
   /**
-   *EasyMvc User's password used for the MySQL connection. EasyMvc
+   * User's password used for the MySQL connection. 
    */
   const Mysql_pwd = "Mysql_pwd";
   /**
-   *EasyMvc Target database used for the MySQL connection. EasyMvc
+   * Target database used for the MySQL connection. 
    */
   const Mysql_db_name = "Mysql_db_name";
   /**
-   *EasyMvc Default lattitude Coordinates to center Google Maps. EasyMvc
+   * Default lattitude Coordinates to center Google Maps. 
    */
   const GoogleMapsCenterLat = "GoogleMapsCenterLat";
   /**
-   *EasyMvc Default longitude Coordinates to center Google Maps. EasyMvc
+   * Default longitude Coordinates to center Google Maps. 
    */
   const GoogleMapsCenterLng = "GoogleMapsCenterLng";
   /**
-   *EasyMvc Default icon image path when a marker has no lattitude and longitude
-   * in Google Maps. EasyMvc
+   * Default icon image path when a marker has no lattitude and longitude
+   * in Google Maps. 
    */
   const GoogleMapsNoLatLngIcon = "GoogleMapsNoLatLngIcon";
   /**
-   *EasyMvc Default domain to use in build email addresses. EasyMvc
+   * Default domain to use in build email addresses. 
    */
   const DefaultEmailDomainValue = "DefaultEmailDomainValue";
   /**
-   *EasyMvc Method using to log error. EasyMvc
-   * @see EasyMVC/Library/Enums/ErrorLoggingMethod.php
+   * Method using to log error. 
+   * @see /Library/Enums/ErrorLoggingMethod.php
    */
   const ErrorLoggingMethod = "ErrorLoggingMethod";
   /**
-   *EasyMvc Public encryption key to use mcrypt. EasyMvc
-   * @see EasyMVC/Library/Security/Encryption.php
+   * Public encryption key to use mcrypt. 
+   * @see /Library/Security/Encryption.php
    */
   const EncryptionKey = "EncryptionKey";
   /**
-   *EasyMvc Public static salt value used to hash user passwords. EasyMvc
-   * @see EasyMVC/Library/Security/Encryption.php
+   * Public static salt value used to hash user passwords. 
+   * @see /Library/Security/Encryption.php
    */
-  const PasswordSalt = "PaswordSalt";
+  const PasswordSalt = "PasswordSalt";
+  /**
+   * File name of the brand image
+   */
+  const LogoImageUrl = "LogoImageUrl";
 
+  /**
+   * Boolean value to use when changing password at first line
+   */
+  const UseEmailLinkForFirstLogin = "UseEmailLinkForFirstLogin";
 }
 

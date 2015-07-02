@@ -42,8 +42,9 @@ CREATE TABLE IF NOT EXISTS `f_user` (
     `f_user_login` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
     `f_user_password` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
 	`f_user_password_is_hashed`tinyint(1) DEFAULT 0 NOT NULL COMMENT 'Flag to know if a password is hashed or not',
-    `f_user_salt` varchar(36) COLLATE utf8_unicode_ci NOT NULL,
-    `f_user_hint` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+	`f_user_token` varchar(24) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The token used to enable a user to login after changing his password at the first connection',
+    `f_user_salt` varchar(36) COLLATE utf8_unicode_ci NULL,
+    `f_user_hint` varchar(20) COLLATE utf8_unicode_ci NULL,
     `f_user_email` VARCHAR(50) COLLATE utf8_unicode_ci NOT NULL COMMENT 'User email that is unique and must be set',
     `f_user_role_id` smallint(2) NOT NULL COMMENT 'Look up the table user_role for details about the roles',
     `f_user_session_id` VARCHAR(50) COLLATE utf8_unicode_ci NULL COMMENT 'Hashed session ID',
@@ -101,9 +102,79 @@ CREATE TABLE IF NOT EXISTS `f_ip_blacklist` (
       REFERENCES `f_action` (`f_action_key`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
-INSERT INTO `easymvc_db`.`f_action` (`f_action_key`,`f_action_description`) VALUES ('auth','Authentication action');
-INSERT INTO `easymvc_db`.`f_user_role` (`f_user_role_desc`) VALUES ('Default');
+-- Table structure for table `f_common_partial_view`
+CREATE TABLE IF NOT EXISTS `f_common_partial_view` (
+    `f_common_partial_view_id` int(11) NOT NULL AUTO_INCREMENT,
+    `f_common_partial_view_file_path` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+    PRIMARY KEY (`f_common_partial_view_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
+-- Table structure for table `f_route_type`
+CREATE TABLE IF NOT EXISTS `f_route_type` (
+    `f_route_type_id` varchar(10) NOT NULL,
+    `f_route_type_description` varchar(150) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Describe the type',
+    PRIMARY KEY (`f_route_type_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Table structure for table `f_route`
+CREATE TABLE IF NOT EXISTS `f_route` (
+    `f_route_id` int(11) NOT NULL AUTO_INCREMENT,
+    `f_route_url` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Url to match the request',
+    `f_route_controller` tinyint(50) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Controller class to load',
+    `f_route_action` varchar(50) COLLATE utf8_unicode_ci NULL COMMENT 'Controller action to execute',
+	`f_route_resource_key` varchar(25) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Key to retrieve the resources for the route',
+	`f_route_type_id` varchar(4) COLLATE utf8_unicode_ci NOT NULL COMMENT 'See f_route_type table',
+    PRIMARY KEY (`f_route_id`),
+	CONSTRAINT `fk_route_route_type` FOREIGN KEY (`f_route_type_id`)
+      REFERENCES `f_route_type` (`f_route_type_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+-- Table structure for table `f_route_js`
+CREATE TABLE IF NOT EXISTS `f_route_js` (
+    `f_route_js_id` int(11) NOT NULL AUTO_INCREMENT,
+    `f_route_js_file_path` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+    `f_route_id` int(11) NOT NULL COMMENT 'See f_route table',
+    PRIMARY KEY (`f_route_js_id`),
+    CONSTRAINT `fk_route_route_js` FOREIGN KEY (`f_route_id`)
+      REFERENCES `f_route` (`f_route_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+-- Table structure for table `f_route_css`
+CREATE TABLE IF NOT EXISTS `f_route_css` (
+    `f_route_css_id` int(11) NOT NULL AUTO_INCREMENT,
+    `f_route_css_file_path` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+    `f_route_id` int(11) NOT NULL COMMENT 'See f_route table',
+    PRIMARY KEY (`f_route_css_id`),
+    CONSTRAINT `fk_route_route_css` FOREIGN KEY (`f_route_id`)
+      REFERENCES `f_route` (`f_route_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+-- Table structure for table `f_route_common_partial_view`
+CREATE TABLE IF NOT EXISTS `f_route_common_partial_view` (
+    `f_route_id` int(11) NOT NULL COMMENT 'See f_route table',
+    `f_common_partial_view_id` int(11) NOT NULL COMMENT 'See f_common_partial_view',
+    CONSTRAINT `fk_rcpv_route` FOREIGN KEY (`f_route_id`)
+      REFERENCES `f_route` (`f_route_id`) ON DELETE CASCADE,
+    CONSTRAINT `fk_rcpv_cpv` FOREIGN KEY (`f_common_partial_view_id`)
+      REFERENCES `f_common_partial_view` (`f_common_partial_view_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+-- ----------------------------------------------------------------------------
+-- Data 
+-- ----------------------------------------------------------------------------
+INSERT INTO `f_action` (`f_action_key`,`f_action_description`) VALUES ('auth','Authentication action');
+
+INSERT INTO `f_route_type` (`f_route_type_id`,`f_route_type_description`) 
+VALUES 
+('ui','Represent a route executing an action in a Application controller to load a HTML view to the end user.'),
+('lib','Represent a route executing an action in a Framework controller to load a HTML view to the developer.'),
+('ajax','Represent a route executing an AJAX request in an Application controller.'),
+('lib ajax','Represent a route executing an AJAX request in an Framework controller.');
+
+INSERT INTO `f_user_role` (`f_user_role_desc`) VALUES ('Default');
+
+INSERT INTO `f_user` VALUES (1,'t','t',0,null,null,'t@t.com',1,null);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

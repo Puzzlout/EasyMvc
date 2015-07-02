@@ -30,7 +30,7 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
 
 class ConfigController extends \Library\Controllers\BaseController {
 
-  public function executeGetSettingValue(\Library\HttpRequest $rq) {
+  public function GetSettingValue() {
     $result = $this->InitResponseWS(
             array("directory" => "common", "resx_file" => "ws_defaults", "resx_key" => "", "step" => "error")
     );
@@ -50,6 +50,10 @@ class ConfigController extends \Library\Controllers\BaseController {
               )
       );
     }
+  }
+  
+  public function ConfigureRouting() {
+    $this->app()->dal()->getDalInstance()->GetRoutesDetails();
   }
 
 }

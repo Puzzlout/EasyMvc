@@ -77,7 +77,7 @@ class FileLoader extends \Library\Core\ApplicationComponent {
 
   private function LoadDocumentObjects() {
     $db = new \Library\Dal\Managers('PDO', $this->app());
-    $dal = $db->getManagerOf("Document", false);
+    $dal = $db->getDalInstance("Document", false);
     if (isset($this->dataPost["itemCategory"]) and isset($this->dataPost["itemId"]) and is_numeric($this->dataPost["itemId"])) {
       return $dal->selectManyByCategoryAndId($this->dataPost["itemCategory"], $this->dataPost["itemId"]);
     } else {

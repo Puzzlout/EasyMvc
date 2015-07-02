@@ -18,7 +18,7 @@ $(document).ready(function() {
    } else {//success
     toastr.success(reply.message);
     //Now redirect to project page
-    window.location.replace("project");
+    //window.location.replace("project");
    }
   });
  };

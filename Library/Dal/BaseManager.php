@@ -1,25 +1,14 @@
 <?php
 
 /**
- *
- * @package     Easy MVC Framework
- * @author      Jeremie Litzler
- * @copyright   Copyright (c) 2015
- * @license		
- * @link		
- * @since		
- * @filesource
- */
-// ------------------------------------------------------------------------
-
-/**
- * BaseManager Class
- *
- * @package       Library
- * @category    Dal
- * @category      
- * @author        Jeremie Litzler
- * @link		
+ * Handles the database queries.
+ * 
+ * @author Jeremie Litzler
+ * @copyright Copyright (c) 2015
+ * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link https://github.com/WebDevJL/EasyMVC
+ * @since Version 1.0.0
+ * @package BaseManager
  */
 
 namespace Library\Dal;
@@ -29,6 +18,9 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
 }
 
 class BaseManager extends \Library\Dal\Manager {
+
+  const INSERTCOLUMNS = "INSERTCOLUMNS";
+  const INSERTVALUES = "INSERTVALUES";
 
   public function __construct($dao, $filters) {
     parent::__construct($dao, $filters);
@@ -66,7 +58,8 @@ class BaseManager extends \Library\Dal\Manager {
    * Can be a bool (TRUE,FALSE), a integer or a list of Dao objects (of type  $dao_class) 
    */
   public function selectMany($object, $where_filter_id, $filter_as_string = false) {
-    $params = array("type" => "SELECT", "dao_class" => \Library\Helpers\CommonHelper::GetFullClassName($object));
+    $this->dbConfig()->setType(DbExecutionType::SELECT);
+    $this->dbConfig()->setDaoClassName(\Library\Helpers\CommonHelper::GetFullClassName($object));
     if ($where_filter_id !== "") {
       $where_clause = " WHERE " . $where_filter_id . " = :where_filter_id";
     } else {
@@ -96,21 +89,14 @@ class BaseManager extends \Library\Dal\Manager {
   }
 
   /**
-   * Select method for many items
    * 
-   * @param object 
-   * $object: Dao object
-   * @param array
-   * $where_filters: an array following structure:
-   * 
-   * representing the column name to filter the data on. It is used in the WHERE clause.
-   * @param bool
-   * $filter_as_string: TRUE or FALSE to know if a where filter is a string or a integer 
-   * @return mixed
-   * Can be a bool (TRUE,FALSE), a integer or a list of Dao objects (of type  $dao_class) 
+   * @param type $object
+   * @param type $where_filters
+   * @return type
    */
   public function selectManyComplex($object, $where_filters) {
-    $params = array("type" => "SELECT", "dao_class" => \Library\Helpers\CommonHelper::GetFullClassName($object));
+    $this->dbConfig()->setType(DbExecutionType::SELECT);
+    $this->dbConfig()->setDaoClassName(\Library\Helpers\CommonHelper::GetFullClassName($object));
     $select_clause = "SELECT ";
     //TODO: implement building the where clause with one or many filters
     $where_clause = ""; //$this->BuildWhereClause($where_filters);
@@ -144,21 +130,12 @@ class BaseManager extends \Library\Dal\Manager {
    * @param object $item
    */
   public function add($object) {
-    $params = array("type" => "INSERT");
-    $columns = "";
-    $values = "";
-    foreach ($object as $key => $value) {
-      $columns .= "`" . $key . "`,";
-      $values .= ":$key,";
-    }
-    $columns = rtrim($columns, ", ");
-    $values = rtrim($values, ", ");
-    $insert_clause = "INSERT INTO `" . $this->GetTableName($object) . "` ($columns) VALUES ($values);";
-    $sth = $this->dao->prepare($insert_clause);
-    foreach ($object as $key => $value) {
-      $sth->bindValue(":$key", $value, \PDO::PARAM_STR);
-    }
-    return $this->ExecuteQuery($sth, $params);
+    $this->dbConfig()->setTableName($this->GetTableName($object));
+    $this->dbConfig()->setType(DbExecutionType::INSERT);
+    $this->dbConfig()->setInsertColumnsClause($this->BuildClauseStatement($object), array($this::INSERTCOLUMNS));
+    $this->dbConfig()->setInsertValuesClause($this->BuildClauseStatement($object), array($this::INSERTVALUES));
+    $this->dbConfig()->BuildInsertQuery();
+    return $this->BindParametersAndExecute($object, NULL);
   }
 
   /**
@@ -166,29 +143,13 @@ class BaseManager extends \Library\Dal\Manager {
    *
    * @param object $item
    */
-  public function edit($object, $where_filter_id) {
-    $params = array("type" => "UPDATE");
-    $where_clause = $set_clause = "";
-    \Library\Helpers\DebugHelper::WriteObject($object);
-    foreach ($object as $key => $value) {
-      if ($key === $where_filter_id) {
-        $where_clause = "$key = :$key";
-      } else if ($value === null) {
-        
-      } else {
-        $set_clause .= "`$key` = :$key,";
-      }
-    }
-    $set_clause = rtrim($set_clause, ",");
-    $update_clause = "UPDATE `" . $this->GetTableName($object) . "` SET $set_clause  WHERE $where_clause;";
-    $sth = $this->dao->prepare($update_clause);
-    foreach ($object as $key => $value) {
-      if ($value !== null) {
-        $sth->bindValue(":$key", $value, \PDO::PARAM_STR);
-      }
-    }
-    \Library\Helpers\DebugHelper::WriteString($update_clause);
-    return $this->ExecuteQuery($sth, $params);
+  public function edit($object, $whereFilterId) {
+    $this->dbConfig()->setTableName($this->GetTableName($object));
+    $this->dbConfig()->setType(DbExecutionType::UPDATE);
+    $this->dbConfig()->setUpdateClause($this->BuildClauseStatement($object));
+    $this->dbConfig()->setWhereClause($this->BuildClauseStatement($object, array($whereFilterId)));
+    $this->dbConfig()->BuildUpdateQuery();
+    return $this->BindParametersAndExecute($object, $whereFilterId);
   }
 
   /**
@@ -197,57 +158,99 @@ class BaseManager extends \Library\Dal\Manager {
    * @param int $identifier
    */
   public function delete($object, $where_filter_id) {
-    $params = array("type" => "DELETE");
+    $this->dbConfig()->setTYpe(DbExecutionType::DELETE);
     $delete_clause = "DELETE from `" . $this->GetTableName($object) . "` WHERE $where_filter_id = " . $object->$where_filter_id() . ";";
     $sth = $this->dao->prepare($delete_clause);
     return $this->ExecuteQuery($sth, $params);
+  }
+
+  public function GetRoutesDetails($objects) {
+    $sql = "";
+    foreach ($objects as $object) {
+      $tableName = $this->GetTableName($object);
+      $sql .= "SELECT " . $this->BuildClauseStatement($object) . " FROM " . $tableName;
+    }
+    $dbStatement = $this->dao->prepare($sql);
+    return $this->ExecuteQuery($dbStatement, array("type" => DbExecutionType::MULTIROWSET));
+  }
+
+  private function BuildClauseStatement($object, $filters = array()) {
+    $result = "";
+    foreach ((array) $object as $property => $value) {
+      if (count($filters) === 0) {
+        $result .= "`$property` = :$property,";
+      } elseif (count($filters) > 0 && in_array($property, $filters)) {
+        $result .= "`$property` = :$property,";
+      } elseif (in_array($this::INSERTCOLUMNS, $filters)) {
+        $result .= "`$property`,";
+      } elseif (in_array($this::INSERTVALUES, $filters)) {
+        $result .= ":$property,";
+      }
+    }
+    return rtrim($result, ",");
+  }
+
+  private function BindParametersAndExecute($object, $whereFilterId) {
+    $dbStatement = $this->dao->prepare($this->dbConfig()->query());
+    foreach ((array) $object as $property => $value) {
+      switch ($property) {
+        case $whereFilterId:
+          $dbStatement->bindValue(":$property", $value, \PDO::PARAM_INT);
+          break;
+        default:
+          $dbStatement->bindValue(":$property", $value);
+          break;
+      }
+    }
+    return $this->ExecuteQuery($dbStatement);
   }
 
   protected function GetTableName($object) {
     return \Library\Helpers\CommonHelper::GetShortClassName($object);
   }
 
-  protected function ExecuteQuery($sth, $params) {
-    $result = -1;
+  protected function ExecuteQuery($dbStatement) {
+    $result = -2;
     try {
-      //\Library\Helpers\DebugHelper::WriteString($sql_query);
-      $query = $sth->execute();
+      $query = $dbStatement->execute();
       if (!$query) {
         $result = $query->errorCode();
       } else {
-        switch ($params["type"]) {
-          case "SELECT":
-            $sth->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $params["dao_class"]);
-            $list = $sth->fetchAll();
-            $sth->closeCursor();
-            return count($list) > 0 ? $list : array();
+        switch ($this->dbConfig()->type()) {
+          case DbExecutionType::SELECT:
+            $dbStatement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $this->dbConfig()->daoClassName());
+            $list = $dbStatement->fetchAll();
+            $dbStatement->closeCursor();
+            $result = count($list) > 0 ? $list : array();
             break;
-          case "UPDATE":
-          case "DELETE":
+          case DbExecutionType::UPDATE:
+          case DbExecutionType::DELETE:
             $result = TRUE;
             break;
-          case "INSERT":
+          case DbExecutionType::INSERT:
             $result = $this->dao->lastInsertId();
             break;
-          case "TABLES":
-            $result = $sth->fetchAll(\PDO::FETCH_NUM);
+          case DbExecutionType::SHOWTABLES:
+            $result = $dbStatement->fetchAll(\PDO::FETCH_NUM);
             break;
-          case "COLUMNNAMES":
-            $result = $sth->fetchAll(\PDO::FETCH_COLUMN);
+          case DbExecutionType::COLUMNNAMES:
+            $result = $dbStatement->fetchAll(\PDO::FETCH_COLUMN);
             break;
-          case "COLUMNMETAS":
-            $result = $sth->fetchAll();
+          case DbExecutionType::COLUMNMETAS:
+            $result = $dbStatement->fetchAll();
             break;
+          case DbExecutionType::MULTIROWSET:
+
           default:
 
             break;
         }
       }
-      $sth->closeCursor();
-    } catch (\PDOException $pdo_ex) {
-      json_encode($pdo_ex);
+      $dbStatement->closeCursor();
+    } catch (\PDOException $exception) {
+      json_encode($exception);
       //echo "<!--" . $pdo_ex->getMessage() . "-->";
-      $result *= $pdo_ex->getCode();
+      $result .= $exception->getCode();
     }
     return $result;
   }

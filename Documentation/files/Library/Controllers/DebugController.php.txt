@@ -1,25 +1,14 @@
 <?php
 
 /**
- *
- * @package		Easy MVC Framework
- * @author		Jeremie Litzler
- * @copyright	Copyright (c) 2015
- * @license		
- * @link		
- * @since		
- * @filesource
- */
-// ------------------------------------------------------------------------
-
-/**
- * Debug controller Class
- *
- * @package		Library
- * @category	Controllers
- * @category	DebugController
- * @author		Jeremie Litzler
- * @link		
+ * Allows to display some data as debug on live platform.
+ * 
+ * @author Jeremie Litzler
+ * @copyright Copyright (c) 2015
+ * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link https://github.com/WebDevJL/EasyMVC
+ * @since Version 1.0.0
+ * @package DebugController
  */
 
 namespace Library\Controllers;
@@ -30,26 +19,16 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
 
 class DebugController extends \Library\Controllers\BaseController {
 
-  public function executeViewSessionArrays(\Library\HttpRequest $rq) {
+  public function ViewSessionArrays() {
     $output = array();
-    switch ($rq->getData("type")) {
-      case "pm":
-        $output = var_dump(\Applications\EasyMvc\Helpers\PmHelper::GetSessionPms($this->user()));
-        break;
-      case "project";
-        $output = var_dump(\Applications\EasyMvc\Helpers\ProjectHelper::GetSessionProjects($this->user()));
-        break;
-      case "task":
-        $output = var_dump(\Applications\EasyMvc\Helpers\TaskHelper::GetSessionTasks($this->user()));
-        break;
+    switch ($this->currentRequest()->getData("type")) {
       case "route":
-        $output = var_dump($this->user->getAttribute(\Library\Enums\SessionKeys::SessionRoutes));
+            \Library\Helpers\DebugHelper::WriteObject(
+                    $this->user->getAttribute(\Library\Enums\SessionKeys::SessionRoutes));
         break;
       default:
         break;
     }
-    echo '<pre>', print_r($output), '</pre>';
-    //\Library\HttpResponse::encodeJson($output);
     die();
   }
 

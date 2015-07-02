@@ -25,8 +25,8 @@ class AuthenticateController extends \Library\Controllers\BaseController {
    * @param \Library\Core\HttpRequest $rq
    * The current request. 
    */
-  public function executeLoadLoginView(\Library\Core\HttpRequest $rq) {
-    $this->executeDisconnect($rq, FALSE);
+  public function LoadLoginView() {
+    $this->Disconnect(FALSE);
   }
 
   /**
@@ -37,29 +37,34 @@ class AuthenticateController extends \Library\Controllers\BaseController {
    * @return json
    * A JSON object with the result bool value and success/error message. 
    */
-  public function executeAuthenticate(\Library\Core\HttpRequest $rq) {
+  public function Authenticate() {
     $result = $this->InitResponseWS();
     $userPost = \Library\Helpers\CommonHelper::PrepareUserObject($this->dataPost(), new \Library\BO\F_user());
     $userDatabase =
             $this
             ->app()
             ->dal()
-            ->getManagerOf('Login')
+            ->getDalInstance('Login')
             ->selectOne($userPost);
+    $dbResult = -1;
     if (count($userDatabase) > 0) {
       $user = $userDatabase[0];
-      if (!$user->F_user_password_is_hashed()) {
+      if (!$user->F_user_password_is_hashed() && $this->app()->auth()->CheckPassword($userPost->F_user_password(), $user, TRUE)) {
         $user = $this->app()->auth()->HashUserPassword($user);
-        $this->app()->dal()->getManagerOf()->edit($user, "f_user_id");
+        $dbResult = $this->app()->dal()->getDalInstance()->edit($user, "f_user_id");
+      } else {
+        $user = $this->app()->auth()->CheckPassword($userPost->F_user_password(), $user);
+        $dbResult = !$user ? -2 : 1;
       }
       //User is correct so log him in and set result to success
-      $result = $this->SendResponseWS("success", $user);
-      $this->app()->auth()->authenticate($user);
+      if ($dbResult > 0) {
+        $this->app()->auth()->authenticate($user);
+      }
     }
     $this->SendResponseWS($result, array(
         "resx_file" => \Applications\EasyMvc\Resources\Enums\ResxFileNameKeys::Login,
         "resx_key" => $this->action(),
-        "step" => count($userDatabase) > 0 ? "success" : "error"
+        "step" => $dbResult > 0 ? "success" : "error"
     ));
   }
 
@@ -68,7 +73,7 @@ class AuthenticateController extends \Library\Controllers\BaseController {
    *
    * @param \Library\HttpRequest $rq
    */
-  public function executeDisconnect(\Library\Core\HttpRequest $rq, $redirect = TRUE) {
+  public function Disconnect($redirect = TRUE) {
     $this->app()->auth->deauthenticate();
     if ($redirect) {
       $this->Redirect("login");
@@ -80,7 +85,7 @@ class AuthenticateController extends \Library\Controllers\BaseController {
    *
    * @param \Library\HttpRequest $rq
    */
-  public function executeCreate(\Library\Core\HttpRequest $rq) {
+  public function Create() {
     $protect = new \Library\Security\Encryption($this->app()->config());
     $data = array(
         "username" => $rq->getData("login"),
@@ -95,7 +100,7 @@ class AuthenticateController extends \Library\Controllers\BaseController {
             $this
             ->app()
             ->dal()
-            ->getManagerOf('Login')
+            ->getDalInstance('Login')
             ->add($user);
     
     $redirect = intval($id) > 0 ? TRUE : FALSE;
@@ -104,14 +109,4 @@ class AuthenticateController extends \Library\Controllers\BaseController {
       $this->Redirect("login");
     }
   }
-
-  /**
-   * Method that logs in a user in the session.
-   *
-   */
-  private function LoginUser($user) {
-    //store user in session
-    $this->app->user->setAttribute(\Library\Enums\SessionKeys::UserConnected, $user);
-  }
-
 }

@@ -39,11 +39,11 @@ class Logger {
   }
 
   public static function PrintOutLogs($logs) {
-    \Library\Helpers\DebugHelper::LogAsHtmlComment(var_export($logs));
+    \Library\Helpers\DebugHelper::WriteString(var_export($logs));
   }
 
   public static function AddLogToDatabase($app, $log) {
-    $app->dal()->getManagerOf()->Add($log);
+    $app->dal()->getDalInstance()->Add($log);
   }
 
   public static function GetTime() {

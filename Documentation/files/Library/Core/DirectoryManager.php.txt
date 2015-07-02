@@ -33,10 +33,10 @@ class DirectoryManager {
   /**
    * Get the file paths for the current directory
    * 
-   * @param string $dirEasyMvc
-   * Directory value to scan.EasyMvc
-   * @return arrayEasyMvc
-   * List of files found in directory scanned.EasyMvc
+   * @param string $dir
+   * Directory value to scan.
+   * @return array
+   * List of files found in directory scanned.
    */
   public static function GetFileNames($dir) {
     return array_diff(scandir($dir), array('..', '.'));
@@ -44,12 +44,12 @@ class DirectoryManager {
 
   /**
    * 
-   * @param type $dirNameEasyMvc
-   * Directory value to scan.EasyMvc
-   * @param type $typeEasyMvc
-   * File extension to find.EasyMvc
-   * @return array(of SplFileInfo)EasyMvc
-   * List of SplFileInfo objects scanned in the top-level directory.EasyMvc
+   * @param type $dirName
+   * Directory value to scan.
+   * @param type $type
+   * File extension to find.
+   * @return array(of SplFileInfo)
+   * List of SplFileInfo objects scanned in the top-level directory.
    */
   public static function GetFilesNamesRecursively($dirName, $extension) {
     $files = array();
@@ -64,14 +64,14 @@ class DirectoryManager {
   }
 
   /**
-   *EasyMvc
+   *
    * Create a directory if doesn't exist.
    * Return True if file exists, otherwise False after creation of directory.
-   * EasyMvc
-   * @param stringEasyMvc
-   * $dir Value of directory to create. EasyMvc
-   * @return booleanEasyMvc
-   * File exists or not. EasyMvc
+   * 
+   * @param string
+   * $dir Value of directory to create. 
+   * @return boolean
+   * File exists or not. 
    */
   public static function CreateDirectory($dir) {
     if (!file_exists($dir) && !is_dir($dir)) {
@@ -83,14 +83,14 @@ class DirectoryManager {
   }
 
   /**
-   *EasyMvc
+   *
    * Check if file exists.
    * Return True if file exists, otherwise False after creation of directory.
-   * EasyMvc
-   * @param stringEasyMvc
-   * $filePath File path EasyMvc
-   * @return booleanEasyMvc
-   * File exists or not. EasyMvc
+   * 
+   * @param string
+   * $filePath File path 
+   * @return boolean
+   * File exists or not. 
    */
   public static function FileExists($filePath) {
     if (!file_exists($filePath)) {

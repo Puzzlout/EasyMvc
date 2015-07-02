@@ -23,7 +23,7 @@ class EasyMvcApplication extends \Library\Core\Application {
 
     $this->name = __APPNAME__;
     $this->context()->setLanguage();
-    $this->logoImageUrl = $this->imageUtil->getImageUrl($this->config()->get("LogoImageUrl"));
+    $this->logoImageUrl = $this->imageUtil->getImageUrl($this->config()->get(\Library\Enums\AppSettingKeys::LogoImageUrl));
   }
 
   public function run() {
