@@ -1,5 +1,11 @@
 <?php
 
+namespace Library\Dal;
+
+if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+  exit('No direct script access allowed');
+}
+
 /**
  * Handles the database queries.
  * 
@@ -10,13 +16,6 @@
  * @since Version 1.0.0
  * @package BaseManager
  */
-
-namespace Library\Dal;
-
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
-  exit('No direct script access allowed');
-}
-
 class BaseManager extends \Library\Dal\Manager {
 
   const INSERTCOLUMNS = "INSERTCOLUMNS";
@@ -129,13 +128,18 @@ class BaseManager extends \Library\Dal\Manager {
    *
    * @param object $item
    */
-  public function add($object) {
-    $this->dbConfig()->setTableName($this->GetTableName($object));
-    $this->dbConfig()->setType(DbExecutionType::INSERT);
-    $this->dbConfig()->setInsertColumnsClause($this->BuildClauseStatement($object), array($this::INSERTCOLUMNS));
-    $this->dbConfig()->setInsertValuesClause($this->BuildClauseStatement($object), array($this::INSERTVALUES));
-    $this->dbConfig()->BuildInsertQuery();
-    return $this->BindParametersAndExecute($object, NULL);
+  public function add($objects) {
+    $dbConfigList = array();
+    foreach ($objects as $object) {
+      $dbConfig = new DbStatementConfig($object);
+      $dbConfig->setTableName($this->GetTableName($object));
+      $dbConfig->setType(DbExecutionType::INSERT);
+      $dbConfig->setInsertColumnsClause($this->BuildClauseStatement($object), array($this::INSERTCOLUMNS));
+      $dbConfig->setInsertValuesClause($this->BuildClauseStatement($object), array($this::INSERTVALUES));
+      $dbConfig->BuildInsertQuery();
+      $this->addDbConfigItem($dbConfig);
+    }
+    return $this->BindParametersAndExecute(NULL);
   }
 
   /**
@@ -143,13 +147,18 @@ class BaseManager extends \Library\Dal\Manager {
    *
    * @param object $item
    */
-  public function edit($object, $whereFilterId) {
-    $this->dbConfig()->setTableName($this->GetTableName($object));
-    $this->dbConfig()->setType(DbExecutionType::UPDATE);
-    $this->dbConfig()->setUpdateClause($this->BuildClauseStatement($object));
-    $this->dbConfig()->setWhereClause($this->BuildClauseStatement($object, array($whereFilterId)));
-    $this->dbConfig()->BuildUpdateQuery();
-    return $this->BindParametersAndExecute($object, $whereFilterId);
+  public function edit($objects, $whereFilters) {
+    $dbConfigList = array();
+    foreach ($objects as $object) {
+      $dbConfig = new DbStatementConfig($object);
+      $dbConfig->setTableName($this->GetTableName($object));
+      $dbConfig->setType(DbExecutionType::UPDATE);
+      $dbConfig->setUpdateClause($this->BuildClauseStatement($object));
+      $dbConfig->setWhereClause($this->BuildClauseStatement($object, $whereFilters));
+      $dbConfig->BuildUpdateQuery();
+      $this->addDbConfigItem($dbConfig);
+    }
+    return $this->BindParametersAndExecute($whereFilters);
   }
 
   /**
@@ -174,32 +183,47 @@ class BaseManager extends \Library\Dal\Manager {
     return $this->ExecuteQuery($dbStatement, array("type" => DbExecutionType::MULTIROWSET));
   }
 
+  /**
+   * Builds a clause from a DAO object. 
+   * The first condition is to build a SET clause.
+   * The second condition is to build a WHERE clause using an array of filters 
+   * to limit the clause parameters.
+   * The third condition is to build a 
+   * @param type $object
+   * @param type $filters
+   * @return type
+   */
   private function BuildClauseStatement($object, $filters = array()) {
     $result = "";
     foreach ((array) $object as $property => $value) {
+      $propertyClean = str_replace("\0*\0", "", $property);
       if (count($filters) === 0) {
-        $result .= "`$property` = :$property,";
-      } elseif (count($filters) > 0 && in_array($property, $filters)) {
-        $result .= "`$property` = :$property,";
+        $result .= "`$propertyClean` = :$propertyClean,";
+      } elseif (count($filters) > 0 && in_array($propertyClean, $filters)) {
+        $result .= "`$propertyClean` = :$propertyClean,";
       } elseif (in_array($this::INSERTCOLUMNS, $filters)) {
-        $result .= "`$property`,";
+        $result .= "`$propertyClean`,";
       } elseif (in_array($this::INSERTVALUES, $filters)) {
-        $result .= ":$property,";
+        $result .= ":$propertyClean,";
       }
     }
     return rtrim($result, ",");
   }
 
-  private function BindParametersAndExecute($object, $whereFilterId) {
-    $dbStatement = $this->dao->prepare($this->dbConfig()->query());
-    foreach ((array) $object as $property => $value) {
-      switch ($property) {
-        case $whereFilterId:
-          $dbStatement->bindValue(":$property", $value, \PDO::PARAM_INT);
-          break;
-        default:
-          $dbStatement->bindValue(":$property", $value);
-          break;
+  protected function BindParametersAndExecute($whereFilters = NULL, $skipBinding = FALSE) {
+    $allQueries = "";
+    foreach ($this->dbConfigList() as $dbConfig) {
+      $allQueries .= $dbConfig->query();
+    }
+    $dbStatement = $this->dao->prepare($allQueries, array(\PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true));
+    foreach ($this->dbConfigList() as $dbConfig) {
+      foreach ((array) $dbConfig->daoObject() as $property => $value) {
+        $propertyClean = str_replace("\0*\0", "", $property);
+        if (!is_null($whereFilters) && (in_array($propertyClean, $whereFilters) || in_array($propertyClean, $whereFilters))) {
+          $dbStatement->bindValue(":$propertyClean", $value);
+        } elseif (!$skipBinding) {
+          $dbStatement->bindValue(":$propertyClean", $value);
+        }
       }
     }
     return $this->ExecuteQuery($dbStatement);
@@ -209,50 +233,55 @@ class BaseManager extends \Library\Dal\Manager {
     return \Library\Helpers\CommonHelper::GetShortClassName($object);
   }
 
-  protected function ExecuteQuery($dbStatement) {
+  protected function ExecuteQuery(\PDOStatement $dbStatement) {
     $result = -2;
     try {
+      //$dbStatement->setFetchMode(\PDO::MYSQL_ATTR_USE_BUFFERED_QUERY);
       $query = $dbStatement->execute();
       if (!$query) {
         $result = $query->errorCode();
       } else {
-        switch ($this->dbConfig()->type()) {
-          case DbExecutionType::SELECT:
-            $dbStatement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $this->dbConfig()->daoClassName());
-            $list = $dbStatement->fetchAll();
-            $dbStatement->closeCursor();
-            $result = count($list) > 0 ? $list : array();
-            break;
-          case DbExecutionType::UPDATE:
-          case DbExecutionType::DELETE:
-            $result = TRUE;
-            break;
-          case DbExecutionType::INSERT:
-            $result = $this->dao->lastInsertId();
-            break;
-          case DbExecutionType::SHOWTABLES:
-            $result = $dbStatement->fetchAll(\PDO::FETCH_NUM);
-            break;
-          case DbExecutionType::COLUMNNAMES:
-            $result = $dbStatement->fetchAll(\PDO::FETCH_COLUMN);
-            break;
-          case DbExecutionType::COLUMNMETAS:
-            $result = $dbStatement->fetchAll();
-            break;
-          case DbExecutionType::MULTIROWSET:
-
-          default:
-
-            break;
-        }
+        $result = $this->ManageExecutionResult($dbStatement);
       }
-      $dbStatement->closeCursor();
     } catch (\PDOException $exception) {
       json_encode($exception);
       //echo "<!--" . $pdo_ex->getMessage() . "-->";
       $result .= $exception->getCode();
     }
     return $result;
+  }
+
+  private function ManageExecutionResult(\PDOStatement $dbStatement) {
+    $result = array();
+    $isValid = true;
+    foreach ($this->dbConfigList() as $dbConfig) {
+      if (!$isValid) {
+        break;
+      } elseif ($this->CheckType($dbConfig->type(), DbExecutionType::SELECT)) {
+        $dbStatement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $dbConfig->daoClassName());
+        $list = $dbStatement->fetchAll();
+        $result = count($list) > 0 ? $list : array();
+      } elseif ($this->CheckType($dbConfig->type(), DbExecutionType::UPDATE)) {
+        $result = TRUE;
+      } elseif ($this->CheckType($dbConfig->type(), DbExecutionType::INSERT)) {
+        $result = $this->dao->lastInsertId();
+      } elseif ($this->CheckType($dbConfig->type(), DbExecutionType::SHOWTABLES)) {
+        $result = $dbStatement->fetchAll(\PDO::FETCH_NUM);
+      } elseif ($this->CheckType($dbConfig->type(), DbExecutionType::COLUMNNAMES)) {
+        $result = $dbStatement->fetchAll(\PDO::FETCH_COLUMN);
+      } elseif ($this->CheckType($dbConfig->type(), DbExecutionType::COLUMNMETAS)) {
+        $result = $dbStatement->fetch(\PDO::FETCH_ASSOC);
+      } elseif ($this->CheckType($dbConfig->type(), DbExecutionType::MULTIROWSET)) {
+        //TODO: to implement.
+        $isValid = $dbStatement->nextRowset();
+      }
+    }
+    $dbStatement->closeCursor();
+    return $result;
+  }
+
+  private function CheckType($typeGiven, $typeToMatch) {
+    return strcmp($typeGiven, $typeToMatch) === 0;
   }
 
 }

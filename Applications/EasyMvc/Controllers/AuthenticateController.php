@@ -47,11 +47,11 @@ class AuthenticateController extends \Library\Controllers\BaseController {
             ->getDalInstance('Login')
             ->selectOne($userPost);
     $dbResult = -1;
-    if (count($userDatabase) > 0) {
+    if (is_array($userDatabase) && count($userDatabase) > 0) {
       $user = $userDatabase[0];
       if (!$user->F_user_password_is_hashed() && $this->app()->auth()->CheckPassword($userPost->F_user_password(), $user, TRUE)) {
         $user = $this->app()->auth()->HashUserPassword($user);
-        $dbResult = $this->app()->dal()->getDalInstance()->edit($user, "f_user_id");
+        $dbResult = $this->app()->dal()->getDalInstance()->edit(array($user), array("f_user_id"));
       } else {
         $user = $this->app()->auth()->CheckPassword($userPost->F_user_password(), $user);
         $dbResult = !$user ? -2 : 1;

@@ -30,6 +30,14 @@ class DbStatementConfig {
   protected $orderByClause = "";
   protected $groupByClause = "";
 
+  public function __construct($daoObject) {
+    $this->setDaoObject($daoObject);
+  }
+  
+  public function daoObject() {
+    return $this->daoObject;
+  }
+  
   public function tableName() {
     return $this->tableName;
   }
@@ -76,6 +84,10 @@ class DbStatementConfig {
 
   public function groupByClause() {
     return $this->groupByClause;
+  }
+  
+  public function setDaoObject($daoObject) {
+    $this->daoObject = $daoObject;
   }
   
   public function setTableName($tableName) {

@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `f_user` (
     `f_user_login` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
     `f_user_password` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
 	`f_user_password_is_hashed`tinyint(1) DEFAULT 0 NOT NULL COMMENT 'Flag to know if a password is hashed or not',
-	`f_user_token` varchar(24) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The token used to enable a user to login after changing his password at the first connection',
+	`f_user_token` varchar(24) COLLATE utf8_unicode_ci NULL COMMENT 'The token used to enable a user to login after changing his password at the first connection',
     `f_user_salt` varchar(36) COLLATE utf8_unicode_ci NULL,
     `f_user_hint` varchar(20) COLLATE utf8_unicode_ci NULL,
     `f_user_email` VARCHAR(50) COLLATE utf8_unicode_ci NOT NULL COMMENT 'User email that is unique and must be set',
@@ -174,7 +174,7 @@ VALUES
 
 INSERT INTO `f_user_role` (`f_user_role_desc`) VALUES ('Default');
 
-INSERT INTO `f_user` VALUES (1,'t','t',0,null,null,'t@t.com',1,null);
+INSERT INTO `f_user` VALUES (1,'t','t',0,null,null,null,'t@t.com',1,null);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

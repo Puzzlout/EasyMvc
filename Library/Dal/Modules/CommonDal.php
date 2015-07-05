@@ -25,10 +25,11 @@ class CommonDal extends \Library\Dal\BaseManager {
    * @return array The list of table names.
    */
   public function GetListOfTablesInDatabase() {
-    $this->dbConfig()->setQuery("SHOW TABLES;");
-    $this->dbConfig()->setType(\Library\Dal\DbExecutionType::SHOWTABLES);
-    $dbStatement = $this->dao->prepare($this->dbConfig()->query());
-    return $this->ExecuteQuery($dbStatement);
+    $dbConfig = new \Library\Dal\DbStatementConfig(NULL);
+    $dbConfig->setQuery("SHOW TABLES;");
+    $dbConfig->setType(\Library\Dal\DbExecutionType::SHOWTABLES);
+    $this->addDbConfigItem($dbConfig);
+    return $this->BindParametersAndExecute();
   }
 
   /**
@@ -39,14 +40,16 @@ class CommonDal extends \Library\Dal\BaseManager {
    * @return array The associative array of the metadata of the table columns.
    */
   public function GetTableColumnsMeta($tableName, $columnNames) {
-    $table_columns_meta = array();
+    $tableColumnsMetadata = array();
     foreach ($columnNames as $columnName) {
-      $this->dbConfig()->setQuery("SHOW COLUMNS FROM `$tableName` WHERE Field = '$columnName'");
-      $this->dbConfig()->setType(\Library\Dal\DbExecutionType::COLUMNMETAS);
-      $dbStatement = $this->dao->prepare($this->dbConfig()->query());
-      $table_columns_meta[$columnName] = $this->ExecuteQuery($dbStatement);
+      $this->setDbConfigList(array());
+      $dbConfig = new \Library\Dal\DbStatementConfig(NULL);
+      $dbConfig->setQuery("SHOW COLUMNS FROM `$tableName` WHERE `Field` = '$columnName';");
+      $dbConfig->setType(\Library\Dal\DbExecutionType::COLUMNMETAS);
+      $this->addDbConfigItem($dbConfig);
+      $tableColumnsMetadata[$columnName] = $this->BindParametersAndExecute();
     }
-    return $table_columns_meta;
+    return $tableColumnsMetadata;
   }
 
   /**
@@ -56,10 +59,12 @@ class CommonDal extends \Library\Dal\BaseManager {
    * @return array The list of column names for a table.
    */
   public function GetTableColumnNames($tableName) {
-    $this->dbConfig()->setQuery('DESCRIBE ' . $tableName . ';');
-    $this->dbConfig()->setType(\Library\Dal\DbExecutionType::COLUMNNAMES);
-    $dbStatement = $this->dao->prepare($this->dbConfig()->query());
-    return $this->ExecuteQuery($dbStatement);
+    $this->setDbConfigList(array());
+    $dbConfig = new \Library\Dal\DbStatementConfig(NULL);
+    $dbConfig->setQuery('DESCRIBE ' . $tableName . ';');
+    $dbConfig->setType(\Library\Dal\DbExecutionType::COLUMNNAMES);
+    $this->addDbConfigItem($dbConfig);
+    return $this->BindParametersAndExecute();
   }
 
 }

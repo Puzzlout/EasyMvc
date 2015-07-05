@@ -14,22 +14,26 @@ class LoginDal extends \Library\Dal\BaseManager {
    * @return array the selected row in the db
    */
   public function selectOne($user) {
-    $sql = "SELECT * FROM " . $this->GetTableName($user)  . " WHERE ";
+    $emailFilter = \Library\BO\F_user::F_USER_EMAIL;
+    $loginFilter = \Library\BO\F_user::F_USER_LOGIN;
+    $whereFilter;
+    $sql = "SELECT * FROM `" . $this->GetTableName($user)  . "` WHERE ";
     if ($user->F_user_login() !== "") {//Check if the user is giving his username and that there is a value
-      $sql .= "`f_user_login` = '" . $user->F_user_login() . "' LIMIT 0, 1;";
+      $sql .= "`$loginFilter` = :$loginFilter LIMIT 0, 1;";
+      $whereFilter = array($loginFilter);
     } else if ($user->F_user_email() !== "") {//Check if the user is giving an email
-      $sql .= "`f_user_email` = '" . $user->F_user_email() . "' LIMIT 0, 1;";
+      $sql .= "`$emailFilter` = :$emailFilter LIMIT 0, 1;";
+      $whereFilter = array($emailFilter);
     } else {
       return array();
     }
-//    \Library\Utility\Logger::PrintOutLogs($sql);
-    $query = $this->dao->query($sql);
-    $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, "\Library\BO\F_user");
+    $dbConfig = new \Library\Dal\DbStatementConfig($user);
+    $dbConfig->setDaoClassName("\Library\BO\F_user");
+    $dbConfig->setType(\Library\Dal\DbExecutionType::SELECT);
+    $dbConfig->setQuery($sql);
+    $this->addDbConfigItem($dbConfig);
 
-    $userDatabase = $query->fetchAll();
-    $query->closeCursor();
-
-    return $userDatabase;
+       return $this->BindParametersAndExecute($whereFilter, TRUE);
   }
 
   public function countById($item) {
