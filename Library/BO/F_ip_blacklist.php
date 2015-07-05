@@ -1,7 +1,16 @@
 <?php
-/*** @author Jeremie Litzler* @copyright Copyright (c) 2015* @licence http://opensource.org/licenses/gpl-license.php GNU Public License* @link https://github.com/WebDevJL/* @since Version 1.0.0* @package F_ip_blacklist*/
-namespace Library\BO;if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) { exit('No direct script access allowed'); }
-class F_ip_blacklist extends \Library\Core\Entity {  protected     $f_ip_blacklist_id,    $f_ip_blacklist_ip_value,    $f_ip_blacklist_attempts,    $f_ip_blacklist_timestamp,    $f_ip_blacklist_expired,    $f_action_key;
+namespace Library\BO;
+if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) { exit('No direct script access allowed'); }
+
+/*** @author Jeremie Litzler* @copyright Copyright (c) 2015* @licence http://opensource.org/licenses/gpl-license.php GNU Public License* @link https://github.com/WebDevJL/* @since Version 1.0.0* @package F_ip_blacklist*/
+class F_ip_blacklist extends \Library\Core\Entity {  const F_IP_BLACKLIST_ID = "f_ip_blacklist_id";
+  const F_IP_BLACKLIST_IP_VALUE = "f_ip_blacklist_ip_value";
+  const F_IP_BLACKLIST_ATTEMPTS = "f_ip_blacklist_attempts";
+  const F_IP_BLACKLIST_TIMESTAMP = "f_ip_blacklist_timestamp";
+  const F_IP_BLACKLIST_EXPIRED = "f_ip_blacklist_expired";
+  const F_ACTION_KEY = "f_action_key";
+
+  protected     $f_ip_blacklist_id,    $f_ip_blacklist_ip_value,    $f_ip_blacklist_attempts,    $f_ip_blacklist_timestamp,    $f_ip_blacklist_expired,    $f_action_key;
   /**    * Sets f_ip_blacklist_id.  */  public function setF_ip_blacklist_id($f_ip_blacklist_id) {      $this->f_ip_blacklist_id = $f_ip_blacklist_id;  }
   /**    * Sets f_ip_blacklist_ip_value.  */  public function setF_ip_blacklist_ip_value($f_ip_blacklist_ip_value) {      $this->f_ip_blacklist_ip_value = $f_ip_blacklist_ip_value;  }
   /**    * Sets f_ip_blacklist_attempts.  */  public function setF_ip_blacklist_attempts($f_ip_blacklist_attempts) {      $this->f_ip_blacklist_attempts = $f_ip_blacklist_attempts;  }

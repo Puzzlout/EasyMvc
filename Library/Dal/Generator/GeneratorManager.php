@@ -18,26 +18,23 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
  */
 class GeneratorManager extends \Library\Core\ApplicationComponent {
 
+  /**
+   * Generates the Dao classes from a database.
+   * 
+   * @throws \Exception
+   */
   public function GenerateDaoClasses() {
     $tableList = $this->app()->dal()->getDalInstance()->GetListOfTablesInDatabase();
     if ($tableList > 0) {
       foreach ($tableList as $table) {
-        $table_name = $table[0];
-        $tableColumnNames = $this->app()->dal()->getDalInstance()->GetTableColumnNames($table[0]);
-        $tableColumnMeta = $this->app()->dal()->getDalInstance()->GetTableColumnsMeta($table[0], $tableColumnNames);
-        $dao = new DaoClassGenerator(
-                array(
-                    "className" => ucfirst($table_name), 
-                    "dir" => __ROOT__ . "Library/Dal/Generator/output/",
-                    "type" => 
-                      (!preg_match("`".\Library\Enums\GenericAppKeys::PREFIX_FRAMEWORK_TABLE.".*$`", $table_name) ? 
-                      \Library\Enums\GenericAppKeys::APP_DB_TABLE : 
-                      \Library\Enums\GenericAppKeys::FRAMEWORK_DB_TABLE)
-                    )
-                );
-        $dao->BuildClassHeader($table_name);
-        $dao->BuildClassBody($tableColumnMeta);
+        $tableName = $table[0];
+        $tableColumnNames = $this->app()->dal()->getDalInstance()->GetTableColumnNames($tableName);
+        $tableColumnMetadata = $this->app()->dal()->getDalInstance()->GetTableColumnsMeta($tableName, $tableColumnNames);
+        $dao = new DaoClassGenerator($tableName);
+        $dao->BuildClassHeader($tableName);
+        $dao->BuildClassBody($tableColumnMetadata);
         $dao->ClassEnd();
+        
       }
     } else {
       throw new \Exception("No tables in database!", 0, NULL);

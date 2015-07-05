@@ -1,7 +1,18 @@
 <?php
-/*** @author Jeremie Litzler* @copyright Copyright (c) 2015* @licence http://opensource.org/licenses/gpl-license.php GNU Public License* @link https://github.com/WebDevJL/* @since Version 1.0.0* @package F_log*/
-namespace Library\BO;if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) { exit('No direct script access allowed'); }
-class F_log extends \Library\Core\Entity {  protected     $f_log_id,    $f_log_request_id,    $f_log_start,    $f_log_end,    $f_log_execution_time,    $f_log_type,    $f_log_filter,    $f_log_value;
+namespace Library\BO;
+if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) { exit('No direct script access allowed'); }
+
+/*** @author Jeremie Litzler* @copyright Copyright (c) 2015* @licence http://opensource.org/licenses/gpl-license.php GNU Public License* @link https://github.com/WebDevJL/* @since Version 1.0.0* @package F_log*/
+class F_log extends \Library\Core\Entity {  const F_LOG_ID = "f_log_id";
+  const F_LOG_REQUEST_ID = "f_log_request_id";
+  const F_LOG_START = "f_log_start";
+  const F_LOG_END = "f_log_end";
+  const F_LOG_EXECUTION_TIME = "f_log_execution_time";
+  const F_LOG_TYPE = "f_log_type";
+  const F_LOG_FILTER = "f_log_filter";
+  const F_LOG_VALUE = "f_log_value";
+
+  protected     $f_log_id,    $f_log_request_id,    $f_log_start,    $f_log_end,    $f_log_execution_time,    $f_log_type,    $f_log_filter,    $f_log_value;
   /**    * Sets f_log_id.  */  public function setF_log_id($f_log_id) {      $this->f_log_id = $f_log_id;  }
   /**    * Sets f_log_request_id.  */  public function setF_log_request_id($f_log_request_id) {      $this->f_log_request_id = $f_log_request_id;  }
   /**    * Sets f_log_start.  */  public function setF_log_start($f_log_start) {      $this->f_log_start = $f_log_start;  }

@@ -1,5 +1,8 @@
 <?php
 
+namespace Library\BO;
+if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) { exit('No direct script access allowed'); }
+
 /**
 * @author Jeremie Litzler
 * @copyright Copyright (c) 2015
@@ -9,15 +12,25 @@
 * @package F_user
 */
 
-namespace Library\BO;
-if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) { exit('No direct script access allowed'); }
 
 class F_user extends \Library\Core\Entity implements \Library\Interfaces\IUser {
-  public 
+  const F_USER_ID = "f_user_id";
+  const F_USER_LOGIN = "f_user_login";
+  const F_USER_PASSWORD = "f_user_password";
+  const F_USER_PASSWORD_IS_HASHED = "f_user_password_is_hashed";
+  const F_USER_TOKEN = "f_user_token";
+  const F_USER_SALT = "f_user_salt";
+  const F_USER_HINT = "f_user_hint";
+  const F_USER_EMAIL = "f_user_email";
+  const F_USER_ROLE_ID = "f_user_role_id";
+  const F_USER_SESSION_ID = "f_user_session_id";
+
+  protected 
     $f_user_id,
     $f_user_login,
     $f_user_password,
     $f_user_password_is_hashed,
+    $f_user_token,
     $f_user_salt,
     $f_user_hint,
     $f_user_email,
@@ -50,6 +63,13 @@ class F_user extends \Library\Core\Entity implements \Library\Interfaces\IUser {
   */
   public function setF_user_password_is_hashed($f_user_password_is_hashed) {
       $this->f_user_password_is_hashed = $f_user_password_is_hashed;
+  }
+
+  /**  
+  * Sets f_user_token.
+  */
+  public function setF_user_token($f_user_token) {
+      $this->f_user_token = $f_user_token;
   }
 
   /**  
@@ -113,6 +133,13 @@ class F_user extends \Library\Core\Entity implements \Library\Interfaces\IUser {
   */
   public function F_user_password_is_hashed() {
     return $this->f_user_password_is_hashed;
+  }
+
+  /**  
+  * Gets f_user_token.
+  */
+  public function F_user_token() {
+    return $this->f_user_token;
   }
 
   /**  
