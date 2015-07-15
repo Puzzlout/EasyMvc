@@ -268,4 +268,44 @@ class CommonHelper {
     }
   }
 
+  public static function EncryptDataHelper($data) {
+    $security = new \Library\Security\Encryption();
+    return $security->Encrypt($data);
+  }
+
+  /**
+   * Return the app name based on the context (Running or Testing).
+   * @return string
+   */
+  public static function GetAppName() {
+    return
+            defined("__TESTED_APPNAME__") ?
+            __TESTED_APPNAME__ :
+            __APPNAME__;
+  }
+
+  /**
+   * Get the xml reader instance for an xml file. If $filePath is given, we
+   * assign to $fileName the filename from $filePath to use it when storing the
+   * XmlReader instance in session.
+   * @param string $filePath
+   * @param string $fileName
+   */
+  public static function GetXmlReaderInstanceForSourceFile($filePath, $fileName = NULL) {
+    if (!isset($fileName)) {
+      $fileName = substr($filePath, strrpos($filePath, "/") + 1);
+    }
+    $xmlFilesLoaded = apc_fetch(\Library\Enums\CacheKeys::XmlFilesLoaded);
+    if (array_key_exists($fileName, $xmlFilesLoaded)) {
+      $this->xmlReader = $xmlFilesLoaded[$fileName];
+    } else {
+      $this->xmlReader =
+              isset($fileName) ?
+              new \Library\Core\XmlReader(NULL, $configFileName) :
+              new \Library\Core\XmlReader($filePath);
+      $xmlFilesLoaded[$configFileName] = $this->xmlReader;
+      apc_add(\Library\Enums\CacheKeys::XmlFilesLoaded, $xmlFilesLoaded);
+    }
+  }
+
 }

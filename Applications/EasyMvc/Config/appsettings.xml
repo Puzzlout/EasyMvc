@@ -7,7 +7,7 @@
   <define key="BaseUrlRelease" value="/" />
   <define key="DefaultCulture" value="en-US" />
   <define key="RootImageFolderPath" value="Web/images/" />
-  <define key="DalFolderPath" value="\Applications\{{app_name}}\Models\Dal\" />
+  <define key="ApplicationsDalFolderPath" value="\Applications\{{app_name}}\Models\Dal\" />
   <define key="RootDocumentUpload" value="../ClienSide/uploads/" />
   <define key="LogoImageUrl" value="logo.png" />
   <define key="DefaultPage" value="login" />

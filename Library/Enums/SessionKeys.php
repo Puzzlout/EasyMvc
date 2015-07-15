@@ -45,6 +45,7 @@ abstract class SessionKeys {
   //Routing
   const AllApplicationsRoutes = "app_routes";
   const SessionRoutesXmlLastModified = "app_routes_last_modified";
+  const XmlFilesLoaded = "XmlFilesLoaded";
   //Tabs
   const TabsStatus = "tabs_status";
 

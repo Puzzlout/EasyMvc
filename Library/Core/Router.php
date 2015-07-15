@@ -26,10 +26,11 @@ class Router extends ApplicationComponent {
   public function InitRoutesFromXml() {
     $this->setRoutesXmlPath(__ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . __APPNAME__ . '/Config/routes.xml');
 
+    
     $routes = $this->app->user()->getAttribute(\Library\Enums\SessionKeys::UserRoutes);
     if (!$this->hasRoutesXmlChanged($this->app()->user()) && $routes) {
       $this->setRoutes($routes);
-    } elseif ($this->hasRoutesXmlChanged($this->app()->user()) || !$this->app()->user()->getAttribute(\Library\Enums\SessionKeys::AllApplicationsRoutes)) {
+    } elseif (file_exists($this->routesXmlPath()) && ($this->hasRoutesXmlChanged($this->app()->user()) || !$this->app()->user()->getAttribute(\Library\Enums\SessionKeys::AllApplicationsRoutes))) {
       $this->LoadAvailableRoutes($this->app());
       //Store routes in session
       $this->app()->user()->setAttribute(\Library\Enums\SessionKeys::AllApplicationsRoutes, $this->routes());

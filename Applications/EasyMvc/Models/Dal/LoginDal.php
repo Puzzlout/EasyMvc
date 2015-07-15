@@ -13,7 +13,7 @@ class LoginDal extends \Library\Dal\BaseManager {
    * @param ProjectManager $pm
    * @return array the selected row in the db
    */
-  public function selectOne($user) {
+  public function selectOne($user, $whereFilters) {
     $emailFilter = \Library\BO\F_user::F_USER_EMAIL;
     $loginFilter = \Library\BO\F_user::F_USER_LOGIN;
     $whereFilter;
@@ -30,6 +30,7 @@ class LoginDal extends \Library\Dal\BaseManager {
     $dbConfig = new \Library\Dal\DbStatementConfig($user);
     $dbConfig->setDaoClassName("\Library\BO\F_user");
     $dbConfig->setType(\Library\Dal\DbExecutionType::SELECT);
+    //$dbConfig->setWhereClause($this->)
     $dbConfig->setQuery($sql);
     $this->addDbConfigItem($dbConfig);
 

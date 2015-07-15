@@ -38,11 +38,18 @@ class Managers {
   protected $dalFrameworkNameSpace = "";
 
   /**
+   * The path to the dal folder in the application.
+   * @var string
+   */
+  protected $dalApplicationFolderPath = "";
+
+  /**
    *
    * @var array
    * Array containing the dal instances. 
    */
   protected $managers = array();
+
   /**
    *
    * @var array 
@@ -62,8 +69,18 @@ class Managers {
   public function __construct($api, \Library\Core\Application $app) {
     $this->databaseApi = $api;
     $this->databaseConnection = PDOFactory::getMysqlConnexion($app);
-    $this->dalApplicationsNamespace = str_replace(\Library\Enums\FrameworkPlaceholders::ApplicationNamePlaceHolder, __APPNAME__, $app->config()->get("DalFolderPath"));
+    $this->dalApplicationFolderPath = $app->config()->get(\Library\Enums\AppSettingKeys::ApplicationsDalFolderPath);
+    $this->dalApplicationsNamespace = $this->GetDalApplicationNamespace();
     $this->dalFrameworkNameSpace = "\Library\Dal\Modules\\";
+  }
+
+  private function GetDalApplicationNamespace() {
+    $resultString =
+            defined("__TESTED_APPNAME__") ?
+            str_replace(\Library\Enums\FrameworkPlaceholders::ApplicationNamePlaceHolder, __TESTED_APPNAME__, $this->dalApplicationFolderPath) :
+            str_replace(\Library\Enums\FrameworkPlaceholders::ApplicationNamePlaceHolder, __APPNAME__, $this->dalApplicationFolderPath);
+    ;
+    return $resultString;
   }
 
   /**
@@ -100,5 +117,4 @@ class Managers {
     }
     return $this->managers[$module];
   }
-
 }

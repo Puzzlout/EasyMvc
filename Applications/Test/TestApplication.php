@@ -6,24 +6,23 @@
 * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
 * @link https://github.com/WebDevJL/EasyMVC
 * @since Version 1.0.0
-* @package EasyMvcApplication
+* @package TestApplication
 */
 
 
-namespace Applications\EasyMvc;
+namespace Applications\Test;
 
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
 }
 
-class EasyMvcApplication extends \Library\Core\Application {
+class TestApplication extends \Library\Core\Application {
 
   public function __construct() {
     parent::__construct();
 
     $this->name = __APPNAME__;
     $this->context()->setLanguage();
-    $this->logoImageUrl = $this->imageUtil->getImageUrl($this->config()->get(\Library\Enums\AppSettingKeys::LogoImageUrl));
   }
 
   public function run() {

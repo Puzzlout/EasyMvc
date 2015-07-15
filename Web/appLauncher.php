@@ -18,7 +18,7 @@ set_error_handler(function($errno, $errstr, $errfile, $errline, array $errcontex
 define('__VERSION_NUMBER__', '1.0.0.2');
 
 /**
- * Prevents the PHP files to be excecuted directly.
+ * Allows this file to execute the autoload.
  */
 define('__EXECUTION_ACCESS_RESTRICTION__', true);
 

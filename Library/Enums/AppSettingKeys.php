@@ -34,7 +34,7 @@ abstract class AppSettingKeys {
    * When the url is http://mydomain.net/MySite, the BaseUrl value 
    * is "/MySite/".<br />
    */
-  const BaseUrl = "ApplicationBaseUrl";
+  const ApplicationBaseUrl = "ApplicationBaseUrl";
   /**
    * Default page to load.
    */
@@ -50,7 +50,7 @@ abstract class AppSettingKeys {
   /**
    * Path to the Dal classes of the Application. 
    */
-  const DalFolderPath = "DalFolderPath";
+  const ApplicationsDalFolderPath = "ApplicationsDalFolderPath";
   /**
    *Path to the Tooltips definition file. 
    */
