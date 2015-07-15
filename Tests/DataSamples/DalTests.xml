@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tests>
+  <test 
+    
+    dao_class_name="\Library\BO\F_user" 
+    test_class_name="\Tests\TestClasses\LoginDalTest" 
+    test_method_name="SelectOneUserFromId"
+    json="{'f_user_id':'1'}" />
+  <test     
+    dao_class_name="" 
+    test_class_name="" 
+    test_method_name=""
+    json="{}" />
+ />
+</tests>
