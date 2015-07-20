@@ -86,7 +86,7 @@ class AuthenticateController extends \Library\Controllers\BaseController {
    * @param \Library\HttpRequest $rq
    */
   public function Create() {
-    $protect = new \Library\Security\Encryption($this->app()->config());
+    $protect = new \Library\Security\Protect ($this->app()->config());
     $data = array(
         "username" => $rq->getData("login"),
         "password" => $rq->getData("pwd"),

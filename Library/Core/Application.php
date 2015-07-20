@@ -45,7 +45,7 @@ abstract class Application {
     $this->auth = new \Library\Security\AuthenticationManager($this);
     $this->dal = new \Library\Dal\Managers('PDO', $this);
     $this->toolTip = new PopUpResourceManager($this);
-    $this->security = new \Library\Security\Encryption($this->config);
+    $this->security = new \Library\Security\Protect ($this->config);
 //    $this->jsManager = new Core\Utility\JavascriptManager($this);
 //    $this->cssManager = new Core\Utility\CssManager($this);
   }

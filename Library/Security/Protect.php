@@ -1,34 +1,22 @@
 <?php
 
-/**
- *
- * @package		Easy MVC Framework
- * @author		Jeremie Litzler
- * @copyright	Copyright (c) 2015
- * @license		
- * @link		
- * @since		
- * @filesource
- */
-// ------------------------------------------------------------------------
-
-/**
- * Encryption Class
- *
- * @package     Library
- * @category	BL
- * @category	Security
- * @author      Jeremie Litzler
- * @link		
- */
-
 namespace Library\Security;
 
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
 }
 
-class Encryption {
+/**
+ * Provides the methods to hash, encrypt and decrypt a value. 
+ * 
+ * @author Jeremie Litzler
+ * @copyright Copyright (c) 2015
+ * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link https://github.com/WebDevJL/EasyMVC
+ * @since Version 1.0.0
+ * @package Protect 
+ */
+class Protect  {
 
   private $hashSalt = null;
   private $encryptionKey = null;

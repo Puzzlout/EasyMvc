@@ -95,12 +95,12 @@ abstract class AppSettingKeys {
   const ErrorLoggingMethod = "ErrorLoggingMethod";
   /**
    * Public encryption key to use mcrypt. 
-   * @see /Library/Security/Encryption.php
+   * @see /Library/Security/Protect .php
    */
   const EncryptionKey = "EncryptionKey";
   /**
    * Public static salt value used to hash user passwords. 
-   * @see /Library/Security/Encryption.php
+   * @see /Library/Security/Protect .php
    */
   const PasswordSalt = "PasswordSalt";
   /**

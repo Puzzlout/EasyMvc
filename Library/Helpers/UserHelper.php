@@ -120,7 +120,7 @@ class UserHelper {
 
   public static function PrepareUserObject($dataPost, $config, $setPass = FALSE) {
     $user = new \Library\BO\User();
-    $protect = new \Library\BL\Security\Encryption($config);
+    $protect = new \Library\BL\Security\Protect ($config);
     $user->setUser_hint($dataPost['user_hint']);
     $user->setUser_login($dataPost['user_login']);
     $user->setUser_email($dataPost['pm_email']);
@@ -152,7 +152,7 @@ class UserHelper {
         'user_value' => $user_value
     );
     $user = CommonHelper::PrepareUserObject($generatedDataPost, new \Library\BO\User());
-    $protect = new \Library\BL\Security\Encryption($caller->app()->config());
+    $protect = new \Library\BL\Security\Protect ($caller->app()->config());
     $user->setUser_password($protect->HashValue($caller->app()->config()->get("PaswordSalt"), $user->user_password()));
     return $manager->add($user);
   }

@@ -269,7 +269,7 @@ class CommonHelper {
   }
 
   public static function EncryptDataHelper($data) {
-    $security = new \Library\Security\Encryption();
+    $security = new \Library\Security\Protect ();
     return $security->Encrypt($data);
   }
 
