@@ -1,15 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tests>
   <test 
-    
     dao_class_name="\Library\BO\F_user" 
     test_class_name="\Tests\TestClasses\LoginDalTest" 
-    test_method_name="SelectOneUserFromId"
+    test_method_name="SelectOneUserFromExistingId"
     json="{'f_user_id':'1'}" />
-  <test     
-    dao_class_name="" 
-    test_class_name="" 
-    test_method_name=""
-    json="{}" />
- />
+  <test 
+    dao_class_name="\Library\BO\F_user" 
+    test_class_name="\Tests\TestClasses\LoginDalTest" 
+    test_method_name="SelectOneUserFromNonExistingId"
+    json="{'f_user_id':'2'}" />
+  <test 
+    dao_class_name="\Library\BO\F_user" 
+    test_class_name="\Tests\TestClasses\LoginDalTest" 
+    test_method_name="SelectOneUserFromExistingEmail"
+    json="{'f_user_email':'t@t.com'}" />
+  <test 
+    dao_class_name="\Library\BO\F_user" 
+    test_class_name="\Tests\TestClasses\LoginDalTest" 
+    test_method_name="SelectOneUserFromNonExistingEmail"
+    json="{'f_user_email':'test@test.fr'}" />
+  <test 
+    dao_class_name="\Library\BO\F_user" 
+    test_class_name="\Tests\TestClasses\LoginDalTest" 
+    test_method_name="SelectOneUserFromExistingLogin"
+    json="{'f_user_login':'t'}" />
+  <test 
+    dao_class_name="\Library\BO\F_user" 
+    test_class_name="\Tests\TestClasses\LoginDalTest" 
+    test_method_name="SelectOneUserFromNonExistingLogin"
+    json="{'f_user_login':'test'}" />
 </tests>

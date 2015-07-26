@@ -1,9 +1,9 @@
 <?php
+namespace Library\Security;
+
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
   exit('No direct script access allowed');
 }
-
-namespace Library\Security;
 
 use Library\Interfaces\IUser;
 use Library\Enums\SessionKeys;

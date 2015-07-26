@@ -15,27 +15,34 @@ $dalTests->RunTests();
   <head>
     <title>Tests page</title>
     <style>
-      li {
+      * {
+        margin: 0;
+        padding: 0;
+        border: 0;
+      }
+      li, h2 {
         margin-bottom: 1px;
+        color: #FFF;
+        padding: 5px 5px;
       }
       .success {
-        background-color: #5bb75b;
+        background-color: #28a247;
       }
       .fail {
-        background-color: #dd514c;
-        color: #FFF;
-        padding: 5px;
+        background-color: #e22b2f;
       }
       p.result-title {
         font-weight: bolder;
       }
       p.result-description {
-        display: none;
+        text-indent: 2em;
       }
     </style>
   </head>
   <body>
-    <h1>Results of test below</h1>
+    <h1>Results of test below:</h1>
+    <h2 class="success">Tests successed: <?php echo ''; ?></h2>
+    <h2 class="fail">Tests failed: <?php echo ""; ?></h2>
     <ul>
       <?php
       foreach ($dalTests->testResults() as $testResult) {

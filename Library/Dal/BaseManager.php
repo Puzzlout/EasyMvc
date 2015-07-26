@@ -56,35 +56,15 @@ class BaseManager extends \Library\Dal\Manager {
    * @return mixed
    * Can be a bool (TRUE,FALSE), a integer or a list of Dao objects (of type  $dao_class) 
    */
-  public function selectMany($object, $where_filter_id, $filter_as_string = false) {
-    $this->dbConfig()->setType(DbExecutionType::SELECT);
-    $this->dbConfig()->setDaoClassName(\Library\Helpers\CommonHelper::GetFullClassName($object));
-    if ($where_filter_id !== "") {
-      $where_clause = " WHERE " . $where_filter_id . " = :where_filter_id";
-    } else {
-      $where_clause = "";
-    }
-
-    $order_by = "";
-    if ($object->getOrderByField() !== FALSE) {
-      $order_by = "ORDER BY " . $object->getOrderByField();
-    }
-    $select_clause = "SELECT ";
-    foreach ($object as $key => $value) {
-      $select_clause .= $key . ", ";
-    }
-    $select_clause = rtrim($select_clause, ", ");
-    $select_clause .= " FROM " . $this->GetTableName($object) . $where_clause . " " . $order_by;
-    $sth = $this->dao->prepare($select_clause);
-    if ($where_filter_id !== "") {
-      if ($filter_as_string) {
-        $sth->bindValue(':where_filter_id', $object->$where_filter_id(), \PDO::PARAM_STR);
-      } else {
-        $sth->bindValue(':where_filter_id', $object->$where_filter_id(), \PDO::PARAM_INT);
-      }
-    }
-
-    return $this->ExecuteQuery($sth, $params);
+  public function selectMany($object, DbQueryFilters $filters) {
+    $dbConfig = new DbStatementConfig();
+    $dbConfig->setType(DbExecutionType::SELECT);
+    $dbConfig->setDaoClassName(\Library\Helpers\CommonHelper::GetFullClassName($object));
+    $dbConfig->BuildSelectClause(!$filters->selectFilters() ? $object : $filters->selectFilters());
+    $dbConfig->BuildWhereClause($filters->whereFilters());
+    $dbConfig->BuildOrderClause($filters->orderbyFilters());
+    $dbConfig->BuildSelectQuery();
+    return $this->BindParametersAndExecute();
   }
 
   /**
@@ -153,7 +133,7 @@ class BaseManager extends \Library\Dal\Manager {
       $dbConfig = new DbStatementConfig($object);
       $dbConfig->setTableName($this->GetTableName($object));
       $dbConfig->setType(DbExecutionType::UPDATE);
-      $dbConfig->setUpdateClause($this->BuildClauseStatement($object));
+      $dbConfig->Bui($this->BuildClauseStatement($object));
       $dbConfig->setWhereClause($this->BuildClauseStatement($object, $whereFilters));
       $dbConfig->BuildUpdateQuery();
       $this->addDbConfigItem($dbConfig);
@@ -183,34 +163,7 @@ class BaseManager extends \Library\Dal\Manager {
     return $this->ExecuteQuery($dbStatement, array("type" => DbExecutionType::MULTIROWSET));
   }
 
-  /**
-   * Builds a clause from a DAO object. 
-   * The first condition is to build a SET clause.
-   * The second condition is to build a WHERE clause using an array of filters 
-   * to limit the clause parameters.
-   * The third condition is to build a 
-   * @param type $object
-   * @param type $filters
-   * @return type
-   */
-  private function BuildClauseStatement($object, $filters = array()) {
-    $result = "";
-    foreach ((array) $object as $property => $value) {
-      $propertyClean = str_replace("\0*\0", "", $property);
-      if (count($filters) === 0) {
-        $result .= "`$propertyClean` = :$propertyClean,";
-      } elseif (count($filters) > 0 && in_array($propertyClean, $filters)) {
-        $result .= "`$propertyClean` = :$propertyClean,";
-      } elseif (in_array($this::INSERTCOLUMNS, $filters)) {
-        $result .= "`$propertyClean`,";
-      } elseif (in_array($this::INSERTVALUES, $filters)) {
-        $result .= ":$propertyClean,";
-      }
-    }
-    return rtrim($result, ",");
-  }
-
-  protected function BindParametersAndExecute($whereFilters = NULL, $skipBinding = FALSE) {
+  protected function BindParametersAndExecute($skipBinding = FALSE) {
     $allQueries = "";
     foreach ($this->dbConfigList() as $dbConfig) {
       $allQueries .= $dbConfig->query();
@@ -219,14 +172,25 @@ class BaseManager extends \Library\Dal\Manager {
     foreach ($this->dbConfigList() as $dbConfig) {
       foreach ((array) $dbConfig->daoObject() as $property => $value) {
         $propertyClean = str_replace("\0*\0", "", $property);
-        if (!is_null($whereFilters) && (in_array($propertyClean, $whereFilters) || in_array($propertyClean, $whereFilters))) {
+        if ($this->IsPropertyNameAFilter($propertyClean, $dbConfig->filters())) {
           $dbStatement->bindValue(":$propertyClean", $value);
         } elseif (!$skipBinding) {
           $dbStatement->bindValue(":$propertyClean", $value);
         }
       }
     }
+    //$this->setDbConfigList(NULL);
     return $this->ExecuteQuery($dbStatement);
+  }
+
+  private function IsPropertyNameAFilter($propertyName, DbQueryFilters $filters) {
+    if (count($filters->whereFilters()) > 0) {
+      return in_array($propertyName, $filters->whereFilters());
+    } else if (count($filters->setFilters()) > 0) {
+      return in_array($propertyName, $filters->setFilters());
+    } else {
+      return FALSE;
+    }
   }
 
   protected function GetTableName($object) {

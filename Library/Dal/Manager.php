@@ -20,12 +20,18 @@ abstract class Manager {
   public function dbConfigList() {
     return $this->dbConfigList;
   }
-  
-  public function addDbConfigItem($dbConfig) {
-    array_push($this->dbConfigList, $dbConfig);
+
+  public function addDbConfigItem($dbConfig, $addToList = FALSE) {
+    if ($addToList) {
+      array_push($this->dbConfigList, $dbConfig);
+    } else {
+      $this->dbConfigList = array($dbConfig);
+    }
+   
   }
-  
+
   public function setDbConfigList($dbConfigList) {
     $this->dbConfigList = $dbConfigList;
   }
+
 }

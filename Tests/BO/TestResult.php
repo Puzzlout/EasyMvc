@@ -21,7 +21,7 @@ class TestResult {
   const FAIL = "fail";
   
   protected $resultMessage;
-  protected $resultStatus;
+  protected $resultStatus = self::FAIL;
   protected $resultTitle;
 
   public function __construct($message = NULL) {
@@ -40,7 +40,14 @@ class TestResult {
     return $this->resultTitle;
   }
   
-  public function setResultStatus($resultStatus) {
+  public function setResultStatus($resultStatus, $result) {
+    if(strcmp($resultStatus, TestResult::SUCCESS) === 0) {
+      $this->setResultMessage("");
+    } else {
+      ob_start();
+      var_dump($result);
+      $this->setResultMessage(ob_get_clean());
+    }
     $this->resultStatus = $resultStatus;
   }
   

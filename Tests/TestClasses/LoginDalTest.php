@@ -16,18 +16,57 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
  * @package LoginDalTest
  */
 class LoginDalTest extends BaseTestClass {
-  public function SelectOneUserFromId() {
-    if(!$this->testExecution->jsonData()) {
-      $user = \Library\Helpers\CommonHelper::PrepareUserObject(\Tests\DataSamples\LoginDalTestsData::SelectASingleUserNeverWhoLoggedIn(), $this->testExecution->daoObject());
-    } else {
-      $user = $this->testExecution->daoObject();
-    }
-    
-    $result = $this->app->dal()->getDalInstance("Login")->SelectOne($user, array(\Library\BO\F_user::F_USER_ID));
-    $testResult = new \Tests\BO\TestResult();
-    
-    $testResult->setResultStatus(count($result) === 1 ? \Tests\BO\TestResult::SUCCESS : \Tests\BO\TestResult::FAIL);
-    $testResult->setResultMessage(strcmp($testResult->resultStatus(), \Tests\BO\TestResult::SUCCESS) === 0 ? "One user was found" : "No user was found");
-    return $testResult;
+
+  public function SelectOneUserFromExistingId() {
+    $user = $this->testExecution->daoObject();
+    $dbQueryFilters = new \Library\Dal\DbQueryFilters();
+    $dbQueryFilters->setWhereFilters(array(\Library\BO\F_user::F_USER_ID));
+    $result = $this->app->dal()->getDalInstance("Login")->SelectOne($user, $dbQueryFilters);
+    $this->testResult->setResultStatus($this->AssertArrayHasAValue($result), $result);
+    return $this->testResult;
   }
+  public function SelectOneUserFromNonExistingId() {
+    $user = $this->testExecution->daoObject();
+    $dbQueryFilters = new \Library\Dal\DbQueryFilters();
+    $dbQueryFilters->setWhereFilters(array(\Library\BO\F_user::F_USER_ID));
+    $result = $this->app->dal()->getDalInstance("Login")->SelectOne($user, $dbQueryFilters);
+    $this->testResult->setResultStatus($this->AssertIsArrayEmpty($result), $result);
+    return $this->testResult;
+  }
+
+  public function SelectOneUserFromExistingLogin() {
+    $user = $this->testExecution->daoObject();
+    $dbQueryFilters = new \Library\Dal\DbQueryFilters();
+    $dbQueryFilters->setWhereFilters(array(\Library\BO\F_user::F_USER_LOGIN));
+    $result = $this->app->dal()->getDalInstance("Login")->SelectOne($user, $dbQueryFilters);
+    $this->testResult->setResultStatus($this->AssertArrayHasAValue($result), $result);
+    return $this->testResult;
+  }
+  
+  public function SelectOneUserFromNonExistingLogin() {
+    $user = $this->testExecution->daoObject();
+    $dbQueryFilters = new \Library\Dal\DbQueryFilters();
+    $dbQueryFilters->setWhereFilters(array(\Library\BO\F_user::F_USER_LOGIN));
+    $result = $this->app->dal()->getDalInstance("Login")->SelectOne($user, $dbQueryFilters);
+    $this->testResult->setResultStatus($this->AssertIsArrayEmpty($result), $result);
+    return $this->testResult;
+  }
+
+  public function SelectOneUserFromExistingEmail() {
+    $user = $this->testExecution->daoObject();
+    $dbQueryFilters = new \Library\Dal\DbQueryFilters();
+    $dbQueryFilters->setWhereFilters(array(\Library\BO\F_user::F_USER_EMAIL));
+    $result = $this->app->dal()->getDalInstance("Login")->SelectOne($user, $dbQueryFilters);
+    $this->testResult->setResultStatus($this->AssertArrayHasAValue($result), $result);
+    return $this->testResult;
+  }
+  public function SelectOneUserFromNonExistingEmail() {
+    $user = $this->testExecution->daoObject();
+    $dbQueryFilters = new \Library\Dal\DbQueryFilters();
+    $dbQueryFilters->setWhereFilters(array(\Library\BO\F_user::F_USER_EMAIL));
+    $result = $this->app->dal()->getDalInstance("Login")->SelectOne($user, $dbQueryFilters);
+    $this->testResult->setResultStatus($this->AssertIsArrayEmpty($result), $result);
+    return $this->testResult;
+  }
+
 }

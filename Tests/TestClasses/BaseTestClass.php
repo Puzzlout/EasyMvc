@@ -19,6 +19,7 @@ class BaseTestClass {
 
   protected $app;
   protected $testExecution;
+  protected $testResult;
 
   /**
    * Initialize the test class with the current test app and the test execution
@@ -30,6 +31,17 @@ class BaseTestClass {
   public function __construct($app, \Tests\BO\TestExecution $testExecution) {
     $this->testExecution = $testExecution;
     $this->app = $app;
+    $this->testResult = new \Tests\BO\TestResult();
   }
 
-}
+  protected function AssertIsArray($array) {
+    return is_array($array) ? \Tests\BO\TestResult::SUCCESS : \Tests\BO\TestResult::FAIL;
+  }
+  protected function AssertIsArrayEmpty($array) {
+    return count($array) === 0 ? \Tests\BO\TestResult::SUCCESS : \Tests\BO\TestResult::FAIL;
+  }
+    protected function AssertArrayHasAValue($array) {
+    return count($array) === 1 ? \Tests\BO\TestResult::SUCCESS : \Tests\BO\TestResult::FAIL;
+  }
+  
+  }
