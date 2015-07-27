@@ -122,13 +122,12 @@ class Globalization extends ApplicationComponent {
    * @return string
    */
   public function getLocalResource($page_name, $key) {
-    if (array_key_exists($page_name, $this->res_local[$this->app->locale])) {
+    if (array_key_exists($this->app->locale, $this->res_local) && array_key_exists($page_name, $this->res_local[$this->app->locale])) {
       return $this->res_local[$this->app->locale][$page_name][$key];
     } else {//always display placeholder for missing locale resource
       return (array_key_exists($page_name, $this->res_local[$this->app->context->defaultLang])) ?
               $this->res_local[$this->app->context->defaultLang][$page_name][$key] :
               'Missing resource: {' . $this->app->locale . '}{' . $page_name . '}{' . $key . '}';
-      //return 'Missing resource: {'.$this->app->locale.'}{'.$page_name.'}{'.$key.'}';
     }
 
     return null;
@@ -159,7 +158,9 @@ class Globalization extends ApplicationComponent {
    * @return array
    */
   public function getCommonResourceArray($page_name) {
-    if (array_key_exists($page_name, $this->res_common[$this->app->locale])) {
+    if (
+            array_key_exists($this->app->locale, $this->res_common) &&
+            array_key_exists($page_name, $this->res_common[$this->app->locale])) {
       return $this->res_common[$this->app->locale][$page_name];
     } else {//always display placeholder for missing locale resource
       return $this->res_common[$this->app->context->defaultLang][$page_name];

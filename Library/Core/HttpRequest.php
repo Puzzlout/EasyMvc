@@ -56,10 +56,15 @@ class HttpRequest {
 
   public function initLanguage(Application $currentApp, $type) {
     if ($type === "default") {
-      return $currentApp->config()->get(Enums\AppSettingKeys::DefaultCulture);
+      return $currentApp->config()->get(Enums\AppSettingKeys::DefaultLanguage);
     }
     if ($type === "browser") {
-      return substr(strtok($_SERVER['HTTP_ACCEPT_LANGUAGE'], '?'), 0, 5);
+      //Get the first culture
+      $culture = substr(strtok($_SERVER['HTTP_ACCEPT_LANGUAGE'], '?'), 0, 5);
+      //Check if the first culture is a short or long version, i.e. en ou en-US.
+      //If it is the short version, we update the culture to return.
+      if(!strpos($culture, "-")) $culture = substr ($culture, 0, 2);
+      return $culture;
     }
   }
 
