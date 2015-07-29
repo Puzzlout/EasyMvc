@@ -159,6 +159,19 @@ CREATE TABLE IF NOT EXISTS `f_route_common_partial_view` (
       REFERENCES `f_common_partial_view` (`f_common_partial_view_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
+-- Table structure for table `f_document`
+CREATE TABLE IF NOT EXISTS `f_document` (
+    `f_document_id` int(11) NOT NULL AUTO_INCREMENT,
+    `f_document_content_type` varchar(50) NOT NULL COMMENT 'Store the content type of the document',
+    `f_document_category` varchar(50) NOT NULL COMMENT 'Is the name of the table/class for which we want a document. Ex: element_id for element table',
+    `f_document_category_id_value` varchar(50) NOT NULL COMMENT 'Is the id of document_category. Ex: the value of element_id of element table',
+    `f_document_value` varchar(100) NOT NULL COMMENT 'A unique constraint prevent adding the same document as a given type',
+    `f_document_size` int(11) NOT NULL COMMENT 'File size in Kb',
+    `f_document_title` varchar(250) NULL DEFAULT 'Caption goes here' COMMENT 'This is the value for a document that is displayed in the HTML as a caption',
+    PRIMARY KEY (`f_document_id`),
+    UNIQUE INDEX `un_doc_cat_val` (`f_document_id` ASC, `f_document_category` ASC, `f_document_category_id_value` ASC)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 
 -- ----------------------------------------------------------------------------
 -- Data 

@@ -25,9 +25,8 @@ class CommonDal extends \Library\Dal\BaseManager {
    * @return array The list of table names.
    */
   public function GetListOfTablesInDatabase() {
-    $dbConfig = new \Library\Dal\DbStatementConfig(NULL);
+    $dbConfig = new \Library\Dal\DbStatementConfig(NULL, \Library\Dal\DbExecutionType::SHOWTABLES, new \Library\Dal\DbQueryFilters());
     $dbConfig->setQuery("SHOW TABLES;");
-    $dbConfig->setType(\Library\Dal\DbExecutionType::SHOWTABLES);
     $this->addDbConfigItem($dbConfig);
     return $this->BindParametersAndExecute();
   }
@@ -43,9 +42,8 @@ class CommonDal extends \Library\Dal\BaseManager {
     $tableColumnsMetadata = array();
     foreach ($columnNames as $columnName) {
       $this->setDbConfigList(array());
-      $dbConfig = new \Library\Dal\DbStatementConfig(NULL);
+      $dbConfig = new \Library\Dal\DbStatementConfig(NULL, \Library\Dal\DbExecutionType::COLUMNMETAS, new \Library\Dal\DbQueryFilters());
       $dbConfig->setQuery("SHOW COLUMNS FROM `$tableName` WHERE `Field` = '$columnName';");
-      $dbConfig->setType(\Library\Dal\DbExecutionType::COLUMNMETAS);
       $this->addDbConfigItem($dbConfig);
       $tableColumnsMetadata[$columnName] = $this->BindParametersAndExecute();
     }
@@ -60,9 +58,8 @@ class CommonDal extends \Library\Dal\BaseManager {
    */
   public function GetTableColumnNames($tableName) {
     $this->setDbConfigList(array());
-    $dbConfig = new \Library\Dal\DbStatementConfig(NULL);
-    $dbConfig->setQuery('DESCRIBE ' . $tableName . ';');
-    $dbConfig->setType(\Library\Dal\DbExecutionType::COLUMNNAMES);
+    $dbConfig = new \Library\Dal\DbStatementConfig(NULL, \Library\Dal\DbExecutionType::COLUMNNAMES, new \Library\Dal\DbQueryFilters());
+    $dbConfig->setQuery("DESCRIBE `$tableName`;");
     $this->addDbConfigItem($dbConfig);
     return $this->BindParametersAndExecute();
   }
