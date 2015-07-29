@@ -44,6 +44,7 @@ class AppSettings {
         \Library\Enums\AppSettingKeys::RootDocumentUpload => "Web/images/",
         \Library\Enums\AppSettingKeys::RootImageFolderPath => "../ClienSide/uploads/",
         \Library\Enums\AppSettingKeys::UseEmailLinkForFirstLogin => TRUE,
+        \Library\Enums\AppSettingKeys::TooltipsXmlFileName => "Applications\{{app_name}}\Resources\Common\\tooltipandpopupstrings.{{culture}}.xml",
     );
   }  
 }

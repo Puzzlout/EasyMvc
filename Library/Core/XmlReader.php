@@ -20,38 +20,40 @@ class XmlReader {
   private $filePath;
   private $currentFileTimeStamp;
   private $lastModifiedTimeStamp;
-  
+
   public function __construct($filePath, $fileName = NULL) {
-    $this->filePath = 
-    isset($fileName) ?
+    $this->filePath = isset($fileName) ?
             $this->GetConfigurationFilePath($fileName) :
             $filePath;
-    $this->currentFileTimeStamp = filemtime($this->filePath);
+    $this->currentFileTimeStamp = file_exists($this->filePath) ?
+            filemtime($this->filePath) :
+            0;
   }
-  
+
   public function setCurrentFileTimeStamp() {
     $this->currentFileTimeStamp = filemtime($this->filePath);
   }
-  
+
   public function setLastModifiedTimeStamp($lastModifiedTimeStamp) {
     $this->lastModifiedTimeStamp = $lastModifiedTimeStamp;
   }
-  
+
   public function currentFileTimeStamp() {
     return $this->currentFileTimeStamp;
   }
-  
+
   public function lastModifiedTimeStamp() {
     return $this->lastModifiedTimeStamp;
   }
-  
+
   public function filePath() {
     return $this->filePath;
   }
-  
+
   public function FileIsNewer() {
-    return $this->currentFileTimeStamp > $this->lastModifiedTimeStamp; 
+    return $this->currentFileTimeStamp > $this->lastModifiedTimeStamp;
   }
+
   /**
    * Builds the filePath to the configuration file.
    * 
@@ -61,6 +63,7 @@ class XmlReader {
   public function GetConfigurationFilePath($fileName) {
     return __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . \Library\Helpers\CommonHelper::GetAppName() . '/Config/' . $fileName;
   }
+
   /**
    * Gets the content of a DOMDocument for a node name. 
    * 
@@ -70,7 +73,7 @@ class XmlReader {
    */
   public function ReturnFileContents($nodeName) {
     if (file_exists($this->filePath)) {
-      
+
       $xml = new \DOMDocument;
       $xml->load($this->filePath);
 
