@@ -38,7 +38,10 @@ class TestConfig {
    * Node name of the json string to read. 
    */
   const JSONSTR = "json";
-
+/**
+ * Node name of the number of time to repeat test value to read.
+ */
+  const REPEAT = "repeat";
   /**
    *
    * @var object : object of data class.
@@ -96,8 +99,16 @@ class TestConfig {
   }
 
   /**
+   * Gets the repeat value.
+   * @return int
+   */
+  public function repeat() {
+    return $this->repeat;
+  }
+  
+  /**
    * Sets the dao class name.
-   * @param string $className
+   * @param string $daoClassName
    */
   public function setDaoClassName($daoClassName) {
     if (empty($daoClassName)) {
@@ -129,10 +140,18 @@ class TestConfig {
 
   /**
    * Sets the jsonData as a associative array.
-   * @param type $jsonData
+   * @param type $jsonString
    */
   public function setJsonString($jsonString) {
     $this->jsonString = str_replace("'", "\"", $jsonString);
   }
 
+  /**
+   * Sets the repeat value as Integer.
+   * @param string $repeat
+   */
+  public function setRepeat($repeat) {
+    $this->repeat = empty($repeat) ? 1 : intval($repeat);
+  }
+  
 }

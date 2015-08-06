@@ -49,6 +49,7 @@ $dalTests->RunTests();
         echo "<li class=\"" . $testResult->resultStatus() . "\">";
         echo "<p class=\"result-title\">" . $testResult->resultTitle() . "</p>";
         echo "<p class=\"result-description\">" . $testResult->resultMessage() . "</p>";
+        echo "<p class=\"result-exe-time\">" . $testResult->resultExecutionTime() . "</p>";
         echo "</li>";
       }
       ?>

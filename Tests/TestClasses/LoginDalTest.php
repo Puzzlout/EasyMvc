@@ -68,5 +68,13 @@ class LoginDalTest extends BaseTestClass {
     $this->testResult->setResultStatus($this->AssertIsArrayEmpty($result), $result);
     return $this->testResult;
   }
+  public function SelectFromIdBenmarking() {
+    $user = $this->testExecution->daoObject();
+    $dbQueryFilters = new \Library\Dal\DbQueryFilters();
+    $dbQueryFilters->setWhereFilters(array(\Library\BO\F_user::F_USER_EMAIL));
+    $result = $this->app->dal()->getDalInstance("Login")->SelectOne($user, $dbQueryFilters);
+    $this->testResult->setResultStatus($this->AssertIsArrayEmpty($result), $result);
+    return $this->testResult;
+  }
 
 }

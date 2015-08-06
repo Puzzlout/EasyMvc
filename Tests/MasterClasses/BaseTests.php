@@ -69,11 +69,13 @@ class BaseTests {
           $testMethodName = $test->getAttribute(\Tests\BO\TestConfig::TEST_METHOD_NAME);
           $daoClassName = $test->getAttribute(\Tests\BO\TestConfig::DAO_CLASS_NAME);
           $jsonString = $test->getAttribute(\Tests\BO\TestConfig::JSONSTR);
+          $repeat = $test->getAttribute(\Tests\BO\TestConfig::REPEAT);
           $testConfig = new \Tests\BO\TestConfig();
           $testConfig->setTestClassName($testClassName);
           $testConfig->setTestMethodName($testMethodName);
           $testConfig->setDaoClassName($daoClassName);
           $testConfig->setJsonString($jsonString);
+          $testConfig->setRepeat($repeat);
           array_push($this->testConfigs, $testConfig);
         } catch (\Exception $exc) {
           echo $exc->getMessage() . "<br />" . $exc->getTraceAsString() . "<br />";

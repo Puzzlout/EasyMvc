@@ -36,19 +36,33 @@ class DalTests extends BaseTests {
 
   private function ExecuteTest(\Tests\BO\TestConfig $testConfig, \Tests\BO\TestExecution $testExecution, $testResult, $testClassInstance) {
     if ($testClassInstance instanceof \Tests\BO\TestResult && $testResult !== FALSE) {
-      $testClassInstance->setResultMessage($testResult->resultMessage() . " ; " . $testClassInstance->resultMessage());
-      $testClassInstance->setResultTitle("DalTest - " . $testConfig->testMethodName());
-      $this->AddTestResultToList($testClassInstance);
+      $this->ProcessFailedLoadingTest($testConfig, $testResult, $testClassInstance);
     } elseif ($testClassInstance instanceof \Tests\BO\TestResult) {
       $testClassInstance->setResultTitle("DalTest - " . $testConfig->testMethodName());
       $this->AddTestResultToList($testClassInstance);
     } else {
-      $testMethodName = $testConfig->testMethodName();
-      $tesDataObject = \Library\Helpers\CommonHelper::PrepareUserObject($testExecution->jsonData(), $testExecution->daoObject());
-      $testResult = $testClassInstance->$testMethodName();
-      $testResult->setResultTitle("DalTest - " . $testConfig->testMethodName());
-      $this->AddTestResultToList($testResult);
+      $this->ProcessTest($testConfig, $testClassInstance);
     }
+  }
+
+  private function ProcessFailedLoadingTest(\Tests\BO\TestConfig $testConfig, \Tests\BO\TestResult $testResult, $testClassInstance) {
+    $testClassInstance->setResultMessage($testResult->resultMessage() . " ; " . $testClassInstance->resultMessage());
+    $testClassInstance->setResultTitle("DalTest - " . $testConfig->testMethodName());
+    $this->AddTestResultToList($testClassInstance);
+  }
+
+  private function ProcessTest(\Tests\BO\TestConfig $testConfig, $testClassInstance) {
+    $testMethodName = $testConfig->testMethodName();
+    $iterator = 1;
+    $start = microtime(TRUE);
+    while ($testConfig->repeat() >= $iterator) {
+      $testResult = $testClassInstance->$testMethodName();
+      $iterator += 1;
+    }
+    $end = microtime(TRUE);
+    $testResult->setResultExecutionTime($end - $start);
+    $testResult->setResultTitle("DalTest - " . $testConfig->testMethodName());
+    $this->AddTestResultToList($testResult);
   }
 
 }
