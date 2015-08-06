@@ -6,6 +6,8 @@ define('__ROOT__', dirname(dirname(__FILE__)) . '/');
 define("__APPNAME__", "Test");
 define("__TESTED_APPNAME__", "EasyMvc");
 define("__EXECUTION_ACCESS_RESTRICTION__", TRUE);
+define("__ENABLE_BENCHMARK__", TRUE);
+
 require '../Library/autoload.php';
 
 $dalTests = new \Tests\MasterClasses\DalTests();

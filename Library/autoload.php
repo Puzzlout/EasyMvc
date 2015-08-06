@@ -17,7 +17,13 @@ function autoload($className) {
   $file = __ROOT__ . str_replace('\\', '/', $className) . '.php';
   if (file_exists($file)) {
     try {
+      $calculateExeTime = defined("__ENABLE_BENCHMARK__") ? __ENABLE_BENCHMARK__ : FALSE;
+      if($calculateExeTime) { $start = microtime(TRUE); }
       require_once $file;
+      if($calculateExeTime) {
+        $exeTime = (microtime(TRUE) - $start) * 1000;
+        echo "loading class : $className : $exeTime ms<br />";
+      }
     } catch (Exception $exc) {
       echo "<!--" . $exc->getMessage() . "-->";
     }

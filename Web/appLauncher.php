@@ -18,6 +18,10 @@ set_error_handler(function($errno, $errstr, $errfile, $errline, array $errcontex
 define('__VERSION_NUMBER__', '1.0.0.2');
 
 /**
+ * To enable benckmarking of the scripts.
+ */
+define("__ENABLE_BENCHMARK__", FALSE);
+/**
  * Allows this file to execute the autoload.
  */
 define('__EXECUTION_ACCESS_RESTRICTION__', true);
@@ -61,7 +65,7 @@ $appClassName = strtr(
 /**
  * Autoload defines global variables.
  */
-require '../Library/autoload.php';
+require_once '../Library/autoload.php';
 
 $app = new $appClassName();
 try {
