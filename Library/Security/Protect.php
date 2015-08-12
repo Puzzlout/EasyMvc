@@ -20,8 +20,8 @@ class Protect  {
 
   private $hashSalt = null;
   private $encryptionKey = null;
-  private $encryptionType = MCRYPT_RIJNDAEL_128;
-  private $encryptionMode = MCRYPT_MODE_CBC;
+  private $encryptionType = "MCRYPT_RIJNDAEL_128";
+  private $encryptionMode = "MCRYPT_MODE_CBC";
   private $iv = null;
 
   public function __construct(\Library\Core\Config $config) {
