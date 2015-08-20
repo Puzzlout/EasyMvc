@@ -2,7 +2,7 @@
 
 namespace Library\Core;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
@@ -70,7 +70,7 @@ class Route {
 
   public function setUrl($url) {
     if (is_string($url)) {
-      $this->url = __BASEURL__ . $url;
+      $this->url = FrameworkConstants_BaseUrl . $url;
     }
   }
 

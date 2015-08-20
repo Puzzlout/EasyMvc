@@ -4,7 +4,7 @@ namespace Library\Core;
 
 use Library\Enums;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
@@ -69,7 +69,7 @@ abstract class Application {
     $_GET = array_merge($_GET, $this->router()->currentRoute()->vars());
 
     $controllerClass = $this->BuildControllerClass($this->router()->currentRoute());
-    if (!file_exists(__ROOT__ . str_replace('\\', '/', $controllerClass) . \Library\Enums\FileNameConst::Extension)) {
+    if (!file_exists(FrameworkConstants_RootDir . str_replace('\\', '/', $controllerClass) . \Library\Enums\FileNameConst::Extension)) {
       $error = new \Library\BO\Error(
               \Library\Enums\ErrorCode::ControllerNotExist, Enums\ErrorOrigin::Library, "Controller not found", "The controller " . $controllerClass . " doesn't exist.");
       $this->httpResponse->displayError($error);

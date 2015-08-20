@@ -13,7 +13,7 @@
 
 namespace Tests\BO;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!FrameworkConstants_ExecutionAccessRestriction)
   exit('No direct script access allowed');
 
 class TestResult {

@@ -2,7 +2,7 @@
 
 namespace Library\Controllers;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
@@ -129,7 +129,7 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
     $this->view = $view;
 
     $this->page->setContentFile(
-            __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName
+            FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::AppsFolderName
             . $this->app->name()
             . \Library\Enums\ApplicationFolderName::ViewsFolderName
             . $this->module
@@ -253,14 +253,14 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
     //Add left menu to layout
     $this->page->addVar("leftMenu", $leftMenu->Build());
     $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($this->resxfile));
-    $this->app->pageTitle = $this->app->i8n->getLocalResource($this->resxfile, "page_title") . " - " .  __APPNAME__;
-    $this->page->addVar("logout_url", __BASEURL__ . \Library\Enums\UrlKeys::LogoutUrl);
+    $this->app->pageTitle = $this->app->i8n->getLocalResource($this->resxfile, "page_title") . " - " .  FrameworkConstants_AppName;
+    $this->page->addVar("logout_url", FrameworkConstants_BaseUrl . \Library\Enums\UrlKeys::LogoutUrl);
     $this->page->addVar(\Library\Enums\Popup::toolTips, $this->toolTips);
   }
 
   protected function Redirect($urlPart) {
     \Library\Utility\TimeLogger::EndLog($this->app(), \Library\Enums\ResourceKeys\GlobalAppKeys::log_http_request);
-    $url = __BASEURL__ . $urlPart;
+    $url = FrameworkConstants_BaseUrl . $urlPart;
     header('Location: ' . $url);
     exit();
   }

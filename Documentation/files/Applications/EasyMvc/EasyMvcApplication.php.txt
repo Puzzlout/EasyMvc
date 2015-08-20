@@ -12,7 +12,7 @@
 
 namespace Applications\EasyMvc;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
@@ -21,7 +21,7 @@ class EasyMvcApplication extends \Library\Core\Application {
   public function __construct() {
     parent::__construct();
 
-    $this->name = __APPNAME__;
+    $this->name = FrameworkConstants_AppName;
     $this->context()->setLanguage();
     $this->logoImageUrl = $this->imageUtil->getImageUrl($this->config()->get(\Library\Enums\AppSettingKeys::LogoImageUrl));
   }

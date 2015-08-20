@@ -1,4 +1,4 @@
-<?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) { exit('No direct script access allowed'); } ?>
+<?php if (!FrameworkConstants_ExecutionAccessRestriction) { exit('No direct script access allowed'); } ?>
 
 <fieldset class="company_form">
   <legend><?php echo $resx["company_legend"]; ?></legend>

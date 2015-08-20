@@ -2,7 +2,7 @@
 
 namespace Library\Core;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
@@ -17,16 +17,16 @@ class Config extends ApplicationComponent {
   }
 
   /**
-   * Build the settings associative array per application (__APPNAME__, __TESTED_APPNAME__)
+   * Build the settings associative array per application (FrameworkConstants_AppName, __TESTED_APPNAME__)
    * if the globla vars are defined and that the application setting class 
    * exists.
    * @see Library\Core\Config->AssignSettingsToArray()
    */
   private function BuildSettingsArray() {
     $appSettingsNamespace = "\Applications\{{appname}}\Config\AppSettings";
-    if (defined("__APPNAME__")) {
-      $appConfigClass = str_replace("{{appname}}", __APPNAME__, $appSettingsNamespace);
-      $this->AssignSettingsToArray(__APPNAME__, $appConfigClass);
+    if (defined("FrameworkConstants_AppName")) {
+      $appConfigClass = str_replace("{{appname}}", FrameworkConstants_AppName, $appSettingsNamespace);
+      $this->AssignSettingsToArray(FrameworkConstants_AppName, $appConfigClass);
     }
     if (defined("__TESTED_APPNAME__")) {
       $testedAppConfigClass = str_replace("{{appname}}", __TESTED_APPNAME__, $appSettingsNamespace);
@@ -53,7 +53,7 @@ class Config extends ApplicationComponent {
    * @param string $key
    * @return boolean|string : The value associated to the key given. Otherwise FALSE
    */
-  public function get($key, $appName = __APPNAME__, $getValueFromTestingApp = FALSE) {
+  public function get($key, $appName = FrameworkConstants_AppName, $getValueFromTestingApp = FALSE) {
     $testAppNameSet = defined("__TESTED_APPNAME__");
     $appName = (!$getValueFromTestingApp && $testAppNameSet) ? __TESTED_APPNAME__ : $appName;
     if (

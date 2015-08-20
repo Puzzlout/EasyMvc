@@ -2,7 +2,7 @@
 
 namespace Tests\MasterClasses;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!FrameworkConstants_ExecutionAccessRestriction)
   exit('No direct script access allowed');
 
 /**
@@ -58,7 +58,7 @@ class BaseTests {
    */
   private function LoadTests($callingChildClass) {
     if (!$this->testConfigs) {
-      $filePath = __ROOT__ . 'Tests/DataSamples/' . substr($callingChildClass, strrpos($callingChildClass, "\\") + 1) . '.xml';
+      $filePath = FrameworkConstants_RootDir . 'Tests/DataSamples/' . substr($callingChildClass, strrpos($callingChildClass, "\\") + 1) . '.xml';
       $xmlReader = new \Library\Core\XmlReader($filePath);
       $tests = $xmlReader->ReturnFileContents(\Tests\BO\TestConfig::TEST);
 

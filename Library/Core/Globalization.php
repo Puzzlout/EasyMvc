@@ -29,7 +29,7 @@
 
 namespace Library\Core;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
@@ -46,7 +46,7 @@ class Globalization extends ApplicationComponent {
    */
 
   public function loadResources() {
-    $this->resoures_path = __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName;
+    $this->resoures_path = FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::AppsFolderName;
     //Get list of resource files
     $this->_files_common = DirectoryManager::GetFileNames($this->resoures_path . $this->app()->name() . \Library\Enums\ApplicationFolderName::ResourceCommonFolderName);
     $this->_files_local = DirectoryManager::GetFileNames($this->resoures_path . $this->app()->name() . \Library\Enums\ApplicationFolderName::ResourceLocalFolderName);

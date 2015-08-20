@@ -2,7 +2,7 @@
 
 namespace Library\Dal;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
@@ -78,7 +78,7 @@ class Managers {
     $resultString =
             defined("__TESTED_APPNAME__") ?
             str_replace(\Library\Enums\FrameworkPlaceholders::ApplicationNamePlaceHolder, __TESTED_APPNAME__, $this->dalApplicationFolderPath) :
-            str_replace(\Library\Enums\FrameworkPlaceholders::ApplicationNamePlaceHolder, __APPNAME__, $this->dalApplicationFolderPath);
+            str_replace(\Library\Enums\FrameworkPlaceholders::ApplicationNamePlaceHolder, FrameworkConstants_AppName, $this->dalApplicationFolderPath);
     ;
     return $resultString;
   }

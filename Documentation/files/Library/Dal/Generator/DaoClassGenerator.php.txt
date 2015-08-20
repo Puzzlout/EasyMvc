@@ -42,7 +42,7 @@ class DaoClassGenerator {
         PhpDocPlaceholder::SUBPACKAGE => "",
         PhpDocPlaceholder::VERSION_NUMBER => __VERSION_NUMBER__,
         CodeSnippetPlaceholders::NAMESPACE_FRAMEWORK => "Library\BO",
-        CodeSnippetPlaceholders::NAMESPACE_APP => "\Applications\"" . __APPNAME__ . "\Models\Dao",
+        CodeSnippetPlaceholders::NAMESPACE_APP => "\Applications\"" . FrameworkConstants_AppName . "\Models\Dao",
         CodeSnippetPlaceholders::CLASS_NAME => $this->className
     );
     $this->isFrameworkClass = $params["type"] === \Library\Enums\GenericAppKeys::APP_DB_TABLE ? FALSE : TRUE;

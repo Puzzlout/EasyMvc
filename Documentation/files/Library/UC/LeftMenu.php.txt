@@ -24,7 +24,7 @@
 
 namespace Library\UC;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
@@ -39,7 +39,7 @@ class LeftMenu {
   public function __construct($app, $resx_left_menu) {
     $this->app = $app;
     $this->resx_left_menu = $resx_left_menu;
-    $this->base_url = str_replace(\Library\Enums\FrameworkPlaceholders::ApplicationNamePlaceHolder, __APPNAME__, $this->app->config->get("base_url"));
+    $this->base_url = str_replace(\Library\Enums\FrameworkPlaceholders::ApplicationNamePlaceHolder, FrameworkConstants_AppName, $this->app->config->get("base_url"));
   }
 
   /**
@@ -64,7 +64,7 @@ class LeftMenu {
    */
   private function _LoadXml() {
     $xml = new \DOMDocument;
-    $filename = __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . $this->app->name() . '/Config/menus.xml';
+    $filename = FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::AppsFolderName . $this->app->name() . '/Config/menus.xml';
     if (file_exists($filename)) {
       $xml->load($filename);
     } else {

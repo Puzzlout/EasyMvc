@@ -25,7 +25,7 @@ define('__EXECUTION_ACCESS_RESTRICTION__', true);
 /**
  * Declare the full directory path where the application resides.
  */
-define('__ROOT__', dirname(dirname(__FILE__)) . '/');
+define('FrameworkConstants_RootDir', dirname(dirname(__FILE__)) . '/');
 
 /**
  * The application name which needs to match the folder name in Applications 
@@ -35,26 +35,26 @@ define('__ROOT__', dirname(dirname(__FILE__)) . '/');
  * 
  * The correct tree structure should be: Applications/YourAppName/..
  */
-define('__APPNAME__', 'EasyMvc');
+define('FrameworkConstants_AppName', 'EasyMvc');
 
 /**
  * Depending on the server setup and where resides the application,
- * __BASEURL__ will need to be updated.
+ * FrameworkConstants_BaseUrl will need to be updated.
  * 
  * Examples:
  *  1) if your website root url is http://mydomain.net/MyApp/, then 
- * __BASEURL__ will be "/MyApp/".
+ * FrameworkConstants_BaseUrl will be "/MyApp/".
  * 
  *  2) if your website root url is http://mydomain.net/, then 
- * __BASEURL__ will be "/".
+ * FrameworkConstants_BaseUrl will be "/".
  * 
  */
-define('__BASEURL__', '/' . __APPNAME__ . '/');
+define('FrameworkConstants_BaseUrl', '/' . FrameworkConstants_AppName . '/');
 
 /**
  * Class name of the application to load.
  */
-$placeholder = array("{{appname}}" => __APPNAME__);
+$placeholder = array("{{appname}}" => FrameworkConstants_AppName);
 $appClassName = strtr(
         "\Applications\{{appname}}\\{{appname}}Application", $placeholder);
 

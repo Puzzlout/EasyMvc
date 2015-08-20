@@ -2,7 +2,7 @@
 
 namespace Library\Core;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
@@ -23,7 +23,7 @@ class HttpResponse extends ApplicationComponent {
   public function displayError(\Library\BO\Error $error) {
     $this->page = new Page($this->app);
     $this->page->addVar("error", $error);
-    $this->page->setContentFile(__ROOT__ . 'Errors/' . $error->errorId() . '.php');
+    $this->page->setContentFile(FrameworkConstants_RootDir . 'Errors/' . $error->errorId() . '.php');
 
     //$this->addHeader('HTTP/1.0 404 Not Found');
 

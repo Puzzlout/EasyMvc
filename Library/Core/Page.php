@@ -2,7 +2,7 @@
 
 namespace Library\Core;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
@@ -41,21 +41,21 @@ class Page extends ApplicationComponent {
        * FOR AUTHENTICATED USERS
        */
       if (!$this->app->router->isWsCall) {
-        require __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . $this->app()->name() . \Library\Enums\FileNameConst::HeaderTemplate;
-        require __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . $this->app()->name() . \Library\Enums\FileNameConst::MenuTopTemplate;
-//        require __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName. $this->app()->name() . \Library\Enums\FileNameConst::BreadcrumbTemplate;
-        require __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . $this->app()->name() . \Library\Enums\FileNameConst::MenuLeftTemplate;
-        require __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . $this->app()->name() . \Library\Enums\FileNameConst::ContenTemplate;
-        require __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . $this->app()->name() . \Library\Enums\FileNameConst::FooterTemplate;
+        require FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::AppsFolderName . $this->app()->name() . \Library\Enums\FileNameConst::HeaderTemplate;
+        require FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::AppsFolderName . $this->app()->name() . \Library\Enums\FileNameConst::MenuTopTemplate;
+//        require FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::AppsFolderName. $this->app()->name() . \Library\Enums\FileNameConst::BreadcrumbTemplate;
+        require FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::AppsFolderName . $this->app()->name() . \Library\Enums\FileNameConst::MenuLeftTemplate;
+        require FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::AppsFolderName . $this->app()->name() . \Library\Enums\FileNameConst::ContenTemplate;
+        require FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::AppsFolderName . $this->app()->name() . \Library\Enums\FileNameConst::FooterTemplate;
       }
     } else {
       /**
        * FOR NON AUTHENTICATED USERS
        */
       if (!$this->app->router->isWsCall) {
-        require __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . $this->app()->name() . \Library\Enums\FileNameConst::HeaderTemplate;
-        require __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . $this->app()->name() . \Library\Enums\FileNameConst::ContenTemplate;
-        require __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . $this->app()->name() . \Library\Enums\FileNameConst::FooterTemplate;
+        require FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::AppsFolderName . $this->app()->name() . \Library\Enums\FileNameConst::HeaderTemplate;
+        require FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::AppsFolderName . $this->app()->name() . \Library\Enums\FileNameConst::ContenTemplate;
+        require FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::AppsFolderName . $this->app()->name() . \Library\Enums\FileNameConst::FooterTemplate;
       }
     }
     \Library\Utility\TimeLogger::EndLog($this->app(), \Library\Enums\ResourceKeys\GlobalAppKeys::log_http_request);
@@ -76,13 +76,13 @@ class Page extends ApplicationComponent {
    */
   protected function setNonAuthenticatedPageLayout() {
     if (!$this->app->router->isWsCall) {
-      require __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . \Library\Enums\FileNameConst::HeaderTemplate;
+      require FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::AppsFolderName . \Library\Enums\FileNameConst::HeaderTemplate;
     }
 
-    require __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . \Library\Enums\FileNameConst::ContenTemplate;
+    require FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::AppsFolderName . \Library\Enums\FileNameConst::ContenTemplate;
 
     if (!$this->app->router->isWsCall) {
-      require __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . \Library\Enums\FileNameConst::FooterTemplate;
+      require FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::AppsFolderName . \Library\Enums\FileNameConst::FooterTemplate;
     }
   }
 
@@ -93,14 +93,14 @@ class Page extends ApplicationComponent {
    */
   protected function setAuthenticatedPageLayout() {
     if (!$this->app->router->isWsCall) {
-      require __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . \Library\Enums\FileNameConst::HeaderTemplate;
-//      require __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName. \Library\Enums\FileNameConst::HeaderTemplate;
+      require FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::AppsFolderName . \Library\Enums\FileNameConst::HeaderTemplate;
+//      require FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::AppsFolderName. \Library\Enums\FileNameConst::HeaderTemplate;
     }
 
-    require __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . \Library\Enums\FileNameConst::ContenTemplate;
+    require FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::AppsFolderName . \Library\Enums\FileNameConst::ContenTemplate;
 
     if (!$this->app->router->isWsCall) {
-      require __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . \Library\Enums\FileNameConst::FooterTemplate;
+      require FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::AppsFolderName . \Library\Enums\FileNameConst::FooterTemplate;
     }
   }
 

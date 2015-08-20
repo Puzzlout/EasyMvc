@@ -2,7 +2,7 @@
 
 namespace Library\Core;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
@@ -13,7 +13,7 @@ class Config extends ApplicationComponent {
   public function get($key) {
     if (!$this->settings) {
       $xml = new \DOMDocument;
-      $xml->load(__ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . __APPNAME__ . '/Config/appsettings.xml');
+      $xml->load(FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::AppsFolderName . FrameworkConstants_AppName . '/Config/appsettings.xml');
 
       $elements = $xml->getElementsByTagName('define');
 

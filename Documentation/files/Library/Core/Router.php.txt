@@ -2,7 +2,7 @@
 
 namespace Library\Core;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
@@ -24,7 +24,7 @@ class Router extends ApplicationComponent {
   }
 
   public function InitRoutesFromXml() {
-    $this->setRoutesXmlPath(__ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . __APPNAME__ . '/Config/routes.xml');
+    $this->setRoutesXmlPath(FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::AppsFolderName . FrameworkConstants_AppName . '/Config/routes.xml');
 
     $routes = $this->app->user()->getAttribute(\Library\Enums\SessionKeys::UserRoutes);
     if (!$this->hasRoutesXmlChanged($this->app()->user()) && $routes) {
@@ -179,9 +179,9 @@ class Router extends ApplicationComponent {
       $route_config = array(
           "route_xml" => $route,
           "vars" => $vars,
-          "js_head" => $this->_GetJsFiles($route, "head", __BASEURL__),
-          "js_html" => $this->_GetJsFiles($route, "html", __BASEURL__),
-          "css" => $this->_GetCss($route, __BASEURL__, $currentApp),
+          "js_head" => $this->_GetJsFiles($route, "head", FrameworkConstants_BaseUrl),
+          "js_html" => $this->_GetJsFiles($route, "html", FrameworkConstants_BaseUrl),
+          "css" => $this->_GetCss($route, FrameworkConstants_BaseUrl, $currentApp),
           "php_modules" => $this->_LoadPhpModules($route),
           "relative_path" => $path_to_add,
           "resxfile" => $route->getAttribute('resxfile')
@@ -213,7 +213,7 @@ class Router extends ApplicationComponent {
                 $this->_GetInternalScriptTag($script, $path_to_add);
       } else if ($script->getAttribute('use') !== "head" && $script->getAttribute('use') !== "html") {
         //Select js files from parent route
-        $parent_route = $this->getRoute(__BASEURL__ . $script->getAttribute('use'));
+        $parent_route = $this->getRoute(FrameworkConstants_BaseUrl . $script->getAttribute('use'));
         $scripts .= $this->_GetFilesForSibbling($parent_route, $destination, $path_to_add);
       }
     }
@@ -269,12 +269,12 @@ class Router extends ApplicationComponent {
     $modules = array();
     foreach ($route->getElementsByTagName('php_module') as $module) {
       if ($module->getAttribute('shared')) {
-        $modules[$module->getAttribute('key')] = __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName
+        $modules[$module->getAttribute('key')] = FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::AppsFolderName
                 . $this->app->name()
                 . rtrim(\Library\Enums\ApplicationFolderName::ViewsFolderName, '/') . \Library\Enums\ApplicationFolderName::ModulesFolderName
                 . $module->getAttribute('file_name');
       } else {
-        $modules[$module->getAttribute('key')] = __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName
+        $modules[$module->getAttribute('key')] = FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::AppsFolderName
                 . $this->app->name()
                 . \Library\Enums\ApplicationFolderName::ViewsFolderName . $route->getAttribute('module') . \Library\Enums\ApplicationFolderName::ModulesFolderName
                 . $module->getAttribute('file_name');
@@ -355,7 +355,7 @@ class Router extends ApplicationComponent {
     $css_files = "";
     foreach ($route->getElementsByTagName('css_file') as $css_file) {
       if ($css_file->getAttribute("use") !== "") {
-        $parent_route = $this->getRoute(__BASEURL__ . $css_file->getAttribute('use'));
+        $parent_route = $this->getRoute(FrameworkConstants_BaseUrl . $css_file->getAttribute('use'));
         $css_files .= $this->_GetFilesForSibbling($parent_route, "css", $path_to_add);
       } else {
         $css_files .= $this->_GetInternalCssTag($css_file, $path_to_add);

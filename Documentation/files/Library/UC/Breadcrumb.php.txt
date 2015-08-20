@@ -24,7 +24,7 @@
 
 namespace Library\UC;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
@@ -68,7 +68,7 @@ class Breadcrumb {
    */
   public function _LoadXml() {
     $xml = new \DOMDocument;
-    $filename = __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . $this->app->name() . '/Config/breadcrumbs.xml';
+    $filename = FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::AppsFolderName . $this->app->name() . '/Config/breadcrumbs.xml';
     if (file_exists($filename)) {
       $xml->load($filename);
     } else {

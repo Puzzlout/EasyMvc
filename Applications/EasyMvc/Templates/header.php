@@ -1,4 +1,4 @@
-<?php if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+<?php if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 } ?>
 <!DOCTYPE html>
@@ -6,10 +6,10 @@
   <head>
     <meta charset="utf-8" />
     <title><?php echo $this->app->pageTitle; ?></title>
-    <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Applications/<?php echo __APPNAME__; ?>/ClientSide/css/app/reset.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Applications/<?php echo FrameworkConstants_AppName; ?>/ClientSide/css/app/reset.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Web/library/css/core/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Applications/<?php echo __APPNAME__; ?>/ClientSide/css/addons/toastr.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Applications/<?php echo __APPNAME__; ?>/ClientSide/css/addons/jquery.contextMenu.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Applications/<?php echo FrameworkConstants_AppName; ?>/ClientSide/css/addons/toastr.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Applications/<?php echo FrameworkConstants_AppName; ?>/ClientSide/css/addons/jquery.contextMenu.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->app->relative_path; ?>Web/library/css/core/jquery-ui.css" />
     <?php echo $this->app->globalResources["css_files"]; ?>    
     <script type="application/javascript" src="<?php echo $this->app->relative_path; ?>Web/library/js/core/jquery.js"></script>

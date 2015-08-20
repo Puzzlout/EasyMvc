@@ -90,7 +90,7 @@ class DaoClassGenerator {
    * @param type $params : array of values
    */
   public function __construct($tableName) {
-    $this->dir = __ROOT__ . "Library/Dal/Generator/output/";
+    $this->dir = FrameworkConstants_RootDir . "Library/Dal/Generator/output/";
     $this->className = ucfirst($tableName);
     $this->fileName = $this->className . ".php";
     $this->placeholders = $this->InitPlaceholders();
@@ -115,7 +115,7 @@ class DaoClassGenerator {
         PhpDocPlaceholder::SUBPACKAGE => "",
         PhpDocPlaceholder::VERSION_NUMBER => __VERSION_NUMBER__,
         CodeSnippetPlaceholders::NAMESPACE_FRAMEWORK => "Library\BO",
-        CodeSnippetPlaceholders::NAMESPACE_APP => "\Applications\"" . __APPNAME__ . "\Models\Dao",
+        CodeSnippetPlaceholders::NAMESPACE_APP => "\Applications\"" . FrameworkConstants_AppName . "\Models\Dao",
         CodeSnippetPlaceholders::CLASS_NAME => $this->className
     );
   }

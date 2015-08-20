@@ -2,7 +2,7 @@
 
 namespace Library\Core;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+if (!FrameworkConstants_ExecutionAccessRestriction)
   exit('No direct script access allowed');
 
 /**
@@ -61,7 +61,7 @@ class XmlReader {
    * @return string
    */
   public function GetConfigurationFilePath($fileName) {
-    return __ROOT__ . \Library\Enums\ApplicationFolderName::AppsFolderName . \Library\Helpers\CommonHelper::GetAppName() . '/Config/' . $fileName;
+    return FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::AppsFolderName . \Library\Helpers\CommonHelper::GetAppName() . '/Config/' . $fileName;
   }
 
   /**

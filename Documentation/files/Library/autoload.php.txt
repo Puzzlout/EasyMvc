@@ -1,12 +1,12 @@
 <?php
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
 /**
  * Finds and load a class from its full name, e.g. namespace + class name.
- * It will check if the file exists in the <i>__ROOT__</i> directory.
+ * It will check if the file exists in the <i>FrameworkConstants_RootDir</i> directory.
  * 
  * If it does, it will load the class to be used.
  * Otherwise, it will throw an exception.
@@ -14,7 +14,7 @@ if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
  * @param string $className
  */
 function autoload($className) {
-  $file = __ROOT__ . str_replace('\\', '/', $className) . '.php';
+  $file = FrameworkConstants_RootDir . str_replace('\\', '/', $className) . '.php';
   if (file_exists($file)) {
     try {
       require_once $file;

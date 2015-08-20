@@ -2,7 +2,7 @@
 
 namespace Library\Dal\Generator;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
@@ -28,7 +28,7 @@ class GeneratorManager extends \Library\Core\ApplicationComponent {
         $dao = new DaoClassGenerator(
                 array(
                     "className" => ucfirst($table_name), 
-                    "dir" => __ROOT__ . "Library/Dal/Generator/output/",
+                    "dir" => FrameworkConstants_RootDir . "Library/Dal/Generator/output/",
                     "type" => 
                       (!preg_match("`".\Library\Enums\GenericAppKeys::PREFIX_FRAMEWORK_TABLE.".*$`", $table_name) ? 
                       \Library\Enums\GenericAppKeys::APP_DB_TABLE : 

@@ -2,7 +2,7 @@
 
 namespace Library\Core;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 session_start();
@@ -17,7 +17,7 @@ class User extends ApplicationComponent {
    */
   public function __construct(Application $app) {
     parent::__construct($app);
-    $this->appPrefix = strtolower(__APPNAME__);
+    $this->appPrefix = strtolower(FrameworkConstants_AppName);
   }
 
   /**

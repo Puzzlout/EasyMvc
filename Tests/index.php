@@ -1,12 +1,14 @@
 <?php
 /**
- * Autoload defines global variables.
+ * Defines global variables.
  */
-define('__ROOT__', dirname(dirname(__FILE__)) . '/');
-define("__APPNAME__", "Test");
-define("__TESTED_APPNAME__", "EasyMvc");
-define("__EXECUTION_ACCESS_RESTRICTION__", TRUE);
-define("__ENABLE_BENCHMARK__", TRUE);
+require_once '../Library/FrameworkConstants.php';
+FrameworkConstants::SetNamedConstants(
+        array(
+            FrameworkConstants::FrameworkConstants_Name_AppName => "Test",
+            FrameworkConstants::FrameworkConstants_Name_TestAppName => "EasyMvc",
+            FrameworkConstants::FrameworkConstants_Name_EnableBenchmark => TRUE
+));
 
 require '../Library/autoload.php';
 

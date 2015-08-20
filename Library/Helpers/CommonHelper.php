@@ -24,7 +24,7 @@
 
 namespace Library\Helpers;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__')) {
+if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
@@ -281,7 +281,7 @@ class CommonHelper {
     return
             defined("__TESTED_APPNAME__") ?
             __TESTED_APPNAME__ :
-            __APPNAME__;
+            FrameworkConstants_AppName;
   }
 
   /**
