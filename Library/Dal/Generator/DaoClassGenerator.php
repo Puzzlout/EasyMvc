@@ -113,7 +113,7 @@ class DaoClassGenerator {
         PhpDocPlaceholder::LINK => "https://github.com/WebDevJL/",
         PhpDocPlaceholder::PACKAGE => $this->className,
         PhpDocPlaceholder::SUBPACKAGE => "",
-        PhpDocPlaceholder::VERSION_NUMBER => __VERSION_NUMBER__,
+        PhpDocPlaceholder::VERSION_NUMBER => FrameworkConstants_Version,
         CodeSnippetPlaceholders::NAMESPACE_FRAMEWORK => "Library\BO",
         CodeSnippetPlaceholders::NAMESPACE_APP => "\Applications\"" . FrameworkConstants_AppName . "\Models\Dao",
         CodeSnippetPlaceholders::CLASS_NAME => $this->className
@@ -176,7 +176,7 @@ class DaoClassGenerator {
    * Writes the line to prevent direct execution of the PHP class.
    */
   public function AddScriptNotAllowedLine() {
-    fwrite($this->writer, $this->_LF . "if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) { exit('No direct script access allowed'); }" . $this->_CRLF);
+    fwrite($this->writer, $this->_LF . "if (!FrameworkConstants_ExecutionAccessRestriction) { exit('No direct script access allowed'); }" . $this->_CRLF);
   }
 
   /**

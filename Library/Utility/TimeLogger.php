@@ -1,27 +1,5 @@
 <?php
 
-/**
- *
- * @package		Easy MVC Framework
- * @author		Jeremie Litzler
- * @copyright	Copyright (c) 2015
- * @license		
- * @link		
- * @since		
- * @filesource
- */
-// ------------------------------------------------------------------------
-
-/**
- * TimeLogger Class
- *
- * @package		Library
- * @category	Utility
- * @category	
- * @author		Jeremie Litzler
- * @link		
- */
-
 namespace Library\Utility;
 
 if (!FrameworkConstants_ExecutionAccessRestriction) {

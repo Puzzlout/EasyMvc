@@ -32,7 +32,7 @@ try {
   $app = new $appClassName();
   $app->run();
 } catch (\Exception $exc) {
-  $errorLogger = new Library\Core\ErrorManager($app, $exc);
+  $errorLogger = new Library\Core\ErrorManager($exc);
   $errorLogger->LogError($exc);
   die();
 }

@@ -23,7 +23,7 @@
 
 
 namespace Applications\EasyMvc\Resources\Enums;
-if ( ! defined('__EXECUTION_ACCESS_RESTRICTION__')) { exit('No direct script access allowed'); }
+if (!FrameworkConstants_ExecutionAccessRestriction) { exit('No direct script access allowed'); }
 
 class ViewVariablesKeys {
   //Generic keys

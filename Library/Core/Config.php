@@ -54,15 +54,16 @@ class Config extends ApplicationComponent {
    * @return boolean|string : The value associated to the key given. Otherwise FALSE
    */
   public function get($key, $appName = FrameworkConstants_AppName, $getValueFromTestingApp = FALSE) {
-    $testAppNameSet = defined("__TESTED_APPNAME__");
-    $appName = (!$getValueFromTestingApp && $testAppNameSet) ? __TESTED_APPNAME__ : $appName;
+    $appNameTest = FrameworkConstants_TestAppName;
+    $appNameTestSet = !empty($appNameTest);
+    $appName = (!$getValueFromTestingApp && $appNameTestSet) ? FrameworkConstants_TestAppName : $appName;
     if (
             !$getValueFromTestingApp &&
             (!$this->settings || !isset($this->settings[$appName]) || !isset($this->settings[$appName][$key]))) {
       return FALSE;
     } elseif (
             ($getValueFromTestingApp && $testAppNameSet) &&
-            (!$this->settings || !isset($this->settings[__TESTED_APPNAME__]) || !isset($this->settings[__TESTED_APPNAME__][$key]))) {
+            (!$this->settings || !isset($this->settings[FrameworkConstants_TestAppName]) || !isset($this->settings[__TESTED_APPNAME__][$key]))) {
       return FALSE;
     } else {
       return $this->settings[$appName][$key];

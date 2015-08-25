@@ -23,11 +23,13 @@
 
 namespace Library\Core;
 
+use Library\Enums\ErrorLoggingMethod;
+
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-class ErrorManager extends ApplicationComponent {
+class ErrorManager {
 
   private $errorLoggingMethod = null;
   private $exception = null;
@@ -37,27 +39,26 @@ class ErrorManager extends ApplicationComponent {
     return $this->errorObj;
   }
 
-  public function __construct(Application $app, \Exception $exc) {//, \Library\Enums\ErrorOrigin $origin, $title) {
-    parent::__construct($app);
-    $this->errorLoggingMethod = $app->config()->get(\Library\Enums\AppSettingKeys::ErrorLoggingMethod);
+  public function __construct(\Exception $exc, $method = ErrorLoggingMethod::EchoString) {
+    $this->errorLoggingMethod = $method;
     $this->exception = $exc;
-//    $this->errorObj = new \Library\BO\Error(
-//            $exc->getCode(),
-//            $origin,
-//            $title,
-//            $exc->getTraceAsString());
   }
 
   public function LogError() {
     switch ($this->errorLoggingMethod) {
       case \Library\Enums\ErrorLoggingMethod::EchoString:
-        echo $this->exception->getMessage() . "</br>" . str_replace("#", "</br>#", $this->exception->getTraceAsString());
+        $this->LogErrorEchoString();
         break;
 
       default:
-        echo "Logging method is " . $this->errorLoggingMethod . " but no implementation is provided for that method yet.";
+        echo "Logging method is " . $this->errorLoggingMethod . " but no implementation is provided for that method yet. Default: EchoString";
+        $this->LogErrorEchoString();
         break;
     }
+  }
+
+  private function LogErrorEchoString() {
+    echo $this->exception->getMessage() . "</br>" . str_replace("#", "</br>#", $this->exception->getTraceAsString());
   }
 
 }
