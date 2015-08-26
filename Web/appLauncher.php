@@ -15,7 +15,9 @@ set_error_handler(function($errno, $errstr, $errfile, $errline, array $errcontex
  * Load the framework constants
  */
 require_once '../Library/FrameworkConstants.php';
-FrameworkConstants::SetNamedConstants();
+FrameworkConstants::SetNamedConstants(array(
+    FrameworkConstants::FrameworkConstants_Name_TestAppName => ""
+));
 /**
  * Autoload defines global variables.
  */
@@ -29,10 +31,12 @@ $appClassName = strtr(
         "\Applications\{{appname}}\\{{appname}}Application", $placeholder);
 
 try {
+  session_start();
   $app = new $appClassName();
   $app->run();
 } catch (\Exception $exc) {
   $errorLogger = new Library\Core\ErrorManager($exc);
   $errorLogger->LogError($exc);
+  var_dump($_SESSION);
   die();
 }

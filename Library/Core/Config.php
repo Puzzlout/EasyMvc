@@ -28,9 +28,9 @@ class Config extends ApplicationComponent {
       $appConfigClass = str_replace("{{appname}}", FrameworkConstants_AppName, $appSettingsNamespace);
       $this->AssignSettingsToArray(FrameworkConstants_AppName, $appConfigClass);
     }
-    if (defined("__TESTED_APPNAME__")) {
-      $testedAppConfigClass = str_replace("{{appname}}", __TESTED_APPNAME__, $appSettingsNamespace);
-      $this->AssignSettingsToArray(__TESTED_APPNAME__, $testedAppConfigClass);
+    if (defined("FrameworkConstants_TestAppName")) {
+      $testedAppConfigClass = str_replace("{{appname}}", FrameworkConstants_TestAppName, $appSettingsNamespace);
+      $this->AssignSettingsToArray(FrameworkConstants_TestAppName, $testedAppConfigClass);
     }
   }
 
@@ -63,7 +63,7 @@ class Config extends ApplicationComponent {
       return FALSE;
     } elseif (
             ($getValueFromTestingApp && $testAppNameSet) &&
-            (!$this->settings || !isset($this->settings[FrameworkConstants_TestAppName]) || !isset($this->settings[__TESTED_APPNAME__][$key]))) {
+            (!$this->settings || !isset($this->settings[FrameworkConstants_TestAppName]) || !isset($this->settings[FrameworkConstants_TestAppName][$key]))) {
       return FALSE;
     } else {
       return $this->settings[$appName][$key];
