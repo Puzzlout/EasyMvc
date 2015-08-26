@@ -76,10 +76,9 @@ class Managers {
 
   private function GetDalApplicationNamespace() {
     $resultString =
-            defined("__TESTED_APPNAME__") ?
-            str_replace(\Library\Enums\FrameworkPlaceholders::ApplicationNamePlaceHolder, __TESTED_APPNAME__, $this->dalApplicationFolderPath) :
+            defined(\FrameworkConstants::FrameworkConstants_TestAppName) ?
+            str_replace(\Library\Enums\FrameworkPlaceholders::ApplicationNamePlaceHolder, FrameworkConstants_TestAppName, $this->dalApplicationFolderPath) :
             str_replace(\Library\Enums\FrameworkPlaceholders::ApplicationNamePlaceHolder, FrameworkConstants_AppName, $this->dalApplicationFolderPath);
-    ;
     return $resultString;
   }
 

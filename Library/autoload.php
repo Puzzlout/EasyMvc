@@ -25,7 +25,7 @@ function autoload($className) {
       throw new ErrorException("Class not found => " . $file);
     }
   } catch (Exception $exc) {
-    echo "<!--" . $exc->getMessage() . "-->";
+    error_log($exc->getMessage() . " ; " . $exc->getTraceAsString());
   }
 }
 
