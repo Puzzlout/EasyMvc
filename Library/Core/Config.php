@@ -24,11 +24,11 @@ class Config extends ApplicationComponent {
    */
   private function BuildSettingsArray() {
     $appSettingsNamespace = "\Applications\{{appname}}\Config\AppSettings";
-    if (defined("FrameworkConstants_AppName")) {
+    if (defined(\FrameworkConstants::FrameworkConstants_AppName)) {
       $appConfigClass = str_replace("{{appname}}", FrameworkConstants_AppName, $appSettingsNamespace);
       $this->AssignSettingsToArray(FrameworkConstants_AppName, $appConfigClass);
     }
-    if (defined("FrameworkConstants_TestAppName")) {
+    if (defined(\FrameworkConstants::FrameworkConstants_TestAppName)) {
       $testedAppConfigClass = str_replace("{{appname}}", FrameworkConstants_TestAppName, $appSettingsNamespace);
       $this->AssignSettingsToArray(FrameworkConstants_TestAppName, $testedAppConfigClass);
     }
@@ -54,15 +54,14 @@ class Config extends ApplicationComponent {
    * @return boolean|string : The value associated to the key given. Otherwise FALSE
    */
   public function get($key, $appName = FrameworkConstants_AppName, $getValueFromTestingApp = FALSE) {
-    $appNameTest = FrameworkConstants_TestAppName;
-    $appNameTestSet = !empty($appNameTest);
-    $appName = (!$getValueFromTestingApp && $appNameTestSet) ? FrameworkConstants_TestAppName : $appName;
+    $isTestAppNameUsed = defined(\FrameworkConstants::FrameworkConstants_TestAppName);
+    $appName = (!$getValueFromTestingApp && $isTestAppNameUsed) ? FrameworkConstants_TestAppName : $appName;
     if (
             !$getValueFromTestingApp &&
             (!$this->settings || !isset($this->settings[$appName]) || !isset($this->settings[$appName][$key]))) {
       return FALSE;
     } elseif (
-            ($getValueFromTestingApp && $testAppNameSet) &&
+            ($getValueFromTestingApp && $isTestAppNameUsed) &&
             (!$this->settings || !isset($this->settings[FrameworkConstants_TestAppName]) || !isset($this->settings[FrameworkConstants_TestAppName][$key]))) {
       return FALSE;
     } else {

@@ -16,7 +16,7 @@ set_error_handler(function($errno, $errstr, $errfile, $errline, array $errcontex
  */
 require_once '../Library/FrameworkConstants.php';
 FrameworkConstants::SetNamedConstants(array(
-    FrameworkConstants::FrameworkConstants_Name_TestAppName => ""
+    FrameworkConstants::FrameworkConstants_Name_TestAppName => NULL
 ));
 /**
  * Autoload defines global variables.

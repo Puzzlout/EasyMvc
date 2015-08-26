@@ -2,14 +2,22 @@
 
 class FrameworkConstants {
 
-  const FrameworkConstants_Name_Version = "FrameworkConstants_Name_Version";
+  const FrameworkConstants_Name_AppName = "FrameworkConstants_Name_AppName";
+  const FrameworkConstants_Name_BaseUrl = "FrameworkConstants_Name_BaseUrl";
   const FrameworkConstants_Name_EnableBenchmark = "FrameworkConstants_Name_EnableBenchmark";
   const FrameworkConstants_Name_ExecutionAccessRestriction = "FrameworkConstants_Name_ExecutionAccessRestriction";
   const FrameworkConstants_Name_RootDir = "FrameworkConstants_Name_RootDir";
-  const FrameworkConstants_Name_AppName = "FrameworkConstants_Name_AppName";
   const FrameworkConstants_Name_TestAppName = "FrameworkConstants_Name_TestAppName";
-  const FrameworkConstants_Name_BaseUrl = "FrameworkConstants_Name_BaseUrl";
+  const FrameworkConstants_Name_Version = "FrameworkConstants_Name_Version";
 
+  const FrameworkConstants_AppName = "FrameworkConstants_AppName";
+  const FrameworkConstants_BaseUrl = "FrameworkConstants_BaseUrl";
+  const FrameworkConstants_EnableBenchmark = "FrameworkConstants_EnableBenchmark";
+  const FrameworkConstants_ExecutionAccessRestriction = "FrameworkConstants_ExecutionAccessRestriction";
+  const FrameworkConstants_RootDir = "FrameworkConstants_RootDir";
+  const FrameworkConstants_TestAppName = "FrameworkConstants_TestAppName";
+  const FrameworkConstants_Version = "FrameworkConstants_Version";
+  
   static function SetNamedConstants($arrayOfCustomValues = array()) {
     $arrayOfValuesToUse = self::SetNamedConstantsValues($arrayOfCustomValues);
 
@@ -17,19 +25,19 @@ class FrameworkConstants {
      * Version number global variable definition
      * It is used to allow automatic client refresh of the JavaScript and CSS files.
      */
-    define("FrameworkConstants_Version", "1.0.2");
+    define(FrameworkConstants::FrameworkConstants_Version, "1.0.2");
     /**
      * To enable benckmarking of the scripts.
      */
-    define("FrameworkConstants_EnableBenchmark", $arrayOfValuesToUse[self::FrameworkConstants_Name_EnableBenchmark]);
+    define(FrameworkConstants::FrameworkConstants_EnableBenchmark, $arrayOfValuesToUse[self::FrameworkConstants_Name_EnableBenchmark]);
     /**
      * Allows this file to execute the autoload.
      */
-    define("FrameworkConstants_ExecutionAccessRestriction", $arrayOfValuesToUse[self::FrameworkConstants_Name_ExecutionAccessRestriction]);
+    define(FrameworkConstants::FrameworkConstants_ExecutionAccessRestriction, $arrayOfValuesToUse[self::FrameworkConstants_Name_ExecutionAccessRestriction]);
     /**
      * Declare the full directory path where the application resides.
      */
-    define("FrameworkConstants_RootDir", $arrayOfValuesToUse[self::FrameworkConstants_Name_RootDir]);
+    define(FrameworkConstants::FrameworkConstants_RootDir, $arrayOfValuesToUse[self::FrameworkConstants_Name_RootDir]);
     /**
      * The application name which needs to match the folder name in Applications 
      * folder.
@@ -38,7 +46,7 @@ class FrameworkConstants {
      * 
      * The correct tree structure should be: Applications/YourAppName/..
      */
-    define("FrameworkConstants_AppName", $arrayOfValuesToUse[self::FrameworkConstants_Name_AppName]);
+    define(FrameworkConstants::FrameworkConstants_AppName, $arrayOfValuesToUse[self::FrameworkConstants_Name_AppName]);
     /**
      * The test application name which needs to match the folder name in Applications 
      * folder.
@@ -47,7 +55,9 @@ class FrameworkConstants {
      * 
      * The correct tree structure should be: Applications/TestAppName/..
      */
-    define("FrameworkConstants_TestAppName", $arrayOfValuesToUse[self::FrameworkConstants_Name_TestAppName]);
+    if (!is_null($arrayOfValuesToUse[self::FrameworkConstants_Name_TestAppName])) {
+      define(FrameworkConstants::FrameworkConstants_TestAppName, $arrayOfValuesToUse[self::FrameworkConstants_Name_TestAppName]);
+    }
     /**
      * Depending on the server setup and where the application resides,
      * FrameworkConstants_BaseUrl will need to be updated.
@@ -60,7 +70,7 @@ class FrameworkConstants {
      * FrameworkConstants_BaseUrl will be "/"
      * 
      */
-    define("FrameworkConstants_BaseUrl", $arrayOfValuesToUse[self::FrameworkConstants_Name_BaseUrl]);
+    define(FrameworkConstants::FrameworkConstants_BaseUrl, $arrayOfValuesToUse[self::FrameworkConstants_Name_BaseUrl]);
   }
 
   /**
@@ -110,8 +120,7 @@ class FrameworkConstants {
         FrameworkConstants::FrameworkConstants_Name_EnableBenchmark => FALSE,
         FrameworkConstants::FrameworkConstants_Name_ExecutionAccessRestriction => TRUE,
         FrameworkConstants::FrameworkConstants_Name_RootDir => dirname(dirname(__FILE__)) . "/",
-        FrameworkConstants::FrameworkConstants_Name_TestAppName => "Test",
+        FrameworkConstants::FrameworkConstants_Name_TestAppName => NULL,
     );
   }
-
 }
