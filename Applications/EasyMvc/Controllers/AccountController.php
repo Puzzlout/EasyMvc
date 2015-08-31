@@ -8,7 +8,7 @@
  * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
  * @link https://github.com/WebDevJL/EasyMVC
  * @since Version 1.0.0
- * @package AuthenticateController
+ * @package AccountController
  */
 
 namespace Applications\EasyMvc\Controllers;
@@ -17,15 +17,12 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-class AuthenticateController extends \Library\Controllers\BaseController {
+class AccountController extends \Library\Controllers\BaseController {
 
   /**
-   * Method that loads the Login view. <p/>
-   *
-   * @param \Library\Core\HttpRequest $rq
-   * The current request. 
+   * Loads the Login view.
    */
-  public function LoadLoginView() {
+  public function Login() {
     $this->Disconnect(FALSE);
   }
 

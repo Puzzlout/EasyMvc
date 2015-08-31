@@ -22,7 +22,7 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
   protected $files = array();
   protected $toolTips = array();
 
-  public function __construct(\Library\Core\Application $app, $module, $action, $resxfile) {
+  public function __construct(\Library\Core\Application $app, $module, $action) {
     parent::__construct($app);
     $this->managers = $app->dal();
     $this->page = new \Library\Core\Page($app);
@@ -30,7 +30,7 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
     $this->setModule($module);
     $this->setAction($action);
     $this->setView($action);
-    $this->setResxFile($resxfile);
+    $this->setResxFile($module);
     $this->setDataPost($this->app->httpRequest()->retrievePostAjaxData(FALSE));
     $this->resxData = $this->app->i8n->getLocalResourceArray($this->resxfile);
     $this->setUploadingFiles();

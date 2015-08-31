@@ -11,7 +11,7 @@ class HttpRequest {
   public $requestId;
 
   public function __construct() {
-    $this->requestId = uniqid();
+    $this->requestId = \Library\Utility\UUID::v4();
   }
 
   public function requestId() {
@@ -31,7 +31,7 @@ class HttpRequest {
   }
 
   public function getData($key) {
-    return isset($_GET[$key]) ? $_GET[$key] : null;
+    return $this->getExists($key) ? $_GET[$key] : null;
   }
 
   public function getExists($key) {

@@ -39,12 +39,13 @@ class ErrorManager {
     return $this->errorObj;
   }
 
-  public function __construct(\Exception $exc, $method = ErrorLoggingMethod::EchoString) {
+  public function __construct($method = ErrorLoggingMethod::EchoString) {
     $this->errorLoggingMethod = $method;
-    $this->exception = $exc;
   }
 
-  public function LogError() {
+  public function LogError(\Exception $exc) {
+    $this->exception = $exc;
+
     switch ($this->errorLoggingMethod) {
       case \Library\Enums\ErrorLoggingMethod::EchoString:
         $this->LogErrorEchoString();

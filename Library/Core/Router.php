@@ -20,13 +20,13 @@ class Router extends ApplicationComponent {
 
   public function __construct(Application $app) {
     parent::__construct($app);
-    $this->InitRoutesFromXml();
+    //$this->InitRoutesFromXml();
   }
 
   public function InitRoutesFromXml() {
     $this->setRoutesXmlPath(FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::AppsFolderName . FrameworkConstants_AppName . '/Config/routes.xml');
 
-    
+
     $routes = $this->app->user()->getAttribute(\Library\Enums\SessionKeys::UserRoutes);
     if (!$this->hasRoutesXmlChanged($this->app()->user()) && $routes) {
       $this->setRoutes($routes);
@@ -41,10 +41,9 @@ class Router extends ApplicationComponent {
 
   public function InitRoutesFromDatabase() {
     //Find the controller classes
-    
     //Find the view folders
-    
   }
+
   /**
    * Set the route of the current request. 
    * @param \Library\Core\Route $route
@@ -130,32 +129,15 @@ class Router extends ApplicationComponent {
    * @throws \RuntimeException
    * Exception is thrown if no route is found. A 404 error page will be rendered. 
    */
-  public function getRoute($url) {
-    foreach ($this->routes as $route) {
-      if (($varsValues = $route->match($url)) !== false) {
-        //$varsNames = $route->varsNames();
-        //$listVars = array();
-        //$this->createListOfVars($varsValues, $varsNames, $listVars);
-        // We add variables to the route found.
-        //$route->setVars($listVars);
-        return $route;
-      }
+  public function getRoute(Route $route, $url) {
+    $constantBaseUrlSet = defined(\FrameworkConstants::FrameworkConstants_BaseUrl);
+    if (!$constantBaseUrlSet) {
+      //todo: create error code
+      throw new Exception("Named constant FrameworkConstants_BaseUrl must be set.", 0, NULL);
+    } else {
+      $route->Init($url);
     }
-
-    throw new \RuntimeException('No route match for URL:' . $url, self::NO_ROUTE);
   }
-
-//  private function createListOfVars($varsValues, $varsNames, $listVars) {
-//    // On créé un nouveau tableau clé/valeur.
-//    // (Clé = nom de la variable, valeur = sa valeur.)
-//    foreach ($varsValues as $key => $match) {
-//      // La première valeur contient entièrement la chaine capturée (voir la doc sur preg_match).
-//      if ($key !== 0) {
-//        $listVars[$varsNames[$key - 1]] = $match;
-//      }
-//    }
-//    return $listVars;
-//  }
 
   /**
    * Read the routes.xml file to build a Route object for each route found.

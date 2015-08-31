@@ -18,8 +18,8 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 
 class EasyMvcApplication extends \Library\Core\Application {
 
-  public function __construct() {
-    parent::__construct();
+  public function __construct(\Library\Core\ErrorManager $errorManager) {
+    parent::__construct($errorManager);
 
     $this->name = FrameworkConstants_AppName;
     $this->context()->setLanguage();

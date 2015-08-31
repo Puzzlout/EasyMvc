@@ -10,6 +10,8 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 
 abstract class Application {
 
+  const CONTROLLER_NAME_PREFIX = "F_";
+
   public $HttpRequest;
   protected $httpResponse;
   public $name;
@@ -29,8 +31,10 @@ abstract class Application {
   public $dal;
   public $toolTip;
   protected $security;
+  public $error;
 
-  public function __construct() {
+  public function __construct(ErrorManager $errorManager) {
+    $this->error = $errorManager;
     $this->httpRequest = new HttpRequest($this);
     $this->httpResponse = new HttpResponse($this);
     $this->user = new User($this);
@@ -45,7 +49,7 @@ abstract class Application {
     $this->auth = new \Library\Security\AuthenticationManager($this);
     $this->dal = new \Library\Dal\Managers('PDO', $this);
     $this->toolTip = new PopUpResourceManager($this);
-    $this->security = new \Library\Security\Protect ($this->config);
+    $this->security = new \Library\Security\Protect($this->config);
 //    $this->jsManager = new Core\Utility\JavascriptManager($this);
 //    $this->cssManager = new Core\Utility\CssManager($this);
   }
@@ -56,25 +60,15 @@ abstract class Application {
 
   public function getController() {
 
-    $this->router()->setCurrentRoute($this->FindRouteMatch());
-    $this->relative_path = $this->router()->currentRoute()->relative_path;
-    $this->globalResources["js_files_head"] = $this->router()->currentRoute()->headJsScripts();
-    $this->globalResources["js_files_html"] = $this->router()->currentRoute()->htmlJsScripts();
-    $this->globalResources["css_files"] = $this->router()->currentRoute()->cssFiles();
+    $this->router->setCurrentRoute($this->FindRouteMatch());
 
-    if (preg_match("`.*ws$`", $this->router()->currentRoute()->type())) {//is the route used for AJAX calls?
-      $this->router()->isWsCall = true;
-    }
-    // On ajoute les variables de l'URL au tableau $_GET.
-    $_GET = array_merge($_GET, $this->router()->currentRoute()->vars());
-
-    $controllerClass = $this->BuildControllerClass($this->router()->currentRoute());
-    if (!file_exists(FrameworkConstants_RootDir . str_replace('\\', '/', $controllerClass) . \Library\Enums\FileNameConst::Extension)) {
+    $controllerObject = $this->GetControllerObject($this->router->currentRoute());
+    if (strcasecmp($controllerObject, Enums\ErrorCodes\FrameworkControllerConstants::ControllerNotFoundValue) === 0) {
       $error = new \Library\BO\Error(
               \Library\Enums\ErrorCode::ControllerNotExist, Enums\ErrorOrigin::Library, "Controller not found", "The controller " . $controllerClass . " doesn't exist.");
       $this->httpResponse->displayError($error);
     }
-    return new $controllerClass($this, $this->router()->currentRoute()->module(), $this->router()->currentRoute()->action(), $this->router()->currentRoute()->resxfile());
+    return new $controllerObject;
   }
 
   abstract public function run();
@@ -122,6 +116,7 @@ abstract class Application {
   public function auth() {
     return $this->auth;
   }
+
   public function dal() {
     return $this->dal;
   }
@@ -133,13 +128,15 @@ abstract class Application {
   public function security() {
     return $this->security;
   }
+
   private function FindRouteMatch() {
     try {
-      // On récupère la route correspondante à l'URL.
-      return $this->router->getRoute($this->httpRequest->requestURI());
+      $route = new Route();
+      $this->router->getRoute($route, $this->httpRequest->requestURI());
+      return $route;
     } catch (\RuntimeException $e) {
       if ($e->getCode() == \Library\Core\Router::NO_ROUTE) {
-        // Si aucune route ne correspond, c'est que la page demandée n'existe pas.
+// Si aucune route ne correspond, c'est que la page demandée n'existe pas.
         $error = new \Library\BO\Error(
                 \Library\Enums\ErrorCode::PageNotFound, "routing", "Page not found", "The route " . $this->httpRequest->requestURI() . " is not found."
         );
@@ -149,26 +146,50 @@ abstract class Application {
   }
 
   /**
-   * Build the string of the controller class to load for the current route
+   * Builds the controller object from a route object.
    * 
    * @param \Library\Core\Route $route : the current route
-   * @return string : the controller class name w/ namespace
+   * @return \Library\Controllers\BaseController
    */
-  private function BuildControllerClass(\Library\Core\Route $route) {
-    if (preg_match("`^lib.*$`", $route->type())) {
-//AJAX request for the Framework
-      return \Library\Enums\NameSpaceName::LibFolderName
-              . \Library\Enums\NameSpaceName::LibControllersFolderName
-              . $route->module()
-              . \Library\Enums\FileNameConst::ControllerSuffix;
+  private function GetControllerObject(\Library\Core\Route $route) {
+    $controllerName = $this->BuildControllerName($route);
+    $controllerClass = "";
+    if (preg_match("`^" . self::CONTROLLER_NAME_PREFIX . "*$`", $controllerName)) {
+      $frameworkControllerFolderPath = \Library\Enums\NameSpaceName::LibFolderName
+              . \Library\Enums\NameSpaceName::LibControllersFolderName;
+      $controllerClass = $frameworkControllerFolderPath . $controllerName;
     } else {
-//AJAX request for the Application
-      return \Library\Enums\NameSpaceName::AppsFolderName . "\\"
+      $applicationControllerFolderPath = \Library\Enums\NameSpaceName::AppsFolderName . "\\"
               . $this->name
-              . \Library\Enums\NameSpaceName::AppsControllersFolderName
-              . $route->module()
-              . \Library\Enums\FileNameConst::ControllerSuffix;
+              . \Library\Enums\NameSpaceName::AppsControllersFolderName;
+      $controllerClass = $applicationControllerFolderPath . $controllerName;
     }
+    return $this->InstanciateController($controllerClass, $route);
+  }
+  
+  /**
+   * Builds the controller name.
+   * 
+   * @param \Library\Core\Route $route
+   * @return string
+   */
+  private function BuildControllerName(Route $route) {
+    return ucfirst($route->module()) . Enums\FileNameConst::ControllerSuffix;
   }
 
+  /**
+   * Instanciate a controller from a name.
+   * 
+   * @param string $controllerClass
+   * @param \Library\Core\Route $route
+   * @return \Library\Controllers\BaseController
+   * @throws \Exception : when the controller class can't be instanciated.
+   */
+  protected function InstanciateController($controllerClass, Route $route) {
+    try {
+      return new $controllerClass($this, $route->module(), $route->action());
+    } catch (\Exception $exc) {
+      throw new \Exception("Controller not found", Enums\ErrorCodes\FrameworkControllerConstants::ControllerNotFoundValue, $exc);
+    }
+  }
 }

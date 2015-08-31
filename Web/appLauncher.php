@@ -30,13 +30,12 @@ $placeholder = array("{{appname}}" => FrameworkConstants_AppName);
 $appClassName = strtr(
         "\Applications\{{appname}}\\{{appname}}Application", $placeholder);
 
+$errorLogger = new Library\Core\ErrorManager();
 try {
   session_start();
-  $app = new $appClassName();
+  $app = new $appClassName($errorLogger);
   $app->run();
 } catch (\Exception $exc) {
-  $errorLogger = new Library\Core\ErrorManager($exc);
   $errorLogger->LogError($exc);
-  var_dump($_SESSION);
   die();
 }

@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Route class
+ * 
+ * @author Jeremie Litzler
+ * @copyright Copyright (c) 2015
+ * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link https://github.com/WebDevJL/EasyMVC
+ * @since Version 1.0.0
+ * @package Route
+ */
+
 namespace Library\Core;
 
 if (!FrameworkConstants_ExecutionAccessRestriction) {
@@ -11,161 +22,89 @@ class Route {
   protected $action;
   protected $module;
   protected $url;
-  protected $varsNames;
-  protected $vars = array();
-  protected $type;
-  protected $headJsScripts = "";
-  protected $htmlJsScripts = "";
-  protected $cssFiles = "";
-  public $relative_path = "";
-  protected $phpModules;
-  protected $resxfile = "";
-  protected $role = array();
 
-  public function __construct($config) {
-    $this->setUrl($config['route_xml']->getAttribute('url'));
-    $this->setModule($config['route_xml']->getAttribute('module'));
-    $this->setAction($config['route_xml']->getAttribute('action'));
-    $this->setType($config['route_xml']->getAttribute('type'));
-    $this->setRole($config['route_xml']->getAttribute('role'));
+  const StartIndexNoVirtualPath = 1;
+  const StartIndexWithVirtualPath = 2;
 
-    $this->setVarsNames($config['vars']);
-
-    $this->setJsScripts($config['js_head'], TRUE);
-    $this->setJsScripts($config['js_html'], FALSE);
-    $this->setCssFiles($config['css']);
-    $this->setRelativePath($config["relative_path"]);
-    $this->setPhpModules($config["php_modules"]);
-    $this->setResxFile($config["resxfile"]);
+  public function __construct() {
+    
   }
 
-  public function hasVars() {
-    return !empty($this->varsNames);
+  /**
+   * Sets the url, module and action of the current route.
+   * @param string $url
+   */
+  public function Init($url) {
+    $urlParts = explode("/", $url);
+
+    $baseUrlConstainsVirtualPath = !(strcasecmp("/", FrameworkConstants_BaseUrl) === 0);
+    $startIndex = $baseUrlConstainsVirtualPath ? self::StartIndexWithVirtualPath : self::StartIndexNoVirtualPath;
+
+    $this->setUrl($url);
+    $this->setModule($urlParts[$startIndex]);
+    $this->setAction($urlParts[$startIndex + 1]);
   }
 
-  public function match($url) {
-    $regex = '`^' . $this->url . '$`';
-    if (preg_match($regex, $url, $matches)) {
-      return $matches;
-    } else {
-      return false;
-    }
-  }
-
+  /**
+   * Gets url of the route.
+   * @return string
+   */
   public function url() {
     return $this->url;
   }
 
-  public function setAction($action) {
-    if (is_string($action)) {
-      $this->action = $action;
-    }
+  /**
+   * Gets the action of the route.
+   * @return string
+   */
+  public function action() {
+    return $this->action;
   }
 
-  public function setModule($module) {
-    if (is_string($module)) {
-      $this->module = $module;
-    }
+  /**
+   * Gets the module of the route.
+   * @return string
+   */
+  public function module() {
+    return $this->module;
   }
 
+  /**
+   * Sets url of the route.
+   * @return string
+   */
   public function setUrl($url) {
     if (is_string($url)) {
       $this->url = FrameworkConstants_BaseUrl . $url;
     }
   }
 
-  public function setVarsNames(array $varsNames) {
-    $this->varsNames = $varsNames;
-  }
-
-  public function setVars(array $vars) {
-    $this->vars = $vars;
-  }
-
-  public function setType($type) {
-    if (is_string($type)) {
-      $this->type = $type;
-    }
-  }
-
-  public function setJsScripts($js_scripts, $forHead) {
-    if ($forHead) {
-      return $this->headJsScripts = $js_scripts;
+  /**
+   * Sets the action of the route.
+   * @return string
+   */
+  public function setAction($action) {
+    if (empty($action)) {
+      throw new \Exception("Action cannot be empty", 0, NULL); //todo: create error code
+    } else if (!is_string($action)) {
+      throw new \Exception("Action must be a string", 0, NULL); //todo: create error code
     } else {
-      return $this->htmlJsScripts = $js_scripts;
+      $this->action = $action;
     }
   }
 
-  public function setCssFiles($css_files) {
-    return $this->cssFiles = $css_files;
-  }
-
-  public function setRelativePath($path) {
-    return $this->relative_path = $path;
-  }
-
-  public function setPhpModules($php_modules) {
-    return $this->phpModules = $php_modules;
-  }
-
-  public function setResxFile($resxfile) {
-    return $this->resxfile = $resxfile;
-  }
-
-  public function setRole($roleString) {
-    if ($roleString == '' || strtolower($roleString) == 'all') {
-      $this->role = array();
+  /**
+   * Sets the module of the route.
+   * @return string
+   */
+  public function setModule($module) {
+    if (empty($module)) {
+      throw new \Exception("Module cannot be empty", 0, NULL); //todo: create error code
+    } else if (!is_string($module)) {
+      throw new \Exception("Module must be a string", 0, NULL); //todo: create error code
     } else {
-      $this->role = explode(",", $roleString);
+      $this->module = $module;
     }
-  }
-
-  public function action() {
-    return $this->action;
-  }
-
-  public function module() {
-    return $this->module;
-  }
-
-  public function vars() {
-    return $this->vars;
-  }
-
-  public function varsNames() {
-    return $this->varsNames;
-  }
-
-  public function type() {
-    return $this->type;
-  }
-
-  public function headJsScripts() {
-    return $this->headJsScripts;
-  }
-
-  public function htmlJsScripts() {
-    return $this->htmlJsScripts;
-  }
-
-  public function cssFiles() {
-    return $this->cssFiles;
-  }
-
-  public function relative_path() {
-    return $this->relative_path;
-  }
-
-  public function phpModules() {
-    return $this->phpModules;
-  }
-
-  public function resxfile() {
-    return $this->resxfile;
-  }
-
-  public function role() {
-    return $this->role;
   }
 
 }
