@@ -18,9 +18,12 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 }
 
 class FrameworkControllerConstants {
+
   const GenericValue = 0;
   const Generic = "ErrorCodes_FrameworkController_GenericKey";
   const ControllerNotFoundValue = 1;
   const ControllerNotFound = "ErrorCodes_FrameworkController_ControllerNotFoundKey";
+  const ControllerNotLoadedValue = 2;
+  const ControllerNotLoaded = "ErrorCodes_FrameworkController_ControllerNotLoadedKey";
 
 }

@@ -32,7 +32,7 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
     $this->setView($action);
     $this->setResxFile($module);
     $this->setDataPost($this->app->httpRequest()->retrievePostAjaxData(FALSE));
-    $this->resxData = $this->app->i8n->getLocalResourceArray($this->resxfile);
+    $this->resxData = $this->app->i8n->getLocalResourceArray($module);
     $this->setUploadingFiles();
     $this->toolTips[\Library\Enums\Popup::ellipsis_tooltip_settings] = $this->app()->toolTip()->getTooltipEllipsisSettings('{"targetcontroller":"' . $this->module . '","targetaction": "' . $this->action . '"}');
   }

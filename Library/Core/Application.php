@@ -189,7 +189,8 @@ abstract class Application {
     try {
       return new $controllerClass($this, $route->module(), $route->action());
     } catch (\Exception $exc) {
-      throw new \Exception("Controller not found", Enums\ErrorCodes\FrameworkControllerConstants::ControllerNotFoundValue, $exc);
+      $this->error->LogError($exc);
+      throw new \Exception("Controller not loaded", Enums\ErrorCodes\FrameworkControllerConstants::ControllerNotLoadedValue, $exc);
     }
   }
 }
