@@ -28,7 +28,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-class FileController extends \Library\Controllers\BaseController {
+class F_FileController extends \Library\Controllers\BaseController {
 
   public function LoadOne() {
     $result = $this->InitResponseWS();

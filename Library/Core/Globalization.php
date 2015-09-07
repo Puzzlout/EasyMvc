@@ -40,7 +40,7 @@ class Globalization extends ApplicationComponent {
   protected $res_local = array();
   private $_files_common = null;
   private $_files_local = null;
-
+  private $currentSubFolder = "";
   /*
    * Load the resources into each type array
    */
@@ -59,15 +59,27 @@ class Globalization extends ApplicationComponent {
     }
   }
 
-  private function loadFile($type, $file) {
-    //Load xml
+  /**
+   * Load a resource file.
+   * 
+   * @param string $fileResourceType : common and local resource
+   * @param string $filename : the filename to load
+   */
+  private function loadFile($fileResourceType, $filename) {
+    //Load xml if $filename has the xml 
+    if(preg_match("`^.*\.(xml)$`", $filename)) {
     $xml = new \DOMDocument;
-    $xml->load($file);
+    $xml->load($filename);
 
     //Split file name to use it to store the resources in the array in a organized manner
-    $params = $this->prepareParams($file);
-    $params["type"] = $type;
+    $params = $this->prepareParams($filename);
+    $params["type"] = $fileResourceType;
+    $params["subfolder"] = $this->currentSubFolder;
     $this->storeContentsIntoArray($xml->getElementsByTagName('resource'), $params);
+    } else {
+      //file is not an xml file but a sub folder
+      $this->currentSubFolder = $filename;
+    }
   }
 
   private function prepareParams($path) {

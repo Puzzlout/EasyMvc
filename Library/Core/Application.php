@@ -63,12 +63,12 @@ abstract class Application {
     $this->router->setCurrentRoute($this->FindRouteMatch());
 
     $controllerObject = $this->GetControllerObject($this->router->currentRoute());
-    if (strcasecmp($controllerObject, Enums\ErrorCodes\FrameworkControllerConstants::ControllerNotFoundValue) === 0) {
+    if (!is_object($controllerObject)) {
       $error = new \Library\BO\Error(
               \Library\Enums\ErrorCode::ControllerNotExist, Enums\ErrorOrigin::Library, "Controller not found", "The controller " . $controllerClass . " doesn't exist.");
       $this->httpResponse->displayError($error);
     }
-    return new $controllerObject;
+    return $controllerObject;
   }
 
   abstract public function run();
@@ -154,10 +154,11 @@ abstract class Application {
   private function GetControllerObject(\Library\Core\Route $route) {
     $controllerName = $this->BuildControllerName($route);
     $controllerClass = "";
-    if (preg_match("`^" . self::CONTROLLER_NAME_PREFIX . "*$`", $controllerName)) {
+    if (preg_match("`^" . self::CONTROLLER_NAME_PREFIX . ".*$`", $controllerName)) {
       $frameworkControllerFolderPath = \Library\Enums\NameSpaceName::LibFolderName
               . \Library\Enums\NameSpaceName::LibControllersFolderName;
       $controllerClass = $frameworkControllerFolderPath . $controllerName;
+      $this->router()->isWsCall = TRUE;
     } else {
       $applicationControllerFolderPath = \Library\Enums\NameSpaceName::AppsFolderName . "\\"
               . $this->name

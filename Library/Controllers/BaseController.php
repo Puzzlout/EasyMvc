@@ -32,9 +32,9 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
     $this->setView($action);
     $this->setResxFile($module);
     $this->setDataPost($this->app->httpRequest()->retrievePostAjaxData(FALSE));
-    $this->resxData = $this->app->i8n->getLocalResourceArray($module);
+    //$this->resxData = array();//$this->app->i8n->getLocalResourceArray($module);
     $this->setUploadingFiles();
-    $this->toolTips[\Library\Enums\Popup::ellipsis_tooltip_settings] = $this->app()->toolTip()->getTooltipEllipsisSettings('{"targetcontroller":"' . $this->module . '","targetaction": "' . $this->action . '"}');
+    //$this->toolTips[\Library\Enums\Popup::ellipsis_tooltip_settings] = $this->app()->toolTip()->getTooltipEllipsisSettings('{"targetcontroller":"' . $this->module . '","targetaction": "' . $this->action . '"}');
   }
 
   public function execute() {
@@ -132,9 +132,9 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
             FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::AppsFolderName
             . $this->app->name()
             . \Library\Enums\ApplicationFolderName::ViewsFolderName
-            . $this->module
+            . ucfirst($this->module)
             . '/'
-            . $this->view . '.php');
+            . ucfirst($this->view) . '.php');
   }
 
   public function setResxFile($resxfile) {
@@ -247,13 +247,13 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
    */
   protected function AddCommonVarsToPage() {
     //Get resources for the left menu
-    $resx_left_menu = $this->app->i8n->getCommonResourceArray(\Library\Enums\ResourceKeys\ResxFileNameKeys::MenuLeft);
+    //$resx_left_menu = $this->app->i8n->getCommonResourceArray(\Library\Enums\ResourceKeys\ResxFileNameKeys::MenuLeft);
     //Init left menu
-    $leftMenu = new \Library\UC\LeftMenu($this->app(), $resx_left_menu);
+    //$leftMenu = new \Library\UC\LeftMenu($this->app(), $resx_left_menu);
     //Add left menu to layout
-    $this->page->addVar("leftMenu", $leftMenu->Build());
-    $this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($this->resxfile));
-    $this->app->pageTitle = $this->app->i8n->getLocalResource($this->resxfile, "page_title") . " - " .  FrameworkConstants_AppName;
+    //$this->page->addVar("leftMenu", $leftMenu->Build());
+    //$this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($this->resxfile));
+    //$this->app->pageTitle = $this->app->i8n->getLocalResource($this->resxfile, "page_title") . " - " .  FrameworkConstants_AppName;
     $this->page->addVar("logout_url", FrameworkConstants_BaseUrl . \Library\Enums\UrlKeys::LogoutUrl);
     $this->page->addVar(\Library\Enums\Popup::toolTips, $this->toolTips);
   }

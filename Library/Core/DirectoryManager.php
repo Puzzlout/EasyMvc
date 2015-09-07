@@ -39,7 +39,8 @@ class DirectoryManager {
    * List of files found in directory scanned.
    */
   public static function GetFileNames($dir) {
-    return array_diff(scandir($dir), array('..', '.','`^.account$`'));
+    $filenames = array_diff(scandir($dir), array('..', '.'));
+    return $filenames;
   }
 
   /**

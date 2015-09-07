@@ -3,6 +3,8 @@
 /**
  * Custom error handler to catch all the error and process them.
  */
+session_start();
+
 set_error_handler(function($errno, $errstr, $errfile, $errline, array $errcontext) {
   // error was suppressed with the @-operator
   if (0 === error_reporting()) {
@@ -32,7 +34,6 @@ $appClassName = strtr(
 
 $errorLogger = new Library\Core\ErrorManager();
 try {
-  session_start();
   $app = new $appClassName($errorLogger);
   $app->run();
 } catch (\Exception $exc) {

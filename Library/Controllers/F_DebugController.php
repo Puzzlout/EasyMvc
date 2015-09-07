@@ -17,7 +17,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-class DebugController extends \Library\Controllers\BaseController {
+class F_DebugController extends \Library\Controllers\BaseController {
 
   public function ViewSessionArrays() {
     $output = array();

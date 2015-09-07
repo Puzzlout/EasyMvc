@@ -27,9 +27,9 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-class GeneratorController extends \Library\Controllers\BaseController {
+class F_GeneratorController extends \Library\Controllers\BaseController {
 
-  public function CreateDaoClasses() {
+  public function BuildDaoClasses() {
     $generator = new \Library\Dal\Generator\GeneratorManager($this->app());
     $generator->GenerateDaoClasses();
   }
