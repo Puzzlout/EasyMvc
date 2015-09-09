@@ -172,6 +172,33 @@ CREATE TABLE IF NOT EXISTS `f_document` (
     UNIQUE INDEX `un_doc_cat_val` (`f_document_id` ASC, `f_document_category` ASC, `f_document_category_id_value` ASC)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS `f_culture` (
+    `f_culture_id` int(11) NOT NULL AUTO_INCREMENT,
+    `f_culture_value` varchar(5) NOT NULL COMMENT 'Culture of format xx-YY or xx only',
+    PRIMARY KEY (`f_culture_id`),
+    UNIQUE INDEX `un_f_culture` (`f_culture_value` ASC) 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `f_resource_global` (
+    `f_resource_global_key` varchar(50) NOT NULL COMMENT 'The identification of the resource. Ex: TopMenuBrandIconAlt',
+    `f_resource_global_value` varchar(4000) NOT NULL,
+    `f_culture_id` int(11) NOT NULL,
+    PRIMARY KEY (`f_resource_global_key`),
+    CONSTRAINT `fk_cul_resx_global` FOREIGN KEY (`f_culture_id`)
+      REFERENCES `f_culture` (`f_culture_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `f_resource_local` (
+    `f_resource_local_key` varchar(50) NOT NULL COMMENT 'The identification of the resource. Ex: H3Title or ButtonAddSomething',
+    `f_culture_id` int(11) NOT NULL,
+    `f_resource_local_value` varchar(4000) NOT NULL,
+    `f_resource_local_module` varchar(50) NOT NULL COMMENT 'Usually represents the Controller name with the prefix "Controller"',
+    `f_resource_local_action` varchar(50) NOT NULL COMMENT 'Usually represents the action of the Controller executed',
+    PRIMARY KEY (`f_resource_local_key`),
+    CONSTRAINT `fk_cul_resx_local` FOREIGN KEY (`f_culture_id`)
+      REFERENCES `f_culture` (`f_culture_id`) ON DELETE CASCADE,
+    UNIQUE INDEX `un_f_resource_local` (`f_resource_local_module` ASC, `f_resource_local_action` ASC)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------------------------------------------------------
 -- Data 

@@ -1,6 +1,19 @@
 <?php
 
-/* * 
+/**
+ * Retrieve the resources from a specified source.
+ * The caller define the source using the constants:
+ *  - FROM_XML
+ * or
+ *  - FROM_DB
+ * 
+ * @author Jeremie Litzler
+ * @copyright Copyright (c) 2015
+ * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link https://github.com/WebDevJL/
+ * @since Version 1.0.0
+ * @package Globalization
+ *
  * What type of resource will we have?
  *  - global resources that are used on every page, e.g. Application name.
  *  - common resources that are used on several pages, e.g. a link text like "Download"
@@ -35,86 +48,33 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 
 class Globalization extends ApplicationComponent {
 
-  protected $resoures_path = "";
-  protected $res_common = array();
-  protected $res_local = array();
-  private $_files_common = null;
-  private $_files_local = null;
-  private $currentSubFolder = "";
-  /*
-   * Load the resources into each type array
-   */
-
-  public function loadResources() {
-    $this->resoures_path = FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::AppsFolderName;
-    //Get list of resource files
-    $this->_files_common = DirectoryManager::GetFileNames($this->resoures_path . $this->app()->name() . \Library\Enums\ApplicationFolderName::ResourceCommonFolderName);
-    $this->_files_local = DirectoryManager::GetFileNames($this->resoures_path . $this->app()->name() . \Library\Enums\ApplicationFolderName::ResourceLocalFolderName);
-    //For each resource type, load data into the appropriate array
-    foreach ($this->_files_common as $file) {
-      $this->loadFile("common", $this->resoures_path . $this->app()->name() . \Library\Enums\ApplicationFolderName::ResourceCommonFolderName . $file);
-    }
-    foreach ($this->_files_local as $file) {
-      $this->loadFile("local", $this->resoures_path . $this->app()->name() . \Library\Enums\ApplicationFolderName::ResourceLocalFolderName . $file);
-    }
+  protected $GlobalResources = array();
+  protected $LocalResources = array();
+  
+  public function __construct(Application $app) {
+    parent::__construct($app);
+    $this->GlobalResources = $this->InitGlobal(ResourceManagers\ResourceLoaderBase::FROM_DB);
+    $this->LocalResources = $this->InitLocal(ResourceManagers\ResourceLoaderBase::FROM_DB);
   }
-
-  /**
-   * Load a resource file.
-   * 
-   * @param string $fileResourceType : common and local resource
-   * @param string $filename : the filename to load
-   */
-  private function loadFile($fileResourceType, $filename) {
-    //Load xml if $filename has the xml 
-    if(preg_match("`^.*\.(xml)$`", $filename)) {
-    $xml = new \DOMDocument;
-    $xml->load($filename);
-
-    //Split file name to use it to store the resources in the array in a organized manner
-    $params = $this->prepareParams($filename);
-    $params["type"] = $fileResourceType;
-    $params["subfolder"] = $this->currentSubFolder;
-    $this->storeContentsIntoArray($xml->getElementsByTagName('resource'), $params);
-    } else {
-      //file is not an xml file but a sub folder
-      $this->currentSubFolder = $filename;
-    }
-  }
-
-  private function prepareParams($path) {
-    $path_to_substr = explode("/", $path);
-    $file_to_params = explode(".", $path_to_substr[count($path_to_substr) - 1], -1);
-    if (count($file_to_params) <> 2) {
-      throw new \Exception("File name is incorrect! The locale is missing. File path given is <" . $path . ">", NULL, NULL);
-    } else {
-      return array("source" => $file_to_params[0], "locale" => $file_to_params[1]);
-    }
-  }
-
-  private function storeContentsIntoArray($data, $params) {
-    //TODO: escape < and > as they are forbidden character in the resource files.
-    switch ($params["type"]) {
-      case "common":
-        foreach ($data as $element) {
-          $this->res_common[$params["locale"]][$params["source"]][$element->getAttribute("key")] = $element->nodeValue;
-        }
-        if (!array_key_exists($params["source"], $this->res_common[$params["locale"]]))
-          $this->res_common[$params["locale"]][$params["source"]] = array();
+  
+  private function InitGlobal($source) {
+    switch ($source) {
+      case ResourceManagers\ResourceLoaderBase::FROM_DB:
+          
         break;
-      case "local":
-        foreach ($data as $element) {
-          $this->res_local[$params["locale"]][$params["source"]][$element->getAttribute("key")] = $element->nodeValue;
-        }
-        break;
+
       default:
-        throw new Exception("Type is incorrect!!! common and local are the only values allowed", NULL, NULL);
+        //todo: create error code
+        throw new Exception("Source ". $source . " is not implemented", 0, NULL);
+        break;
     }
+    
   }
+
 
   public function getCommonResource($common_source, $key) {
     if ($this->res_common) {
-//      throw new Exception("No common resources found.", NULL, NULL);
+      throw new \Exception("No common resources found.", NULL, NULL);
     }
 
     if (isset($this->res_common[$this->app->locale][$common_source][$key])) {
