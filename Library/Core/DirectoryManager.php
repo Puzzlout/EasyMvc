@@ -38,8 +38,11 @@ class DirectoryManager {
    * @return array
    * List of files found in directory scanned.
    */
-  public static function GetFileNames($dir) {
+  public static function GetFileNames($dir, $filters = array()) {
     $filenames = array_diff(scandir($dir), array('..', '.'));
+    if (count($filters > 0)) {
+      $filenames = self::FilterArray($filenames, $filters);
+    }
     return $filenames;
   }
 
@@ -99,6 +102,27 @@ class DirectoryManager {
     } else {
       return TRUE;
     }
+  }
+
+  /**
+   * Filter values out of a given array of values.
+   * 
+   * @param array (of mixed) $targetArray : the list of values
+   * @param array(of mixed) $valuesToRemove : the values to remove from $targetArray
+   */
+  public static function FilterArray($targetArray, $valuesToRemove) {
+    if (is_array($valuesToRemove)) {
+      foreach ($valuesToRemove as $value) {
+        if (($key = array_search($value, $targetArray)) !== false) {
+          unset($targetArray[$key]);
+        } else {
+          //todo: log that the $value to remove was not found.
+        }
+      }
+    } else {
+      //todo: log that the call was made but that $valuesToRemove was not an array.
+    }
+    return $targetArray;
   }
 
 }

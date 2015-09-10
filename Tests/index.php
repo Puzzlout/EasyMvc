@@ -1,9 +1,11 @@
 <?php
+require_once '../errorHandler.php';
 /**
  * Defines global variables.
  */
 require_once '../Library/FrameworkConstants.php';
 use Library\FrameworkConstants;
+
 FrameworkConstants::SetNamedConstants(
         array(
             FrameworkConstants::FrameworkConstants_Name_AppName => "Test",
@@ -13,8 +15,12 @@ FrameworkConstants::SetNamedConstants(
 
 require '../Library/autoload.php';
 
-$dalTests = new \Tests\MasterClasses\DalTests();
-$dalTests->RunTests();
+try {
+  $dalTests = new \Tests\MasterClasses\DalTests();
+  $dalTests->RunTests();
+} catch (\Exception $exc) {
+  echo $exc->getTraceAsString();
+}
 ?>
 <html>
   <head>

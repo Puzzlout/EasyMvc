@@ -29,7 +29,7 @@ class ResourceLoaderBase {
   private $_files_local = null;
   private $CurrentSubFolder = "";
 
-  public function LoadResources($sourceToLoad);
+  public function LoadResources($sourceToLoad) {}
 
   private function storeContentsIntoArray($data, $params) {
     //TODO: escape < and > as they are forbidden character in the resource files.

@@ -53,11 +53,11 @@ class Globalization extends ApplicationComponent {
   
   public function __construct(Application $app) {
     parent::__construct($app);
-    $this->GlobalResources = $this->InitGlobal(ResourceManagers\ResourceLoaderBase::FROM_DB);
-    $this->LocalResources = $this->InitLocal(ResourceManagers\ResourceLoaderBase::FROM_DB);
+    $this->GlobalResources = $this->Init(ResourceManagers\ResourceLoaderBase::FROM_DB);
+    $this->LocalResources = $this->Init(ResourceManagers\ResourceLoaderBase::FROM_DB);
   }
   
-  private function InitGlobal($source) {
+  private function Init($source) {
     switch ($source) {
       case ResourceManagers\ResourceLoaderBase::FROM_DB:
           

@@ -1,0 +1,4 @@
+<?php
+/*** @author Jeremie Litzler* @copyright Copyright (c) 2015* @licence http://opensource.org/licenses/gpl-license.php GNU Public License* @link https://github.com/WebDevJL/* @since Version 1.0.2* @package FrameworkControllers*/namespace Library\Generated;if (!FrameworkConstants_ExecutionAccessRestriction) { exit('No direct script access allowed'); }
+
+class FrameworkControllers {  const F_ConfigControllerKey = 'F_ConfigControllerKey';  const F_DebugControllerKey = 'F_DebugControllerKey';  const F_FileUploadControllerKey = 'F_FileUploadControllerKey';  const F_GeneratorControllerKey = 'F_GeneratorControllerKey';  public static function GetList() {    return array(        F_ConfigControllerKey => 'F_ConfigController',        F_DebugControllerKey => 'F_DebugController',        F_FileUploadControllerKey => 'F_FileUploadController',        F_GeneratorControllerKey => 'F_GeneratorController',    );  }}

@@ -1,22 +1,20 @@
 <?php
 
 /**
- * List of constants representing placeholders for PhpDoc usage.
- * 
- * @author Jeremie Litzler
- * @copyright Copyright (c) 2015
- * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
- * @link https://github.com/WebDevJL/EasyMVC
- * @since Version 1.0.0
- * @package PhpDocPlaceholder
- */
+* @author Jeremie Litzler
+* @copyright Copyright (c) 2015
+* @licence http://opensource.org/licenses/gpl-license.php GNU Public License
+* @link https://github.com/WebDevJL/
+* @since Version 1.0.0
+* @package PhpDocPlaceholders
+*/
 
 namespace Library\Generators\Placeholders;
 
 if (!FrameworkConstants_ExecutionAccessRestriction)
   exit('No direct script access allowed');
 
-class PhpDocPlaceholder {
+class PhpDocPlaceholders {
   const AUTHOR = "{{phpdoc_author}}";
   const PACKAGE = "{{phpdoc_package}}";
   const COPYRIGHT_YEAR = "{{phpdoc_copyright_year}}";

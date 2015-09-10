@@ -8,15 +8,15 @@
 * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
 * @link https://github.com/WebDevJL/
 * @since Version 1.0.0
-* @package PhpDocConstants
+* @package PhpDocSnippets
 */
 
-namespace Library\Dal\Generator;
+namespace Library\Generators\CodeSnippets;
 
 if (!FrameworkConstants_ExecutionAccessRestriction)
   exit('No direct script access allowed');
 
-class PhpDocConstants {
+class PhpDocSnippets {
   const OPENING = "/**";
   const SINGLESTART = "*";
   const CLOSING = "*/";

@@ -29,5 +29,5 @@ abstract class ApplicationFolderName {
   const WebJs = "Web/js/";
   const WebCss = "Web/css/";
   const ModulesFolderName = "/Modules/";
-
+  const Generated = "/Generated/";
 }

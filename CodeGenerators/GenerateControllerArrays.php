@@ -1,8 +1,7 @@
 <?php
-include_once '../../Library/FrameworkConstants.php';
-\Library\FrameworkConstants::SetNamedConstants();
-include_once '../../Library/autoload.php';
-$generator = new \Library\Controllers\Generator\ControllerNameListExtractor();
+require_once '../errorHandler.php';
+require_once 'loader.php';
+$generator = new \Library\Generators\ControllerNameListExtractor();
 $generator->GenerateFiles();
 ?>
 

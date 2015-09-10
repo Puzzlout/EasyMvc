@@ -20,4 +20,5 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 abstract class FrameworkFolderName {
 
   const ControllersFolderName = "Library/Controllers/";
+  const GeneratedFolderName = "Library/Generated/";
 }
