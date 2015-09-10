@@ -1,25 +1,13 @@
 <?php
-
 /**
- *
- * @package		Easy MVC Framework
- * @author		Jeremie Litzler
- * @copyright	Copyright (c) 2015
- * @license
- * @link
- * @since
- * @filesource
- */
-// ------------------------------------------------------------------------
-
-/**
- * Config controller Class
- *
- * @package		Library
- * @category	Controllers
- * @category	ConfigController
- * @author		Jeremie Litzler
- * @link
+ * Class to retrieve config values.
+ * 
+ * @author Jeremie Litzler
+ * @copyright Copyright (c) 2015
+ * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link https://github.com/WebDevJL/EasyMVC
+ * @since Version 1.0.0
+ * @package F_ConfigController
  */
 
 namespace Library\Controllers;
