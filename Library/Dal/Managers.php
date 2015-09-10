@@ -1,6 +1,7 @@
 <?php
 
 namespace Library\Dal;
+use Library\FrameworkConstants;
 
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
@@ -76,7 +77,7 @@ class Managers {
 
   private function GetDalApplicationNamespace() {
     $resultString =
-            defined(\FrameworkConstants::FrameworkConstants_TestAppName) ?
+            defined(FrameworkConstants::FrameworkConstants_TestAppName) ?
             str_replace(\Library\Enums\FrameworkPlaceholders::ApplicationNamePlaceHolder, FrameworkConstants_TestAppName, $this->dalApplicationFolderPath) :
             str_replace(\Library\Enums\FrameworkPlaceholders::ApplicationNamePlaceHolder, FrameworkConstants_AppName, $this->dalApplicationFolderPath);
     return $resultString;

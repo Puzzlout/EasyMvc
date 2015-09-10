@@ -17,6 +17,7 @@ set_error_handler(function($errno, $errstr, $errfile, $errline, array $errcontex
  * Load the framework constants
  */
 require_once '../Library/FrameworkConstants.php';
+use Library\FrameworkConstants;
 FrameworkConstants::SetNamedConstants(array(
     FrameworkConstants::FrameworkConstants_Name_TestAppName => NULL
 ));

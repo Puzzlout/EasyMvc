@@ -22,7 +22,8 @@ class BaseTests {
   protected $testResults = array();
 
   public function __construct($callingChildClass) {
-    $this->app = new \Applications\Test\TestApplication();
+    $errorLogger = new \Library\Core\ErrorManager();
+    $this->app = new \Applications\Test\TestApplication($errorLogger);
     $this->LoadTests($callingChildClass);
   }
 

@@ -1,6 +1,7 @@
 <?php
 
 namespace Library\Core;
+use Library\FrameworkConstants;
 
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
@@ -24,11 +25,11 @@ class Config extends ApplicationComponent {
    */
   private function BuildSettingsArray() {
     $appSettingsNamespace = "\Applications\{{appname}}\Config\AppSettings";
-    if (defined(\FrameworkConstants::FrameworkConstants_AppName)) {
+    if (defined(FrameworkConstants::FrameworkConstants_AppName)) {
       $appConfigClass = str_replace("{{appname}}", FrameworkConstants_AppName, $appSettingsNamespace);
       $this->AssignSettingsToArray(FrameworkConstants_AppName, $appConfigClass);
     }
-    if (defined(\FrameworkConstants::FrameworkConstants_TestAppName)) {
+    if (defined(FrameworkConstants::FrameworkConstants_TestAppName)) {
       $testedAppConfigClass = str_replace("{{appname}}", FrameworkConstants_TestAppName, $appSettingsNamespace);
       $this->AssignSettingsToArray(FrameworkConstants_TestAppName, $testedAppConfigClass);
     }
@@ -54,7 +55,7 @@ class Config extends ApplicationComponent {
    * @return boolean|string : The value associated to the key given. Otherwise FALSE
    */
   public function get($key, $appName = FrameworkConstants_AppName, $getValueFromTestingApp = FALSE) {
-    $isTestAppNameUsed = defined(\FrameworkConstants::FrameworkConstants_TestAppName);
+    $isTestAppNameUsed = defined(FrameworkConstants::FrameworkConstants_TestAppName);
     $appName = (!$getValueFromTestingApp && $isTestAppNameUsed) ? FrameworkConstants_TestAppName : $appName;
     if (
             !$getValueFromTestingApp &&

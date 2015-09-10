@@ -22,7 +22,15 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 
 class ControllerNameListExtractor {
 
-  public static function GenerateFiles() {
+  public $filesGenerated = array();
+  public function __construct() {
+  }
+
+  /**
+   * Generate the Classes that list the Controller names available in the
+   * solution.
+   */
+  public function GenerateFiles() {
     $FrameworkControllers = DirectoryManager::GetFileNames(
                     FrameworkConstants_RootDir .
                     \Library\Enums\FrameworkFolderName::ControllersFolderName);
@@ -33,19 +41,28 @@ class ControllerNameListExtractor {
                     FrameworkConstants_AppName .
                     \Library\Enums\ApplicationFolderName::ControllersFolderName);
 
-    self::GenerateFrameworkControllersArray($FrameworkControllers);
-    self::GenerateFrameworkControllersArray($ApplicationControllers);
+    array_push($this->filesGenerated, self::GenerateFrameworkControllersArray($FrameworkControllers));
+    array_push($this->filesGenerated, self::GenerateFrameworkControllersArray($ApplicationControllers));
   }
 
-  private static function GenerateFrameworkControllersArray($controllersFiles) {
+  /**
+   * Generate the Constant Class list the framework controllers.
+   * 
+   * @param array(of String) $controllersFiles : the list of framework controllers
+   */
+  private function GenerateFrameworkControllersArray($controllersFiles) {
     if (count($controllersFiles) > 0) {
       foreach ($controllersFiles as $file) {
         
       }
     }
   }
-
-  private static function GenerateCurrentApplicationsControllersArray($controllersFiles) {
+  /**
+   * Generate the Constant Class list the current application controllers.
+   * 
+   * @param array(of String) $controllersFiles : the list of currnet application controllers
+   */
+  private function GenerateCurrentApplicationsControllersArray($controllersFiles) {
     if (count($controllersFiles) > 0) {
       foreach ($controllersFiles as $file) {
         

@@ -1,6 +1,7 @@
 <?php
 
 namespace Library\Core;
+use Library\FrameworkConstants;
 
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
@@ -130,7 +131,7 @@ class Router extends ApplicationComponent {
    * Exception is thrown if no route is found. A 404 error page will be rendered. 
    */
   public function getRoute(Route $route, $url) {
-    $constantBaseUrlSet = defined(\FrameworkConstants::FrameworkConstants_BaseUrl);
+    $constantBaseUrlSet = defined(FrameworkConstants::FrameworkConstants_BaseUrl);
     if (!$constantBaseUrlSet) {
       //todo: create error code
       throw new Exception("Named constant FrameworkConstants_BaseUrl must be set.", 0, NULL);
