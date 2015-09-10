@@ -13,35 +13,43 @@
 
 namespace Library\Controllers\Generator;
 
-if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
+use Library\Core\DirectoryManager;
+use Library\FrameworkConstants;
+
+if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
+}
 
 class ControllerNameListExtractor {
 
-  public static function GenerateFile() {
+  public static function GenerateFiles() {
     $FrameworkControllers = DirectoryManager::GetFileNames(
-                    FrameworkConstants::FrameworkConstants_RootDir .
+                    FrameworkConstants_RootDir .
                     \Library\Enums\FrameworkFolderName::ControllersFolderName);
 
     $ApplicationControllers = DirectoryManager::GetFileNames(
-                    FrameworkConstants::FrameworkConstants_RootDir .
+                    FrameworkConstants_RootDir .
                     \Library\Enums\ApplicationFolderName::AppsFolderName .
-                    FrameworkConstants::FrameworkConstants_AppName .
+                    FrameworkConstants_AppName .
                     \Library\Enums\ApplicationFolderName::ControllersFolderName);
-    
+
     self::GenerateFrameworkControllersArray($FrameworkControllers);
     self::GenerateFrameworkControllersArray($ApplicationControllers);
   }
 
   private static function GenerateFrameworkControllersArray($controllersFiles) {
-    foreach ($controllersFiles as $file) {
-      
+    if (count($controllersFiles) > 0) {
+      foreach ($controllersFiles as $file) {
+        
+      }
     }
   }
 
   private static function GenerateCurrentApplicationsControllersArray($controllersFiles) {
-    foreach ($controllersFiles as $file) {
-      
+    if (count($controllersFiles) > 0) {
+      foreach ($controllersFiles as $file) {
+        
+      }
     }
   }
 

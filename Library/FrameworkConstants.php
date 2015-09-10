@@ -1,5 +1,7 @@
 <?php
 
+namespace Library;
+
 class FrameworkConstants {
 
   const FrameworkConstants_Name_AppName = "FrameworkConstants_Name_AppName";

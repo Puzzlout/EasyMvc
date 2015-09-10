@@ -3,6 +3,7 @@
  * Defines global variables.
  */
 require_once '../Library/FrameworkConstants.php';
+use Library\FrameworkConstants;
 FrameworkConstants::SetNamedConstants(
         array(
             FrameworkConstants::FrameworkConstants_Name_AppName => "Test",
