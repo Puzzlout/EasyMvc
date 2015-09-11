@@ -32,7 +32,7 @@ class FrameworkController {
     return self::Prefix . $unprefixedValue;
   }
 
-  public function GetErrorCode($key) {
+  public static function GetErrorCode($key) {
     $fullKey = self::Prefix . $key;
     $codes = self::GetErrorCodes();
     return $codes[$fullKey];

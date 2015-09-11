@@ -16,7 +16,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-class F_ConfigController extends \Library\Controllers\BaseController {
+class ConfigController extends \Library\Controllers\BaseController {
 
   public function GetSettingValue() {
     $result = $this->InitResponseWS(

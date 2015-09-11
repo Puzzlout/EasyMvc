@@ -18,7 +18,7 @@ $generator->GenerateFiles();
   </head>
   <body>
     <div class="top-bar">
-      <a href="../index.php">Go back</a>
+      <a href="index.php">Go back</a>
     </div>
     <div class="content">
       <p>Files generated:</p>

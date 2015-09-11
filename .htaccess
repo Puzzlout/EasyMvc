@@ -2,4 +2,4 @@ Options +FollowSymLinks
 
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ /EasyMvc/CodeGenerators/index.php [QSA,L]
+RewriteRule ^(.*)$ /EasyMvc/Web/appLauncher.php [QSA,L]

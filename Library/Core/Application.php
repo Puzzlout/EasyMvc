@@ -3,6 +3,7 @@
 namespace Library\Core;
 
 use Library\Enums;
+use Library\Generators\ClassGenerationBase;
 
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
@@ -63,11 +64,9 @@ abstract class Application {
     $this->router->setCurrentRoute($this->FindRouteMatch());
 
     $controllerObject = $this->GetControllerObject($this->router->currentRoute());
-    if (!is_object($controllerObject)) {
-      $error = new \Library\BO\Error(
-              \Library\Enums\ErrorCode::ControllerNotExist, Enums\ErrorOrigin::Library, "Controller not found", "The controller " . $controllerClass . " doesn't exist.");
-      $this->httpResponse->displayError($error);
-    }
+//    if ($controllerObject instanceof \Library\Controllers\ErrorController) {
+//      $this->httpResponse->displayError(new \Library\BO\Error);
+//    }
     return $controllerObject;
   }
 
@@ -153,21 +152,45 @@ abstract class Application {
    */
   private function GetControllerObject(\Library\Core\Route $route) {
     $controllerName = $this->BuildControllerName($route);
-    $controllerClass = "";
-    if (preg_match("`^" . self::CONTROLLER_NAME_PREFIX . ".*$`", $controllerName)) {
+    $FrameworkControllersListClass = "\Library\Generated\FrameworkControllers";
+    $ApplicationControllersListClass = "\Applications\\" .
+            FrameworkConstants_AppName .
+            "\Generated\\" .
+            FrameworkConstants_AppName . "Controllers";
+
+    $controllerClassName = $this->FindControllerClassName(
+            $controllerName, $FrameworkControllersListClass, $ApplicationControllersListClass, $route
+    );
+    return $this->InstanciateController($controllerClassName, $route);
+  }
+
+  /**
+   * Find the controller class name to instanciate.
+   * 
+   * @param string $controllerName : the controller to find
+   * @param string $FrameworkControllersListClass : class name to the list of framework controllers list
+   * @param string $ApplicationControllersListClass : class name to the list of current application controllers list
+   * @param \Library\Core\Route $route : the current route
+   */
+  public function FindControllerClassName($controllerName, $FrameworkControllersListClass, $ApplicationControllersListClass, \Library\Core\Route $route) {
+    if (array_key_exists($controllerName . ClassGenerationBase::Key, $FrameworkControllersListClass::GetList())) {
       $frameworkControllerFolderPath = \Library\Enums\NameSpaceName::LibFolderName
               . \Library\Enums\NameSpaceName::LibControllersFolderName;
       $controllerClass = $frameworkControllerFolderPath . $controllerName;
       $this->router()->isWsCall = TRUE;
-    } else {
+    } else if (array_key_exists($controllerName . ClassGenerationBase::Key, $ApplicationControllersListClass::GetList())) {
       $applicationControllerFolderPath = \Library\Enums\NameSpaceName::AppsFolderName . "\\"
               . $this->name
               . \Library\Enums\NameSpaceName::AppsControllersFolderName;
       $controllerClass = $applicationControllerFolderPath . $controllerName;
+    } else {
+      error_log("The controller requested '$controllerClass' doesn't exist.");
+      $controllerClass = "\Library\Controllers\ErrorController";
+      $route->setModule("Error");
+      $route->setAction("ControllerNotFound");
     }
-    return $this->InstanciateController($controllerClass, $route);
   }
-  
+
   /**
    * Builds the controller name.
    * 
@@ -194,4 +217,5 @@ abstract class Application {
       throw new \Exception("Controller not loaded", Enums\ErrorCodes\FrameworkControllerConstants::ControllerNotLoadedValue, $exc);
     }
   }
+
 }
