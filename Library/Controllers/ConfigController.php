@@ -7,7 +7,7 @@
  * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
  * @link https://github.com/WebDevJL/EasyMVC
  * @since Version 1.0.0
- * @package F_ConfigController
+ * @package ConfigController
  */
 
 namespace Library\Controllers;

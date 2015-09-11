@@ -1,25 +1,13 @@
 <?php
-
 /**
- *
- * @package		Easy MVC Framework
- * @author		Jeremie Litzler
- * @copyright	Copyright (c) 2015
- * @license		
- * @link		
- * @since		
- * @filesource
- */
-// ------------------------------------------------------------------------
-
-/**
- * FileUploadController controller Class
- *
- * @package		Library
- * @category	Controllers
- * @category	FileUploadController
- * @author		Jeremie Litzler
- * @link		
+ * Class to handle file management.
+ * 
+ * @author Jeremie Litzler
+ * @copyright Copyright (c) 2015
+ * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link https://github.com/WebDevJL/EasyMVC
+ * @since Version 1.0.0
+ * @package FileController
  */
 
 namespace Library\Controllers;
@@ -28,7 +16,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-class F_FileController extends \Library\Controllers\BaseController {
+class FileController extends \Library\Controllers\BaseController {
 
   public function LoadOne() {
     $result = $this->InitResponseWS();
@@ -36,7 +24,7 @@ class F_FileController extends \Library\Controllers\BaseController {
     $manager = $this->managers()->getDalInstance("Document");
     $manager->setRootDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::RootDocumentUpload));
     $manager->setWebDirectory($this->app()->config()->get(\Library\Enums\AppSettingKeys::BaseUrl) . $this->app()->config()->get(\Library\Enums\AppSettingKeys::RootUploadsFolderPath));
-    $document = new \Applications\EasyMvc\Models\Dao\Document();
+    $document = new \Library\BO\F_document();
     $document->setDocument_id($dataPost['id']);
     $document = $manager->selectOne($document);
     if (!is_null($document)) {
