@@ -65,6 +65,10 @@ class ClassGenerationBase {
   public $isFrameworkClass = true;
 
   /**
+   * @var string : the content of /EasyMVC/CodeGenerators/templates/ClassHeaderTemplate.tt
+   */
+  public $classHeaderTemplateContents;
+  /**
    * Opens handle to write to target file.
    */
   public function OpenWriter() {

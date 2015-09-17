@@ -31,6 +31,7 @@ class ClassGenerationControllerNamesArray extends ClassGenerationBase {
     $this->fileName = $this->className . ".php";
     $this->placeholders = Placeholders\PlaceholdersManager::InitPlaceholdersForPhpDoc($params);
     $this->data = $data;
+    $this->classHeaderTemplateContents = file_exists(Templates\TemplateFileNameConstants::GetFullNameForConst(Templates\TemplateFileNameConstants::ClassHeaderTemplate));
   }
 
   public function BuildClass() {

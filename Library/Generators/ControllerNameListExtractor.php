@@ -34,8 +34,7 @@ class ControllerNameListExtractor {
    */
   public function GenerateFiles() {
     $FrameworkControllers = DirectoryManager::GetFileNames(
-                    FrameworkConstants_RootDir . \Library\Enums\FrameworkFolderName::ControllersFolderName,
-            array("BaseController.php"));
+                    FrameworkConstants_RootDir . \Library\Enums\FrameworkFolderName::ControllersFolderName, array("BaseController.php"));
 
     $ApplicationControllers = DirectoryManager::GetFileNames(
                     FrameworkConstants_RootDir .
@@ -69,7 +68,7 @@ class ControllerNameListExtractor {
       $classGen->BuildClass();
       return $classGen->fileName;
     } else {
-      return "Not class to generate.";
+      return "No class to generate.";
     }
   }
 

@@ -1,0 +1,19 @@
+<?php
+/**
+ * {{class_name_description}}
+ * 
+ * @author {{phpdoc_author}}
+ * @copyright Copyright (c) {{phpdoc_copyright_year}}
+ * @licence {{phpdoc_licence}}
+ * @link {{phpdoc_link}}
+ * @since Version {{phpdoc_version_number}}
+ * @package {{class_name}}
+ */
+
+namespace {{namespace_value}};
+
+if (!FrameworkConstants_ExecutionAccessRestriction) {
+  exit('No direct script access allowed');
+}
+
+class {{class_name}} {
