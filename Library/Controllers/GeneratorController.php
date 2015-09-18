@@ -18,7 +18,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 
 class GeneratorController extends \Library\Controllers\BaseController {
 
-  public function BuildDaoClasses() {
+  public function BuildDao() {
     $generator = new \Library\Dal\Generator\GeneratorManager($this->app());
     $generator->GenerateDaoClasses();
   }

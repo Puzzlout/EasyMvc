@@ -42,43 +42,50 @@ class ClassGenerationControllerNamesArray extends ClassGenerationBase {
   }
 
   /**
-   * Write the constants of the class if any must be created.
+   * Write the content of the class, method by method.
    */
-  public function WriteConstants() {
-    $output = "";
-    foreach ($this->data as $value) {
-      $valueCleaned = trim($value, ".php") . ClassGenerationBase::Key;
-      $lineOfCode = CodeSnippets\PhpCodeSnippets::TAB2 .
-              "const " . $valueCleaned .
-              " = '" .
-              $valueCleaned . "';" .
-              CodeSnippets\PhpCodeSnippets::LF;
-      $output .= $lineOfCode;
-    }
-    $output .= CodeSnippets\PhpCodeSnippets::LF;
+  public function WriteContent() {
+    $output = $this->WriteGetListMethod();
+    $output .= CodeSnippets\PhpCodeSnippets::CRLF;
+    $output .= $this->WriteDoesControllerExistMethod();
     fwrite($this->writer, $output);
   }
 
   /**
-   * Write the content of the class, method by method.
+   * 
+   * @return string : the code generated for the method
    */
-  public function WriteContent() {
+  private function WriteGetListMethod() {
+    $method = $this->GetMethodNameToGenerate(__FUNCTION__);
     $output = CodeSnippets\PhpCodeSnippets::TAB2 .
-            "public static function GetList() {" . CodeSnippets\PhpCodeSnippets::LF .
+            CodeSnippets\PhpCodeSnippets::PublicStaticFunction . $method . "() {" . CodeSnippets\PhpCodeSnippets::LF .
             CodeSnippets\PhpCodeSnippets::TAB4 .
             "return array(" . CodeSnippets\PhpCodeSnippets::LF;
 
     foreach ($this->data as $value) {
       $valueCleaned = trim($value, ".php");
 
-      $lineOfCode = CodeSnippets\PhpCodeSnippets::TAB8 . "" . $valueCleaned . ClassGenerationBase::Key . " => '" . $valueCleaned . "',";
+      $lineOfCode = CodeSnippets\PhpCodeSnippets::TAB8 . "self::" . $valueCleaned . ClassGenerationBase::Key . " => '" . $valueCleaned . "',";
       $output .= $lineOfCode . CodeSnippets\PhpCodeSnippets::LF;
     }
     $output .=
             CodeSnippets\PhpCodeSnippets::TAB4 . ");" . CodeSnippets\PhpCodeSnippets::LF .
             CodeSnippets\PhpCodeSnippets::TAB2 . "}";
+    return $output;
+  }
 
-    fwrite($this->writer, $output);
+  /**
+   * 
+   * @return string : the code generated for the method
+   */
+  private function WriteDoesControllerExistMethod() {
+    $method = $this->GetMethodNameToGenerate(__FUNCTION__);
+    $output = CodeSnippets\PhpCodeSnippets::TAB2 .
+            CodeSnippets\PhpCodeSnippets::PublicStaticFunction . $method . "(\$key) {" . CodeSnippets\PhpCodeSnippets::LF .
+            CodeSnippets\PhpCodeSnippets::TAB4 .
+            "return array_key_exists(\$key, self::GetList());" . CodeSnippets\PhpCodeSnippets::LF .
+            CodeSnippets\PhpCodeSnippets::TAB2 . "}";
+    return $output;
   }
 
 }

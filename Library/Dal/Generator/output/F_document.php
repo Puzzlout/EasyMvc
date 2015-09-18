@@ -1,6 +1,6 @@
 <?php
 namespace Library\BO;if (!FrameworkConstants_ExecutionAccessRestriction) { exit('No direct script access allowed'); }
-/*** @author Jeremie Litzler* @copyright Copyright (c) 2015* @licence http://opensource.org/licenses/gpl-license.php GNU Public License* @link https://github.com/WebDevJL/* @since Version 1.0.2* @package F_document*/
+/*** @author Jeremie Litzler* @copyright Copyright (c) 2015* @licence http://opensource.org/licenses/gpl-license.php GNU Public License* @link https://github.com/WebDevJL/* @since Version 1.0.2.1* @package F_document*/
 class F_document extends \Library\Core\Entity {  const F_DOCUMENT_ID = "f_document_id";  const F_DOCUMENT_CONTENT_TYPE = "f_document_content_type";  const F_DOCUMENT_CATEGORY = "f_document_category";  const F_DOCUMENT_CATEGORY_ID_VALUE = "f_document_category_id_value";  const F_DOCUMENT_VALUE = "f_document_value";  const F_DOCUMENT_SIZE = "f_document_size";  const F_DOCUMENT_TITLE = "f_document_title";
   protected     $f_document_id,    $f_document_content_type,    $f_document_category,    $f_document_category_id_value,    $f_document_value,    $f_document_size,    $f_document_title;
   /**    * Sets f_document_id.  */  public function setF_document_id($f_document_id) {      $this->f_document_id = $f_document_id;  }

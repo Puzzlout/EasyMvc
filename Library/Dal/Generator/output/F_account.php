@@ -1,6 +1,6 @@
 <?php
 namespace Library\BO;if (!FrameworkConstants_ExecutionAccessRestriction) { exit('No direct script access allowed'); }
-/*** @author Jeremie Litzler* @copyright Copyright (c) 2015* @licence http://opensource.org/licenses/gpl-license.php GNU Public License* @link https://github.com/WebDevJL/* @since Version 1.0.2* @package F_account*/
+/*** @author Jeremie Litzler* @copyright Copyright (c) 2015* @licence http://opensource.org/licenses/gpl-license.php GNU Public License* @link https://github.com/WebDevJL/* @since Version 1.0.2.1* @package F_account*/
 class F_account extends \Library\Core\Entity {  const F_ACCOUNT_ID = "f_account_id";  const F_ACCOUNT_NAME = "f_account_name";  const F_ACCOUNT_DESC = "f_account_desc";  const F_ACCOUNT_ACTIVE = "f_account_active";  const F_ACCOUNT_VISIBLE = "f_account_visible";  const F_USER_ID = "f_user_id";
   protected     $f_account_id,    $f_account_name,    $f_account_desc,    $f_account_active,    $f_account_visible,    $f_user_id;
   /**    * Sets f_account_id.  */  public function setF_account_id($f_account_id) {      $this->f_account_id = $f_account_id;  }

@@ -165,8 +165,29 @@ class ClassGenerationBase {
     $this->ClassStart();
   }
 
+    /**
+   * Write the constants of the class if any must be created.
+   */
+  public function WriteConstants($valueToTrim = ".php") {
+    $output = "";
+    foreach ($this->data as $value) {
+      $valueCleaned = trim($value, $valueToTrim) . ClassGenerationBase::Key;
+      $lineOfCode = CodeSnippets\PhpCodeSnippets::TAB2 .
+              "const " . $valueCleaned .
+              " = '" .
+              $valueCleaned . "';" .
+              CodeSnippets\PhpCodeSnippets::LF;
+      $output .= $lineOfCode;
+    }
+    $output .= CodeSnippets\PhpCodeSnippets::LF;
+    fwrite($this->writer, $output);
+  }
+
   public function WriteContent() {
     
   }
 
+  public function GetMethodNameToGenerate($dynamicMethod) {
+    return str_replace(array("Write", "Method"), "", $dynamicMethod);
+  }
 }

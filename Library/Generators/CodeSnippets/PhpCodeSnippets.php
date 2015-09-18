@@ -47,4 +47,8 @@ class PhpCodeSnippets {
    */
   const TAB8 = "        ";
 
+  /**
+   * public static function snippet
+   */
+  const PublicStaticFunction = "public static function ";
 }

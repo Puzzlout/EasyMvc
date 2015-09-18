@@ -42,17 +42,8 @@ class ControllerNameListExtractor {
                     FrameworkConstants_AppName .
                     \Library\Enums\ApplicationFolderName::ControllersFolderName);
 
-    $params = array(
-        ClassGenerationBase::NameSpaceKey => "Library\Generated",
-        ClassGenerationBase::ClassNameKey => "FrameworkControllers",
-        ClassGenerationBase::DestinationDirKey => \Library\Enums\FrameworkFolderName::GeneratedFolderName,
-    );
-    array_push($this->filesGenerated, self::GenerateControllersArrayFile($params, $FrameworkControllers));
-    $params[ClassGenerationBase::NameSpaceKey] = "Applications\\" . FrameworkConstants_AppName . "\Generated";
-    $params[ClassGenerationBase::ClassNameKey] = FrameworkConstants_AppName . "Controllers";
-    $params[ClassGenerationBase::DestinationDirKey] = \Library\Enums\ApplicationFolderName::AppsFolderName .
-            FrameworkConstants_AppName . \Library\Enums\ApplicationFolderName::Generated;
-    array_push($this->filesGenerated, self::GenerateControllersArrayFile($params, $ApplicationControllers));
+    $this->GenerateFrameworkFile($FrameworkControllers);
+    $this->GenerateApplicationFile($ApplicationControllers);
   }
 
   /**
@@ -61,15 +52,44 @@ class ControllerNameListExtractor {
    * @param assoc array $params : the params composed the namespace and name of the class.
    * @param array(of String) $controllersFiles : the list of framework controllers
    */
-  private function GenerateControllersArrayFile($params, $controllersFiles) {
-    if (count($controllersFiles) > 0) {
+  private function GenerateControllersArrayFile($params, $controllerFiles) {
+    if (count($controllerFiles) > 0) {
       $classGen = new ClassGenerationControllerNamesArray(
-              FrameworkConstants_RootDir . $params[ClassGenerationBase::DestinationDirKey], $params, $controllersFiles);
+              FrameworkConstants_RootDir . $params[ClassGenerationBase::DestinationDirKey], $params, $controllerFiles);
       $classGen->BuildClass();
       return $classGen->fileName;
     } else {
       return "No class to generate.";
     }
+  }
+
+  /**
+   * Generate the FrameworkControllers.php class.
+   * 
+   * @param array $controllerFiles : list of controllers filenames
+   */
+  private function GenerateFrameworkFile($controllerFiles) {
+    $params = array(
+        ClassGenerationBase::NameSpaceKey => "Library\Generated",
+        ClassGenerationBase::ClassNameKey => "FrameworkControllers",
+        ClassGenerationBase::DestinationDirKey => \Library\Enums\FrameworkFolderName::GeneratedFolderName,
+    );
+    array_push($this->filesGenerated, self::GenerateControllersArrayFile($params, $controllerFiles));
+  }
+
+  /**
+   * Generate the AppNameControllers.php class.
+   * 
+   * @param array $controllerFiles : list of controllers filenames
+   */
+  private function GenerateApplicationFile($controllerFiles) {
+    $params = array(
+        ClassGenerationBase::NameSpaceKey => "Applications\\" . FrameworkConstants_AppName . "\Generated",
+        ClassGenerationBase::ClassNameKey => FrameworkConstants_AppName . "Controllers",
+        ClassGenerationBase::DestinationDirKey => \Library\Enums\ApplicationFolderName::AppsFolderName .
+        FrameworkConstants_AppName . \Library\Enums\ApplicationFolderName::Generated,
+    );
+    array_push($this->filesGenerated, self::GenerateControllersArrayFile($params, $controllerFiles));
   }
 
 }

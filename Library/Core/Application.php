@@ -173,12 +173,15 @@ abstract class Application {
    * @param \Library\Core\Route $route : the current route
    */
   public function FindControllerClassName($controllerName, $FrameworkControllersListClass, $ApplicationControllersListClass, \Library\Core\Route $route) {
-    if (array_key_exists($controllerName . ClassGenerationBase::Key, $FrameworkControllersListClass::GetList())) {
+    $FrameworkControllers = $FrameworkControllersListClass::GetList();
+    $ApplicationControllers = $ApplicationControllersListClass::GetList();
+    
+    if (array_key_exists($controllerName . ClassGenerationBase::Key, $FrameworkControllers)) {
       $frameworkControllerFolderPath = \Library\Enums\NameSpaceName::LibFolderName
               . \Library\Enums\NameSpaceName::LibControllersFolderName;
       $controllerClass = $frameworkControllerFolderPath . $controllerName;
       $this->router()->isWsCall = TRUE;
-    } else if (array_key_exists($controllerName . ClassGenerationBase::Key, $ApplicationControllersListClass::GetList())) {
+    } else if (array_key_exists($controllerName . ClassGenerationBase::Key, $ApplicationControllers)) {
       $applicationControllerFolderPath = \Library\Enums\NameSpaceName::AppsFolderName . "\\"
               . $this->name
               . \Library\Enums\NameSpaceName::AppsControllersFolderName;
@@ -189,6 +192,7 @@ abstract class Application {
       $route->setModule("Error");
       $route->setAction("ControllerNotFound");
     }
+    return $controllerClass;
   }
 
   /**

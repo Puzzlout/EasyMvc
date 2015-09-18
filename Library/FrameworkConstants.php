@@ -27,7 +27,7 @@ class FrameworkConstants {
      * Version number global variable definition
      * It is used to allow automatic client refresh of the JavaScript and CSS files.
      */
-    define(FrameworkConstants::FrameworkConstants_Version, "1.0.2");
+    define(FrameworkConstants::FrameworkConstants_Version, "1.0.2.1");
     /**
      * To enable benckmarking of the scripts.
      */

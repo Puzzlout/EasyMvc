@@ -57,7 +57,7 @@ class Globalization extends ApplicationComponent {
     $this->LocalResources = $this->Init(ResourceManagers\ResourceLoaderBase::FROM_DB);
   }
   
-  private function Init($source) {
+  public function Init($source) {
     switch ($source) {
       case ResourceManagers\ResourceLoaderBase::FROM_DB:
           
@@ -65,7 +65,7 @@ class Globalization extends ApplicationComponent {
 
       default:
         //todo: create error code
-        throw new Exception("Source ". $source . " is not implemented", 0, NULL);
+        throw new \Exception("Source ". $source . " is not implemented", 0, NULL);
         break;
     }
     

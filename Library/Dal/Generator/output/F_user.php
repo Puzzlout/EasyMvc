@@ -1,6 +1,6 @@
 <?php
 namespace Library\BO;if (!FrameworkConstants_ExecutionAccessRestriction) { exit('No direct script access allowed'); }
-/*** @author Jeremie Litzler* @copyright Copyright (c) 2015* @licence http://opensource.org/licenses/gpl-license.php GNU Public License* @link https://github.com/WebDevJL/* @since Version 1.0.2* @package F_user*/
+/*** @author Jeremie Litzler* @copyright Copyright (c) 2015* @licence http://opensource.org/licenses/gpl-license.php GNU Public License* @link https://github.com/WebDevJL/* @since Version 1.0.2.1* @package F_user*/
 class F_user extends \Library\Core\Entity {  const F_USER_ID = "f_user_id";  const F_USER_LOGIN = "f_user_login";  const F_USER_PASSWORD = "f_user_password";  const F_USER_PASSWORD_IS_HASHED = "f_user_password_is_hashed";  const F_USER_TOKEN = "f_user_token";  const F_USER_SALT = "f_user_salt";  const F_USER_HINT = "f_user_hint";  const F_USER_EMAIL = "f_user_email";  const F_USER_ROLE_ID = "f_user_role_id";  const F_USER_SESSION_ID = "f_user_session_id";
   protected     $f_user_id,    $f_user_login,    $f_user_password,    $f_user_password_is_hashed,    $f_user_token,    $f_user_salt,    $f_user_hint,    $f_user_email,    $f_user_role_id,    $f_user_session_id;
   /**    * Sets f_user_id.  */  public function setF_user_id($f_user_id) {      $this->f_user_id = $f_user_id;  }

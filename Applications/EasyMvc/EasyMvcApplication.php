@@ -28,7 +28,7 @@ class EasyMvcApplication extends \Library\Core\Application {
 
   public function run() {
     \Library\Utility\TimeLogger::StartLog($this, \Library\Enums\ResourceKeys\GlobalAppKeys::log_http_request);
-    $this->i8n->loadResources();
+    $this->i8n->Init(\Library\Core\ResourceManagers\ResourceLoaderBase::FROM_DB);
 
     $controller = $this->getController();
 

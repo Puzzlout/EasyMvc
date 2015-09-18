@@ -1,6 +1,6 @@
 <?php
 namespace Library\BO;if (!FrameworkConstants_ExecutionAccessRestriction) { exit('No direct script access allowed'); }
-/*** @author Jeremie Litzler* @copyright Copyright (c) 2015* @licence http://opensource.org/licenses/gpl-license.php GNU Public License* @link https://github.com/WebDevJL/* @since Version 1.0.2* @package F_action*/
+/*** @author Jeremie Litzler* @copyright Copyright (c) 2015* @licence http://opensource.org/licenses/gpl-license.php GNU Public License* @link https://github.com/WebDevJL/* @since Version 1.0.2.1* @package F_action*/
 class F_action extends \Library\Core\Entity {  const F_ACTION_KEY = "f_action_key";  const F_ACTION_DESCRIPTION = "f_action_description";
   protected     $f_action_key,    $f_action_description;
   /**    * Sets f_action_key.  */  public function setF_action_key($f_action_key) {      $this->f_action_key = $f_action_key;  }

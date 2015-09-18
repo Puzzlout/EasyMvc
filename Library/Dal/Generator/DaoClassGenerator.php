@@ -10,6 +10,8 @@
  */
 
 namespace Library\Dal\Generator;
+use Library\Generators\CodeSnippets;
+use Library\Generators\Placeholders;
 
 class DaoClassGenerator {
 
@@ -107,16 +109,16 @@ class DaoClassGenerator {
    */
   private function InitPlaceholders() {
     return array(
-        PhpDocPlaceholder::AUTHOR => "Jeremie Litzler",
-        PhpDocPlaceholder::COPYRIGHT_YEAR => date("Y"),
-        PhpDocPlaceholder::LICENCE => "http://opensource.org/licenses/gpl-license.php GNU Public License",
-        PhpDocPlaceholder::LINK => "https://github.com/WebDevJL/",
-        PhpDocPlaceholder::PACKAGE => $this->className,
-        PhpDocPlaceholder::SUBPACKAGE => "",
-        PhpDocPlaceholder::VERSION_NUMBER => FrameworkConstants_Version,
-        CodeSnippetPlaceholders::NAMESPACE_FRAMEWORK => "Library\BO",
-        CodeSnippetPlaceholders::NAMESPACE_APP => "\Applications\"" . FrameworkConstants_AppName . "\Models\Dao",
-        CodeSnippetPlaceholders::CLASS_NAME => $this->className
+        Placeholders\PhpDocPlaceholders::AUTHOR => "Jeremie Litzler",
+        Placeholders\PhpDocPlaceholders::COPYRIGHT_YEAR => date("Y"),
+        Placeholders\PhpDocPlaceholders::LICENCE => "http://opensource.org/licenses/gpl-license.php GNU Public License",
+        Placeholders\PhpDocPlaceholders::LINK => "https://github.com/WebDevJL/",
+        Placeholders\PhpDocPlaceholders::PACKAGE => $this->className,
+        Placeholders\PhpDocPlaceholders::SUBPACKAGE => "",
+        Placeholders\PhpDocPlaceholders::VERSION_NUMBER => FrameworkConstants_Version,
+        Placeholders\ClassFilePlaceholders::NAMESPACE_FRAMEWORK => "Library\BO",
+        Placeholders\ClassFilePlaceholders::NAMESPACE_APP => "\Applications\"" . FrameworkConstants_AppName . "\Models\Dao",
+        Placeholders\ClassFilePlaceholders::CLASS_NAME => $this->className
     );
   }
 
@@ -150,9 +152,9 @@ class DaoClassGenerator {
   public function AddNameSpace() {
     $output = "";
     if ($this->isFrameworkClass) {
-      $output = strtr(CodeSnippets::SNIPPET_NAMESPACE_FRAMEWORK, $this->placeholders);
+      $output = strtr(CodeSnippets\ClassFileSnippets::SNIPPET_NAMESPACE_FRAMEWORK, $this->placeholders);
     } else {
-      $output = strtr(CodeSnippets::SNIPPET_NAMESPACE_APP, $this->placeholders);
+      $output = strtr(CodeSnippets\ClassFileSnippets::SNIPPET_NAMESPACE_APP, $this->placeholders);
     }
     fwrite($this->writer, $output);
   }
@@ -161,14 +163,14 @@ class DaoClassGenerator {
    * Computes the class description using PhpDoc and writes it to the output.
    */
   public function AddFileDescription() {
-    $output = PhpDocConstants::OPENING . $this->_LF .
-            strtr(PhpDocConstants::AUTHOR, $this->placeholders) . $this->_LF .
-            strtr(PhpDocConstants::COPYRIGHT, $this->placeholders) . $this->_LF .
-            strtr(PhpDocConstants::LICENCE, $this->placeholders) . $this->_LF .
-            strtr(PhpDocConstants::LINK, $this->placeholders) . $this->_LF .
-            strtr(PhpDocConstants::SINCE, $this->placeholders) . $this->_LF .
-            strtr(PhpDocConstants::PACKAGE, $this->placeholders) . $this->_LF .
-            PhpDocConstants::CLOSING . $this->_LF;
+    $output = CodeSnippets\PhpDocSnippets::OPENING . $this->_LF .
+            strtr(CodeSnippets\PhpDocSnippets::AUTHOR, $this->placeholders) . $this->_LF .
+            strtr(CodeSnippets\PhpDocSnippets::COPYRIGHT, $this->placeholders) . $this->_LF .
+            strtr(CodeSnippets\PhpDocSnippets::LICENCE, $this->placeholders) . $this->_LF .
+            strtr(CodeSnippets\PhpDocSnippets::LINK, $this->placeholders) . $this->_LF .
+            strtr(CodeSnippets\PhpDocSnippets::SINCE, $this->placeholders) . $this->_LF .
+            strtr(CodeSnippets\PhpDocSnippets::PACKAGE, $this->placeholders) . $this->_LF .
+            CodeSnippets\PhpDocSnippets::CLOSING . $this->_LF;
     fwrite($this->writer, $output);
   }
 
@@ -279,12 +281,12 @@ class DaoClassGenerator {
           CodeSnippetPlaceholders::PROPERTY_NAME => $columnMetadata["Field"]);
       $output .=
               $this->_TAB2 .
-              strtr(CodeSnippets::SNIPPET_SET_PROPERTY_START, $placeholders) . $this->_LF;
+              strtr(CodeSnippets\ClassFileSnippets::SNIPPET_SET_PROPERTY_START, $placeholders) . $this->_LF;
       $output .=
               $this->_TAB6 .
-              strtr(CodeSnippets::SNIPPET_SET_PROPERTY_ASSIGNMENT, $placeholders) .
+              strtr(CodeSnippets\ClassFileSnippets::SNIPPET_SET_PROPERTY_ASSIGNMENT, $placeholders) .
               $this->_LF;
-      $output .= $this->_TAB2 . CodeSnippets::SNIPPET_CLOSING_CURLY_BRACKET . $this->_CRLF;
+      $output .= $this->_TAB2 . CodeSnippets\ClassFileSnippets::SNIPPET_CLOSING_CURLY_BRACKET . $this->_CRLF;
     }
     fwrite($this->writer, $output);
   }
@@ -303,13 +305,13 @@ class DaoClassGenerator {
           CodeSnippetPlaceholders::PROPERTY_NAME => $columnMetadata["Field"]);
 
       $output .= $this->_TAB2 .
-              strtr(CodeSnippets::SNIPPET_GET_PROPERTY_START, $placeholders) .
+              strtr(CodeSnippets\ClassFileSnippets::SNIPPET_GET_PROPERTY_START, $placeholders) .
               $this->_LF;
       $output .=
               $this->_TAB4 .
-              strtr(CodeSnippets::SNIPPET_GET_PROPERTY_MIDDLE, $placeholders) .
+              strtr(CodeSnippets\ClassFileSnippets::SNIPPET_GET_PROPERTY_MIDDLE, $placeholders) .
               $this->_LF;
-      $output .= $this->_TAB2 . CodeSnippets::SNIPPET_CLOSING_CURLY_BRACKET . $this->_CRLF;
+      $output .= $this->_TAB2 . CodeSnippets\ClassFileSnippets::SNIPPET_CLOSING_CURLY_BRACKET . $this->_CRLF;
     }
     fwrite($this->writer, $output);
   }
@@ -322,18 +324,18 @@ class DaoClassGenerator {
    */
   private function AddPropertyPhpDoc($columnMetadata, $isSetter = TRUE) {
     $output =
-            $this->_TAB2 . PhpDocConstants::OPENING .
+            $this->_TAB2 . \Library\Generators\CodeSnippets\PhpDocSnippets::OPENING .
             $this->_TAB2 . $this->_LF;
     $placeholders = array(
-        "{{set_dynamic_code}}" => strtr(PhpDocConstants::SET_PROPERTY_SUMMARY, array(PhpDocPlaceholder::SET_PROPERTY => $columnMetadata["Field"])),
-        "{{get_dynamic_code}}" => strtr(PhpDocConstants::GET_PROPERTY_SUMMARY, array(PhpDocPlaceholder::GET_PROPERTY => $columnMetadata["Field"]))
+        "{{set_dynamic_code}}" => strtr(CodeSnippets\PhpDocSnippets::SET_PROPERTY_SUMMARY, array(Placeholders\PhpDocPlaceholders::SET_PROPERTY => $columnMetadata["Field"])),
+        "{{get_dynamic_code}}" => strtr(CodeSnippets\PhpDocSnippets::GET_PROPERTY_SUMMARY, array(Placeholders\PhpDocPlaceholders::GET_PROPERTY => $columnMetadata["Field"]))
     );
     if ($isSetter) {
       $output .= $this->_TAB2 . strtr("{{set_dynamic_code}}", $placeholders);
     } else {
       $output .= $this->_TAB2 . strtr("{{get_dynamic_code}}", $placeholders);
     }
-    $output .= $this->_LF . $this->_TAB2 . PhpDocConstants::CLOSING . $this->_LF;
+    $output .= $this->_LF . $this->_TAB2 . CodeSnippets\PhpDocSnippets::CLOSING . $this->_LF;
     return $output;
   }
 
