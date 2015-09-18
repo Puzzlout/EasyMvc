@@ -216,6 +216,8 @@ INSERT INTO `f_user_role` (`f_user_role_desc`) VALUES ('Default');
 
 INSERT INTO `f_user` VALUES (1,'t','t',0,null,null,null,'t@t.com',1,null);
 
+INSERT INTO `f_culture` (`f_culture_value`) VALUES ('en'),('en-US'),('fr'),('fr-FR');
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
