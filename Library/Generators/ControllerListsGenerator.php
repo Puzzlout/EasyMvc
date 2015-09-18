@@ -1,14 +1,15 @@
 <?php
 
 /**
- * Class to retrieve the controller files and build an array of controller names.
+ * Class to retrieve the controller files and build a class that holds an array 
+ * of controller names.
  * 
  * @author Jeremie Litzler
  * @copyright Copyright (c) 2015
  * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
  * @link https://github.com/WebDevJL/EasyMVC
  * @since Version 1.0.0
- * @package ControllerListExtractor
+ * @package ControllerListsGenerator
  */
 
 namespace Library\Generators;
@@ -20,7 +21,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-class ControllerNameListExtractor {
+class ControllerListsGenerator {
 
   public $filesGenerated = array();
 
@@ -29,10 +30,11 @@ class ControllerNameListExtractor {
   }
 
   /**
+   * Retrieve the lists of controller filenames.
    * Generate the Classes that list the Controller names available in the
    * solution.
    */
-  public function GenerateFiles() {
+  public function Run() {
     $FrameworkControllers = DirectoryManager::GetFileNames(
                     FrameworkConstants_RootDir . \Library\Enums\FrameworkFolderName::ControllersFolderName, array("BaseController.php"));
 
@@ -54,7 +56,7 @@ class ControllerNameListExtractor {
    */
   private function GenerateControllersArrayFile($params, $controllerFiles) {
     if (count($controllerFiles) > 0) {
-      $classGen = new ClassGenerationControllerNamesArray(
+      $classGen = new ClassGeneratorForControllerList(
               FrameworkConstants_RootDir . $params[ClassGenerationBase::DestinationDirKey], $params, $controllerFiles);
       $classGen->BuildClass();
       return $classGen->fileName;

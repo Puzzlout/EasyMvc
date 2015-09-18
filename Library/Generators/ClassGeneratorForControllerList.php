@@ -9,7 +9,7 @@
  * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
  * @link https://github.com/WebDevJL/EasyMVC
  * @since Version 1.0.0
- * @package ClassGenerationControllerNamesArray
+ * @package ClassGeneratorForControllerList
  */
 
 namespace Library\Generators;
@@ -17,30 +17,7 @@ namespace Library\Generators;
 if (!FrameworkConstants_ExecutionAccessRestriction)
   exit('No direct script access allowed');
 
-class ClassGenerationControllerNamesArray extends ClassGenerationBase {
-
-  /**
-   * 
-   * @param string $destinationDir
-   * @param assoc array $params : the params composed the namespace and name of the class
-   * @param array(of String) $data : list of controllers file names.
-   */
-  public function __construct($destinationDir, $params, $data) {
-    $this->destinationDir = $destinationDir;
-    $this->className = $params[ClassGenerationBase::ClassNameKey];
-    $this->fileName = $this->className . ".php";
-    $this->placeholders = Placeholders\PlaceholdersManager::InitPlaceholdersForPhpDoc($params);
-    $this->data = $data;
-    $this->classHeaderTemplateContents = file_exists(Templates\TemplateFileNameConstants::GetFullNameForConst(Templates\TemplateFileNameConstants::ClassHeaderTemplate));
-  }
-
-  public function BuildClass() {
-    $this->WriteClassHeader();
-    $this->WriteConstants();
-    $this->WriteContent();
-    $this->ClassEnd();
-  }
-
+class ClassGeneratorForControllerList extends ClassGenerationBase {
   /**
    * Write the content of the class, method by method.
    */

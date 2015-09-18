@@ -68,6 +68,30 @@ class ClassGenerationBase {
    * @var string : the content of /EasyMVC/CodeGenerators/templates/ClassHeaderTemplate.tt
    */
   public $classHeaderTemplateContents;
+  
+  
+  /**
+   * 
+   * @param string $destinationDir
+   * @param assoc array $params : the params composed the namespace and name of the class
+   * @param array(of String) $data : list of controllers file names.
+   */
+  public function __construct($destinationDir, $params, $data) {
+    $this->destinationDir = $destinationDir;
+    $this->className = $params[ClassGenerationBase::ClassNameKey];
+    $this->fileName = $this->className . ".php";
+    $this->placeholders = Placeholders\PlaceholdersManager::InitPlaceholdersForPhpDoc($params);
+    $this->data = $data;
+    $this->classHeaderTemplateContents = file_exists(Templates\TemplateFileNameConstants::GetFullNameForConst(Templates\TemplateFileNameConstants::ClassHeaderTemplate));
+  }
+
+  public function BuildClass() {
+    $this->WriteClassHeader();
+    $this->WriteConstants();
+    $this->WriteContent();
+    $this->ClassEnd();
+  }
+
   /**
    * Opens handle to write to target file.
    */
