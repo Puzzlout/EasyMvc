@@ -2,6 +2,7 @@
 require_once 'loader.php';
 //const PagesFolder = "pages/";
 const GenerateControllerArraysFile = "GenerateControllerArrays.php";
+const GenerateDalModuleArraysFile = "GenerateDalModuleArrays.php";
 ?>
 <html>
   <head>
@@ -13,6 +14,7 @@ const GenerateControllerArraysFile = "GenerateControllerArrays.php";
     <p>On this page, you can generate code by simple click.</p>
     <ul>
       <li><a href="<?php echo GenerateControllerArraysFile; ?>">Generate controller names arrays</a></li>
+      <li><a href="<?php echo GenerateDalModuleArraysFile; ?>">Generate data access layer modules names arrays</a></li>
     </ul>
   </body>
 </html>
