@@ -60,13 +60,12 @@ class Globalization extends ApplicationComponent {
   public function Init($source) {
     switch ($source) {
       case ResourceManagers\ResourceLoaderBase::FROM_DB:
-          
+        $this->GlobalResources = array();//$this->app()->dal()->getDalInstance()->
         break;
 
       default:
         //todo: create error code
         throw new \Exception("Source ". $source . " is not implemented", 0, NULL);
-        break;
     }
     
   }
