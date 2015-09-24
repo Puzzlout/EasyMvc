@@ -1,7 +1,7 @@
 <?php
 require_once '../errorHandler.php';
 require_once 'loader.php';
-$generator = new \Library\Generators\ControllerListsGenerator();
+$generator = new \Library\GeneratorEngine\ControllerListsGenerator();
 $generator->Run();
 ?>
 

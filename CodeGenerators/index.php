@@ -6,7 +6,7 @@ const GenerateDalModuleArraysFile = "GenerateDalModuleArrays.php";
 ?>
 <html>
   <head>
-    <title>Generators</title>
+    <title>GeneratorEngine</title>
     <style></style>
   </head>
   <body>

@@ -11,7 +11,7 @@
  * @package TemplateFileNameConstants
  */
 
-namespace Library\Generators\Templates;
+namespace Library\GeneratorEngine\Templates;
 
 if (!FrameworkConstants_ExecutionAccessRestriction)
   exit('No direct script access allowed');

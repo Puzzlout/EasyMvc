@@ -10,8 +10,8 @@
  */
 
 namespace Library\Dal\Generator;
-use Library\Generators\CodeSnippets;
-use Library\Generators\Placeholders;
+use Library\GeneratorEngine\CodeSnippets;
+use Library\GeneratorEngine\Placeholders;
 
 class DaoClassGenerator {
 
@@ -324,7 +324,7 @@ class DaoClassGenerator {
    */
   private function AddPropertyPhpDoc($columnMetadata, $isSetter = TRUE) {
     $output =
-            $this->_TAB2 . \Library\Generators\CodeSnippets\PhpDocSnippets::OPENING .
+            $this->_TAB2 . \Library\GeneratorEngine\CodeSnippets\PhpDocSnippets::OPENING .
             $this->_TAB2 . $this->_LF;
     $placeholders = array(
         "{{set_dynamic_code}}" => strtr(CodeSnippets\PhpDocSnippets::SET_PROPERTY_SUMMARY, array(Placeholders\PhpDocPlaceholders::SET_PROPERTY => $columnMetadata["Field"])),

@@ -12,7 +12,7 @@
  * @package DalModuleListsGenerator
  */
 
-namespace Library\Generators;
+namespace Library\GeneratorEngine;
 
 use Library\Core\DirectoryManager;
 use Library\FrameworkConstants;

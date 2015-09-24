@@ -11,7 +11,7 @@
 * @package PhpDocSnippets
 */
 
-namespace Library\Generators\CodeSnippets;
+namespace Library\GeneratorEngine\CodeSnippets;
 
 if (!FrameworkConstants_ExecutionAccessRestriction)
   exit('No direct script access allowed');

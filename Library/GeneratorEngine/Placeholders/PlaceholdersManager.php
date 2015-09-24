@@ -11,7 +11,7 @@
  * @package 
  */
 
-namespace Library\Generators\Placeholders;
+namespace Library\GeneratorEngine\Placeholders;
 
 if (!FrameworkConstants_ExecutionAccessRestriction)
   exit('No direct script access allowed');
@@ -24,12 +24,12 @@ class PlaceholdersManager {
         PhpDocPlaceholders::COPYRIGHT_YEAR => date("Y"),
         PhpDocPlaceholders::LICENCE => "http://opensource.org/licenses/gpl-license.php GNU Public License",
         PhpDocPlaceholders::LINK => "https://github.com/WebDevJL/",
-        PhpDocPlaceholders::PACKAGE => $params[\Library\Generators\ClassGenerationBase::ClassNameKey],
+        PhpDocPlaceholders::PACKAGE => $params[\Library\GeneratorEngine\ClassGenerationBase::ClassNameKey],
         PhpDocPlaceholders::SUBPACKAGE => "",
         PhpDocPlaceholders::VERSION_NUMBER => FrameworkConstants_Version,
-        ClassFilePlaceholders::NAMESPACE_FRAMEWORK => $params[\Library\Generators\ClassGenerationBase::NameSpaceKey],
+        ClassFilePlaceholders::NAMESPACE_FRAMEWORK => $params[\Library\GeneratorEngine\ClassGenerationBase::NameSpaceKey],
         ClassFilePlaceholders::NAMESPACE_APP => "",
-        ClassFilePlaceholders::CLASS_NAME => $params[\Library\Generators\ClassGenerationBase::ClassNameKey]
+        ClassFilePlaceholders::CLASS_NAME => $params[\Library\GeneratorEngine\ClassGenerationBase::ClassNameKey]
     );
   }
 
