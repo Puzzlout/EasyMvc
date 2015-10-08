@@ -8,13 +8,7 @@ $generator->Run();
 <html>
   <head>
     <title>Controller names array generator</title>
-    <style>
-      .top-bar, .top-bar > * {
-        line-height: 40px;
-        background-color: #eee;
-      }
-    </style>
-    
+    <link rel="stylesheet" type="text/css" href="./css/styles.css"/>
   </head>
   <body>
     <div class="top-bar">

@@ -21,6 +21,7 @@ abstract class ApplicationFolderName {
 
   const AppsFolderName = "Applications/";
   const ControllersFolderName = "/Controllers/";
+  const DalModulesFolderName = "/DalModules/";
   const ViewsFolderName = "/Views/";
   const TemplatesFolderName = "/Templates/";
   const ConfigFolderName = "/Config/";

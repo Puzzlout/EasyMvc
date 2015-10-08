@@ -1,6 +1,6 @@
 <?php
 
-namespace Applications\EasyMvc\Models\Dal;
+namespace Applications\EasyMvc\DalModules;
 
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed'); }

@@ -23,6 +23,8 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 
 class DalModuleListsGenerator {
 
+  const GeneratedPrefix = "DalModules";
+  
   public $filesGenerated = array();
 
   public function __construct() {
@@ -35,17 +37,17 @@ class DalModuleListsGenerator {
    * solution.
    */
   public function Run() {
-    $FrameworkControllers = DirectoryManager::GetFileNames(
-                    FrameworkConstants_RootDir . \Library\Enums\FrameworkFolderName::ControllersFolderName, array("BaseController.php"));
+    $FrameworkDalModules = DirectoryManager::GetFileNames(
+                    FrameworkConstants_RootDir . \Library\Enums\FrameworkFolderName::DalModulesFolderName);
 
-    $ApplicationControllers = DirectoryManager::GetFileNames(
+    $ApplicationDalModules = DirectoryManager::GetFileNames(
                     FrameworkConstants_RootDir .
                     \Library\Enums\ApplicationFolderName::AppsFolderName .
                     FrameworkConstants_AppName .
-                    \Library\Enums\ApplicationFolderName::ControllersFolderName);
+                    \Library\Enums\ApplicationFolderName::DalModulesFolderName);
 
-    $this->GenerateFrameworkFile($FrameworkControllers);
-    $this->GenerateApplicationFile($ApplicationControllers);
+    $this->GenerateFrameworkFile($FrameworkDalModules);
+    $this->GenerateApplicationFile($ApplicationDalModules);
   }
 
   /**
@@ -68,30 +70,30 @@ class DalModuleListsGenerator {
   /**
    * Generate the FrameworkControllers.php class.
    * 
-   * @param array $controllerFiles : list of controllers filenames
+   * @param array $files : list of dal modules filenames
    */
-  private function GenerateFrameworkFile($controllerFiles) {
+  private function GenerateFrameworkFile($files) {
     $params = array(
         ClassGenerationBase::NameSpaceKey => "Library\Generated",
-        ClassGenerationBase::ClassNameKey => "FrameworkControllers",
+        ClassGenerationBase::ClassNameKey => "Framework" . self::GeneratedPrefix,
         ClassGenerationBase::DestinationDirKey => \Library\Enums\FrameworkFolderName::GeneratedFolderName,
     );
-    array_push($this->filesGenerated, self::GenerateControllersArrayFile($params, $controllerFiles));
+    array_push($this->filesGenerated, self::GenerateControllersArrayFile($params, $files));
   }
 
   /**
    * Generate the AppNameControllers.php class.
    * 
-   * @param array $controllerFiles : list of controllers filenames
+   * @param array $files : list of dal modules filenames
    */
-  private function GenerateApplicationFile($controllerFiles) {
+  private function GenerateApplicationFile($files) {
     $params = array(
         ClassGenerationBase::NameSpaceKey => "Applications\\" . FrameworkConstants_AppName . "\Generated",
-        ClassGenerationBase::ClassNameKey => FrameworkConstants_AppName . "Controllers",
+        ClassGenerationBase::ClassNameKey => FrameworkConstants_AppName . self::GeneratedPrefix,
         ClassGenerationBase::DestinationDirKey => \Library\Enums\ApplicationFolderName::AppsFolderName .
         FrameworkConstants_AppName . \Library\Enums\ApplicationFolderName::Generated,
     );
-    array_push($this->filesGenerated, self::GenerateControllersArrayFile($params, $controllerFiles));
+    array_push($this->filesGenerated, self::GenerateControllersArrayFile($params, $files));
   }
 
 }
