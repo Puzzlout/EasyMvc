@@ -24,7 +24,7 @@ class ClassGeneratorForControllerList extends ClassGenerationBase {
   public function WriteContent() {
     $output = $this->WriteGetListMethod();
     $output .= CodeSnippets\PhpCodeSnippets::CRLF;
-    $output .= $this->WriteDoesControllerExistMethod();
+    $output .= $this->WriteDoesConstantExistMethod();
     fwrite($this->writer, $output);
   }
 
@@ -55,7 +55,7 @@ class ClassGeneratorForControllerList extends ClassGenerationBase {
    * 
    * @return string : the code generated for the method
    */
-  private function WriteDoesControllerExistMethod() {
+  private function WriteDoesConstantExistMethod() {
     $method = $this->GetMethodNameToGenerate(__FUNCTION__);
     $output = CodeSnippets\PhpCodeSnippets::TAB2 .
             CodeSnippets\PhpCodeSnippets::PublicStaticFunction . $method . "(\$key) {" . CodeSnippets\PhpCodeSnippets::LF .
