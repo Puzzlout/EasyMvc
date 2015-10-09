@@ -1,15 +1,14 @@
 <?php
 
 /**
- * Class that build the class with the array of controller names to look up 
- * when a web request is made.
+ * Class that build the class with the array of files names as constants.
  * 
  * @author Jeremie Litzler
  * @copyright Copyright (c) 2015
  * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
  * @link https://github.com/WebDevJL/EasyMVC
  * @since Version 1.0.0
- * @package ClassGeneratorForControllerList
+ * @package ConstantsClassGenerator
  */
 
 namespace Library\GeneratorEngine;
@@ -17,7 +16,7 @@ namespace Library\GeneratorEngine;
 if (!FrameworkConstants_ExecutionAccessRestriction)
   exit('No direct script access allowed');
 
-class ClassGeneratorForControllerList extends ClassGenerationBase {
+class ConstantsClassGenerator extends BaseClassGenerator {
   /**
    * Write the content of the class, method by method.
    */
@@ -42,7 +41,7 @@ class ClassGeneratorForControllerList extends ClassGenerationBase {
     foreach ($this->data as $value) {
       $valueCleaned = trim($value, ".php");
 
-      $lineOfCode = CodeSnippets\PhpCodeSnippets::TAB8 . "self::" . $valueCleaned . ClassGenerationBase::Key . " => '" . $valueCleaned . "',";
+      $lineOfCode = CodeSnippets\PhpCodeSnippets::TAB8 . "self::" . $valueCleaned . BaseClassGenerator::Key . " => '" . $valueCleaned . "',";
       $output .= $lineOfCode . CodeSnippets\PhpCodeSnippets::LF;
     }
     $output .=

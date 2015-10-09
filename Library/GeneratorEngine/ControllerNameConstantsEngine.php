@@ -21,7 +21,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-class ControllerNameConstantsGenerator extends ConstantsClassGeneratorBase {
+class ControllerNameConstantsEngine extends ConstantsClassEngineBase {
   /**
    * Retrieve the lists of controller filenames.
    * Generate the Classes that list the Controller names available in the

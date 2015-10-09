@@ -3,7 +3,7 @@
 namespace Library\Core;
 
 use Library\Enums;
-use Library\GeneratorEngine\ClassGenerationBase;
+use Library\GeneratorEngine\BaseClassGenerator;
 
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
@@ -176,12 +176,12 @@ abstract class Application {
     $FrameworkControllers = $FrameworkControllersListClass::GetList();
     $ApplicationControllers = $ApplicationControllersListClass::GetList();
     
-    if (array_key_exists($controllerName . ClassGenerationBase::Key, $FrameworkControllers)) {
+    if (array_key_exists($controllerName . BaseClassGenerator::Key, $FrameworkControllers)) {
       $frameworkControllerFolderPath = \Library\Enums\NameSpaceName::LibFolderName
               . \Library\Enums\NameSpaceName::LibControllersFolderName;
       $controllerClass = $frameworkControllerFolderPath . $controllerName;
       $this->router()->isWsCall = TRUE;
-    } else if (array_key_exists($controllerName . ClassGenerationBase::Key, $ApplicationControllers)) {
+    } else if (array_key_exists($controllerName . BaseClassGenerator::Key, $ApplicationControllers)) {
       $applicationControllerFolderPath = \Library\Enums\NameSpaceName::AppsFolderName . "\\"
               . $this->name
               . \Library\Enums\NameSpaceName::AppsControllersFolderName;

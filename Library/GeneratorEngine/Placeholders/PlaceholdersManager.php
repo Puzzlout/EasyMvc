@@ -24,12 +24,12 @@ class PlaceholdersManager {
         PhpDocPlaceholders::COPYRIGHT_YEAR => date("Y"),
         PhpDocPlaceholders::LICENCE => "http://opensource.org/licenses/gpl-license.php GNU Public License",
         PhpDocPlaceholders::LINK => "https://github.com/WebDevJL/",
-        PhpDocPlaceholders::PACKAGE => $params[\Library\GeneratorEngine\ClassGenerationBase::ClassNameKey],
+        PhpDocPlaceholders::PACKAGE => $params[\Library\GeneratorEngine\BaseClassGenerator::ClassNameKey],
         PhpDocPlaceholders::SUBPACKAGE => "",
         PhpDocPlaceholders::VERSION_NUMBER => FrameworkConstants_Version,
-        ClassFilePlaceholders::NAMESPACE_FRAMEWORK => $params[\Library\GeneratorEngine\ClassGenerationBase::NameSpaceKey],
+        ClassFilePlaceholders::NAMESPACE_FRAMEWORK => $params[\Library\GeneratorEngine\BaseClassGenerator::NameSpaceKey],
         ClassFilePlaceholders::NAMESPACE_APP => "",
-        ClassFilePlaceholders::CLASS_NAME => $params[\Library\GeneratorEngine\ClassGenerationBase::ClassNameKey]
+        ClassFilePlaceholders::CLASS_NAME => $params[\Library\GeneratorEngine\BaseClassGenerator::ClassNameKey]
     );
   }
 

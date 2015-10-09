@@ -20,7 +20,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-class DalModuleNameConstantsGenerator extends ConstantsClassGeneratorBase {
+class DalModuleNameConstantsEngine extends ConstantsClassEngineBase {
   /**
    * Retrieve the lists of filenames.
    * Generate the Classes that list the Dal Modules names available in the

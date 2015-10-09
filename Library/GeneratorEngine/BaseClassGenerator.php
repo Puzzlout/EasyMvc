@@ -8,7 +8,7 @@
  * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
  * @link https://github.com/WebDevJL/EasyMVC
  * @since Version 1.0.0
- * @package ClassGenerationBase
+ * @package BaseClassGenerator
  */
 
 namespace Library\GeneratorEngine;
@@ -16,7 +16,7 @@ namespace Library\GeneratorEngine;
 if (!FrameworkConstants_ExecutionAccessRestriction)
   exit('No direct script access allowed');
 
-class ClassGenerationBase {
+class BaseClassGenerator {
 
   const NameSpaceKey = "NameSpaceKey";
   const ClassNameKey = "ClassNameKey";
@@ -78,7 +78,7 @@ class ClassGenerationBase {
    */
   public function __construct($destinationDir, $params, $data) {
     $this->destinationDir = $destinationDir;
-    $this->className = $params[ClassGenerationBase::ClassNameKey];
+    $this->className = $params[self::ClassNameKey];
     $this->fileName = $this->className . ".php";
     $this->placeholders = Placeholders\PlaceholdersManager::InitPlaceholdersForPhpDoc($params);
     $this->data = $data;
@@ -195,7 +195,7 @@ class ClassGenerationBase {
   public function WriteConstants($valueToTrim = ".php") {
     $output = "";
     foreach ($this->data as $value) {
-      $valueCleaned = trim($value, $valueToTrim) . ClassGenerationBase::Key;
+      $valueCleaned = trim($value, $valueToTrim) . BaseClassGenerator::Key;
       $lineOfCode = CodeSnippets\PhpCodeSnippets::TAB2 .
               "const " . $valueCleaned .
               " = '" .
