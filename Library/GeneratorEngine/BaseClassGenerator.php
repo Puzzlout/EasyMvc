@@ -22,6 +22,7 @@ class BaseClassGenerator {
   const ClassNameKey = "ClassNameKey";
   const DestinationDirKey = "DestinationDirKey";
   const Key = "Key";
+  const FolderKey = "FolderKey";
 
   /**
    * @var resource a file pointer resource on success, or <b>FALSE</b> on error. 
@@ -68,8 +69,7 @@ class BaseClassGenerator {
    * @var string : the content of /EasyMVC/CodeGenerators/templates/ClassHeaderTemplate.tt
    */
   public $classHeaderTemplateContents;
-  
-  
+
   /**
    * 
    * @param string $destinationDir
@@ -189,29 +189,134 @@ class BaseClassGenerator {
     $this->ClassStart();
   }
 
-    /**
+  /**
    * Write the constants of the class if any must be created.
    */
   public function WriteConstants($valueToTrim = ".php") {
     $output = "";
-    foreach ($this->data as $value) {
-      $valueCleaned = trim($value, $valueToTrim) . BaseClassGenerator::Key;
-      $lineOfCode = CodeSnippets\PhpCodeSnippets::TAB2 .
-              "const " . $valueCleaned .
-              " = '" .
-              $valueCleaned . "';" .
-              CodeSnippets\PhpCodeSnippets::LF;
-      $output .= $lineOfCode;
+    foreach ($this->data as $key => $value) {
+      if (!is_array($value) && preg_match("`^.*php$`", $value)) {
+        $output .= $this->WriteConstant($this->CleanAndBuildConstantKeyValue($value, $valueToTrim));
+      } else {
+        $output .= $this->WriteConstant($this->BuildConstantFolderKeyValue($key));
+        $output .= $this->WriteConstantsFromArray($value, $valueToTrim);
+      }
     }
     $output .= CodeSnippets\PhpCodeSnippets::LF;
     fwrite($this->writer, $output);
   }
 
+  /**
+   * Resurcive loop to write constants.
+   * 
+   * @param array $array
+   * @param string $valueToTrim
+   */
+  protected function WriteConstantsFromArray($array, $valueToTrim) {
+    
+  }
+
+  protected function WriteConstant($value) {
+    $lineOfCode = CodeSnippets\PhpCodeSnippets::TAB2 .
+            "const " . $value .
+            " = '" .
+            $value . "';" .
+            CodeSnippets\PhpCodeSnippets::LF;
+    return $lineOfCode;
+  }
+
+  /**
+   * Implementation varies. See the derived class.
+   */
   public function WriteContent() {
     
   }
 
+  /**
+   * 
+   * @param string $dynamicMethod the template method to build the final method
+   * name from.
+   * 
+   * @return string the computed method name.
+   */
   public function GetMethodNameToGenerate($dynamicMethod) {
     return str_replace(array("Write", "Method"), "", $dynamicMethod);
   }
+
+  /**
+   * Build a string for a constant representing the key to find a folder in the
+   * array of constants.
+   * 
+   * @param string $value the value is a filename without its extension
+   * @see CleanAndBuildConstantKeyValue function
+   * @return string
+   */
+  protected function BuildConstantKeyValue($value) {
+    return $value . BaseClassGenerator::Key;
+  }
+
+  /**
+   * Build a string for a constant representing the key to find a folder in the
+   * array of constants.
+   * 
+   * @param srting $folderValue the value is a folder name
+   * @return string
+   */
+  protected function BuildConstantFolderKeyValue($folderValue) {
+    return $folderValue . BaseClassGenerator::FolderKey;
+  }
+
+  /**
+   * Remove extension of filename.
+   * 
+   * @param string $filename
+   * @param string $extension
+   * @return string the extensionless filename
+   */
+  protected function RemoveExtensionFileName($filename, $extension) {
+    return trim($filename, $extension);
+  }
+
+  /**
+   * Cleans a file name from its extension and build the key string value to find
+   * its value in the array of constants.
+   * @param type $rawValue
+   * @param type $valueToTrim
+   * @return type
+   */
+  protected function CleanAndBuildConstantKeyValue($rawValue, $valueToTrim) {
+    $valueCleaned = $this->RemoveExtensionFileName($rawValue, $valueToTrim);
+    return $this->BuildConstantKeyValue($valueCleaned);
+  }
+
+  /**
+   * Computes a value of an associative array.
+   * 
+   * @param string $value the value to use to compute the output
+   * @return string the computed string
+   */
+  protected function WriteAssociativeArrayValue($value, $tabAmount = 0) {
+    $lineOfCode =
+            str_repeat("  ", $tabAmount) .
+            "self::" .
+            $value . BaseClassGenerator::Key . " => '" . $value . "'," .
+            CodeSnippets\PhpCodeSnippets::LF;
+    return $lineOfCode;
+  }
+
+  /**
+   * Computes a value of an associative array.
+   * 
+   * @param string $value the value to use to compute the output
+   * @return string the computed string
+   */
+  protected function WriteAssociativeArrayValueAsNewArray($value, $tabAmount = 0) {
+    $lineOfCode = 
+            str_repeat("  ", $tabAmount) .
+            "self::" .
+            $value . BaseClassGenerator::FolderKey . " => array(" .
+            CodeSnippets\PhpCodeSnippets::LF;
+    return $lineOfCode;
+  }
+
 }

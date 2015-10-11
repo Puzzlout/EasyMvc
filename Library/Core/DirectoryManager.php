@@ -30,6 +30,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 
 class DirectoryManager {
 
+  const DIRECTORY_SEPARATOR = "/";
   /**
    * Get the file paths for the current directory
    * 
@@ -55,16 +56,28 @@ class DirectoryManager {
    * @return array(of SplFileInfo)
    * List of SplFileInfo objects scanned in the top-level directory.
    */
-  public static function GetFilesNamesRecursively($dirName, $extension) {
-    $files = array();
-    $dir_iterator = new \RecursiveDirectoryIterator($dirName);
-    $iterator = new \RecursiveIteratorIterator($dir_iterator, \RecursiveIteratorIterator::SELF_FIRST);
-    foreach ($iterator as $file) {
-      if (preg_match('~^.*' . $extension . '$~', $file->getFileName())) {
-        array_push($files, $file);
+  public static function GetFilesNamesRecursively($dirName, $extension = "") {
+      $files = self::RecursiveScanDir($dirName);
+    return $files;
+  }
+
+  
+  public static function RecursiveScanDir($dir) {
+
+    $result = array();
+
+    $cdir = scandir($dir);
+    foreach ($cdir as $key => $value) {
+      if (!in_array($value, array(".", ".."))) {
+        if (is_dir($dir . DIRECTORY_SEPARATOR . $value)) {
+          $result[$value] = self::RecursiveScanDir($dir . DIRECTORY_SEPARATOR . $value);
+        } else {
+          $result[] = $value;
+        }
       }
     }
-    return $files;
+
+    return $result;
   }
 
   /**

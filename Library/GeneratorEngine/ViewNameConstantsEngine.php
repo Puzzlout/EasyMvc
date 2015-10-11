@@ -27,10 +27,10 @@ class ViewNameConstantsEngine extends ConstantsClassEngineBase {
    * solution.
    */
   public function Run() {
-    $FrameworkList = DirectoryManager::GetFileNames(
+    $FrameworkList = DirectoryManager::GetFilesNamesRecursively(
                     FrameworkConstants_RootDir . \Library\Enums\FrameworkFolderName::ViewsFolderName);
 
-    $ApplicationList = DirectoryManager::GetFileNames(
+    $ApplicationList = DirectoryManager::GetFilesNamesRecursively(
                     FrameworkConstants_RootDir .
                     \Library\Enums\ApplicationFolderName::AppsFolderName .
                     FrameworkConstants_AppName .
