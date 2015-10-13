@@ -23,13 +23,15 @@ class PlaceholdersManager {
         PhpDocPlaceholders::AUTHOR => "Jeremie Litzler",
         PhpDocPlaceholders::COPYRIGHT_YEAR => date("Y"),
         PhpDocPlaceholders::LICENCE => "http://opensource.org/licenses/gpl-license.php GNU Public License",
-        PhpDocPlaceholders::LINK => "https://github.com/WebDevJL/",
+        PhpDocPlaceholders::LINK => "https://github.com/WebDevJL/EasyMVC/blob/master/README.md",
         PhpDocPlaceholders::PACKAGE => $params[\Library\GeneratorEngine\BaseClassGenerator::ClassNameKey],
         PhpDocPlaceholders::SUBPACKAGE => "",
         PhpDocPlaceholders::VERSION_NUMBER => FrameworkConstants_Version,
         ClassFilePlaceholders::NAMESPACE_FRAMEWORK => $params[\Library\GeneratorEngine\BaseClassGenerator::NameSpaceKey],
         ClassFilePlaceholders::NAMESPACE_APP => "",
-        ClassFilePlaceholders::CLASS_NAME => $params[\Library\GeneratorEngine\BaseClassGenerator::ClassNameKey]
+        ClassFilePlaceholders::NAMESPACE_CLASS => $params[\Library\GeneratorEngine\BaseClassGenerator::NameSpaceKey],
+        ClassFilePlaceholders::CLASS_NAME => $params[\Library\GeneratorEngine\BaseClassGenerator::ClassNameKey],
+        ClassFilePlaceholders::CLASS_DESCRIPTION => $params[\Library\GeneratorEngine\BaseClassGenerator::ClassDescriptionKey],
     );
   }
 

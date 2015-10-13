@@ -17,8 +17,9 @@ if (!FrameworkConstants_ExecutionAccessRestriction)
 class ClassFilePlaceholders {
   const NAMESPACE_FRAMEWORK = "{{namespace_framework}}";
   const NAMESPACE_APP = "{{namespace_app}}";
+  const NAMESPACE_CLASS = "{{namespace_class}}";
   const CLASS_NAME = "{{class_name}}";
   const PROPERTY_NAME_FIRST_CAP = "{{property_name_first_cap}}";
   const PROPERTY_NAME = "{{property_name}}";
-  
+  const CLASS_DESCRIPTION= "{{class_description}}";
 }

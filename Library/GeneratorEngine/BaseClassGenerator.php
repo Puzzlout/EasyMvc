@@ -16,18 +16,14 @@ namespace Library\GeneratorEngine;
 if (!FrameworkConstants_ExecutionAccessRestriction)
   exit('No direct script access allowed');
 
-class BaseClassGenerator {
+class BaseClassGenerator extends BaseTemplateProcessor {
 
   const NameSpaceKey = "NameSpaceKey";
   const ClassNameKey = "ClassNameKey";
   const DestinationDirKey = "DestinationDirKey";
   const Key = "Key";
   const FolderKey = "FolderKey";
-
-  /**
-   * @var resource a file pointer resource on success, or <b>FALSE</b> on error. 
-   */
-  protected $writer;
+  const ClassDescriptionKey = "ClassDescriptionKey";
 
   /**
    * The path where the class file generated must be saved.
@@ -48,13 +44,6 @@ class BaseClassGenerator {
   public $fileName;
 
   /**
-   * The list of placeholders for the various code snippets.
-   * The first use is the Class Header PhpDoc.
-   * @var array(of String) 
-   */
-  public $placeholders;
-
-  /**
    * The data to use to write the content of the class.
    * @var array(of String)  
    */
@@ -64,25 +53,22 @@ class BaseClassGenerator {
    * The flag to know if the class is a framework and application class.
    */
   public $isFrameworkClass = true;
-
-  /**
-   * @var string : the content of /EasyMVC/CodeGenerators/templates/ClassHeaderTemplate.tt
-   */
-  public $classHeaderTemplateContents;
-
+  
   /**
    * 
    * @param string $destinationDir
    * @param assoc array $params : the params composed the namespace and name of the class
    * @param array(of String) $data : list of controllers file names.
    */
-  public function __construct($destinationDir, $params, $data) {
-    $this->destinationDir = $destinationDir;
+  public function __construct($params, $data) {
+    $this->destinationDir = FrameworkConstants_RootDir . $params[BaseClassGenerator::DestinationDirKey];
     $this->className = $params[self::ClassNameKey];
     $this->fileName = $this->className . ".php";
     $this->placeholders = Placeholders\PlaceholdersManager::InitPlaceholdersForPhpDoc($params);
     $this->data = $data;
-    $this->classHeaderTemplateContents = file_exists(Templates\TemplateFileNameConstants::GetFullNameForConst(Templates\TemplateFileNameConstants::ClassHeaderTemplate));
+    $templateHeader = Templates\TemplateFileNameConstants::GetFullNameForConst(Templates\TemplateFileNameConstants::ClassHeaderTemplate);
+    $this->classHeaderTemplateContents = file_exists($templateHeader) ?
+            file_get_contents($templateHeader) : FALSE;
   }
 
   public function BuildClass() {
@@ -182,11 +168,15 @@ class BaseClassGenerator {
    */
   public function WriteClassHeader() {
     $this->OpenWriter();
-    $this->AddPhpOpenTag();
-    $this->AddFileDescription();
-    $this->AddNameSpace();
-    $this->AddScriptNotAllowedLine();
-    $this->ClassStart();
+    if (is_string($this->classHeaderTemplateContents)) {
+      $this->ProcessTemplate();
+    } else {
+      $this->AddPhpOpenTag();
+      $this->AddFileDescription();
+      $this->AddNameSpace();
+      $this->AddScriptNotAllowedLine();
+      $this->ClassStart();
+    }
   }
 
   /**
@@ -274,7 +264,10 @@ class BaseClassGenerator {
    * @return string the extensionless filename
    */
   protected function RemoveExtensionFileName($filename, $extension) {
-    return trim($filename, $extension);
+    //WARNING: the function trim does weird thing so prefer using str_replace
+    //ex: if we have a filename "popupsomething.php" where we want the extension
+    //to be removed, the trimmed result will be "opupsomething".
+    return str_replace($extension, "", $filename);
   }
 
   /**
@@ -296,8 +289,7 @@ class BaseClassGenerator {
    * @return string the computed string
    */
   protected function WriteAssociativeArrayValue($value, $tabAmount = 0) {
-    $lineOfCode =
-            str_repeat("  ", $tabAmount) .
+    $lineOfCode = str_repeat("  ", $tabAmount) .
             "self::" .
             $value . BaseClassGenerator::Key . " => '" . $value . "'," .
             CodeSnippets\PhpCodeSnippets::LF;
@@ -311,8 +303,7 @@ class BaseClassGenerator {
    * @return string the computed string
    */
   protected function WriteAssociativeArrayValueAsNewArray($value, $tabAmount = 0) {
-    $lineOfCode = 
-            str_repeat("  ", $tabAmount) .
+    $lineOfCode = str_repeat("  ", $tabAmount) .
             "self::" .
             $value . BaseClassGenerator::FolderKey . " => array(" .
             CodeSnippets\PhpCodeSnippets::LF;

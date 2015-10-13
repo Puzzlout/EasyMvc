@@ -21,6 +21,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 }
 
 class DalModuleNameConstantsEngine extends ConstantsClassEngineBase {
+
   /**
    * Retrieve the lists of filenames.
    * Generate the Classes that list the Dal Modules names available in the
@@ -36,7 +37,22 @@ class DalModuleNameConstantsEngine extends ConstantsClassEngineBase {
                     FrameworkConstants_AppName .
                     \Library\Enums\ApplicationFolderName::DalModulesFolderName);
 
+    $this->params = array(
+        BaseClassGenerator::NameSpaceKey => "Library\Generated",
+        BaseClassGenerator::ClassNameKey => "Framework" . $this->GeneratedClassPrefix,
+        BaseClassGenerator::DestinationDirKey => \Library\Enums\FrameworkFolderName::GeneratedFolderName,
+        BaseClassGenerator::ClassDescriptionKey => "Lists the constants for framework dal module classes for autocompletion and easy coding."
+    );
+
     $this->GenerateFrameworkFile($FrameworkDalModules);
+    $this->params = array(
+        BaseClassGenerator::NameSpaceKey => "Applications\\" . FrameworkConstants_AppName . "\Generated",
+        BaseClassGenerator::ClassNameKey => FrameworkConstants_AppName . $this->GeneratedClassPrefix,
+        BaseClassGenerator::DestinationDirKey => \Library\Enums\ApplicationFolderName::AppsFolderName .
+        FrameworkConstants_AppName . \Library\Enums\ApplicationFolderName::Generated,
+        BaseClassGenerator::ClassDescriptionKey => "Lists the constants for application dal module classes for autocompletion and easy coding."
+    );
     $this->GenerateApplicationFile($ApplicationDalModules);
   }
+
 }

@@ -20,6 +20,11 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 abstract class ConstantsClassEngineBase {
 
   /**
+   * Holds the static values to build the class, like the namespace, the description, etc.
+   * @var array
+   */
+  public $params = array();
+  /**
    *
    * @var string represents the class prefix of the constants list.
    * @example Controllers, DalModules, etc. 
@@ -42,10 +47,9 @@ abstract class ConstantsClassEngineBase {
    * @param assoc array $params the params composed the namespace and name of the class.
    * @param array(of String) $files the list of framework files that will make the list of constants
    */
-  protected function GenerateConstantsClass($params, $files) {
+  protected function GenerateConstantsClass($files) {
     if (count($files) > 0) {
-      $classGen = new ConstantsClassGenerator(
-              FrameworkConstants_RootDir . $params[BaseClassGenerator::DestinationDirKey], $params, $files);
+      $classGen = new ConstantsClassGenerator($this->params, $files);
       $classGen->BuildClass();
       return $classGen->fileName;
     } else {
@@ -66,12 +70,7 @@ abstract class ConstantsClassEngineBase {
    * @param array $files list of filenames
    */
   protected function GenerateFrameworkFile($files) {
-    $params = array(
-        BaseClassGenerator::NameSpaceKey => "Library\Generated",
-        BaseClassGenerator::ClassNameKey => "Framework" . $this->GeneratedClassPrefix,
-        BaseClassGenerator::DestinationDirKey => \Library\Enums\FrameworkFolderName::GeneratedFolderName,
-    );
-    array_push($this->filesGenerated, $this->GenerateConstantsClass($params, $files));
+    array_push($this->filesGenerated, $this->GenerateConstantsClass($files));
   }
 
   /**
@@ -80,13 +79,7 @@ abstract class ConstantsClassEngineBase {
    * @param array $files list of filenames
    */
   protected function GenerateApplicationFile($files) {
-    $params = array(
-        BaseClassGenerator::NameSpaceKey => "Applications\\" . FrameworkConstants_AppName . "\Generated",
-        BaseClassGenerator::ClassNameKey => FrameworkConstants_AppName . $this->GeneratedClassPrefix,
-        BaseClassGenerator::DestinationDirKey => \Library\Enums\ApplicationFolderName::AppsFolderName .
-        FrameworkConstants_AppName . \Library\Enums\ApplicationFolderName::Generated,
-    );
-    array_push($this->filesGenerated, $this->GenerateConstantsClass($params, $files));
+    array_push($this->filesGenerated, $this->GenerateConstantsClass($files));
   }
 
 }

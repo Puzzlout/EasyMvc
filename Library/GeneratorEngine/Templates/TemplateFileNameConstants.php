@@ -17,12 +17,13 @@ if (!FrameworkConstants_ExecutionAccessRestriction)
   exit('No direct script access allowed');
 
 class TemplateFileNameConstants {
-  const RootLocation = "CodeGenerators/templates";
+  const RootLocation = "CodeGenerators/templates/";
   const TemplateExtension = ".tt";
   const ClassHeaderTemplate = "ClassHeaderTemplate";
   
   public static function GetFullNameForConst($constant)
   {
-    return self::RootLocation . $constant . self::TemplateExtension;
+    $path = FrameworkConstants_RootDir . self::RootLocation . $constant . self::TemplateExtension;
+    return $path;
   }
 }

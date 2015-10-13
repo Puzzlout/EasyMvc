@@ -36,7 +36,20 @@ class ViewNameConstantsEngine extends ConstantsClassEngineBase {
                     FrameworkConstants_AppName .
                     \Library\Enums\ApplicationFolderName::ViewsFolderName);
 
+    $this->params = array(
+        BaseClassGenerator::NameSpaceKey => "Library\Generated",
+        BaseClassGenerator::ClassNameKey => "Framework" . $this->GeneratedClassPrefix,
+        BaseClassGenerator::DestinationDirKey => \Library\Enums\FrameworkFolderName::GeneratedFolderName,
+        BaseClassGenerator::ClassDescriptionKey => "Lists the constants for framework view files to autocompletion and easy coding."
+    );
     $this->GenerateFrameworkFile($FrameworkList);
+    $this->params = array(
+        BaseClassGenerator::NameSpaceKey => "Applications\\" . FrameworkConstants_AppName . "\Generated",
+        BaseClassGenerator::ClassNameKey => FrameworkConstants_AppName . $this->GeneratedClassPrefix,
+        BaseClassGenerator::DestinationDirKey => \Library\Enums\ApplicationFolderName::AppsFolderName .
+        FrameworkConstants_AppName . \Library\Enums\ApplicationFolderName::Generated,
+        BaseClassGenerator::ClassDescriptionKey => "Lists the constants for application view files to autocompletion and easy coding."
+    );
     $this->GenerateApplicationFile($ApplicationList);
   }
 }

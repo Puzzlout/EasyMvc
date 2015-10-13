@@ -22,6 +22,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 }
 
 class ControllerNameConstantsEngine extends ConstantsClassEngineBase {
+
   /**
    * Retrieve the lists of controller filenames.
    * Generate the Classes that list the Controller names available in the
@@ -37,7 +38,21 @@ class ControllerNameConstantsEngine extends ConstantsClassEngineBase {
                     FrameworkConstants_AppName .
                     \Library\Enums\ApplicationFolderName::ControllersFolderName);
 
+    $this->params = array(
+        BaseClassGenerator::NameSpaceKey => "Library\Generated",
+        BaseClassGenerator::ClassNameKey => "Framework" . $this->GeneratedClassPrefix,
+        BaseClassGenerator::DestinationDirKey => \Library\Enums\FrameworkFolderName::GeneratedFolderName,
+        BaseClassGenerator::ClassDescriptionKey => "Lists the constants for framework controller classes to autocompletion and easy coding."
+    );
     $this->GenerateFrameworkFile($FrameworkControllers);
+    $this->params = array(
+        BaseClassGenerator::NameSpaceKey => "Applications\\" . FrameworkConstants_AppName . "\Generated",
+        BaseClassGenerator::ClassNameKey => FrameworkConstants_AppName . $this->GeneratedClassPrefix,
+        BaseClassGenerator::DestinationDirKey => \Library\Enums\ApplicationFolderName::AppsFolderName .
+        FrameworkConstants_AppName . \Library\Enums\ApplicationFolderName::Generated,
+        BaseClassGenerator::ClassDescriptionKey => "Lists the constants for application controller classes to autocompletion and easy coding."
+    );
     $this->GenerateApplicationFile($ApplicationControllers);
   }
+
 }
