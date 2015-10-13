@@ -40,6 +40,7 @@ abstract class Application {
     $this->httpResponse = new HttpResponse($this);
     $this->user = new User($this);
     $this->config = new Config($this);
+    $this->dal = new \Library\Dal\Managers('PDO', $this);
     $this->context = new Context($this);
     $this->i8n = new Globalization($this);
     $this->imageUtil = new \Library\Utility\ImageUtility($this);
@@ -48,7 +49,6 @@ abstract class Application {
     $this->locale = $this->httpRequest->initLanguage($this, "browser");
     $this->name = '';
     $this->auth = new \Library\Security\AuthenticationManager($this);
-    $this->dal = new \Library\Dal\Managers('PDO', $this);
     $this->toolTip = new PopUpResourceManager($this);
     $this->security = new \Library\Security\Protect($this->config);
 //    $this->jsManager = new Core\Utility\JavascriptManager($this);
