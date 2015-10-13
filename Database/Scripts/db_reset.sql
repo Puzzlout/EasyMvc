@@ -183,7 +183,7 @@ CREATE TABLE IF NOT EXISTS `f_resource_global` (
     `f_resource_global_key` varchar(50) NOT NULL COMMENT 'The identification of the resource. Ex: TopMenuBrandIconAlt',
     `f_resource_global_value` varchar(4000) NOT NULL,
     `f_culture_id` int(11) NOT NULL,
-    PRIMARY KEY (`f_resource_global_key`),
+    PRIMARY KEY (`f_resource_global_key`,`f_culture_id`),
     CONSTRAINT `fk_cul_resx_global` FOREIGN KEY (`f_culture_id`)
       REFERENCES `f_culture` (`f_culture_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

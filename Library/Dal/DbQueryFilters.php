@@ -29,8 +29,8 @@ class DbQueryFilters {
   public function whereFilters() {
     return $this->whereFilters;
   }
-  public function orderbyFilters() {
-    return $this->orderbyFilters;
+  public function orderByFilters() {
+    return $this->orderByFilters;
   }
   public function setFilters() {
     return $this->setFilters;

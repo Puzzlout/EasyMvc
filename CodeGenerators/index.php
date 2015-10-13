@@ -8,6 +8,7 @@ $GeneratorDesc = "Generate " . PlaceholderMessageModule . " constants class";
 const Controller = "Controller";
 const DalModule = "DalModule";
 const ViewName = "ViewName";
+const DaoGenerator = "../Generator/BuildDao";
 ?>
 
 <html>
@@ -32,6 +33,11 @@ const ViewName = "ViewName";
       <li>
         <a href="<?php echo str_replace(PlaceholderModule, ViewName, $GeneratorFileName); ?>">
           <?php echo str_replace(PlaceholderMessageModule, strtolower(ViewName), $GeneratorDesc); ?>
+        </a>
+      </li>
+      <li>
+        <a href="<?php echo DaoGenerator; ?>">
+          <?php echo "Refresh the DAO classes"; ?>
         </a>
       </li>
     </ul>

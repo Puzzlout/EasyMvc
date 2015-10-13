@@ -60,7 +60,7 @@ class Globalization extends ApplicationComponent {
   public function Init($source) {
     switch ($source) {
       case ResourceManagers\ResourceLoaderBase::FROM_DB:
-        $this->GlobalResources = $this->app()->dal()->getDalInstance()->selectMany(new \Library\BO\F_resource_global());
+        $this->GlobalResources = $this->app()->dal()->getDalInstance()->selectMany(new \Library\BO\F_resource_global(), new \Library\Dal\DbQueryFilters());
         break;
 
       default:

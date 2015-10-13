@@ -18,7 +18,7 @@ FrameworkConstants::SetNamedConstants(array(
 ));
 /**
  * Autoload defines global variables.
- */
+ */ 
 require_once '../Library/autoload.php';
 
 /**

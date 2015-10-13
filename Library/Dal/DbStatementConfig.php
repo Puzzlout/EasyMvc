@@ -39,8 +39,8 @@ class DbStatementConfig {
     $this->setDaoClassName(\Library\Helpers\CommonHelper::GetFullClassName($daoObject));
     $this->setTableName(\Library\Helpers\CommonHelper::GetShortClassName($daoObject));
     $this->setType($queryAction);
-    $this->BuildSelectClause((array) $daoObject);
-    $this->BuildWhereClause($filters->whereFilters());
+    //$this->BuildSelectClause((array) $daoObject);
+    //$this->BuildWhereClause($filters->whereFilters());
     $this->setFilters($filters);
   }
 

@@ -57,13 +57,14 @@ class BaseManager extends \Library\Dal\Manager {
    * Can be a bool (TRUE,FALSE), a integer or a list of Dao objects (of type  $dao_class) 
    */
   public function selectMany($object, DbQueryFilters $filters) {
-    $dbConfig = new DbStatementConfig();
+    $dbConfig = new DbStatementConfig($object, DbExecutionType::SELECT, $filters);
     $dbConfig->setType(DbExecutionType::SELECT);
     $dbConfig->setDaoClassName(\Library\Helpers\CommonHelper::GetFullClassName($object));
-    $dbConfig->BuildSelectClause(!$filters->selectFilters() ? $object : $filters->selectFilters());
+    $dbConfig->BuildSelectClause(!$filters->selectFilters() ? (array) $object : $filters->selectFilters());
     $dbConfig->BuildWhereClause($filters->whereFilters());
-    $dbConfig->BuildOrderClause($filters->orderbyFilters());
+    $dbConfig->BuildOrderClause($filters->orderByFilters());
     $dbConfig->BuildSelectQuery();
+    $this->addDbConfigItem($dbConfig);
     return $this->BindParametersAndExecute();
   }
 
@@ -184,9 +185,9 @@ class BaseManager extends \Library\Dal\Manager {
   }
 
   private function IsPropertyNameAFilter($propertyName, DbQueryFilters $filters) {
-    if (count($filters->whereFilters()) > 0) {
+    if (is_array($filters->whereFilters()) && count($filters->whereFilters()) > 0) {
       return in_array($propertyName, $filters->whereFilters());
-    } else if (count($filters->setFilters()) > 0) {
+    } else if (is_array($filters->setFilters()) && count($filters->setFilters()) > 0) {
       return in_array($propertyName, $filters->setFilters());
     } else {
       return FALSE;
