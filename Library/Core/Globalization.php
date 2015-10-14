@@ -48,19 +48,19 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 
 class Globalization extends ApplicationComponent {
 
-  protected $GlobalResources = array();
-  protected $LocalResources = array();
+  public $GlobalResources = array();
+  public $LocalResources = array();
   
   public function __construct(Application $app) {
     parent::__construct($app);
-    $this->GlobalResources = $this->Init(ResourceManagers\ResourceLoaderBase::FROM_DB);
-    $this->LocalResources = $this->Init(ResourceManagers\ResourceLoaderBase::FROM_DB);
+    $this->Init(ResourceManagers\ResourceLoaderBase::FROM_DB);
   }
   
   public function Init($source) {
     switch ($source) {
       case ResourceManagers\ResourceLoaderBase::FROM_DB:
         $this->GlobalResources = $this->app()->dal()->getDalInstance()->selectMany(new \Library\BO\F_resource_global(), new \Library\Dal\DbQueryFilters());
+        $this->LocalResources = $this->app()->dal()->getDalInstance()->selectMany(new \Library\BO\F_resource_local(), new \Library\Dal\DbQueryFilters());
         break;
 
       default:

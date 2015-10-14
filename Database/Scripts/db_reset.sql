@@ -191,13 +191,12 @@ CREATE TABLE IF NOT EXISTS `f_resource_global` (
 CREATE TABLE IF NOT EXISTS `f_resource_local` (
     `f_resource_local_key` varchar(50) NOT NULL COMMENT 'The identification of the resource. Ex: H3Title or ButtonAddSomething',
     `f_culture_id` int(11) NOT NULL,
-    `f_resource_local_value` varchar(4000) NOT NULL,
-    `f_resource_local_module` varchar(50) NOT NULL COMMENT 'Usually represents the Controller name with the prefix "Controller"',
     `f_resource_local_action` varchar(50) NOT NULL COMMENT 'Usually represents the action of the Controller executed',
-    PRIMARY KEY (`f_resource_local_key`),
+    `f_resource_local_module` varchar(50) NOT NULL COMMENT 'Usually represents the Controller name with the prefix "Controller"',
+    `f_resource_local_value` varchar(4000) NOT NULL,
+    PRIMARY KEY (`f_resource_local_key`,`f_culture_id`),
     CONSTRAINT `fk_cul_resx_local` FOREIGN KEY (`f_culture_id`)
-      REFERENCES `f_culture` (`f_culture_id`) ON DELETE CASCADE,
-    UNIQUE INDEX `un_f_resource_local` (`f_resource_local_module` ASC, `f_resource_local_action` ASC)
+      REFERENCES `f_culture` (`f_culture_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------------------------------------------------------
@@ -217,6 +216,12 @@ INSERT INTO `f_user_role` (`f_user_role_desc`) VALUES ('Default');
 INSERT INTO `f_user` VALUES (1,'t','t',0,null,null,null,'t@t.com',1,null);
 
 INSERT INTO `f_culture` (`f_culture_value`) VALUES ('en'),('en-US'),('fr'),('fr-FR');
+
+INSERT INTO `easymvc_db`.`f_resource_global` VALUES 
+('test', 'This is a test value', '1'),
+('test', 'This is a test value', '2'),
+('test', 'C\'est une valeur de test', '3'),
+('test', 'C\'est une valeur de test', '4');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
