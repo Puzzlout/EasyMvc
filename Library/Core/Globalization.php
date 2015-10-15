@@ -48,28 +48,108 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 
 class Globalization extends ApplicationComponent {
 
+  const GLOBAL_RESX_OBJ_LIST = "GLOBAL_RESX_OBJ_LIST";
+  const LOCAL_RESX_OBJ_LIST = "LOCAL_RESX_OBJ_LIST";
+
   public $GlobalResources = array();
   public $LocalResources = array();
-  
+
   public function __construct(Application $app) {
     parent::__construct($app);
     $this->Init(ResourceManagers\ResourceLoaderBase::FROM_DB);
   }
-  
+
   public function Init($source) {
+    $dal = $this->app()->dal()->getDalInstance();
     switch ($source) {
       case ResourceManagers\ResourceLoaderBase::FROM_DB:
-        $this->GlobalResources = $this->app()->dal()->getDalInstance()->selectMany(new \Library\BO\F_resource_global(), new \Library\Dal\DbQueryFilters());
-        $this->LocalResources = $this->app()->dal()->getDalInstance()->selectMany(new \Library\BO\F_resource_local(), new \Library\Dal\DbQueryFilters());
+        $objectLists = array();
+        $objectLists[self::GLOBAL_RESX_OBJ_LIST] = $dal->selectMany(new \Library\BO\F_resource_global(), $dbFilters);
+        $objectLists[self::LOCAL_RESX_OBJ_LIST] = $dal->selectMany(new \Library\BO\F_resource_local(), $dbFilters);
+        $this->OrganizeResourcesIntoAssociativeArray($objectLists);
         break;
 
       default:
         //todo: create error code
-        throw new \Exception("Source ". $source . " is not implemented", 0, NULL);
+        throw new \Exception("Source " . $source . " is not implemented", 0, NULL);
     }
-    
   }
 
+  /**
+   * $this->GlobalResources and $this->LocalResources hold a array of F_resource_global
+   * and F_resource_local objects.
+   * 
+   * We could use these list and use a loop to find the resource by key and culture.
+   * Instead, let's transform the array into an associative array of this form:
+   * 
+   * //For Global Resources
+   * $array = array(
+   *    "en" => array(
+   *      "key1" => "value1",
+   *      "key2" => "value2",
+   *      ...
+   *      "keyN" => "valueN",
+   *    ),
+   *    "fr" => array(
+   *      "key1" => "value1",
+   *      "key2" => "value2",
+   *      ...
+   *      "keyN" => "valueN",
+   *    )
+   * );
+   * 
+   * //For Local Resources
+   *    "en" => array(
+   *      "module1" => array(
+   *        "common" => array(
+   *          "key1" => "value1",
+   *          ...
+   *          "keyN" => "valueN"
+   *        ),
+   *        "action1" => array(
+   *          "key1" => "value1",
+   *          ...
+   *          "keyN" => "valueN"
+   *        ),
+   *        "action2" => array(
+   *          "key1" => "value1",
+   *          ...
+   *          "keyN" => "valueN"
+   *        ),
+   *      ),
+   *      "module2" => array(
+   *        "action3" => array(
+   *          "key1" => "value1",
+   *          ...
+   *          "keyN" => "valueN"
+   *        ),
+   *        "action4" => array(
+   *          "key1" => "value1",
+   *          ...
+   *          "keyN" => "valueN"
+   *        ),
+   *      ),
+   *    ),
+   *    ... repeat for other languages ...
+   * );
+   */
+  private function OrganizeResourcesIntoAssociativeArray($objectLists) {
+    $dbFilters = new \Library\Dal\DbQueryFilters();
+    $dbFilters->orderByFilters(\Library\BO\F_culture::F_CULTURE_ID);
+    $cultures = $dal->selectMany(new \Library\BO\F_culture(), $dbFilters);
+    $this->OrganizeGlobalResources()
+  }
+
+  private function OrganizeGlobalResources() {
+    $assocArray = array();
+    foreach ($this->GlobalResources as $key => $value) {
+      
+    }
+  }
+
+  private function functionName($param) {
+    
+  }
 
   public function getCommonResource($common_source, $key) {
     if ($this->res_common) {
