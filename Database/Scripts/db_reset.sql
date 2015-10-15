@@ -174,7 +174,9 @@ CREATE TABLE IF NOT EXISTS `f_document` (
 
 CREATE TABLE IF NOT EXISTS `f_culture` (
     `f_culture_id` int(11) NOT NULL AUTO_INCREMENT,
-    `f_culture_value` varchar(5) NOT NULL COMMENT 'Culture of format xx-YY or xx only',
+    `f_culture_lang` varchar(2) NOT NULL COMMENT 'Language of format xx',
+    `f_culture_currency` varchar(2) NULL COMMENT 'Currency of format XX',
+    `f_culture_desc` varchar(25) NOT NULL COMMENT 'Description of culture. ex: American English',
     PRIMARY KEY (`f_culture_id`),
     UNIQUE INDEX `un_f_culture` (`f_culture_value` ASC) 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -190,10 +192,10 @@ CREATE TABLE IF NOT EXISTS `f_resource_global` (
 
 CREATE TABLE IF NOT EXISTS `f_resource_local` (
     `f_resource_local_key` varchar(50) NOT NULL COMMENT 'The identification of the resource. Ex: H3Title or ButtonAddSomething',
-    `f_culture_id` int(11) NOT NULL,
     `f_resource_local_action` varchar(50) NOT NULL COMMENT 'Usually represents the action of the Controller executed',
     `f_resource_local_module` varchar(50) NOT NULL COMMENT 'Usually represents the Controller name with the prefix "Controller"',
     `f_resource_local_value` varchar(4000) NOT NULL,
+    `f_culture_id` int(11) NOT NULL,
     PRIMARY KEY (`f_resource_local_key`,`f_culture_id`),
     CONSTRAINT `fk_cul_resx_local` FOREIGN KEY (`f_culture_id`)
       REFERENCES `f_culture` (`f_culture_id`) ON DELETE CASCADE
@@ -215,13 +217,27 @@ INSERT INTO `f_user_role` (`f_user_role_desc`) VALUES ('Default');
 
 INSERT INTO `f_user` VALUES (1,'t','t',0,null,null,null,'t@t.com',1,null);
 
-INSERT INTO `f_culture` (`f_culture_value`) VALUES ('en'),('en-US'),('fr'),('fr-FR');
+INSERT INTO `f_culture` (`f_culture_value`) VALUES 
+('en', null, 'English'),
+('en', 'US', 'American English'),
+('fr', null, 'Français'),
+('fr', 'FR', 'Français (France)');
 
 INSERT INTO `easymvc_db`.`f_resource_global` VALUES 
 ('test', 'This is a test value', '1'),
 ('test', 'This is a test value', '2'),
 ('test', 'C\'est une valeur de test', '3'),
 ('test', 'C\'est une valeur de test', '4');
+
+INSERT INTO `easymvc_db`.`f_resource_local` VALUES 
+('h1_title', 'account', 'login', 'Login View', '1'),
+('email_label', 'account', 'login', 'E-mail:', '1'),
+('h1_title', 'account', 'login', 'Login View', '2'),
+('email_label', 'account', 'login', 'E-mail:', '2'),
+('h1_title', 'account', 'login', 'Vue Connexion', '3'),
+('email_label', 'account', 'login', 'E-mail :', '3'),
+('h1_title', 'account', 'login', 'Vue Connexion', '4'),
+('email_label', 'account', 'login', 'E-mail :', '4');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

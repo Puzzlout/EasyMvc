@@ -33,6 +33,7 @@ abstract class Application {
   public $toolTip;
   protected $security;
   public $error;
+  public $cultures = array();
 
   public function __construct(ErrorManager $errorManager) {
     $this->error = $errorManager;
@@ -42,6 +43,7 @@ abstract class Application {
     $this->config = new Config($this);
     $this->dal = new \Library\Dal\Managers('PDO', $this);
     $this->context = new Context($this);
+    $this->cultures = $this->GetCultureArray();
     $this->i8n = new Globalization($this);
     $this->imageUtil = new \Library\Utility\ImageUtility($this);
 
@@ -55,6 +57,18 @@ abstract class Application {
 //    $this->cssManager = new Core\Utility\CssManager($this);
   }
 
+  
+  public function GetCultureArray() {
+    $dal = $this->dal->getDalInstance();
+    $dbFilters = new \Library\Dal\DbQueryFilters();
+    $dbFilters->setOrderByFilters(array(\Library\BO\F_culture::F_CULTURE_ID));
+    $cultureObjects = $dal->selectMany(new \Library\BO\F_culture(), $dbFilters);
+    $cultureAssocArray = array();
+    foreach ($cultureObjects as $culture) {
+      array_push($cultureAssocArray, $culture->culture_id());
+    }
+    return $cultureAssocArray;
+  }
   public function initConfig() {
     
   }

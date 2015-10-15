@@ -134,10 +134,7 @@ class Globalization extends ApplicationComponent {
    * );
    */
   private function OrganizeResourcesIntoAssociativeArray($objectLists) {
-    $dbFilters = new \Library\Dal\DbQueryFilters();
-    $dbFilters->orderByFilters(\Library\BO\F_culture::F_CULTURE_ID);
-    $cultures = $dal->selectMany(new \Library\BO\F_culture(), $dbFilters);
-    $this->OrganizeGlobalResources()
+    $this->OrganizeGlobalResources();
   }
 
   private function OrganizeGlobalResources() {

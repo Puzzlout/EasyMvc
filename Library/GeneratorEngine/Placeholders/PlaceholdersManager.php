@@ -6,7 +6,7 @@
  * @author Jeremie Litzler
  * @copyright Copyright (c) 2015
  * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
- * @link https://github.com/WebDevJL/EasyMVC
+ * @link https://github.com/WebDevJL/EasyMvc
  * @since Version 1.0.0
  * @package 
  */
@@ -23,7 +23,7 @@ class PlaceholdersManager {
         PhpDocPlaceholders::AUTHOR => "Jeremie Litzler",
         PhpDocPlaceholders::COPYRIGHT_YEAR => date("Y"),
         PhpDocPlaceholders::LICENCE => "http://opensource.org/licenses/gpl-license.php GNU Public License",
-        PhpDocPlaceholders::LINK => "https://github.com/WebDevJL/EasyMVC/blob/master/README.md",
+        PhpDocPlaceholders::LINK => "https://github.com/WebDevJL/EasyMvc/blob/master/README.md",
         PhpDocPlaceholders::PACKAGE => $params[\Library\GeneratorEngine\BaseClassGenerator::ClassNameKey],
         PhpDocPlaceholders::SUBPACKAGE => "",
         PhpDocPlaceholders::VERSION_NUMBER => FrameworkConstants_Version,
