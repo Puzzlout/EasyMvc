@@ -174,11 +174,12 @@ CREATE TABLE IF NOT EXISTS `f_document` (
 
 CREATE TABLE IF NOT EXISTS `f_culture` (
     `f_culture_id` int(11) NOT NULL AUTO_INCREMENT,
-    `f_culture_lang` varchar(2) NOT NULL COMMENT 'Language of format xx',
-    `f_culture_currency` varchar(2) NULL COMMENT 'Currency of format XX',
-    `f_culture_desc` varchar(25) NOT NULL COMMENT 'Description of culture. ex: American English',
+    `f_culture_language` varchar(3) NOT NULL COMMENT 'Language of format xx',
+    `f_culture_region` varchar(3) NULL COMMENT 'Currency of format XX',
+    `f_culture_iso_639` varchar(3)NOT NULL COMMENT 'ISO 639x Value',
+    `f_culture_display_name` varchar(50) NOT NULL COMMENT 'Description of culture. ex: American English',
     PRIMARY KEY (`f_culture_id`),
-    UNIQUE INDEX `un_f_culture` (`f_culture_value` ASC) 
+    UNIQUE INDEX `un_f_culture` (`f_culture_language` ASC, `f_culture_region` ASC) 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `f_resource_global` (
@@ -217,11 +218,136 @@ INSERT INTO `f_user_role` (`f_user_role_desc`) VALUES ('Default');
 
 INSERT INTO `f_user` VALUES (1,'t','t',0,null,null,null,'t@t.com',1,null);
 
-INSERT INTO `f_culture` (`f_culture_value`) VALUES 
-('en', null, 'English'),
-('en', 'US', 'American English'),
-('fr', null, 'Français'),
-('fr', 'FR', 'Français (France)');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('af','ZA','AFK','Afrikaans - South Africa');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('sq','AL','SQI','Albanian - Albania');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('ar','DZ','ARG','Arabic - Algeria');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('ar','BH','ARH','Arabic - Bahrain');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('ar','EG','ARE','Arabic - Egypt');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('ar','IQ','ARI','Arabic - Iraq');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('ar','JO','ARJ','Arabic - Jordan');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('ar','KW','ARK','Arabic - Kuwait');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('ar','LB','ARB','Arabic - Lebanon');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('ar','LY','ARL','Arabic - Libya');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('ar','MA','ARM','Arabic - Morocco');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('ar','OM','ARO','Arabic - Oman');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('ar','QA','ARQ','Arabic - Qatar');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('ar','SA','ARA','Arabic - Saudi Arabia');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('ar','SY','ARS','Arabic - Syria');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('ar','TN','ART','Arabic - Tunisia');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('ar','AE','ARU','Arabic - United Arab Emirates');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('ar','YE','ARY','Arabic - Yemen');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('hy','AM','','Armenian - Armenia');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('eu','ES','EUQ','Basque - Basque');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('be','BY','BEL','Belarusian - Belarus');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('bg','BG','BGR','Bulgarian - Bulgaria');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('ca','ES','CAT','Catalan - Catalan');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('zh','CN','CHS','Chinese - China');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('zh','HK','ZHH','Chinese - Hong Kong SAR');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('zh','MO','','Chinese - Macau SAR');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('zh','SG','ZHI','Chinese - Singapore');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('zh','TW','CHT','Chinese - Taiwan');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('zh','CHS','','Chinese (Simplified)');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('zh','CHT','','Chinese (Traditional)');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('hr','HR','HRV','Croatian - Croatia');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('cs','CZ','CSY','Czech - Czech Republic');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('da','DK','DAN','Danish - Denmark');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('div','MV','','Dhivehi - Maldives');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('nl','BE','NLB','Dutch - Belgium');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('nl','NL','','Dutch - The Netherlands');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('en','AU','ENA','English - Australia');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('en','BZ','ENL','English - Belize');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('en','CA','ENC','English - Canada');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('en','CB','','English - Caribbean');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('en','IE','ENI','English - Ireland');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('en','JM','ENJ','English - Jamaica');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('en','NZ','ENZ','English - New Zealand');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('en','PH','','English - Philippines');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('en','ZA','ENS','English - South Africa');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('en','TT','ENT','English - Trinidad and Tobago');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('en','GB','ENG','English - United Kingdom');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('en','US','ENU','English - United States');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('en','ZW','','English - Zimbabwe');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('et','EE','ETI','Estonian - Estonia');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('fo','FO','FOS','Faroese - Faroe Islands');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('fa','IR','FAR','Farsi - Iran');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('fi','FI','FIN','Finnish - Finland');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('fr','BE','FRB','French - Belgium');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('fr','CA','FRC','French - Canada');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('fr','FR','','French - France');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('fr','LU','FRL','French - Luxembourg');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('fr','MC','','French - Monaco');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('fr','CH','FRS','French - Switzerland');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('gl','ES','','Galician - Galician');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('ka','GE','','Georgian - Georgia');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('de','AT','DEA','German - Austria');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('de','DE','','German - Germany');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('de','LI','DEC','German - Liechtenstein');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('de','LU','DEL','German - Luxembourg');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('de','CH','DES','German - Switzerland');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('el','GR','ELL','Greek - Greece');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('gu','IN','','Gujarati - India');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('he','IL','HEB','Hebrew - Israel');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('hi','IN','HIN','Hindi - India');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('hu','HU','HUN','Hungarian - Hungary');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('is','IS','ISL','Icelandic - Iceland');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('id','ID','','Indonesian - Indonesia');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('it','IT','','Italian - Italy');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('it','CH','ITS','Italian - Switzerland');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('ja','JP','JPN','Japanese - Japan');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('kn','IN','','Kannada - India');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('kk','KZ','','Kazakh - Kazakhstan');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('kok','IN','','Konkani - India');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('ko','KR','KOR','Korean - Korea');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('ky','KZ','','Kyrgyz - Kazakhstan');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('lv','LV','LVI','Latvian - Latvia');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('lt','LT','LTH','Lithuanian - Lithuania');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('mk','MK','MKD','Macedonian (FYROM)');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('ms','BN','','Malay - Brunei');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('ms','MY','','Malay - Malaysia');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('mr','IN','','Marathi - India');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('mn','MN','','Mongolian - Mongolia');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('nb','NO','','Norwegian (Bokmål) - Norway');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('nn','NO','','Norwegian (Nynorsk) - Norway');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('pl','PL','PLK','Polish - Poland');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('pt','BR','PTB','Portuguese - Brazil');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('pt','PT','','Portuguese - Portugal');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('pa','IN','','Punjabi - India');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('ro','RO','ROM','Romanian - Romania');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('ru','RU','RUS','Russian - Russia');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('sa','IN','','Sanskrit - India');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('sk','SK','SKY','Slovak - Slovakia');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('sl','SI','SLV','Slovenian - Slovenia');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('es','AR','ESS','Spanish - Argentina');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('es','BO','ESB','Spanish - Bolivia');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('es','CL','ESL','Spanish - Chile');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('es','CO','ESO','Spanish - Colombia');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('es','CR','ESC','Spanish - Costa Rica');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('es','DO','ESD','Spanish - Dominican Republic');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('es','EC','ESF','Spanish - Ecuador');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('es','SV','ESE','Spanish - El Salvador');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('es','GT','ESG','Spanish - Guatemala');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('es','HN','ESH','Spanish - Honduras');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('es','MX','ESM','Spanish - Mexico');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('es','NI','ESI','Spanish - Nicaragua');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('es','PA','ESA','Spanish - Panama');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('es','PY','ESZ','Spanish - Paraguay');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('es','PE','ESR','Spanish - Peru');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('es','PR','ES','Spanish - Puerto Rico');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('es','ES','','Spanish - Spain');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('es','UY','ESY','Spanish - Uruguay');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('es','VE','ESV','Spanish - Venezuela');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('sw','KE','','Swahili - Kenya');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('sv','FI','SVF','Swedish - Finland');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('sv','SE','','Swedish - Sweden');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('syr','SY','','Syriac - Syria');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('ta','IN','','Tamil - India');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('tt','RU','','Tatar - Russia');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('te','IN','','Telugu - India');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('th','TH','THA','Thai - Thailand');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('tr','TR','TRK','Turkish - Turkey');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('uk','UA','UKR','Ukrainian - Ukraine');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('ur','PK','URD','Urdu - Pakistan');
+INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('vi','VN','VIT','Vietnamese - Vietnam');
 
 INSERT INTO `easymvc_db`.`f_resource_global` VALUES 
 ('test', 'This is a test value', '1'),
