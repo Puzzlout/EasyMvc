@@ -12,6 +12,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 abstract class Application {
 
   const CONTROLLER_NAME_PREFIX = "F_";
+  const CULTURES_ARRAY_KEY = "application_cultures";
 
   public $HttpRequest;
   protected $httpResponse;
@@ -57,25 +58,23 @@ abstract class Application {
 //    $this->cssManager = new Core\Utility\CssManager($this);
   }
 
-  
   public function GetCultureArray() {
     $dal = $this->dal->getDalInstance();
     $dbFilters = new \Library\Dal\DbQueryFilters();
     $dbFilters->setOrderByFilters(array(\Library\BO\F_culture_extension::F_CULTURE_ID));
     $cultureObjects = $dal->selectMany(new \Library\BO\F_culture_extension(), $dbFilters);
-    $cultureAssocArray = array();
-    foreach ($cultureObjects as $cultureObj) {
-      $culture = array(
-          \Library\BO\F_culture_extension::CultureArrayKey . $cultureObj->f_culture_id(), array(
-              $cultureObj->f_culture_language(),
-              $cultureObj->f_culture_region(),
-              $cultureObj->f_culture_iso_639(),
-              $cultureObj->f_culture_display_name()
-          ));
-      array_push($cultureAssocArray, $culture);
+    $cultureAssocArray = array(\Library\BO\F_culture_extension::FullArrayCultureKey => null);
+    if (count($cultureObjects) > 0) {
+      foreach ($cultureObjects as $cultureObj) {
+        $cultureAssocArray
+            [\Library\BO\F_culture_extension::FullArrayCultureKey]
+            [\Library\BO\F_culture_extension::SingleCultureArrayKey . $cultureObj->f_culture_id()] = 
+            \Library\Helpers\CommonHelper::CleanPrefixedkeyInAssocArray((array) $cultureObj);
+      }
     }
     return $cultureAssocArray;
   }
+
   public function initConfig() {
     
   }
@@ -158,7 +157,7 @@ abstract class Application {
       if ($e->getCode() == \Library\Core\Router::NO_ROUTE) {
 // Si aucune route ne correspond, c'est que la page demandée n'existe pas.
         $error = new \Library\BO\Error(
-                \Library\Enums\ErrorCode::PageNotFound, "routing", "Page not found", "The route " . $this->httpRequest->requestURI() . " is not found."
+            \Library\Enums\ErrorCode::PageNotFound, "routing", "Page not found", "The route " . $this->httpRequest->requestURI() . " is not found."
         );
         $this->httpResponse->displayError($error);
       }
@@ -175,12 +174,12 @@ abstract class Application {
     $controllerName = $this->BuildControllerName($route);
     $FrameworkControllersListClass = "\Library\Generated\FrameworkControllers";
     $ApplicationControllersListClass = "\Applications\\" .
-            FrameworkConstants_AppName .
-            "\Generated\\" .
-            FrameworkConstants_AppName . "Controllers";
+        FrameworkConstants_AppName .
+        "\Generated\\" .
+        FrameworkConstants_AppName . "Controllers";
 
     $controllerClassName = $this->FindControllerClassName(
-            $controllerName, $FrameworkControllersListClass, $ApplicationControllersListClass, $route
+        $controllerName, $FrameworkControllersListClass, $ApplicationControllersListClass, $route
     );
     return $this->InstanciateController($controllerClassName, $route);
   }
@@ -196,16 +195,16 @@ abstract class Application {
   public function FindControllerClassName($controllerName, $FrameworkControllersListClass, $ApplicationControllersListClass, \Library\Core\Route $route) {
     $FrameworkControllers = $FrameworkControllersListClass::GetList();
     $ApplicationControllers = $ApplicationControllersListClass::GetList();
-    
+
     if (array_key_exists($controllerName . BaseClassGenerator::Key, $FrameworkControllers)) {
       $frameworkControllerFolderPath = \Library\Enums\NameSpaceName::LibFolderName
-              . \Library\Enums\NameSpaceName::LibControllersFolderName;
+          . \Library\Enums\NameSpaceName::LibControllersFolderName;
       $controllerClass = $frameworkControllerFolderPath . $controllerName;
       $this->router()->isWsCall = TRUE;
     } else if (array_key_exists($controllerName . BaseClassGenerator::Key, $ApplicationControllers)) {
       $applicationControllerFolderPath = \Library\Enums\NameSpaceName::AppsFolderName . "\\"
-              . $this->name
-              . \Library\Enums\NameSpaceName::AppsControllersFolderName;
+          . $this->name
+          . \Library\Enums\NameSpaceName::AppsControllersFolderName;
       $controllerClass = $applicationControllerFolderPath . $controllerName;
     } else {
       error_log("The controller requested '$controllerClass' doesn't exist.");

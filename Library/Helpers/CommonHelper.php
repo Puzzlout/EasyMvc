@@ -308,5 +308,21 @@ class CommonHelper {
       apc_add(\Library\Enums\CacheKeys::XmlFilesLoaded, $xmlFilesLoaded);
     }
   }
-
+  
+  /**
+   * Clean an associative array when its key have a prefix, like "*" which happens
+   * when converting an object to associative array.
+   * 
+   * @param array $array the array to clean
+   * @param string $prefix the prefix to remove
+   * @return associative array
+   */
+  public static function CleanPrefixedkeyInAssocArray($array, $prefix = "\0*\0") {
+    $cleanedArray = array("array");
+    foreach ($array as $key => $value) {
+      $keyCleaned = str_replace($prefix, "", $key);
+      $cleanedArray["array"][$keyCleaned] = $value;
+    }
+    return $cleanedArray["array"];
+  }
 }

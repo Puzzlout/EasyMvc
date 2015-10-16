@@ -15,5 +15,6 @@ namespace Library\BO;
 if (!FrameworkConstants_ExecutionAccessRestriction) { exit('No direct script access allowed'); }
 
 class F_culture_extension extends \Library\BO\F_culture {
-  const CultureArrayKey = "culture_";
+  const FullArrayCultureKey = "application_cultures";
+  const SingleCultureArrayKey = "culture_";
 }
