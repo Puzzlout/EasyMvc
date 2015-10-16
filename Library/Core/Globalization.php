@@ -42,14 +42,19 @@
 
 namespace Library\Core;
 
+use Library\BO\F_common_resource;
+use Library\BO\F_controller_resource;
+
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
 class Globalization extends ApplicationComponent {
 
-  const GLOBAL_RESX_OBJ_LIST = "GLOBAL_RESX_OBJ_LIST";
-  const LOCAL_RESX_OBJ_LIST = "LOCAL_RESX_OBJ_LIST";
+  const COMMON_RESX_OBJ_LIST = "COMMON_RESX_OBJ_LIST";
+  const CONTROLLER_RESX_OBJ_LIST = "CONTROLLER_RESX_OBJ_LIST";
+  const COMMON_RESX_ARRAY_KEY = "COMMON_RESX_ARRAY_KEY";
+  const CONTROLLER_RESX_ARRAY_KEY = "CONTROLLER_RESX_ARRAY_KEY";
 
   public $GlobalResources = array();
   public $LocalResources = array();
@@ -64,8 +69,8 @@ class Globalization extends ApplicationComponent {
     switch ($source) {
       case ResourceManagers\ResourceLoaderBase::FROM_DB:
         $objectLists = array();
-        $objectLists[self::GLOBAL_RESX_OBJ_LIST] = $dal->selectMany(new \Library\BO\F_common_resource(), new \Library\Dal\DbQueryFilters());
-        $objectLists[self::LOCAL_RESX_OBJ_LIST] = $dal->selectMany(new \Library\BO\F_control_resource(), new \Library\Dal\DbQueryFilters());
+        $objectLists[self::COMMON_RESX_OBJ_LIST] = $dal->selectMany(new \Library\BO\F_common_resource(), new \Library\Dal\DbQueryFilters());
+        $objectLists[self::CONTROLLER_RESX_OBJ_LIST] = $dal->selectMany(new \Library\BO\F_controller_resource(), new \Library\Dal\DbQueryFilters());
         $this->OrganizeResourcesIntoAssociativeArray($objectLists);
         break;
 
@@ -134,18 +139,29 @@ class Globalization extends ApplicationComponent {
    * );
    */
   private function OrganizeResourcesIntoAssociativeArray($objectLists) {
-    $this->OrganizeGlobalResources();
+    $this->OrganizeCommonResources($objectLists[self::COMMON_RESX_OBJ_LIST]);
+    $this->OrganizeControllerResources($objectLists[self::CONTROLLER_RESX_OBJ_LIST]);
   }
 
-  private function OrganizeGlobalResources() {
+  private function OrganizeCommonResources($resources) {
+    $assocArray = array(self::COMMON_RESX_ARRAY_KEY);
+    foreach ($resources as $resourceObj) {
+      $cleanArray = \Library\Helpers\CommonHelper::CleanPrefixedkeyInAssocArray((array) $resourceObj);
+      if (isset($assocArray[self::COMMON_RESX_ARRAY_KEY][$resourceObj->f_culture_id()])) {
+        
+      } else {
+        $assocArray
+            [self::COMMON_RESX_ARRAY_KEY]
+            [$cleanArray[\Library\BO\F_common_resource::F_CULTURE_ID]] = $cleanArray;
+      }
+    }
+  }
+
+  private function OrganizeControllerResources($param) {
     $assocArray = array();
     foreach ($this->GlobalResources as $key => $value) {
       
     }
-  }
-
-  private function functionName($param) {
-    
   }
 
   public function getCommonResource($common_source, $key) {
@@ -174,8 +190,8 @@ class Globalization extends ApplicationComponent {
       return $this->res_local[$this->app->locale][$page_name][$key];
     } else {//always display placeholder for missing locale resource
       return (array_key_exists($page_name, $this->res_local[$this->app->context->defaultLang])) ?
-              $this->res_local[$this->app->context->defaultLang][$page_name][$key] :
-              'Missing resource: {' . $this->app->locale . '}{' . $page_name . '}{' . $key . '}';
+          $this->res_local[$this->app->context->defaultLang][$page_name][$key] :
+          'Missing resource: {' . $this->app->locale . '}{' . $page_name . '}{' . $key . '}';
     }
 
     return null;
@@ -190,12 +206,12 @@ class Globalization extends ApplicationComponent {
   public function getLocalResourceArray($page_name) {
     if (isset($this->res_local[$this->app->locale][$page_name])) {
       return (array_key_exists($page_name, $this->res_local[$this->app->locale])) ?
-              $this->res_local[$this->app->locale][$page_name] :
-              $this->getCommonResourceArray($page_name);
+          $this->res_local[$this->app->locale][$page_name] :
+          $this->getCommonResourceArray($page_name);
     } else {//always display placeholder for missing locale resource
       return (array_key_exists($page_name, $this->res_local[$this->app->context->defaultLang])) ?
-              $this->res_local[$this->app->context->defaultLang][$page_name] :
-              $this->getCommonResourceArray($page_name);
+          $this->res_local[$this->app->context->defaultLang][$page_name] :
+          $this->getCommonResourceArray($page_name);
     }
   }
 
@@ -207,8 +223,8 @@ class Globalization extends ApplicationComponent {
    */
   public function getCommonResourceArray($page_name) {
     if (
-            array_key_exists($this->app->locale, $this->res_common) &&
-            array_key_exists($page_name, $this->res_common[$this->app->locale])) {
+        array_key_exists($this->app->locale, $this->res_common) &&
+        array_key_exists($page_name, $this->res_common[$this->app->locale])) {
       return $this->res_common[$this->app->locale][$page_name];
     } else {//always display placeholder for missing locale resource
       return $this->res_common[$this->app->context->defaultLang][$page_name];

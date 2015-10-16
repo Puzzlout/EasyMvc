@@ -191,14 +191,14 @@ CREATE TABLE IF NOT EXISTS `f_common_resource` (
       REFERENCES `f_culture` (`f_culture_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS `f_control_resource` (
-    `f_control_resource_key` varchar(50) NOT NULL COMMENT 'The identification of the resource. Ex: H3Title or ButtonAddSomething',
-    `f_control_resource_action` varchar(50) NOT NULL COMMENT 'Usually represents the action of the Controller executed',
-    `f_control_resource_module` varchar(50) NOT NULL COMMENT 'Usually represents the Controller name with the prefix "Controller"',
-    `f_control_resource_value` varchar(4000) NOT NULL,
+CREATE TABLE IF NOT EXISTS `f_controller_resource` (
+    `f_controller_resource_key` varchar(50) NOT NULL COMMENT 'The identification of the resource. Ex: H3Title or ButtonAddSomething',
+    `f_controller_resource_action` varchar(50) NOT NULL COMMENT 'Usually represents the action of the Controller executed',
+    `f_controller_resource_module` varchar(50) NOT NULL COMMENT 'Usually represents the Controller name with the prefix "Controller"',
+    `f_controller_resource_value` varchar(4000) NOT NULL,
     `f_culture_id` int(11) NOT NULL,
-    PRIMARY KEY (`f_control_resource_key`,`f_culture_id`),
-    CONSTRAINT `fk_cul_resx_control` FOREIGN KEY (`f_culture_id`)
+    PRIMARY KEY (`f_controller_resource_key`, `f_controller_resource_action`, `f_controller_resource_module`, `f_culture_id`),
+    CONSTRAINT `fk_cul_resx_controller` FOREIGN KEY (`f_culture_id`)
       REFERENCES `f_culture` (`f_culture_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -351,16 +351,25 @@ INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_
 
 INSERT INTO `easymvc_db`.`f_common_resource` VALUES 
 ('test', 'This is a test value', '47'),
+('test2', 'This is a test value2', '47'),
 ('test', 'This is a test value', '48'),
-('test', 'C\'est une valeur de test', '56');
+('test2', 'This is a test value2', '48'),
+('test', 'C\'est une valeur de test', '56'),
+('test2', 'C\'est une valeur de test2', '56');
 
-INSERT INTO `easymvc_db`.`f_control_resource` VALUES 
+INSERT INTO `easymvc_db`.`f_controller_resource` VALUES 
 ('h1_title', 'account', 'login', 'Login View', '47'),
 ('email_label', 'account', 'login', 'E-mail:', '47'),
+('h1_title', 'account', 'create', 'Create account View', '47'),
+('email_label', 'account', 'create', 'E-mail:', '47'),
 ('h1_title', 'account', 'login', 'Login View', '48'),
 ('email_label', 'account', 'login', 'E-mail:', '48'),
+('h1_title', 'account', 'create', 'Create account View', '48'),
+('email_label', 'account', 'create', 'E-mail:', '48'),
 ('h1_title', 'account', 'login', 'Vue Connexion', '56'),
-('email_label', 'account', 'login', 'E-mail :', '56');
+('email_label', 'account', 'login', 'E-mail :', '56'),
+('h1_title', 'account', 'create', 'Vue Création de compte', '56'),
+('email_label', 'account', 'create', 'E-mail :', '56');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -8,9 +8,9 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 
 abstract class Entity implements \ArrayAccess {
 
-  public function __construct(array $donnees = array()) {
-    if (!empty($donnees)) {
-      $this->hydrate($donnees);
+  public function __construct(array $assocArray = array()) {
+    if (!empty($assocArray)) {
+      $this->hydrate($assocArray);
     }
   }
 
