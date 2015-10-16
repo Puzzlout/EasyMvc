@@ -134,6 +134,41 @@ class Globalization extends ApplicationComponent {
 
   /**
    * 
+   * //For Controller Resources
+   *    "en" => array(
+   *      "module1" => array(
+   *        "common" => array(
+   *          "key1" => "value1",
+   *          ...
+   *          "keyN" => "valueN"
+   *        ),
+   *        "action1" => array(
+   *          "key1" => "value1",
+   *          ...
+   *          "keyN" => "valueN"
+   *        ),
+   *        "action2" => array(
+   *          "key1" => "value1",
+   *          ...
+   *          "keyN" => "valueN"
+   *        ),
+   *      ),
+   *      "module2" => array(
+   *        "action3" => array(
+   *          "key1" => "value1",
+   *          ...
+   *          "keyN" => "valueN"
+   *        ),
+   *        "action4" => array(
+   *          "key1" => "value1",
+   *          ...
+   *          "keyN" => "valueN"
+   *        ),
+   *      ),
+   *    ),
+   *    ... repeat for other languages ...
+   * );
+   * 
    * @param array(of Library\BO\F_controller_resource) $resources the objects to loop through
    */
   private function OrganizeControllerResources($resources) {
