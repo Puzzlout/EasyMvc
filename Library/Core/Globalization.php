@@ -56,8 +56,8 @@ class Globalization extends ApplicationComponent {
   const COMMON_RESX_ARRAY_KEY = "COMMON_RESX_ARRAY_KEY";
   const CONTROLLER_RESX_ARRAY_KEY = "CONTROLLER_RESX_ARRAY_KEY";
 
-  public $GlobalResources = array();
-  public $LocalResources = array();
+  public $CommonResources = array();
+  public $ControllerResources = array();
 
   public function __construct(Application $app) {
     parent::__construct($app);
@@ -81,21 +81,29 @@ class Globalization extends ApplicationComponent {
   }
 
   /**
-   * $this->GlobalResources and $this->LocalResources hold a array of F_resource_global
+   * $this->CommonResources and $this->ControllerResources hold a array of F_resource_global
    * and F_resource_local objects.
    * 
    * We could use these list and use a loop to find the resource by key and culture.
    * Instead, let's transform the array into an associative array of this form:
+   */
+  private function OrganizeResourcesIntoAssociativeArray($objectLists) {
+    $this->OrganizeCommonResources($objectLists[self::COMMON_RESX_OBJ_LIST]);
+    $this->OrganizeControllerResources($objectLists[self::CONTROLLER_RESX_OBJ_LIST]);
+  }
+
+  /**
+   * Build the associative array for the Common resources.
+   * The structure is:
    * 
-   * //For Global Resources
    * $array = array(
-   *    "en" => array(
+   *    "culture_id_1" => array(
    *      "key1" => "value1",
    *      "key2" => "value2",
    *      ...
    *      "keyN" => "valueN",
    *    ),
-   *    "fr" => array(
+   *    "culture_id_2" => array(
    *      "key1" => "value1",
    *      "key2" => "value2",
    *      ...
@@ -103,65 +111,57 @@ class Globalization extends ApplicationComponent {
    *    )
    * );
    * 
-   * //For Local Resources
-   *    "en" => array(
-   *      "module1" => array(
-   *        "common" => array(
-   *          "key1" => "value1",
-   *          ...
-   *          "keyN" => "valueN"
-   *        ),
-   *        "action1" => array(
-   *          "key1" => "value1",
-   *          ...
-   *          "keyN" => "valueN"
-   *        ),
-   *        "action2" => array(
-   *          "key1" => "value1",
-   *          ...
-   *          "keyN" => "valueN"
-   *        ),
-   *      ),
-   *      "module2" => array(
-   *        "action3" => array(
-   *          "key1" => "value1",
-   *          ...
-   *          "keyN" => "valueN"
-   *        ),
-   *        "action4" => array(
-   *          "key1" => "value1",
-   *          ...
-   *          "keyN" => "valueN"
-   *        ),
-   *      ),
-   *    ),
-   *    ... repeat for other languages ...
-   * );
+   * @param array(of Library\BO\F_common_resource) $resources the objects to loop through
    */
-  private function OrganizeResourcesIntoAssociativeArray($objectLists) {
-    $this->OrganizeCommonResources($objectLists[self::COMMON_RESX_OBJ_LIST]);
-    $this->OrganizeControllerResources($objectLists[self::CONTROLLER_RESX_OBJ_LIST]);
-  }
-
   private function OrganizeCommonResources($resources) {
     $assocArray = array(self::COMMON_RESX_ARRAY_KEY);
     foreach ($resources as $resourceObj) {
       $cleanArray = \Library\Helpers\CommonHelper::CleanPrefixedkeyInAssocArray((array) $resourceObj);
       if (isset($assocArray[self::COMMON_RESX_ARRAY_KEY][$resourceObj->f_culture_id()])) {
-        
+        $assocArray
+            [self::COMMON_RESX_ARRAY_KEY]
+            [$resourceObj->f_culture_id()]
+            [$cleanArray[F_common_resource::F_COMMON_RESOURCE_KEY]] = $cleanArray[F_common_resource::F_COMMON_RESOURCE_VALUE];
       } else {
         $assocArray
             [self::COMMON_RESX_ARRAY_KEY]
-            [$cleanArray[\Library\BO\F_common_resource::F_CULTURE_ID]] = $cleanArray;
+            [$cleanArray[\Library\BO\F_common_resource::F_CULTURE_ID]]
+            [$cleanArray[F_common_resource::F_COMMON_RESOURCE_KEY]] = $cleanArray[F_common_resource::F_COMMON_RESOURCE_VALUE];
       }
     }
+    $this->CommonResources = $assocArray[self::COMMON_RESX_ARRAY_KEY];
   }
 
-  private function OrganizeControllerResources($param) {
-    $assocArray = array();
-    foreach ($this->GlobalResources as $key => $value) {
-      
+  /**
+   * 
+   * @param array(of Library\BO\F_controller_resource) $resources the objects to loop through
+   */
+  private function OrganizeControllerResources($resources) {
+    $assocArray = array(self::CONTROLLER_RESX_ARRAY_KEY);
+    foreach ($resources as $resourceObj) {
+      $cleanArray = \Library\Helpers\CommonHelper::CleanPrefixedkeyInAssocArray((array) $resourceObj);
+      if (isset($assocArray
+              [self::COMMON_RESX_ARRAY_KEY]
+              [$resourceObj->f_culture_id()]
+              [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_MODULE]]
+              [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_ACTION]]
+              [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_KEY]])) {
+        $assocArray
+            [self::CONTROLLER_RESX_ARRAY_KEY]
+            [$resourceObj->f_culture_id()]
+            [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_MODULE]]
+            [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_ACTION]]
+            [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_KEY]] = $cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_VALUE];
+      } else {
+        $assocArray
+            [self::CONTROLLER_RESX_ARRAY_KEY]
+            [$cleanArray[\Library\BO\F_common_resource::F_CULTURE_ID]]
+            [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_MODULE]]
+            [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_ACTION]]
+            [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_KEY]] = $cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_VALUE];
+      }
     }
+    $this->ControllerResources = $assocArray[self::CONTROLLER_RESX_ARRAY_KEY];
   }
 
   public function getCommonResource($common_source, $key) {

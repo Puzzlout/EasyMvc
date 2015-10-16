@@ -193,11 +193,11 @@ CREATE TABLE IF NOT EXISTS `f_common_resource` (
 
 CREATE TABLE IF NOT EXISTS `f_controller_resource` (
     `f_controller_resource_key` varchar(50) NOT NULL COMMENT 'The identification of the resource. Ex: H3Title or ButtonAddSomething',
-    `f_controller_resource_action` varchar(50) NOT NULL COMMENT 'Usually represents the action of the Controller executed',
     `f_controller_resource_module` varchar(50) NOT NULL COMMENT 'Usually represents the Controller name with the prefix "Controller"',
+    `f_controller_resource_action` varchar(50) NOT NULL COMMENT 'Usually represents the action of the Controller executed',
     `f_controller_resource_value` varchar(4000) NOT NULL,
     `f_culture_id` int(11) NOT NULL,
-    PRIMARY KEY (`f_controller_resource_key`, `f_controller_resource_action`, `f_controller_resource_module`, `f_culture_id`),
+    PRIMARY KEY (`f_controller_resource_key`, `f_controller_resource_module`, `f_controller_resource_action`, `f_culture_id`),
     CONSTRAINT `fk_cul_resx_controller` FOREIGN KEY (`f_culture_id`)
       REFERENCES `f_culture` (`f_culture_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
