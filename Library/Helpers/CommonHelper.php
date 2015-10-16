@@ -63,6 +63,7 @@ class CommonHelper {
   public static function GetShortClassName($object) {
     $full_class_name = get_class($object);
     $class_name = substr($full_class_name, strrpos($full_class_name, '\\') + 1);
+    $class_name = str_replace("_extension", "", $class_name);
     return strtolower($class_name);
   }
 

@@ -61,11 +61,18 @@ abstract class Application {
   public function GetCultureArray() {
     $dal = $this->dal->getDalInstance();
     $dbFilters = new \Library\Dal\DbQueryFilters();
-    $dbFilters->setOrderByFilters(array(\Library\BO\F_culture::F_CULTURE_ID));
-    $cultureObjects = $dal->selectMany(new \Library\BO\F_culture(), $dbFilters);
+    $dbFilters->setOrderByFilters(array(\Library\BO\F_culture_extension::F_CULTURE_ID));
+    $cultureObjects = $dal->selectMany(new \Library\BO\F_culture_extension(), $dbFilters);
     $cultureAssocArray = array();
-    foreach ($cultureObjects as $culture) {
-      array_push($cultureAssocArray, $culture->culture_id());
+    foreach ($cultureObjects as $cultureObj) {
+      $culture = array(
+          \Library\BO\F_culture_extension::CultureArrayKey . $cultureObj->f_culture_id(), array(
+              $cultureObj->f_culture_language(),
+              $cultureObj->f_culture_region(),
+              $cultureObj->f_culture_iso_639(),
+              $cultureObj->f_culture_display_name()
+          ));
+      array_push($cultureAssocArray, $culture);
     }
     return $cultureAssocArray;
   }

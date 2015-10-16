@@ -182,23 +182,23 @@ CREATE TABLE IF NOT EXISTS `f_culture` (
     UNIQUE INDEX `un_f_culture` (`f_culture_language` ASC, `f_culture_region` ASC) 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS `f_resource_global` (
-    `f_resource_global_key` varchar(50) NOT NULL COMMENT 'The identification of the resource. Ex: TopMenuBrandIconAlt',
-    `f_resource_global_value` varchar(4000) NOT NULL,
+CREATE TABLE IF NOT EXISTS `f_common_resource` (
+    `f_common_resource_key` varchar(50) NOT NULL COMMENT 'The identification of the resource. Ex: TopMenuBrandIconAlt',
+    `f_common_resource_value` varchar(4000) NOT NULL,
     `f_culture_id` int(11) NOT NULL,
-    PRIMARY KEY (`f_resource_global_key`,`f_culture_id`),
-    CONSTRAINT `fk_cul_resx_global` FOREIGN KEY (`f_culture_id`)
+    PRIMARY KEY (`f_common_resource_key`,`f_culture_id`),
+    CONSTRAINT `fk_cul_resx_common` FOREIGN KEY (`f_culture_id`)
       REFERENCES `f_culture` (`f_culture_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS `f_resource_local` (
-    `f_resource_local_key` varchar(50) NOT NULL COMMENT 'The identification of the resource. Ex: H3Title or ButtonAddSomething',
-    `f_resource_local_action` varchar(50) NOT NULL COMMENT 'Usually represents the action of the Controller executed',
-    `f_resource_local_module` varchar(50) NOT NULL COMMENT 'Usually represents the Controller name with the prefix "Controller"',
-    `f_resource_local_value` varchar(4000) NOT NULL,
+CREATE TABLE IF NOT EXISTS `f_control_resource` (
+    `f_control_resource_key` varchar(50) NOT NULL COMMENT 'The identification of the resource. Ex: H3Title or ButtonAddSomething',
+    `f_control_resource_action` varchar(50) NOT NULL COMMENT 'Usually represents the action of the Controller executed',
+    `f_control_resource_module` varchar(50) NOT NULL COMMENT 'Usually represents the Controller name with the prefix "Controller"',
+    `f_control_resource_value` varchar(4000) NOT NULL,
     `f_culture_id` int(11) NOT NULL,
-    PRIMARY KEY (`f_resource_local_key`,`f_culture_id`),
-    CONSTRAINT `fk_cul_resx_local` FOREIGN KEY (`f_culture_id`)
+    PRIMARY KEY (`f_control_resource_key`,`f_culture_id`),
+    CONSTRAINT `fk_cul_resx_control` FOREIGN KEY (`f_culture_id`)
       REFERENCES `f_culture` (`f_culture_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -349,21 +349,18 @@ INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_
 INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('ur','PK','URD','Urdu - Pakistan');
 INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('vi','VN','VIT','Vietnamese - Vietnam');
 
-INSERT INTO `easymvc_db`.`f_resource_global` VALUES 
-('test', 'This is a test value', '1'),
-('test', 'This is a test value', '2'),
-('test', 'C\'est une valeur de test', '3'),
-('test', 'C\'est une valeur de test', '4');
+INSERT INTO `easymvc_db`.`f_common_resource` VALUES 
+('test', 'This is a test value', '47'),
+('test', 'This is a test value', '48'),
+('test', 'C\'est une valeur de test', '56');
 
-INSERT INTO `easymvc_db`.`f_resource_local` VALUES 
-('h1_title', 'account', 'login', 'Login View', '1'),
-('email_label', 'account', 'login', 'E-mail:', '1'),
-('h1_title', 'account', 'login', 'Login View', '2'),
-('email_label', 'account', 'login', 'E-mail:', '2'),
-('h1_title', 'account', 'login', 'Vue Connexion', '3'),
-('email_label', 'account', 'login', 'E-mail :', '3'),
-('h1_title', 'account', 'login', 'Vue Connexion', '4'),
-('email_label', 'account', 'login', 'E-mail :', '4');
+INSERT INTO `easymvc_db`.`f_control_resource` VALUES 
+('h1_title', 'account', 'login', 'Login View', '47'),
+('email_label', 'account', 'login', 'E-mail:', '47'),
+('h1_title', 'account', 'login', 'Login View', '48'),
+('email_label', 'account', 'login', 'E-mail:', '48'),
+('h1_title', 'account', 'login', 'Vue Connexion', '56'),
+('email_label', 'account', 'login', 'E-mail :', '56');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

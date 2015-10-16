@@ -64,8 +64,8 @@ class Globalization extends ApplicationComponent {
     switch ($source) {
       case ResourceManagers\ResourceLoaderBase::FROM_DB:
         $objectLists = array();
-        $objectLists[self::GLOBAL_RESX_OBJ_LIST] = $dal->selectMany(new \Library\BO\F_resource_global(), $dbFilters);
-        $objectLists[self::LOCAL_RESX_OBJ_LIST] = $dal->selectMany(new \Library\BO\F_resource_local(), $dbFilters);
+        $objectLists[self::GLOBAL_RESX_OBJ_LIST] = $dal->selectMany(new \Library\BO\F_common_resource(), new \Library\Dal\DbQueryFilters());
+        $objectLists[self::LOCAL_RESX_OBJ_LIST] = $dal->selectMany(new \Library\BO\F_control_resource(), new \Library\Dal\DbQueryFilters());
         $this->OrganizeResourcesIntoAssociativeArray($objectLists);
         break;
 
