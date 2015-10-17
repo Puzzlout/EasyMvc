@@ -57,10 +57,9 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
       $this->AddCommonVarsToPage();
     }
 
-    $time_log_type = \Library\Enums\ResourceKeys\GlobalAppKeys::log_controller_method_request;
-    \Library\Utility\TimeLogger::StartLog($this->app(), $time_log_type);
+    $logId = \Library\Utility\TimeLogger::StartLog($this->app(), __CLASS__.__METHOD__);
     $result = $this->$action();
-    \Library\Utility\TimeLogger::EndLog($this->app(), $time_log_type);
+    \Library\Utility\TimeLogger::EndLog($this->app(), $logId);
     if ($result !== NULL) {
       echo \Library\Core\HttpResponse::encodeJson($result);
     }

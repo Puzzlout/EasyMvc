@@ -172,6 +172,34 @@ class DbStatementConfig {
     $this->filters = $filters;
   }
 
+  public function BuildInsertColumnsClause($columns) {
+    if (!$columns) {
+      $this->insertColumnsClause = FALSE;
+      return;
+    }
+
+    foreach ($columns as $filter => $value) {
+      $filterClean = str_replace("\0*\0", "", $filter);
+      $this->insertColumnsClause .= "`$filterClean`, ";
+    }
+    $this->insertColumnsClause = rtrim($this->insertColumnsClause);
+    $this->insertColumnsClause = rtrim($this->insertColumnsClause, ",");
+  }
+
+  public function BuildInsertValuesClause($values) {
+    if (!$values) {
+      $this->insertValuesClause = FALSE;
+      return;
+    }
+
+    foreach ($values as $filter => $value) {
+      $filterClean = str_replace("\0*\0", "", $filter);
+      $this->insertValuesClause .= ":$filterClean, ";
+    }
+    $this->insertValuesClause = rtrim($this->insertValuesClause);
+    $this->insertValuesClause = rtrim($this->insertValuesClause, ",");
+  }
+
   public function BuildSelectClause($selectFilters) {
     if (!$selectFilters) {
       $this->selectClause = FALSE;
@@ -230,8 +258,7 @@ class DbStatementConfig {
   }
 
   public function BuildUpdateQuery() {
-    $this->query =
-            $this->type
+    $this->query = $this->type
             . $this->tableName
             . " SET "
             . $this->updateClause
@@ -240,8 +267,7 @@ class DbStatementConfig {
   }
 
   public function BuildInsertQuery() {
-    $this->query =
-            $this->type
+    $this->query = $this->type
             . " INTO "
             . $this->tableName
             . " ("
@@ -252,8 +278,7 @@ class DbStatementConfig {
   }
 
   public function BuildSelectQuery() {
-    $this->query =
-            (!$this->selectClause ? "*" : $this->selectClause)
+    $this->query = (!$this->selectClause ? "*" : $this->selectClause)
             . " FROM "
             . $this->tableName
             . (!$this->whereClause ? "" : $this->whereClause)

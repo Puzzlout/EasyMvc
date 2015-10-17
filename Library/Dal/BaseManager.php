@@ -110,17 +110,23 @@ class BaseManager extends \Library\Dal\Manager {
    * @param object $item
    */
   public function add($objects) {
-    $dbConfigList = array();
-    foreach ($objects as $object) {
-      $dbConfig = new DbStatementConfig($object);
-      $dbConfig->setTableName($this->GetTableName($object));
-      $dbConfig->setType(DbExecutionType::INSERT);
-      $dbConfig->setInsertColumnsClause($this->BuildClauseStatement($object), array($this::INSERTCOLUMNS));
-      $dbConfig->setInsertValuesClause($this->BuildClauseStatement($object), array($this::INSERTVALUES));
-      $dbConfig->BuildInsertQuery();
-      $this->addDbConfigItem($dbConfig);
+    if (is_array($objects)) {
+      foreach ($objects as $object) {
+        $this->BuildAddDbConfig($object);
+      }
+    } else {
+      $this->BuildAddDbConfig($objects);
     }
     return $this->BindParametersAndExecute(NULL);
+  }
+
+  public function BuildAddDbConfig($object) {
+    $dbConfig = new DbStatementConfig($object, DbExecutionType::INSERT, new DbQueryFilters());
+    $dbConfig->setTableName($this->GetTableName($object));
+    $dbConfig->BuildInsertColumnsClause((array) $object);
+    $dbConfig->BuildInsertValuesClause((array) $object);
+    $dbConfig->BuildInsertQuery();
+    $this->addDbConfigItem($dbConfig);
   }
 
   /**

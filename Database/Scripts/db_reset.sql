@@ -70,14 +70,14 @@ CREATE TABLE IF NOT EXISTS `f_account` (
 
 -- Table structure for table `f_log`
 CREATE TABLE IF NOT EXISTS `f_log` (
-    `f_log_id` int(11) NOT NULL AUTO_INCREMENT,
-    `f_log_request_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-    `f_log_level` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT 'INFO, DEBUG, WARNING, ERROR, FATAL',
-    `f_log_start` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+    `f_log_id` varchar(36) NOT NULL COMMENT 'A GUID generated using the class \Library\Utility\UUID::v4()',
+    `f_log_request_id` varchar(36) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The current http request id',
+    `f_log_level` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT 'See the class \Library\BO\F_log_extension',
+    `f_log_start` varchar(20) COLLATE utf8_unicode_ci NOT NULL COMMENT 'FORMAT: Y-m-d H:i:s',
     `f_log_end` varchar(20) COLLATE utf8_unicode_ci NOT NULL COMMENT 'FORMAT: Y-m-d H:i:s',
     `f_log_execution_time` float(10,6) NOT NULL COMMENT 'In milliseconds',
-    `f_log_source` varchar(40) COLLATE utf8_unicode_ci NOT NULL COMMENT 'class_name->method',
-    `f_log_context` varchar(4000) COLLATE utf8_unicode_ci NOT NULL COMMENT 'data context at the time of log',
+    `f_log_source` varchar(150) COLLATE utf8_unicode_ci NOT NULL COMMENT 'class_name->method',
+    `f_log_context` varchar(4000) COLLATE utf8_unicode_ci NULL COMMENT 'data context at the time of log',
     PRIMARY KEY (`f_log_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
