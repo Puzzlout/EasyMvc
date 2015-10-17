@@ -72,12 +72,12 @@ CREATE TABLE IF NOT EXISTS `f_account` (
 CREATE TABLE IF NOT EXISTS `f_log` (
     `f_log_id` int(11) NOT NULL AUTO_INCREMENT,
     `f_log_request_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+    `f_log_level` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT 'INFO, DEBUG, WARNING, ERROR, FATAL',
     `f_log_start` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
     `f_log_end` varchar(20) COLLATE utf8_unicode_ci NOT NULL COMMENT 'FORMAT: Y-m-d H:i:s',
     `f_log_execution_time` float(10,6) NOT NULL COMMENT 'In milliseconds',
-    `f_log_type` varchar(40) COLLATE utf8_unicode_ci NOT NULL COMMENT 'http_request, controller_method',
-    `f_log_filter` varchar(100) NOT NULL,
-	`f_log_value` varchar(2000) NULL,
+    `f_log_source` varchar(40) COLLATE utf8_unicode_ci NOT NULL COMMENT 'class_name->method',
+    `f_log_context` varchar(4000) COLLATE utf8_unicode_ci NOT NULL COMMENT 'data context at the time of log',
     PRIMARY KEY (`f_log_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
@@ -185,6 +185,7 @@ CREATE TABLE IF NOT EXISTS `f_culture` (
 CREATE TABLE IF NOT EXISTS `f_common_resource` (
     `f_common_resource_key` varchar(50) NOT NULL COMMENT 'The identification of the resource. Ex: TopMenuBrandIconAlt',
     `f_common_resource_value` varchar(4000) NOT NULL,
+    `f_common_resource_comment` varchar(100) NULL COMMENT 'Describe the resource usage',
     `f_culture_id` int(11) NOT NULL,
     PRIMARY KEY (`f_common_resource_key`,`f_culture_id`),
     CONSTRAINT `fk_cul_resx_common` FOREIGN KEY (`f_culture_id`)
@@ -196,6 +197,7 @@ CREATE TABLE IF NOT EXISTS `f_controller_resource` (
     `f_controller_resource_module` varchar(50) NOT NULL COMMENT 'Usually represents the Controller name with the prefix "Controller"',
     `f_controller_resource_action` varchar(50) NOT NULL COMMENT 'Usually represents the action of the Controller executed',
     `f_controller_resource_value` varchar(4000) NOT NULL,
+    `f_controller_resource_comment` varchar(100) NULL COMMENT 'Describe the resource usage',
     `f_culture_id` int(11) NOT NULL,
     PRIMARY KEY (`f_controller_resource_key`, `f_controller_resource_module`, `f_controller_resource_action`, `f_culture_id`),
     CONSTRAINT `fk_cul_resx_controller` FOREIGN KEY (`f_culture_id`)
@@ -350,26 +352,26 @@ INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_
 INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('vi','VN','VIT','Vietnamese - Vietnam');
 
 INSERT INTO `easymvc_db`.`f_common_resource` VALUES 
-('test', 'This is a test value', '47'),
-('test2', 'This is a test value2', '47'),
-('test', 'This is a test value', '48'),
-('test2', 'This is a test value2', '48'),
-('test', 'C\'est une valeur de test', '56'),
-('test2', 'C\'est une valeur de test2', '56');
+('test', 'This is a test value', 'Testing purpose', '47'),
+('test2', 'This is a test value2', 'Testing purpose', '47'),
+('test', 'This is a test value', 'Testing purpose', '48'),
+('test2', 'This is a test value2', 'Testing purpose', '48'),
+('test', 'C\'est une valeur de test', 'Testing purpose', '56'),
+('test2', 'C\'est une valeur de test2', 'Testing purpose', '56');
 
 INSERT INTO `easymvc_db`.`f_controller_resource` VALUES 
-('h1_title', 'account', 'login', 'Login View', '47'),
-('email_label', 'account', 'login', 'E-mail:', '47'),
-('h1_title', 'account', 'create', 'Create account View', '47'),
-('email_label', 'account', 'create', 'E-mail:', '47'),
-('h1_title', 'account', 'login', 'Login View', '48'),
-('email_label', 'account', 'login', 'E-mail:', '48'),
-('h1_title', 'account', 'create', 'Create account View', '48'),
-('email_label', 'account', 'create', 'E-mail:', '48'),
-('h1_title', 'account', 'login', 'Vue Connexion', '56'),
-('email_label', 'account', 'login', 'E-mail :', '56'),
-('h1_title', 'account', 'create', 'Vue Création de compte', '56'),
-('email_label', 'account', 'create', 'E-mail :', '56');
+('h1_title', 'account', 'login', 'Login View', 'The title of the H1 element', '47'),
+('email_label', 'account', 'login', 'E-mail:', 'The label for the email input','47'),
+('h1_title', 'account', 'create', 'Create account View', 'The title of the H1 element','47'),
+('email_label', 'account', 'create', 'E-mail:', 'The label for the email input','47'),
+('h1_title', 'account', 'login', 'Login View', 'The title of the H1 element','48'),
+('email_label', 'account', 'login', 'E-mail:', 'The label for the email input','48'),
+('h1_title', 'account', 'create', 'Create account View', 'The title of the H1 element','48'),
+('email_label', 'account', 'create', 'E-mail:', 'The label for the email input','48'),
+('h1_title', 'account', 'login', 'Vue Connexion', 'Le titre de l''élément H1','56'),
+('email_label', 'account', 'login', 'E-mail :', 'Le libellé de l''input email','56'),
+('h1_title', 'account', 'create', 'Vue Création de compte', 'Le titre de l''élément H1','56'),
+('email_label', 'account', 'create', 'E-mail :', 'Le libellé de l''input email','56');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

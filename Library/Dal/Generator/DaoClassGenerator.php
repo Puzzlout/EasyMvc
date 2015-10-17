@@ -129,6 +129,9 @@ class DaoClassGenerator {
     $filePath = $this->dir . $this->fileName;
     echo $filePath . "<br />";
 
+//    if(!file_exists($filePath)) {
+//      file_put_contents($filePath, "");
+//    }
     $this->writer = fopen($filePath, 'w') or die("can't open file");
   }
 
