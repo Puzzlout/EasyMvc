@@ -15,7 +15,7 @@ class Context extends ApplicationComponent {
   }
 
   public function setLanguage() {
-    $this->defaultLang = $this->app->config()->get(\Library\Enums\AppSettingKeys::DefaultCulture);
+    $this->defaultLang = $this->app->cultures[$this->app->config()->get(\Library\Enums\AppSettingKeys::DefaultCulture)];
   }
 
 }

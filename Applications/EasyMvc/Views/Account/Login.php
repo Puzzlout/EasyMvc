@@ -9,16 +9,16 @@
 </section>
 <section  class="login-container">
   <figure class="login-box">
-    <h1><?php echo $resx["h1_title"]; ?></h1>
+    <h1><?php echo $this->app->i8n()->getControllerResx("h1_title"); ?></h1>
     <div class="login-form login-box-small">
       <p style="display: none;">
-        <label><?php echo $resx["email_label"]; ?></label>
+        <label><?php echo $this->app->i8n()->getControllerResx("email_label"); ?></label>
         <input 
           autocomplete="on" 
           name="f_user_email" 
           type="text" 
           class="field" 
-          data-input-label="<?php echo $resx["email_label"]; ?>" 
+          data-input-label="<?php echo $this->app->i8n()->getControllerResx("email_label"); ?>" 
           placeholder="<?php echo $resx["email_ph_text"]; ?>">
       </p>
       <label><?php echo $resx["username_label"]; ?></label>

@@ -68,11 +68,11 @@ abstract class Application {
       foreach ($cultureObjects as $cultureObj) {
         $cultureAssocArray
             [\Library\BO\F_culture_extension::FullArrayCultureKey]
-            [\Library\BO\F_culture_extension::SingleCultureArrayKey . $cultureObj->f_culture_id()] = 
+            [$cultureObj->F_culture_language().'-'.$cultureObj->F_culture_region()] = 
             \Library\Helpers\CommonHelper::CleanPrefixedkeyInAssocArray((array) $cultureObj);
       }
     }
-    return $cultureAssocArray;
+    return $cultureAssocArray[\Library\BO\F_culture_extension::FullArrayCultureKey];
   }
 
   public function initConfig() {
