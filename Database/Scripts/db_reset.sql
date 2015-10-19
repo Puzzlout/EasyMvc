@@ -26,7 +26,7 @@ USE `easymvc_db`;
 --  CONSTRAINT `fk_some_table` FOREIGN KEY (`some_id`)
 --      REFERENCES `some_other_table` (`some_id`) ON DELETE CASCADE
 --
---
+--  
 /*---------------------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------*/
 -- Table structure for `f_user_role`
@@ -78,7 +78,8 @@ CREATE TABLE IF NOT EXISTS `f_log` (
     `f_log_execution_time` float(10,6) NOT NULL COMMENT 'In milliseconds',
     `f_log_source` varchar(150) COLLATE utf8_unicode_ci NOT NULL COMMENT 'class_name->method',
     `f_log_context` varchar(4000) COLLATE utf8_unicode_ci NULL COMMENT 'data context at the time of log',
-    PRIMARY KEY (`f_log_id`)
+    PRIMARY KEY (`f_log_id`),
+    UNIQUE INDEX `un_log_start` (`f_log_start` ASC)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
