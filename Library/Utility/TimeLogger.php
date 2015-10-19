@@ -41,10 +41,29 @@ class TimeLogger extends Logger {
     $log->setF_log_execution_time(
             ($log->f_log_end() - $log->f_log_start()) * 1000
     );
-    $log->setF_log_start(gmdate("Y-m-d H:i:s", $log->f_log_start()));
-    $log->setF_log_end(gmdate("Y-m-d H:i:s", $log->f_log_end()));
+    $log->setF_log_start(DateTimeHelper::GetDateTimeWithMs($log->f_log_start()));
+    $log->setF_log_end(DateTimeHelper::GetDateTimeWithMs($log->f_log_end()));
     Logger::AddLogToDatabase($app, $log);
     Logger::StoreLogs($app->user(), $logs);
   }
 
+  public function EndLogInfo(\Library\Core\Application $app, $logId) {
+    self::EndLog($app, $logId, \Library\BO\F_log_extension::LEVEL_INFO);
+  }
+  
+  public function EndLogDebug(\Library\Core\Application $app, $logId) {
+    self::EndLog($app, $logId, \Library\BO\F_log_extension::LEVEL_DEBUG);
+  }
+
+  public function EndLogWarning(\Library\Core\Application $app, $logId) {
+    self::EndLog($app, $logId, \Library\BO\F_log_extension::LEVEL_WARNING);
+  }
+
+  public function EndLogError(\Library\Core\Application $app, $logId) {
+    self::EndLog($app, $logId, \Library\BO\F_log_extension::LEVEL_ERROR);
+  }
+
+  public function EndLogFatal(\Library\Core\Application $app, $logId) {
+    self::EndLog($app, $logId, \Library\BO\F_log_extension::LEVEL_FATAL);
+  }
 }
