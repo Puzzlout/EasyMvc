@@ -26,7 +26,7 @@ class TestApplication extends \Library\Core\Application {
   }
 
   public function run() {
-    $logId = \Library\Utility\TimeLogger::StartLog($this, __CLASS__.__METHOD__);
+    $logGuid = \Library\Utility\TimeLogger::StartLogInfo($this, __CLASS__.__METHOD__);
     $this->i8n->loadResources();
 
     $controller = $this->getController();
@@ -39,7 +39,7 @@ class TestApplication extends \Library\Core\Application {
 
     $this->httpResponse->setPage($controller->page());
     $this->httpResponse->send();
-    \Library\Utility\TimeLogger::EndLog($this, $logId);
+    \Library\Utility\TimeLogger::EndLog($this, $logGuid);
   }
 
   private function AddGlobalAppVariables($controller) {

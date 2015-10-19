@@ -58,7 +58,6 @@ class Page extends ApplicationComponent {
         require FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::AppsFolderName . $this->app()->name() . \Library\Enums\FileNameConst::FooterTemplate;
       }
     }
-    \Library\Utility\TimeLogger::EndLog($this->app(), \Library\Enums\ResourceKeys\GlobalAppKeys::log_http_request);
     return ob_get_clean();
   }
 

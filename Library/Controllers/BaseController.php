@@ -57,9 +57,9 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
       $this->AddCommonVarsToPage();
     }
 
-    $logId = \Library\Utility\TimeLogger::StartLog($this->app(), __CLASS__.__METHOD__);
+    $logGuid = \Library\Utility\TimeLogger::StartLogInfo($this->app(), get_class($this). "->".  ucfirst($action));
     $result = $this->$action();
-    \Library\Utility\TimeLogger::EndLog($this->app(), $logId);
+    \Library\Utility\TimeLogger::EndLog($this->app(), $logGuid);
     if ($result !== NULL) {
       echo \Library\Core\HttpResponse::encodeJson($result);
     }
@@ -268,7 +268,6 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
   }
 
   protected function Redirect($urlPart) {
-    \Library\Utility\TimeLogger::EndLog($this->app(), \Library\Enums\ResourceKeys\GlobalAppKeys::log_http_request);
     $url = FrameworkConstants_BaseUrl . $urlPart;
     header('Location: ' . $url);
     exit();

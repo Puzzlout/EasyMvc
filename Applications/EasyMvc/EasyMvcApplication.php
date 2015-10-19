@@ -35,9 +35,7 @@ class EasyMvcApplication extends \Library\Core\Application {
     //The variable PM will be available accross the application
     $this->AddGlobalAppVariables($controller);
 
-    $logId = \Library\Utility\TimeLogger::StartLog($this, ucfirst($this->router->currentRoute()->module()."Controller") .'.'. ucfirst($this->router->currentRoute()->action()));
     $controller->execute();
-    \Library\Utility\TimeLogger::EndLog($this, $logId);
 
     $this->httpResponse->setPage($controller->page());
     $this->httpResponse->send();

@@ -68,12 +68,12 @@ class Globalization extends ApplicationComponent {
     $dal = $this->app()->dal()->getDalInstance();
     switch ($source) {
       case ResourceManagers\ResourceLoaderBase::FROM_DB:
-        $logId = \Library\Utility\TimeLogger::StartLog($this->app(), __CLASS__.__METHOD__);
+        $logGuid = \Library\Utility\TimeLogger::StartLogInfo($this->app(), __CLASS__.__METHOD__);
         $objectLists = array();
         $objectLists[self::COMMON_RESX_OBJ_LIST] = $dal->selectMany(new \Library\BO\F_common_resource(), new \Library\Dal\DbQueryFilters());
         $objectLists[self::CONTROLLER_RESX_OBJ_LIST] = $dal->selectMany(new \Library\BO\F_controller_resource(), new \Library\Dal\DbQueryFilters());
         $this->OrganizeResourcesIntoAssociativeArray($objectLists);
-        \Library\Utility\TimeLogger::EndLog($this->app, $logId);
+        \Library\Utility\TimeLogger::EndLog($this->app, $logGuid);
         break;
 
       default:

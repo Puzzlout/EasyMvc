@@ -31,9 +31,9 @@ $appClassName = strtr(
 $errorLogger = new Library\Core\ErrorManager();
 try {
   $app = new $appClassName($errorLogger);
-  $logId = \Library\Utility\TimeLogger::StartLog($app, "PageLoad.".$app->httpRequest()->requestURI(), Library\BO\F_log_extension::LEVEL_INFO);
+  $logGuid = \Library\Utility\TimeLogger::StartLogInfo($app, "PageLoad.".$app->httpRequest()->requestURI());
   $app->run();
-  \Library\Utility\TimeLogger::EndLog($app, $logId, Library\BO\F_log_extension::LEVEL_INFO);
+  \Library\Utility\TimeLogger::EndLog($app, $logGuid);
 } catch (\Exception $exc) {
   $errorLogger->LogError($exc);
   die();

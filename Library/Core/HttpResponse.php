@@ -15,7 +15,6 @@ class HttpResponse extends ApplicationComponent {
   }
 
   public function redirect($location) {
-    \Library\Utility\TimeLogger::EndLog($this->app(), \Library\Enums\ResourceKeys\GlobalAppKeys::log_http_request);
     header('Location: ' . $location);
     exit;
   }
@@ -36,7 +35,6 @@ class HttpResponse extends ApplicationComponent {
       exit($this->page->getGeneratedPage());
     } else {
       //Since we are doing a AJAX call, we just exit.
-      \Library\Utility\TimeLogger::EndLog($this->app, \Library\Enums\ResourceKeys\GlobalAppKeys::log_http_request);
       die();
     }
     die();
