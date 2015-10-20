@@ -26,7 +26,7 @@ abstract class ApplicationFolderName {
   const TemplatesFolderName = "/Templates/";
   const ConfigFolderName = "/Config/";
   const ResourceCommonFolderName = "/Resources/Common/";
-  const ResourceLocalFolderName = "/Resources/Local/";
+  const ResourceControllerFolderName = "/Resources/Controller/";
   const WebJs = "Web/js/";
   const WebCss = "Web/css/";
   const ModulesFolderName = "/Modules/";

@@ -44,13 +44,13 @@ class EasyMvcApplication extends \Library\Core\Application {
   private function AddGlobalAppVariables($controller) {
     $user = $controller->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
     //Just other variables if needed.
-    $resources = 
-            $this->i8n->ControllerResources
-            [$this->context()->defaultLang[\Library\BO\F_culture::F_CULTURE_ID]]
-            [$this->router()->currentRoute()->module()]
-            [$this->router()->currentRoute()->action()];
+//    $resources = 
+//            $this->i8n->ControllerResources
+//            [$this->context()->defaultLang[\Library\BO\F_culture::F_CULTURE_ID]]
+//            [$this->router()->currentRoute()->module()]
+//            [$this->router()->currentRoute()->action()];
     $controller->page()->addVar('user', $user[0]);
-    $controller->page()->addVar('resx', $resources);
+//    $controller->page()->addVar('resx', $resources);
     
   }
 

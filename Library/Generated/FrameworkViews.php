@@ -17,5 +17,5 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 }
 
 class FrameworkViews {
-  const ConfigFolderKey = 'ConfigFolderKey';  const ModulesFolderKey = 'ModulesFolderKey';  const configRoutingKey = 'configRoutingKey';  public static function GetList() {    return array(      self::ConfigFolderKey => array(        self::ModulesFolderKey => array(      ),        self::configRoutingKey => 'configRouting',      ),    );  }
+  const ConfigFolderKey = 'ConfigFolderKey';  const configRoutingKey = 'configRoutingKey';  public static function GetList() {    return array(      self::ConfigFolderKey => array(        self::configRoutingKey => 'configRouting',      ),    );  }
   public static function DoesConstantExist($key) {    return array_key_exists($key, self::GetList());  }}

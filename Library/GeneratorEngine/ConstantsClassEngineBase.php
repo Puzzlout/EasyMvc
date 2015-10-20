@@ -58,11 +58,14 @@ abstract class ConstantsClassEngineBase {
   }
 
   /**
-   * Retrieve the lists of filenames and then generate the Classes.
+   * Retrieve the data and then generate the Classes.
    * The implementation is specific to each case. See the derived generator
    * classes.
+   * 
+   * @param assoc array $data depending on the situation, some data can be passed
+   * on to generate the files desired.
    */
-  abstract public function Run();
+  abstract public function Run($data = NULL);
 
   /**
    * Generate the FrameworkControllers.php class.

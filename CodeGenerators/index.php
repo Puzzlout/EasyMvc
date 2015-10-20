@@ -8,7 +8,10 @@ $GeneratorDesc = "Generate " . PlaceholderMessageModule . " constants class";
 const Controller = "Controller";
 const DalModule = "DalModule";
 const ViewName = "ViewName";
-const DaoGenerator = "../Generator/BuildDao";
+const DaoGeneratorUrl = "../Generator/BuildDao";
+const DaoGeneratorText= "Refresh the DAO classes";
+const ResourceGeneratorUrl = "../Generator/BuildResources";
+const ResourceGeneratorText= "Refresh the resources from the database";
 ?>
 
 <html>
@@ -36,8 +39,13 @@ const DaoGenerator = "../Generator/BuildDao";
         </a>
       </li>
       <li>
-        <a href="<?php echo DaoGenerator; ?>">
-          <?php echo "Refresh the DAO classes"; ?>
+        <a href="<?php echo DaoGeneratorUrl; ?>">
+          <?php echo DaoGeneratorText; ?>
+        </a>
+      </li>
+      <li>
+        <a href="<?php echo ResourceGeneratorUrl; ?>">
+          <?php echo ResourceGeneratorText; ?>
         </a>
       </li>
     </ul>

@@ -27,8 +27,11 @@ class ControllerNameConstantsEngine extends ConstantsClassEngineBase {
    * Retrieve the lists of controller filenames.
    * Generate the Classes that list the Controller names available in the
    * solution.
+   * 
+   * @param assoc array $data depending on the situation, some data can be passed
+   * on to generate the files desired.
    */
-  public function Run() {
+  public function Run($data = NULL) {
     $FrameworkControllers = DirectoryManager::GetFileNames(
                     FrameworkConstants_RootDir . \Library\Enums\FrameworkFolderName::ControllersFolderName, array("BaseController.php"));
 

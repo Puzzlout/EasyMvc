@@ -26,8 +26,11 @@ class DalModuleNameConstantsEngine extends ConstantsClassEngineBase {
    * Retrieve the lists of filenames.
    * Generate the Classes that list the Dal Modules names available in the
    * solution.
+   * 
+   * @param assoc array $data depending on the situation, some data can be passed
+   * on to generate the files desired.
    */
-  public function Run() {
+  public function Run($data = NULL) {
     $FrameworkDalModules = DirectoryManager::GetFileNames(
                     FrameworkConstants_RootDir . \Library\Enums\FrameworkFolderName::DalModulesFolderName);
 
