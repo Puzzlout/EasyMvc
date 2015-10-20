@@ -100,16 +100,17 @@ class Globalization extends ApplicationComponent {
    * 
    * $array = array(
    *    "culture_id_1" => array(
-   *      "key1" => "value1",
-   *      "key2" => "value2",
-   *      ...
-   *      "keyN" => "valueN",
+   *      "group1" 
+   *        "key1" => "value1",
+   *        "key2" => "value2",
+   *        ...
+   *        "keyN" => "valueN",
    *    ),
    *    "culture_id_2" => array(
-   *      "key1" => "value1",
-   *      "key2" => "value2",
-   *      ...
-   *      "keyN" => "valueN",
+   *        "key1" => "value1",
+   *        "key2" => "value2",
+   *        ...
+   *        "keyN" => "valueN",
    *    )
    * );
    * 
@@ -119,21 +120,27 @@ class Globalization extends ApplicationComponent {
     $assocArray = array(self::COMMON_RESX_ARRAY_KEY);
     foreach ($resources as $resourceObj) {
       $cleanArray = \Library\Helpers\CommonHelper::CleanPrefixedkeyInAssocArray((array) $resourceObj);
-      if (isset($assocArray[self::COMMON_RESX_ARRAY_KEY][$resourceObj->f_culture_id()])) {
+      if (isset($assocArray
+              [self::COMMON_RESX_ARRAY_KEY]
+              [$resourceObj->f_culture_id()]
+              [$cleanArray[F_common_resource::F_COMMON_RESOURCE_GROUP]]
+              [$cleanArray[F_common_resource::F_COMMON_RESOURCE_KEY]])) {
         $assocArray
-                [self::COMMON_RESX_ARRAY_KEY]
-                [$resourceObj->f_culture_id()]
-                [$cleanArray[F_common_resource::F_COMMON_RESOURCE_KEY]] = array(
-            $cleanArray[F_common_resource::F_COMMON_RESOURCE_VALUE],
-            $cleanArray[F_common_resource::F_COMMON_RESOURCE_COMMENT]
+            [self::COMMON_RESX_ARRAY_KEY]
+            [$resourceObj->f_culture_id()]
+            [$cleanArray[F_common_resource::F_COMMON_RESOURCE_GROUP]]
+            [$cleanArray[F_common_resource::F_COMMON_RESOURCE_KEY]] = array(
+          $cleanArray[F_common_resource::F_COMMON_RESOURCE_VALUE],
+          $cleanArray[F_common_resource::F_COMMON_RESOURCE_COMMENT]
         );
       } else {
         $assocArray
-                [self::COMMON_RESX_ARRAY_KEY]
-                [$cleanArray[\Library\BO\F_common_resource::F_CULTURE_ID]]
-                [$cleanArray[F_common_resource::F_COMMON_RESOURCE_KEY]] = array(
-            \Library\BO\F_common_resource::F_COMMON_RESOURCE_VALUE => $cleanArray[F_common_resource::F_COMMON_RESOURCE_VALUE],
-            \Library\BO\F_common_resource::F_COMMON_RESOURCE_COMMENT => $cleanArray[F_common_resource::F_COMMON_RESOURCE_COMMENT]
+            [self::COMMON_RESX_ARRAY_KEY]
+            [$cleanArray[\Library\BO\F_common_resource::F_CULTURE_ID]]
+            [$cleanArray[F_common_resource::F_COMMON_RESOURCE_GROUP]]
+            [$cleanArray[F_common_resource::F_COMMON_RESOURCE_KEY]] = array(
+          \Library\BO\F_common_resource::F_COMMON_RESOURCE_VALUE => $cleanArray[F_common_resource::F_COMMON_RESOURCE_VALUE],
+          \Library\BO\F_common_resource::F_COMMON_RESOURCE_COMMENT => $cleanArray[F_common_resource::F_COMMON_RESOURCE_COMMENT]
         );
       }
     }
@@ -184,29 +191,29 @@ class Globalization extends ApplicationComponent {
     foreach ($resources as $resourceObj) {
       $cleanArray = \Library\Helpers\CommonHelper::CleanPrefixedkeyInAssocArray((array) $resourceObj);
       if (isset($assocArray
-                      [self::COMMON_RESX_ARRAY_KEY]
-                      [$resourceObj->f_culture_id()]
-                      [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_MODULE]]
-                      [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_ACTION]]
-                      [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_KEY]])) {
+              [self::COMMON_RESX_ARRAY_KEY]
+              [$resourceObj->f_culture_id()]
+              [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_MODULE]]
+              [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_ACTION]]
+              [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_KEY]])) {
         $assocArray
-                [self::CONTROLLER_RESX_ARRAY_KEY]
-                [$resourceObj->f_culture_id()]
-                [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_MODULE]]
-                [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_ACTION]]
-                [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_KEY]] = array(
-            \Library\BO\F_controller_resource::F_CONTROLLER_RESOURCE_VALUE => $cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_VALUE],
-            \Library\BO\F_controller_resource::F_CONTROLLER_RESOURCE_COMMENT => $cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_COMMENT])
+            [self::CONTROLLER_RESX_ARRAY_KEY]
+            [$resourceObj->f_culture_id()]
+            [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_MODULE]]
+            [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_ACTION]]
+            [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_KEY]] = array(
+          \Library\BO\F_controller_resource::F_CONTROLLER_RESOURCE_VALUE => $cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_VALUE],
+          \Library\BO\F_controller_resource::F_CONTROLLER_RESOURCE_COMMENT => $cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_COMMENT])
         ;
       } else {
         $assocArray
-                [self::CONTROLLER_RESX_ARRAY_KEY]
-                [$cleanArray[\Library\BO\F_common_resource::F_CULTURE_ID]]
-                [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_MODULE]]
-                [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_ACTION]]
-                [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_KEY]] = array(
-            \Library\BO\F_controller_resource::F_CONTROLLER_RESOURCE_VALUE => $cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_VALUE],
-            \Library\BO\F_controller_resource::F_CONTROLLER_RESOURCE_COMMENT => $cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_COMMENT])
+            [self::CONTROLLER_RESX_ARRAY_KEY]
+            [$cleanArray[\Library\BO\F_common_resource::F_CULTURE_ID]]
+            [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_MODULE]]
+            [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_ACTION]]
+            [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_KEY]] = array(
+          \Library\BO\F_controller_resource::F_CONTROLLER_RESOURCE_VALUE => $cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_VALUE],
+          \Library\BO\F_controller_resource::F_CONTROLLER_RESOURCE_COMMENT => $cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_COMMENT])
         ;
       }
     }
@@ -220,9 +227,9 @@ class Globalization extends ApplicationComponent {
    */
   public function getCommonResx($key) {
     $resource = $this->CommonResources
-            [$this->app->context()->defaultLang[\Library\BO\F_culture::F_CULTURE_ID]]
-            [$key]
-            [F_common_resource::F_COMMON_RESOURCE_VALUE];
+        [$this->app->context()->defaultLang[\Library\BO\F_culture::F_CULTURE_ID]]
+        [$key]
+        [F_common_resource::F_COMMON_RESOURCE_VALUE];
     return $resource;
   }
 
@@ -233,11 +240,12 @@ class Globalization extends ApplicationComponent {
    */
   public function getControllerResx($key) {
     $resource = $this->ControllerResources
-            [$this->app->context()->defaultLang[\Library\BO\F_culture::F_CULTURE_ID]]
-            [$this->app->router()->currentRoute()->module()]
-            [$this->app->router()->currentRoute()->action()]
-            [$key]
-            [F_controller_resource::F_CONTROLLER_RESOURCE_VALUE];
+        [$this->app->context()->defaultLang[\Library\BO\F_culture::F_CULTURE_ID]]
+        [$this->app->router()->currentRoute()->module()]
+        [$this->app->router()->currentRoute()->action()]
+        [$key]
+        [F_controller_resource::F_CONTROLLER_RESOURCE_VALUE];
     return $resource;
   }
+
 }

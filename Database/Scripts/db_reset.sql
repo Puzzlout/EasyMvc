@@ -184,11 +184,12 @@ CREATE TABLE IF NOT EXISTS `f_culture` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `f_common_resource` (
+    `f_common_resource_group` varchar(50) NOT NULL COMMENT 'The group of the resource. Ex: Exception, etc...',
     `f_common_resource_key` varchar(50) NOT NULL COMMENT 'The identification of the resource. Ex: TopMenuBrandIconAlt',
     `f_common_resource_value` varchar(4000) NOT NULL,
     `f_common_resource_comment` varchar(100) NULL COMMENT 'Describe the resource usage',
     `f_culture_id` int(11) NOT NULL,
-    PRIMARY KEY (`f_common_resource_key`,`f_culture_id`),
+    PRIMARY KEY (`f_common_resource_group`,`f_common_resource_key`,`f_culture_id`),
     CONSTRAINT `fk_cul_resx_common` FOREIGN KEY (`f_culture_id`)
       REFERENCES `f_culture` (`f_culture_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -353,12 +354,12 @@ INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_
 INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_639`,`f_culture_display_name`) VALUES ('vi','VN','VIT','Vietnamese - Vietnam');
 
 INSERT INTO `easymvc_db`.`f_common_resource` VALUES 
-('test', 'This is a test value', 'Testing purpose', '47'),
-('test2', 'This is a test value2', 'Testing purpose', '47'),
-('test', 'This is a test value', 'Testing purpose', '48'),
-('test2', 'This is a test value2', 'Testing purpose', '48'),
-('test', 'C\'est une valeur de test', 'Testing purpose', '56'),
-('test2', 'C\'est une valeur de test2', 'Testing purpose', '56');
+('group1','test', 'This is a test value', 'Testing purpose', '47'),
+('group2','test2', 'This is a test value2', 'Testing purpose', '47'),
+('group1','test', 'This is a test value', 'Testing purpose', '48'),
+('group2','test2', 'This is a test value2', 'Testing purpose', '48'),
+('group1','test', 'C\'est une valeur de test', 'Testing purpose', '56'),
+('group2','test2', 'C\'est une valeur de test2', 'Testing purpose', '56');
 
 INSERT INTO `easymvc_db`.`f_controller_resource` VALUES 
 ('h1_title', 'account', 'login', 'Login View', 'The title of the H1 element', '47'),
