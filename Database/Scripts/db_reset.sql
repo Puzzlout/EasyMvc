@@ -355,11 +355,17 @@ INSERT INTO `f_culture` (`f_culture_language`,`f_culture_region`,`f_culture_iso_
 
 INSERT INTO `easymvc_db`.`f_common_resource` VALUES 
 ('group1','test', 'This is a test value', 'Testing purpose', '47'),
+('group1','test3', 'This is a test value3', 'Testing purpose', '47'),
 ('group2','test2', 'This is a test value2', 'Testing purpose', '47'),
+('group2','test3', 'This is a test value3', 'Testing purpose', '47'),
 ('group1','test', 'This is a test value', 'Testing purpose', '48'),
+('group1','test1', 'This is a test value1', 'Testing purpose', '48'),
 ('group2','test2', 'This is a test value2', 'Testing purpose', '48'),
+('group2','test1', 'This is a test value1', 'Testing purpose', '48'),
 ('group1','test', 'C\'est une valeur de test', 'Testing purpose', '56'),
-('group2','test2', 'C\'est une valeur de test2', 'Testing purpose', '56');
+('group1','test2', 'C\'est une valeur de test2', 'Testing purpose', '56'),
+('group2','test2', 'C\'est une valeur de test2', 'Testing purpose', '56'),
+('group2','test3', 'C\'est une valeur de test3', 'Testing purpose', '56');
 
 INSERT INTO `easymvc_db`.`f_controller_resource` VALUES 
 ('h1_title', 'account', 'login', 'Login View', 'The title of the H1 element', '47'),

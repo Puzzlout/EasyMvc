@@ -24,6 +24,8 @@ class BaseClassGenerator extends BaseTemplateProcessor {
   const Key = "Key";
   const FolderKey = "FolderKey";
   const ClassDescriptionKey = "ClassDescriptionKey";
+  const CultureKey = "CultureKey";
+  const DataIsResources = "DataIsResourcesKey";
 
   /**
    * The path where the class file generated must be saved.
@@ -53,7 +55,13 @@ class BaseClassGenerator extends BaseTemplateProcessor {
    * The flag to know if the class is a framework and application class.
    */
   public $isFrameworkClass = true;
-  
+
+  /**
+   * The data is either a list of files and folders or a list of resources.
+   * @var bool
+   */
+  public $dataIsResources = false;
+
   /**
    * 
    * @param string $destinationDir
@@ -63,17 +71,22 @@ class BaseClassGenerator extends BaseTemplateProcessor {
   public function __construct($params, $data) {
     $this->destinationDir = FrameworkConstants_RootDir . $params[BaseClassGenerator::DestinationDirKey];
     $this->className = $params[self::ClassNameKey];
-    $this->fileName = $this->className . ".php";
+    $this->fileName = array_key_exists(self::CultureKey, $params) ? $this->className . "." . $params[self::CultureKey] . ".php" : $this->className . ".php";
     $this->placeholders = Placeholders\PlaceholdersManager::InitPlaceholdersForPhpDoc($params);
     $this->data = $data;
     $templateHeader = Templates\TemplateFileNameConstants::GetFullNameForConst(Templates\TemplateFileNameConstants::ClassHeaderTemplate);
     $this->classHeaderTemplateContents = file_exists($templateHeader) ?
             file_get_contents($templateHeader) : FALSE;
+    $this->dataIsResources = $params[self::DataIsResources];
   }
 
   public function BuildClass() {
     $this->WriteClassHeader();
-    $this->WriteConstants();
+    if ($this->dataIsResources) {
+      $this->WriteConstantsForResources();
+    } else {
+      $this->WriteConstantsForListOfFilesAndFolders();
+    }
     $this->WriteContent();
     $this->ClassEnd();
   }
@@ -180,9 +193,10 @@ class BaseClassGenerator extends BaseTemplateProcessor {
   }
 
   /**
-   * Write the constants of the class if any must be created.
+   * Write the constants of the class if any must be created when the data is 
+   * a list of files and folders.
    */
-  public function WriteConstants($valueToTrim = ".php") {
+  public function WriteConstantsForListOfFilesAndFolders($valueToTrim = ".php") {
     $output = "";
     foreach ($this->data as $key => $value) {
       if (!is_array($value) && preg_match("`^.*php$`", $value)) {
@@ -191,6 +205,19 @@ class BaseClassGenerator extends BaseTemplateProcessor {
         $output .= $this->WriteConstant($this->BuildConstantFolderKeyValue($key));
         $output .= $this->WriteConstantsFromArray($value, $valueToTrim);
       }
+    }
+    $output .= CodeSnippets\PhpCodeSnippets::LF;
+    fwrite($this->writer, $output);
+  }
+
+  /**
+   * Write the constants of the class if any must be created when the data is 
+   * a list of resources.
+   */
+  public function WriteConstantsForResources($valueToTrim = "") {
+    $output = "";
+    foreach ($this->data as $key => $value) {
+      $output .= $this->WriteConstant($this->BuildConstantKeyValue($key));
     }
     $output .= CodeSnippets\PhpCodeSnippets::LF;
     fwrite($this->writer, $output);

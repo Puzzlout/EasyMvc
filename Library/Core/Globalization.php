@@ -61,10 +61,9 @@ class Globalization extends ApplicationComponent {
 
   public function __construct(Application $app) {
     parent::__construct($app);
-    $this->Init(ResourceManagers\ResourceLoaderBase::FROM_DB);
   }
 
-  public function Init($source) {
+  public function Init($source = \Library\Core\ResourceManagers\ResourceLoaderBase::FROM_DB) {
     $dal = $this->app()->dal()->getDalInstance();
     switch ($source) {
       case ResourceManagers\ResourceLoaderBase::FROM_DB:
@@ -122,13 +121,13 @@ class Globalization extends ApplicationComponent {
       $cleanArray = \Library\Helpers\CommonHelper::CleanPrefixedkeyInAssocArray((array) $resourceObj);
       if (isset($assocArray
               [self::COMMON_RESX_ARRAY_KEY]
-              [$resourceObj->f_culture_id()]
               [$cleanArray[F_common_resource::F_COMMON_RESOURCE_GROUP]]
+              [$resourceObj->f_culture_id()]
               [$cleanArray[F_common_resource::F_COMMON_RESOURCE_KEY]])) {
         $assocArray
             [self::COMMON_RESX_ARRAY_KEY]
-            [$resourceObj->f_culture_id()]
             [$cleanArray[F_common_resource::F_COMMON_RESOURCE_GROUP]]
+            [$resourceObj->f_culture_id()]
             [$cleanArray[F_common_resource::F_COMMON_RESOURCE_KEY]] = array(
           $cleanArray[F_common_resource::F_COMMON_RESOURCE_VALUE],
           $cleanArray[F_common_resource::F_COMMON_RESOURCE_COMMENT]
@@ -136,8 +135,8 @@ class Globalization extends ApplicationComponent {
       } else {
         $assocArray
             [self::COMMON_RESX_ARRAY_KEY]
-            [$cleanArray[\Library\BO\F_common_resource::F_CULTURE_ID]]
             [$cleanArray[F_common_resource::F_COMMON_RESOURCE_GROUP]]
+            [$cleanArray[\Library\BO\F_common_resource::F_CULTURE_ID]]
             [$cleanArray[F_common_resource::F_COMMON_RESOURCE_KEY]] = array(
           \Library\BO\F_common_resource::F_COMMON_RESOURCE_VALUE => $cleanArray[F_common_resource::F_COMMON_RESOURCE_VALUE],
           \Library\BO\F_common_resource::F_COMMON_RESOURCE_COMMENT => $cleanArray[F_common_resource::F_COMMON_RESOURCE_COMMENT]
@@ -192,15 +191,15 @@ class Globalization extends ApplicationComponent {
       $cleanArray = \Library\Helpers\CommonHelper::CleanPrefixedkeyInAssocArray((array) $resourceObj);
       if (isset($assocArray
               [self::COMMON_RESX_ARRAY_KEY]
-              [$resourceObj->f_culture_id()]
               [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_MODULE]]
               [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_ACTION]]
+              [$resourceObj->f_culture_id()]
               [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_KEY]])) {
         $assocArray
             [self::CONTROLLER_RESX_ARRAY_KEY]
-            [$resourceObj->f_culture_id()]
             [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_MODULE]]
             [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_ACTION]]
+            [$resourceObj->f_culture_id()]
             [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_KEY]] = array(
           \Library\BO\F_controller_resource::F_CONTROLLER_RESOURCE_VALUE => $cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_VALUE],
           \Library\BO\F_controller_resource::F_CONTROLLER_RESOURCE_COMMENT => $cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_COMMENT])
@@ -208,9 +207,9 @@ class Globalization extends ApplicationComponent {
       } else {
         $assocArray
             [self::CONTROLLER_RESX_ARRAY_KEY]
-            [$cleanArray[\Library\BO\F_common_resource::F_CULTURE_ID]]
             [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_MODULE]]
             [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_ACTION]]
+            [$cleanArray[\Library\BO\F_common_resource::F_CULTURE_ID]]
             [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_KEY]] = array(
           \Library\BO\F_controller_resource::F_CONTROLLER_RESOURCE_VALUE => $cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_VALUE],
           \Library\BO\F_controller_resource::F_CONTROLLER_RESOURCE_COMMENT => $cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_COMMENT])

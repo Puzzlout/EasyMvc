@@ -42,13 +42,12 @@ class GeneratorManager extends \Library\Core\ApplicationComponent {
   }
 
   public function GenerateResourceArrays() {
-    $commonResxFromDb = $this->app()->dal()->getDalInstance()->selectMany(new \Library\BO\F_common_resource(), new \Library\Dal\DbQueryFilters());
-    $controllerResxFromDb = $this->app()->dal()->getDalInstance()->selectMany(new \Library\BO\F_controller_resource(), new \Library\Dal\DbQueryFilters());
-
+    $this->app()->i8n()->Init();
     $generator = new \Library\GeneratorEngine\Utility\ResourceEngine("Resx");
+    $generator->setAppInstance($this->app());
     $generator->Run(array(
-        \Library\Core\Globalization::COMMON_RESX_OBJ_LIST => $commonResxFromDb,
-        \Library\Core\Globalization::CONTROLLER_RESX_OBJ_LIST => $controllerResxFromDb
+        \Library\Core\Globalization::COMMON_RESX_ARRAY_KEY => $this->app()->i8n()->CommonResources,
+        \Library\Core\Globalization::CONTROLLER_RESX_ARRAY_KEY => $this->app()->i8n()->ControllerResources
     ));
 
     echo 'Done!';

@@ -300,15 +300,14 @@ class CommonHelper {
     if (array_key_exists($fileName, $xmlFilesLoaded)) {
       $this->xmlReader = $xmlFilesLoaded[$fileName];
     } else {
-      $this->xmlReader =
-              isset($fileName) ?
+      $this->xmlReader = isset($fileName) ?
               new \Library\Core\XmlReader(NULL, $configFileName) :
               new \Library\Core\XmlReader($filePath);
       $xmlFilesLoaded[$configFileName] = $this->xmlReader;
       apc_add(\Library\Enums\CacheKeys::XmlFilesLoaded, $xmlFilesLoaded);
     }
   }
-  
+
   /**
    * Clean an associative array when its key have a prefix, like "*" which happens
    * when converting an object to associative array.
@@ -325,4 +324,22 @@ class CommonHelper {
     }
     return $cleanedArray["array"];
   }
+
+  /**
+   * 
+   * @param array $arrayToSearch
+   * @param string $assocArrayKeyValue
+   * @param string $assocArrayValue
+   * @return array
+   */
+  public static function FindArrayFromAContainingValue($arrayToSearch, $assocArrayKeyValue, $assocArrayValue) {
+    foreach ($arrayToSearch as $key => $subArray) {
+      if (array_key_exists($assocArrayKeyValue, $subArray) &&
+              $subArray[$assocArrayKeyValue] === (string)$assocArrayValue) {
+        return $subArray;
+      }
+    }
+    return array();
+  }
+
 }
