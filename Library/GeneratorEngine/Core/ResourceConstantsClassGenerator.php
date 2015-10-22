@@ -35,7 +35,12 @@ class ResourceConstantsClassGenerator extends ConstantsClassGenerator {
   public function WriteConstants($valueToTrim = ".php") {
     $output = "";
     foreach ($this->data as $key => $value) {
-      $output .= $this->WriteConstant($this->BuildConstantKeyValue($key));
+      if (!is_array($value)) {
+        $output .= $this->WriteConstant($this->BuildConstantKeyValue($key, $valueToTrim));
+      } else {
+        $output .= $this->WriteConstant($this->BuildConstantKeyValue($key));
+        $output .= $this->WriteConstantsFromArray($value, $valueToTrim);
+      }
     }
     $output .= PhpCodeSnippets::LF;
     fwrite($this->writer, $output);
@@ -93,12 +98,7 @@ class ResourceConstantsClassGenerator extends ConstantsClassGenerator {
   protected function WriteNewArrayAndItsContents($array, $arrayOpened = FALSE, $tabAmount = 0) {
     $output = "";
     foreach ($array as $key => $value) {
-      if (is_array($value)) {
-        $output .= $this->WriteAssociativeArrayValueAsNewArray($key, $tabAmount); //new array opened
-        $output .= $this->WriteNewArrayAndItsContents($value, TRUE, $tabAmount);
-      } else {
-        $output .= $this->WriteAssociativeArrayValue($this->RemoveExtensionFileName($value, ".php"), $tabAmount);
-      }
+        $output .= $this->WriteAssociativeArrayValue($key, $value, $tabAmount);
     }
     if ($arrayOpened) {
       $output .= $this->CloseArray($tabAmount - 1);
@@ -134,16 +134,37 @@ class ResourceConstantsClassGenerator extends ConstantsClassGenerator {
 
   protected function WriteConstantsFromArray($array, $valueToTrim) {
     $output = "";
-    parent::WriteConstantsFromArray($array, $valueToTrim);
     foreach ($array as $key => $value) {
-      if (is_array($value)) {
-        $output .= $this->WriteConstant($this->BuildConstantFolderKeyValue($key));
-        $output .= $this->WriteConstantsFromArray($value, $valueToTrim);
-      } else {
-        $output .= $this->WriteConstant($this->CleanAndBuildConstantKeyValue($value, $valueToTrim));
-      }
+        $output .= $this->WriteConstant($this->BuildConstantKeyValue($key));
     }
     return $output;
   }
+  
+  /**
+   * Computes a value of an associative array.
+   * 
+   * @param string $value the value to use to compute the output
+   * @return string the computed string
+   */
+  protected function WriteAssociativeArrayValueAsNewArray($value, $tabAmount = 0) {
+    $lineOfCode = str_repeat("  ", $tabAmount) .
+            "self::" .
+            $value . self::Key . " => array(" .
+            PhpCodeSnippets::LF;
+    return $lineOfCode;
+  }
 
+  /**
+   * Computes a value of an associative array.
+   * 
+   * @param string $value the value to use to compute the output
+   * @return string the computed string
+   */
+  protected function WriteAssociativeArrayValue($key, $value, $tabAmount = 0) {
+    $lineOfCode = str_repeat("  ", $tabAmount) .
+            "self::" .
+            $key . self::Key . " => \"" . $value . "\"," .
+            PhpCodeSnippets::LF;
+    return $lineOfCode;
+  }
 }
