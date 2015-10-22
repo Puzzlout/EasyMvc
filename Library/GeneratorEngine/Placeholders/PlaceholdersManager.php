@@ -24,14 +24,14 @@ class PlaceholdersManager {
         PhpDocPlaceholders::COPYRIGHT_YEAR => date("Y"),
         PhpDocPlaceholders::LICENCE => "http://opensource.org/licenses/gpl-license.php GNU Public License",
         PhpDocPlaceholders::LINK => "https://github.com/WebDevJL/EasyMvc/blob/master/README.md",
-        PhpDocPlaceholders::PACKAGE => $params[\Library\GeneratorEngine\BaseClassGenerator::ClassNameKey],
+        PhpDocPlaceholders::PACKAGE => $params[\Library\GeneratorEngine\Core\BaseClassGenerator::ClassNameKey],
         PhpDocPlaceholders::SUBPACKAGE => "",
         PhpDocPlaceholders::VERSION_NUMBER => FrameworkConstants_Version,
-        ClassFilePlaceholders::NAMESPACE_FRAMEWORK => $params[\Library\GeneratorEngine\BaseClassGenerator::NameSpaceKey],
+        ClassFilePlaceholders::NAMESPACE_FRAMEWORK => $params[\Library\GeneratorEngine\Core\BaseClassGenerator::NameSpaceKey],
         ClassFilePlaceholders::NAMESPACE_APP => "",
-        ClassFilePlaceholders::NAMESPACE_CLASS => $params[\Library\GeneratorEngine\BaseClassGenerator::NameSpaceKey],
-        ClassFilePlaceholders::CLASS_NAME => $params[\Library\GeneratorEngine\BaseClassGenerator::ClassNameKey],
-        ClassFilePlaceholders::CLASS_DESCRIPTION => $params[\Library\GeneratorEngine\BaseClassGenerator::ClassDescriptionKey],
+        ClassFilePlaceholders::NAMESPACE_CLASS => $params[\Library\GeneratorEngine\Core\BaseClassGenerator::NameSpaceKey],
+        ClassFilePlaceholders::CLASS_NAME => $params[\Library\GeneratorEngine\Core\BaseClassGenerator::ClassNameKey],
+        ClassFilePlaceholders::CLASS_DESCRIPTION => $params[\Library\GeneratorEngine\Core\BaseClassGenerator::ClassDescriptionKey],
     );
   }
 

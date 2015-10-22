@@ -1,7 +1,7 @@
 <?php
 require_once '../errorHandler.php';
 require_once 'loader.php';
-$generator = new Library\GeneratorEngine\DalModuleNameConstantsEngine("DalModules");
+$generator = new Library\GeneratorEngine\Core\DalModuleNameConstantsEngine("DalModules");
 $generator->Run();
 ?>
 

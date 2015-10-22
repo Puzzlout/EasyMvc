@@ -1,7 +1,7 @@
 <?php
 require_once '../errorHandler.php';
 require_once 'loader.php';
-$generator = new \Library\GeneratorEngine\ControllerNameConstantsEngine("Controllers");
+$generator = new \Library\GeneratorEngine\Core\ControllerNameConstantsEngine("Controllers");
 $generator->Run();
 ?>
 

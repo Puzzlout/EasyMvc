@@ -17,7 +17,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-class ResourceEngine extends \Library\GeneratorEngine\ConstantsClassEngineBase {
+class ResourceEngine extends \Library\GeneratorEngine\Core\ResourceConstantsClassEngine {
 
   public $NamespaceApplicationRootGeneratedFolder = "";
   public $DestinationFolder = "";
@@ -39,12 +39,12 @@ class ResourceEngine extends \Library\GeneratorEngine\ConstantsClassEngineBase {
       foreach ($groupArray as $cultureKey => $cultureArray) {
         $culture = \Library\Helpers\CommonHelper::FindArrayFromAContainingValue($this->app->cultures, \Library\BO\F_culture::F_CULTURE_ID, (string) $cultureKey);
         $this->params = array(
-            \Library\GeneratorEngine\BaseClassGenerator::NameSpaceKey => $this->NamespaceApplicationRootGeneratedFolder,
-            \Library\GeneratorEngine\BaseClassGenerator::ClassNameKey => $groupKey . $this->GeneratedClassPrefix,
-            \Library\GeneratorEngine\BaseClassGenerator::DestinationDirKey => $this->DestinationFolder,
-            \Library\GeneratorEngine\BaseClassGenerator::ClassDescriptionKey => "List of the resources for the group" . $groupKey . " of common resources.",
-            \Library\GeneratorEngine\BaseClassGenerator::CultureKey => $culture[\Library\BO\F_culture::F_CULTURE_LANGUAGE] . "-" . $culture[\Library\BO\F_culture::F_CULTURE_REGION],
-            \Library\GeneratorEngine\BaseClassGenerator::DataIsResources => TRUE
+            \Library\GeneratorEngine\Core\BaseClassGenerator::NameSpaceKey => $this->NamespaceApplicationRootGeneratedFolder,
+            \Library\GeneratorEngine\Core\BaseClassGenerator::ClassNameKey => $groupKey . $this->GeneratedClassPrefix,
+            \Library\GeneratorEngine\Core\BaseClassGenerator::DestinationDirKey => $this->DestinationFolder,
+            \Library\GeneratorEngine\Core\BaseClassGenerator::ClassDescriptionKey => "List of the resources for the group" . $groupKey . " of common resources.",
+            \Library\GeneratorEngine\Core\BaseClassGenerator::CultureKey => $culture[\Library\BO\F_culture::F_CULTURE_LANGUAGE] . "-" . $culture[\Library\BO\F_culture::F_CULTURE_REGION],
+            \Library\GeneratorEngine\Core\BaseClassGenerator::DataIsResources => TRUE
         );
         $this->GenerateApplicationFile($cultureArray);
       }
@@ -58,12 +58,12 @@ class ResourceEngine extends \Library\GeneratorEngine\ConstantsClassEngineBase {
       foreach ($moduleArray as $actionKey => $actionArray) {
         $culture = \Library\Helpers\CommonHelper::FindArrayFromAContainingValue($this->app->cultures, \Library\BO\F_culture::F_CULTURE_ID, (string) $cultureKey);
         $this->params = array(
-            \Library\GeneratorEngine\BaseClassGenerator::NameSpaceKey => $this->NamespaceApplicationRootGeneratedFolder,
-            \Library\GeneratorEngine\BaseClassGenerator::ClassNameKey => ucfirst($moduleKey),
-            \Library\GeneratorEngine\BaseClassGenerator::DestinationDirKey => $this->DestinationFolder,
-            \Library\GeneratorEngine\BaseClassGenerator::ClassDescriptionKey => "List of the resources for the module" . $moduleKey,
-            \Library\GeneratorEngine\BaseClassGenerator::CultureKey => $culture[\Library\BO\F_culture::F_CULTURE_LANGUAGE] . "-" . $culture[\Library\BO\F_culture::F_CULTURE_REGION],
-            \Library\GeneratorEngine\BaseClassGenerator::DataIsResources => TRUE
+            \Library\GeneratorEngine\Core\BaseClassGenerator::NameSpaceKey => $this->NamespaceApplicationRootGeneratedFolder,
+            \Library\GeneratorEngine\Core\BaseClassGenerator::ClassNameKey => ucfirst($moduleKey),
+            \Library\GeneratorEngine\Core\BaseClassGenerator::DestinationDirKey => $this->DestinationFolder,
+            \Library\GeneratorEngine\Core\BaseClassGenerator::ClassDescriptionKey => "List of the resources for the module" . $moduleKey,
+            \Library\GeneratorEngine\Core\BaseClassGenerator::CultureKey => $culture[\Library\BO\F_culture::F_CULTURE_LANGUAGE] . "-" . $culture[\Library\BO\F_culture::F_CULTURE_REGION],
+            \Library\GeneratorEngine\Core\BaseClassGenerator::DataIsResources => TRUE
         );
         $this->GenerateApplicationFile($resources);
       }

@@ -3,7 +3,7 @@
 namespace Library\Core;
 
 use Library\Enums;
-use Library\GeneratorEngine\BaseClassGenerator;
+use Library\GeneratorEngine\Core\BaseClassGenerator;
 
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');

@@ -12,7 +12,7 @@
  * @package ControllerListsGenerator
  */
 
-namespace Library\GeneratorEngine;
+namespace Library\GeneratorEngine\Core;
 
 use Library\Core\DirectoryManager;
 use Library\FrameworkConstants;

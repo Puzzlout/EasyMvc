@@ -11,7 +11,8 @@
  * @package BaseClassGenerator
  */
 
-namespace Library\GeneratorEngine;
+namespace Library\GeneratorEngine\Core;
+use Library\GeneratorEngine\CodeSnippets\PhpCodeSnippets;
 
 if (!FrameworkConstants_ExecutionAccessRestriction)
   exit('No direct script access allowed');
@@ -72,21 +73,16 @@ class BaseClassGenerator extends BaseTemplateProcessor {
     $this->destinationDir = FrameworkConstants_RootDir . $params[BaseClassGenerator::DestinationDirKey];
     $this->className = $params[self::ClassNameKey];
     $this->fileName = array_key_exists(self::CultureKey, $params) ? $this->className . "." . $params[self::CultureKey] . ".php" : $this->className . ".php";
-    $this->placeholders = Placeholders\PlaceholdersManager::InitPlaceholdersForPhpDoc($params);
+    $this->placeholders = \Library\GeneratorEngine\Placeholders\PlaceholdersManager::InitPlaceholdersForPhpDoc($params);
     $this->data = $data;
-    $templateHeader = Templates\TemplateFileNameConstants::GetFullNameForConst(Templates\TemplateFileNameConstants::ClassHeaderTemplate);
+    $templateHeader = \Library\GeneratorEngine\Templates\TemplateFileNameConstants::GetFullNameForConst(\Library\GeneratorEngine\Templates\TemplateFileNameConstants::ClassHeaderTemplate);
     $this->classHeaderTemplateContents = file_exists($templateHeader) ?
             file_get_contents($templateHeader) : FALSE;
-    $this->dataIsResources = $params[self::DataIsResources];
   }
 
   public function BuildClass() {
     $this->WriteClassHeader();
-    if ($this->dataIsResources) {
-      $this->WriteConstantsForResources();
-    } else {
-      $this->WriteConstantsForListOfFilesAndFolders();
-    }
+    $this->WriteConstants();
     $this->WriteContent();
     $this->ClassEnd();
   }
@@ -110,7 +106,7 @@ class BaseClassGenerator extends BaseTemplateProcessor {
    * Writes the PHP opening tag of PHP file.
    */
   public function AddPhpOpenTag() {
-    fwrite($this->writer, "<?php" . CodeSnippets\PhpCodeSnippets::CRLF);
+    fwrite($this->writer, "<?php" . PhpCodeSnippets::CRLF);
   }
 
   /**
@@ -130,14 +126,14 @@ class BaseClassGenerator extends BaseTemplateProcessor {
    * Computes the class description using PhpDoc and writes it to the output.
    */
   public function AddFileDescription() {
-    $output = CodeSnippets\PhpDocSnippets::OPENING . CodeSnippets\PhpCodeSnippets::LF .
-            strtr(CodeSnippets\PhpDocSnippets::AUTHOR, $this->placeholders) . CodeSnippets\PhpCodeSnippets::LF .
-            strtr(CodeSnippets\PhpDocSnippets::COPYRIGHT, $this->placeholders) . CodeSnippets\PhpCodeSnippets::LF .
-            strtr(CodeSnippets\PhpDocSnippets::LICENCE, $this->placeholders) . CodeSnippets\PhpCodeSnippets::LF .
-            strtr(CodeSnippets\PhpDocSnippets::LINK, $this->placeholders) . CodeSnippets\PhpCodeSnippets::LF .
-            strtr(CodeSnippets\PhpDocSnippets::SINCE, $this->placeholders) . CodeSnippets\PhpCodeSnippets::LF .
-            strtr(CodeSnippets\PhpDocSnippets::PACKAGE, $this->placeholders) . CodeSnippets\PhpCodeSnippets::LF .
-            CodeSnippets\PhpDocSnippets::CLOSING . CodeSnippets\PhpCodeSnippets::LF;
+    $output = CodeSnippets\PhpDocSnippets::OPENING . PhpCodeSnippets::LF .
+            strtr(CodeSnippets\PhpDocSnippets::AUTHOR, $this->placeholders) . PhpCodeSnippets::LF .
+            strtr(CodeSnippets\PhpDocSnippets::COPYRIGHT, $this->placeholders) . PhpCodeSnippets::LF .
+            strtr(CodeSnippets\PhpDocSnippets::LICENCE, $this->placeholders) . PhpCodeSnippets::LF .
+            strtr(CodeSnippets\PhpDocSnippets::LINK, $this->placeholders) . PhpCodeSnippets::LF .
+            strtr(CodeSnippets\PhpDocSnippets::SINCE, $this->placeholders) . PhpCodeSnippets::LF .
+            strtr(CodeSnippets\PhpDocSnippets::PACKAGE, $this->placeholders) . PhpCodeSnippets::LF .
+            CodeSnippets\PhpDocSnippets::CLOSING . PhpCodeSnippets::LF;
     fwrite($this->writer, $output);
   }
 
@@ -145,9 +141,9 @@ class BaseClassGenerator extends BaseTemplateProcessor {
    * Writes the line to prevent direct execution of the PHP class.
    */
   public function AddScriptNotAllowedLine() {
-    $output = CodeSnippets\PhpCodeSnippets::LF .
+    $output = PhpCodeSnippets::LF .
             "if (!FrameworkConstants_ExecutionAccessRestriction) { exit('No direct script access allowed'); }" .
-            CodeSnippets\PhpCodeSnippets::CRLF;
+            PhpCodeSnippets::CRLF;
     fwrite($this->writer, $output);
   }
 
@@ -155,9 +151,9 @@ class BaseClassGenerator extends BaseTemplateProcessor {
    * Writes the start of the class.
    */
   public function ClassStart() {
-    $output = CodeSnippets\PhpCodeSnippets::CRLF .
+    $output = PhpCodeSnippets::CRLF .
             "class " . ucfirst($this->className) . " {" . //" extends " . $this->baseClass . " {" .
-            CodeSnippets\PhpCodeSnippets::LF;
+            PhpCodeSnippets::LF;
     fwrite($this->writer, $output);
   }
 
@@ -165,7 +161,7 @@ class BaseClassGenerator extends BaseTemplateProcessor {
    * Closes the class.
    */
   public function ClassEnd() {
-    fwrite($this->writer, CodeSnippets\PhpCodeSnippets::LF . "}");
+    fwrite($this->writer, PhpCodeSnippets::LF . "}");
     $this->CloseWriter();
   }
 
@@ -193,10 +189,12 @@ class BaseClassGenerator extends BaseTemplateProcessor {
   }
 
   /**
-   * Write the constants of the class if any must be created when the data is 
-   * a list of files and folders.
+   * Write the constants of the class to the output file.
+   * 
+   * @param string $valueToTrim the string value to remove from each value in
+   * $this->data array.
    */
-  public function WriteConstantsForListOfFilesAndFolders($valueToTrim = ".php") {
+  public function WriteConstants($valueToTrim = ".php") {
     $output = "";
     foreach ($this->data as $key => $value) {
       if (!is_array($value) && preg_match("`^.*php$`", $value)) {
@@ -206,7 +204,7 @@ class BaseClassGenerator extends BaseTemplateProcessor {
         $output .= $this->WriteConstantsFromArray($value, $valueToTrim);
       }
     }
-    $output .= CodeSnippets\PhpCodeSnippets::LF;
+    $output .= PhpCodeSnippets::LF;
     fwrite($this->writer, $output);
   }
 
@@ -219,7 +217,7 @@ class BaseClassGenerator extends BaseTemplateProcessor {
     foreach ($this->data as $key => $value) {
       $output .= $this->WriteConstant($this->BuildConstantKeyValue($key));
     }
-    $output .= CodeSnippets\PhpCodeSnippets::LF;
+    $output .= PhpCodeSnippets::LF;
     fwrite($this->writer, $output);
   }
 
@@ -234,11 +232,11 @@ class BaseClassGenerator extends BaseTemplateProcessor {
   }
 
   protected function WriteConstant($value) {
-    $lineOfCode = CodeSnippets\PhpCodeSnippets::TAB2 .
+    $lineOfCode = PhpCodeSnippets::TAB2 .
             "const " . $value .
             " = '" .
             $value . "';" .
-            CodeSnippets\PhpCodeSnippets::LF;
+            PhpCodeSnippets::LF;
     return $lineOfCode;
   }
 
@@ -318,8 +316,8 @@ class BaseClassGenerator extends BaseTemplateProcessor {
   protected function WriteAssociativeArrayValue($value, $tabAmount = 0) {
     $lineOfCode = str_repeat("  ", $tabAmount) .
             "self::" .
-            $value . BaseClassGenerator::Key . " => '" . $value . "'," .
-            CodeSnippets\PhpCodeSnippets::LF;
+            $value . self::Key . " => '" . $value . "'," .
+            PhpCodeSnippets::LF;
     return $lineOfCode;
   }
 
@@ -332,8 +330,8 @@ class BaseClassGenerator extends BaseTemplateProcessor {
   protected function WriteAssociativeArrayValueAsNewArray($value, $tabAmount = 0) {
     $lineOfCode = str_repeat("  ", $tabAmount) .
             "self::" .
-            $value . BaseClassGenerator::FolderKey . " => array(" .
-            CodeSnippets\PhpCodeSnippets::LF;
+            $value . self::FolderKey . " => array(" .
+            PhpCodeSnippets::LF;
     return $lineOfCode;
   }
 

@@ -12,7 +12,7 @@
  * @package ViewNameConstantsEngine
  */
 
-namespace Library\GeneratorEngine;
+namespace Library\GeneratorEngine\Core;
 
 use Library\Core\DirectoryManager;
 

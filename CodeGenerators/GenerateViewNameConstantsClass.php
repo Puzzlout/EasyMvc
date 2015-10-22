@@ -1,7 +1,7 @@
 <?php
 require_once '../errorHandler.php';
 require_once 'loader.php';
-$generator = new Library\GeneratorEngine\ViewNameConstantsEngine("Views");
+$generator = new Library\GeneratorEngine\Core\ViewNameConstantsEngine("Views");
 $generator->Run();
 ?>
 

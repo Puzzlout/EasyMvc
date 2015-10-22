@@ -11,20 +11,42 @@
  * @package ConstantsClassGenerator
  */
 
-namespace Library\GeneratorEngine;
+namespace Library\GeneratorEngine\Core;
+use Library\GeneratorEngine\CodeSnippets\PhpCodeSnippets;
 
 if (!FrameworkConstants_ExecutionAccessRestriction)
   exit('No direct script access allowed');
 
-class ConstantsClassGenerator extends BaseClassGenerator {
+class ResourceConstantsClassGenerator extends ConstantsClassGenerator {
+
+  public function BuildClass() {
+    parent::WriteClassHeader();
+    $this->WriteConstants();
+    $this->WriteContent();
+    parent::ClassEnd();
+  }
+
+  /**
+   * Write the constants of the class to the output file.
+   * 
+   * @param string $valueToTrim the string value to remove from each value in
+   * $this->data array.
+   */
+  public function WriteConstants($valueToTrim = ".php") {
+    $output = "";
+    foreach ($this->data as $key => $value) {
+      $output .= $this->WriteConstant($this->BuildConstantKeyValue($key));
+    }
+    $output .= PhpCodeSnippets::LF;
+    fwrite($this->writer, $output);
+  }
 
   /**
    * Write the content of the class, method by method.
    */
   public function WriteContent() {
-    parent::WriteContent();
     $output = $this->WriteGetListMethod();
-    $output .= CodeSnippets\PhpCodeSnippets::CRLF;
+    $output .= PhpCodeSnippets::CRLF;
     $output .= $this->WriteDoesConstantExistMethod();
     fwrite($this->writer, $output);
   }
@@ -35,10 +57,10 @@ class ConstantsClassGenerator extends BaseClassGenerator {
    */
   private function WriteGetListMethod() {
     $method = $this->GetMethodNameToGenerate(__FUNCTION__);
-    $output = CodeSnippets\PhpCodeSnippets::TAB2 .
-            CodeSnippets\PhpCodeSnippets::PublicStaticFunction . $method . "() {" . CodeSnippets\PhpCodeSnippets::LF .
-            CodeSnippets\PhpCodeSnippets::TAB4 .
-            "return array(" . CodeSnippets\PhpCodeSnippets::LF;
+    $output = PhpCodeSnippets::TAB2 .
+            PhpCodeSnippets::PublicStaticFunction . $method . "() {" . PhpCodeSnippets::LF .
+            PhpCodeSnippets::TAB4 .
+            "return array(" . PhpCodeSnippets::LF;
 
     foreach ($this->data as $key => $value) {
       if (!is_array($value) && preg_match("`^.*php$`", $value)) {
@@ -50,11 +72,11 @@ class ConstantsClassGenerator extends BaseClassGenerator {
         $output .= $this->WriteNewArrayAndItsContents($value, TRUE, 4);
         //$output .= $this->CloseArray(count($value), 4);
       }
-      $output .= CodeSnippets\PhpCodeSnippets::LF;
+      $output .= PhpCodeSnippets::LF;
     }
     $output .=
-            CodeSnippets\PhpCodeSnippets::TAB4 . ");" . CodeSnippets\PhpCodeSnippets::LF .
-            CodeSnippets\PhpCodeSnippets::TAB2 . "}";
+            PhpCodeSnippets::TAB4 . ");" . PhpCodeSnippets::LF .
+            PhpCodeSnippets::TAB2 . "}";
     return $output;
   }
 
@@ -102,11 +124,11 @@ class ConstantsClassGenerator extends BaseClassGenerator {
    */
   private function WriteDoesConstantExistMethod() {
     $method = $this->GetMethodNameToGenerate(__FUNCTION__);
-    $output = CodeSnippets\PhpCodeSnippets::TAB2 .
-            CodeSnippets\PhpCodeSnippets::PublicStaticFunction . $method . "(\$key) {" . CodeSnippets\PhpCodeSnippets::LF .
-            CodeSnippets\PhpCodeSnippets::TAB4 .
-            "return array_key_exists(\$key, self::GetList());" . CodeSnippets\PhpCodeSnippets::LF .
-            CodeSnippets\PhpCodeSnippets::TAB2 . "}";
+    $output = PhpCodeSnippets::TAB2 .
+            PhpCodeSnippets::PublicStaticFunction . $method . "(\$key) {" . PhpCodeSnippets::LF .
+            PhpCodeSnippets::TAB4 .
+            "return array_key_exists(\$key, self::GetList());" . PhpCodeSnippets::LF .
+            PhpCodeSnippets::TAB2 . "}";
     return $output;
   }
 

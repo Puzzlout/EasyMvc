@@ -9,10 +9,10 @@
  * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
  * @link https://github.com/WebDevJL/EasyMvc
  * @since Version 1.0.0
- * @package 
+ * @package BaseTemplateProcessor
  */
 
-namespace Library\GeneratorEngine;
+namespace Library\GeneratorEngine\Core;
 
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');

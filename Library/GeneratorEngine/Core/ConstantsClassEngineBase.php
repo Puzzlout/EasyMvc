@@ -11,7 +11,7 @@
  * @package ConstantsClassGeneratorBase
  */
 
-namespace Library\GeneratorEngine;
+namespace Library\GeneratorEngine\Core;
 
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
