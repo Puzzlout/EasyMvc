@@ -316,12 +316,11 @@ class BaseClassGenerator extends BaseTemplateProcessor {
   /**
    * Computes a value of an associative array.
    * 
-   * @param string $key the key to use to compute the output in some cases
    * @param string $value the value to use to compute the output
    * @param int $tabAmount the amount of tabulations to print in the computed output
    * @return string the computed string
    */
-  protected function WriteAssociativeArrayValue($key, $value, $tabAmount = 0) {
+  protected function WriteAssociativeArrayValue($value, $tabAmount = 0) {
     $lineOfCode = str_repeat("  ", $tabAmount) .
             "self::" .
             $value . self::Key . " => '" . $value . "'," .

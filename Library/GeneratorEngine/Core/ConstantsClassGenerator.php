@@ -44,7 +44,7 @@ class ConstantsClassGenerator extends BaseClassGenerator {
     foreach ($this->data as $key => $value) {
       if (!is_array($value) && preg_match("`^.*php$`", $value)) {
         //write associative value in array
-        $output .= $this->WriteAssociativeArrayValue(null, $this->RemoveExtensionFileName($value, ".php"), 3);
+        $output .= $this->WriteAssociativeArrayValue($this->RemoveExtensionFileName($value, ".php"), 3);
       } else {
         //write a new array and its contents
         $output .= $this->WriteAssociativeArrayValueAsNewArray($key, 3);
