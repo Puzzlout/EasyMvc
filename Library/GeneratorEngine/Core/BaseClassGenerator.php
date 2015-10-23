@@ -12,6 +12,7 @@
  */
 
 namespace Library\GeneratorEngine\Core;
+
 use Library\GeneratorEngine\CodeSnippets\PhpCodeSnippets;
 
 if (!FrameworkConstants_ExecutionAccessRestriction)
@@ -26,7 +27,7 @@ class BaseClassGenerator extends BaseTemplateProcessor {
   const FolderKey = "FolderKey";
   const ClassDescriptionKey = "ClassDescriptionKey";
   const CultureKey = "CultureKey";
-  const DataIsResources = "DataIsResourcesKey";
+  const ClassDerivation = "ClassDerivationKey";
 
   /**
    * The path where the class file generated must be saved.
@@ -71,8 +72,13 @@ class BaseClassGenerator extends BaseTemplateProcessor {
    */
   public function __construct($params, $data) {
     $this->destinationDir = FrameworkConstants_RootDir . $params[BaseClassGenerator::DestinationDirKey];
-    $this->className = $params[self::ClassNameKey];
-    $this->fileName = array_key_exists(self::CultureKey, $params) ? $this->className . "." . $params[self::CultureKey] . ".php" : $this->className . ".php";
+    $this->className = array_key_exists(self::ClassDerivation, $params) ?
+            $params[self::ClassNameKey] . " extends " . $params[self::ClassDerivation] :
+            $params[self::ClassNameKey];
+    $this->fileName = array_key_exists(self::CultureKey, $params) ?
+            $params[self::ClassNameKey] . "." . $params[self::CultureKey] . ".php" :
+            $params[self::ClassNameKey] . ".php";
+    $params[self::ClassNameKey] = $this->className;
     $this->placeholders = \Library\GeneratorEngine\Placeholders\PlaceholdersManager::InitPlaceholdersForPhpDoc($params);
     $this->data = $data;
     $templateHeader = \Library\GeneratorEngine\Templates\TemplateFileNameConstants::GetFullNameForConst(\Library\GeneratorEngine\Templates\TemplateFileNameConstants::ClassHeaderTemplate);

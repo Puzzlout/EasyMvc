@@ -73,7 +73,7 @@ class ConstantsClassGenerator extends BaseClassGenerator {
     $output = "";
     foreach ($array as $key => $value) {
       if (is_array($value)) {
-        $output .= $this->WriteAssociativeArrayValueAsNewArray(null, $key, $tabAmount); //new array opened
+        $output .= $this->WriteAssociativeArrayValueAsNewArray($key, $tabAmount); //new array opened
         $output .= $this->WriteNewArrayAndItsContents($value, TRUE, $tabAmount);
       } else {
         $output .= $this->WriteAssociativeArrayValue($this->RemoveExtensionFileName($value, ".php"), $tabAmount);

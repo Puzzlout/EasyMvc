@@ -12,6 +12,7 @@
  */
 
 namespace Library\GeneratorEngine\Core;
+
 use Library\GeneratorEngine\CodeSnippets\PhpCodeSnippets;
 
 if (!FrameworkConstants_ExecutionAccessRestriction)
@@ -52,7 +53,6 @@ class ResourceConstantsClassGenerator extends ConstantsClassGenerator {
   public function WriteContent() {
     $output = $this->WriteGetListMethod();
     $output .= PhpCodeSnippets::CRLF;
-    $output .= $this->WriteDoesConstantExistMethod();
     fwrite($this->writer, $output);
   }
 
@@ -98,7 +98,12 @@ class ResourceConstantsClassGenerator extends ConstantsClassGenerator {
   protected function WriteNewArrayAndItsContents($array, $arrayOpened = FALSE, $tabAmount = 0) {
     $output = "";
     foreach ($array as $key => $value) {
+      if (is_array($value)) {
+        $output .= $this->WriteAssociativeArrayValueAsNewArray($key, $tabAmount); //new array opened
+        $output .= $this->WriteNewArrayAndItsContents($value, TRUE, $tabAmount);
+      } else {
         $output .= $this->WriteAssociativeArrayValue($key, $value, $tabAmount);
+      }
     }
     if ($arrayOpened) {
       $output .= $this->CloseArray($tabAmount - 1);
@@ -135,11 +140,11 @@ class ResourceConstantsClassGenerator extends ConstantsClassGenerator {
   protected function WriteConstantsFromArray($array, $valueToTrim) {
     $output = "";
     foreach ($array as $key => $value) {
-        $output .= $this->WriteConstant($this->BuildConstantKeyValue($key));
+      $output .= $this->WriteConstant($this->BuildConstantKeyValue($key));
     }
     return $output;
   }
-  
+
   /**
    * Computes a value of an associative array.
    * 
@@ -167,4 +172,5 @@ class ResourceConstantsClassGenerator extends ConstantsClassGenerator {
             PhpCodeSnippets::LF;
     return $lineOfCode;
   }
+
 }

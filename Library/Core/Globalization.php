@@ -192,14 +192,14 @@ class Globalization extends ApplicationComponent {
       if (isset($assocArray
               [self::COMMON_RESX_ARRAY_KEY]
               [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_MODULE]]
-              [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_ACTION]]
               [$resourceObj->f_culture_id()]
+              [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_ACTION]]
               [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_KEY]])) {
         $assocArray
             [self::CONTROLLER_RESX_ARRAY_KEY]
             [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_MODULE]]
-            [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_ACTION]]
             [$resourceObj->f_culture_id()]
+            [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_ACTION]]
             [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_KEY]] = array(
           \Library\BO\F_controller_resource::F_CONTROLLER_RESOURCE_VALUE => $cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_VALUE],
           \Library\BO\F_controller_resource::F_CONTROLLER_RESOURCE_COMMENT => $cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_COMMENT])
@@ -208,8 +208,8 @@ class Globalization extends ApplicationComponent {
         $assocArray
             [self::CONTROLLER_RESX_ARRAY_KEY]
             [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_MODULE]]
-            [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_ACTION]]
             [$cleanArray[\Library\BO\F_common_resource::F_CULTURE_ID]]
+            [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_ACTION]]
             [$cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_KEY]] = array(
           \Library\BO\F_controller_resource::F_CONTROLLER_RESOURCE_VALUE => $cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_VALUE],
           \Library\BO\F_controller_resource::F_CONTROLLER_RESOURCE_COMMENT => $cleanArray[F_controller_resource::F_CONTROLLER_RESOURCE_COMMENT])
