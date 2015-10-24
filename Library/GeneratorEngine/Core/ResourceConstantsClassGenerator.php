@@ -65,7 +65,7 @@ class ResourceConstantsClassGenerator extends ConstantsClassGenerator implements
   public function WriteAssociativeArrayValueWithKeyAndValue($key, $value, $tabAmount = 0) {
     $lineOfCode = str_repeat("  ", $tabAmount) .
             "self::" .
-            $key . self::Key . " => \"" . $value . "\"," .
+            $key . self::Key . " => \"" . utf8_encode($value) . "\"," .
             PhpCodeSnippets::LF;
     return $lineOfCode;
   }
