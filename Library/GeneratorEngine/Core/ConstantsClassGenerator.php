@@ -12,21 +12,87 @@
  */
 
 namespace Library\GeneratorEngine\Core;
+
 use Library\GeneratorEngine\CodeSnippets\PhpCodeSnippets;
 
 if (!FrameworkConstants_ExecutionAccessRestriction)
   exit('No direct script access allowed');
 
-class ConstantsClassGenerator extends BaseClassGenerator {
+class ConstantsClassGenerator extends BaseClassGenerator implements IClassGenerator, IConstantClass {
+
+  public function BuildClass() {
+    parent::BuildClass();
+  }
+
+  /**
+   * Build a string for a constant representing the key to find a folder in the
+   * array of constants.
+   * 
+   * @param srting $folderValue the value is a folder name
+   * @return string
+   */
+  public function BuildConstantFolderKeyValue($folderValue) {
+    return $folderValue . BaseClassGenerator::FolderKey;
+  }
+
+  /**
+   * Closes a opened array.
+   * 
+   * @param int $tabAmount the number of tabs or 2 spaces to print.
+   * @return string the code generated.
+   */
+  public function CloseArray($tabAmount = 0) {
+    return
+            str_repeat("  ", $tabAmount) .
+            "),";
+  }
+
+  public function WriteAssociativeArrayValueAsNewArray($value, $tabAmount = 0) {
+    return parent::WriteAssociativeArrayValueAsNewArray($value, $tabAmount);
+  }
+
+  public function WriteAssociativeArrayValueWithKeyAndValue($key, $value, $tabAmount = 0) {
+    throw new \Library\Exceptions\NotImplementedException();
+  }
+
+  /**
+   * Write the constants of the class to the output file.
+   * 
+   * @param string $valueToTrim the string value to remove from each value in
+   * $this->data array.
+   */
+  public function WriteConstants($valueToTrim = ".php") {
+    $output = "";
+    foreach ($this->data as $key => $value) {
+      if (!is_array($value) && preg_match("`^.*php$`", $value)) {
+        $output .= $this->WriteConstant($this->CleanAndBuildConstantKeyValue($value, $valueToTrim));
+      } else {
+        $output .= $this->WriteConstant($this->BuildConstantFolderKeyValue($key));
+        $output .= $this->WriteConstantsFromArray($value, $valueToTrim);
+      }
+    }
+    $output .= PhpCodeSnippets::LF;
+    fwrite($this->writer, $output);
+  }
+
+  public function WriteConstantsFromArray($array, $valueToTrim) {
+    $output = "";
+    foreach ($array as $key => $value) {
+      if (is_array($value)) {
+        $output .= $this->WriteConstant($this->BuildConstantFolderKeyValue($key));
+        $output .= $this->WriteConstantsFromArray($value, $valueToTrim);
+      } else {
+        $output .= $this->WriteConstant($this->CleanAndBuildConstantKeyValue($value, $valueToTrim));
+      }
+    }
+    return $output;
+  }
 
   /**
    * Write the content of the class, method by method.
    */
   public function WriteContent() {
-    parent::WriteContent();
     $output = $this->WriteGetListMethod();
-    $output .= PhpCodeSnippets::CRLF;
-    $output .= $this->WriteDoesConstantExistMethod();
     fwrite($this->writer, $output);
   }
 
@@ -34,7 +100,7 @@ class ConstantsClassGenerator extends BaseClassGenerator {
    * 
    * @return string : the code generated for the method
    */
-  private function WriteGetListMethod() {
+  public function WriteGetListMethod() {
     $method = $this->GetMethodNameToGenerate(__FUNCTION__);
     $output = PhpCodeSnippets::TAB2 .
             PhpCodeSnippets::PublicStaticFunction . $method . "() {" . PhpCodeSnippets::LF .
@@ -69,7 +135,7 @@ class ConstantsClassGenerator extends BaseClassGenerator {
    * code.
    * @return string the code generated.
    */
-  protected function WriteNewArrayAndItsContents($array, $arrayOpened = FALSE, $tabAmount = 0) {
+  public function WriteNewArrayAndItsContents($array, $arrayOpened = FALSE, $tabAmount = 0) {
     $output = "";
     foreach ($array as $key => $value) {
       if (is_array($value)) {
@@ -81,46 +147,6 @@ class ConstantsClassGenerator extends BaseClassGenerator {
     }
     if ($arrayOpened) {
       $output .= $this->CloseArray($tabAmount - 1);
-    }
-    return $output;
-  }
-
-  /**
-   * Closes a opened array.
-   * 
-   * @param int $tabAmount the number of tabs or 2 spaces to print.
-   * @return string the code generated.
-   */
-  protected function CloseArray($tabAmount = 0) {
-    return
-            str_repeat("  ", $tabAmount) .
-            "),";
-  }
-
-  /**
-   * 
-   * @return string : the code generated for the method
-   */
-  private function WriteDoesConstantExistMethod() {
-    $method = $this->GetMethodNameToGenerate(__FUNCTION__);
-    $output = PhpCodeSnippets::TAB2 .
-            PhpCodeSnippets::PublicStaticFunction . $method . "(\$key) {" . PhpCodeSnippets::LF .
-            PhpCodeSnippets::TAB4 .
-            "return array_key_exists(\$key, self::GetList());" . PhpCodeSnippets::LF .
-            PhpCodeSnippets::TAB2 . "}";
-    return $output;
-  }
-
-  protected function WriteConstantsFromArray($array, $valueToTrim) {
-    $output = "";
-    parent::WriteConstantsFromArray($array, $valueToTrim);
-    foreach ($array as $key => $value) {
-      if (is_array($value)) {
-        $output .= $this->WriteConstant($this->BuildConstantFolderKeyValue($key));
-        $output .= $this->WriteConstantsFromArray($value, $valueToTrim);
-      } else {
-        $output .= $this->WriteConstant($this->CleanAndBuildConstantKeyValue($value, $valueToTrim));
-      }
     }
     return $output;
   }

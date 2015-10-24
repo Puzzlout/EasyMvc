@@ -17,5 +17,4 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 }
 
 class EasyMvcControllers {
-  const AccountControllerKey = 'AccountControllerKey';  public static function GetList() {    return array(      self::AccountControllerKey => 'AccountController',    );  }
-  public static function DoesConstantExist($key) {    return array_key_exists($key, self::GetList());  }}
+  const AccountControllerKey = 'AccountControllerKey';  public static function GetList() {    return array(      self::AccountControllerKey => 'AccountController',    );  }}

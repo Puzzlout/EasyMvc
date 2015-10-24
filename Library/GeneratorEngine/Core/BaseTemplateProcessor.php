@@ -18,7 +18,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-class BaseTemplateProcessor {
+class BaseTemplateProcessor extends BaseClass {
 
   /**
    * @var resource a file pointer resource on success, or <b>FALSE</b> on error. 

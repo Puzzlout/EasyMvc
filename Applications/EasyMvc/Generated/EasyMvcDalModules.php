@@ -17,5 +17,4 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 }
 
 class EasyMvcDalModules {
-  const LoginDalKey = 'LoginDalKey';  const _TemplateDalKey = '_TemplateDalKey';  public static function GetList() {    return array(      self::LoginDalKey => 'LoginDal',      self::_TemplateDalKey => '_TemplateDal',    );  }
-  public static function DoesConstantExist($key) {    return array_key_exists($key, self::GetList());  }}
+  const LoginDalKey = 'LoginDalKey';  const _TemplateDalKey = '_TemplateDalKey';  public static function GetList() {    return array(      self::LoginDalKey => 'LoginDal',      self::_TemplateDalKey => '_TemplateDal',    );  }}
