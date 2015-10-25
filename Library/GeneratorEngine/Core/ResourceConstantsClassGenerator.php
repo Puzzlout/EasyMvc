@@ -21,6 +21,19 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 
 class ResourceConstantsClassGenerator extends ConstantsClassGenerator implements IClassGenerator, IConstantClass {
 
+  public function __construct($params, $data) {
+    parent::__construct($params, $data);
+    $this->fileName = $params[self::ClassNameKey] . 
+            "_" . 
+            $params[self::CultureKey] . 
+            ".php";
+    $this->className = str_replace(".php", "", $this->fileName) . 
+            " extends " . 
+            $params[self::ClassDerivation];
+    $params[self::ClassNameKey] = $this->className;
+    $this->placeholders = \Library\GeneratorEngine\Placeholders\PlaceholdersManager::InitPlaceholdersForPhpDoc($params);
+  }
+
   public function BuildClass() {
     parent::OpenWriter();
     parent::WriteClassHeader();

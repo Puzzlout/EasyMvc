@@ -43,7 +43,7 @@ class ResourceEngine extends \Library\GeneratorEngine\Core\ResourceConstantsClas
             \Library\GeneratorEngine\Core\BaseClassGenerator::ClassNameKey => ucfirst($groupKey) . $this->GeneratedClassPrefix,
             \Library\GeneratorEngine\Core\BaseClassGenerator::DestinationDirKey => $this->DestinationFolder,
             \Library\GeneratorEngine\Core\BaseClassGenerator::ClassDescriptionKey => "List of the resources for the group" . $groupKey . " of common resources.",
-            \Library\GeneratorEngine\Core\BaseClassGenerator::CultureKey => $culture[\Library\BO\F_culture::F_CULTURE_LANGUAGE] . "-" . $culture[\Library\BO\F_culture::F_CULTURE_REGION],
+            \Library\GeneratorEngine\Core\BaseClassGenerator::CultureKey => $culture[\Library\BO\F_culture::F_CULTURE_LANGUAGE] . "_" . $culture[\Library\BO\F_culture::F_CULTURE_REGION],
             \Library\GeneratorEngine\Core\BaseClassGenerator::ClassDerivation => "\Library\Core\ResourceManagers\CommonResxBase"
         );
         $this->GenerateApplicationFile($cultureArray);
@@ -62,7 +62,7 @@ class ResourceEngine extends \Library\GeneratorEngine\Core\ResourceConstantsClas
             \Library\GeneratorEngine\Core\BaseClassGenerator::ClassNameKey => ucfirst($moduleKey) . $this->GeneratedClassPrefix,
             \Library\GeneratorEngine\Core\BaseClassGenerator::DestinationDirKey => $this->DestinationFolder,
             \Library\GeneratorEngine\Core\BaseClassGenerator::ClassDescriptionKey => "List of the resources for the module" . $moduleKey,
-            \Library\GeneratorEngine\Core\BaseClassGenerator::CultureKey => $culture[\Library\BO\F_culture::F_CULTURE_LANGUAGE] . "-" . $culture[\Library\BO\F_culture::F_CULTURE_REGION],
+            \Library\GeneratorEngine\Core\BaseClassGenerator::CultureKey => $culture[\Library\BO\F_culture::F_CULTURE_LANGUAGE] . "_" . $culture[\Library\BO\F_culture::F_CULTURE_REGION],
             \Library\GeneratorEngine\Core\BaseClassGenerator::ClassDerivation => "\Library\Core\ResourceManagers\ComntrollerResxBase"
         );
         $this->GenerateApplicationFile($cultureArray);

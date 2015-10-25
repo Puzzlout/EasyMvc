@@ -20,6 +20,12 @@ if (!FrameworkConstants_ExecutionAccessRestriction)
 
 class ConstantsClassGenerator extends BaseClassGenerator implements IClassGenerator, IConstantClass {
 
+  public function __construct($params, $data) {
+    $this->fileName = $params[self::ClassNameKey] . ".php";
+    $this->className = $params[self::ClassNameKey];
+    parent::__construct($params, $data);
+  }
+  
   public function BuildClass() {
     parent::BuildClass();
   }

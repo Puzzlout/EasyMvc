@@ -28,13 +28,6 @@ class BaseClassGenerator extends BaseTemplateProcessor implements IClassGenerato
    */
   public function __construct($params, $data) {
     $this->destinationDir = FrameworkConstants_RootDir . $params[BaseClassGenerator::DestinationDirKey];
-    $this->className = array_key_exists(self::ClassDerivation, $params) ?
-            $params[self::ClassNameKey] . " extends " . $params[self::ClassDerivation] :
-            $params[self::ClassNameKey];
-    $this->fileName = array_key_exists(self::CultureKey, $params) ?
-            $params[self::ClassNameKey] . "." . $params[self::CultureKey] . ".php" :
-            $params[self::ClassNameKey] . ".php";
-    $params[self::ClassNameKey] = $this->className;
     $this->placeholders = \Library\GeneratorEngine\Placeholders\PlaceholdersManager::InitPlaceholdersForPhpDoc($params);
     $this->data = $data;
     $templateHeader = \Library\GeneratorEngine\Templates\TemplateFileNameConstants::GetFullNameForConst(\Library\GeneratorEngine\Templates\TemplateFileNameConstants::ClassHeaderTemplate);

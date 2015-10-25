@@ -22,12 +22,11 @@ abstract class ResourceConstantsClassEngine extends ConstantsClassEngineBase {
   /**
    * Generate the Constant Class list the framework.
    * 
-   * @param assoc array $params the params composed the namespace and name of the class.
-   * @param array(of String) $files the list of framework files that will make the list of constants
+   * @param array(of String) $data the array of data that will be used to build the list of constants
    */
-  protected function GenerateConstantsClass($files) {
-    if (count($files) > 0) {
-      $classGen = new ResourceConstantsClassGenerator($this->params, $files);
+  protected function GenerateConstantsClass($data) {
+    if (count($data) > 0) {
+      $classGen = new ResourceConstantsClassGenerator($this->params, $data);
       $classGen->BuildClass();
       return $classGen->fileName;
     } else {
