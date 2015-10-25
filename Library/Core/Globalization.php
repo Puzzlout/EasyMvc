@@ -63,10 +63,10 @@ class Globalization extends ApplicationComponent {
     parent::__construct($app);
   }
 
-  public function Init($source = \Library\Core\ResourceManagers\ResourceLoaderBase::FROM_DB) {
+  public function Init($source = \Library\Core\ResourceManagers\ResourceBase::FROM_DB) {
     $dal = $this->app()->dal()->getDalInstance();
     switch ($source) {
-      case ResourceManagers\ResourceLoaderBase::FROM_DB:
+      case ResourceManagers\ResourceBase::FROM_DB:
         $logGuid = \Library\Utility\TimeLogger::StartLogInfo($this->app(), __CLASS__ . __METHOD__);
         $objectLists = array();
         $objectLists[self::COMMON_RESX_OBJ_LIST] = $dal->selectMany(new \Library\BO\F_common_resource(), new \Library\Dal\DbQueryFilters());

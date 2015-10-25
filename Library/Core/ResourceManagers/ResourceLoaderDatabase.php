@@ -18,31 +18,5 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 }
 
 class ResourceLoaderDatabase extends ResourceLoaderBase {
-    /**
-   * Load the resources into each type array.
-   * 
-   * @param string $sourceToLoad : either ResourceLoaderBase::FROM_FILE or ResourceLoaderBase::FROM_DB
-   */
-  public function loadResources() {
-    $CommonResourceFiles = array();
-    $LocalResourceFiles = array();
-    foreach ($CommonResourceFiles as $resourceGlobal) {
-      $this->loadFile("common", $this->resoures_path . $this->app()->name() . \Library\Enums\ApplicationFolderName::ResourceCommonFolderName . $file);
-    }
-    foreach ($LocalResourceFiles as $resourceLocal) {
-      $this->loadFile("local", $this->resoures_path . $this->app()->name() . \Library\Enums\ApplicationFolderName::ResourceLocalFolderName . $file);
-    }
-  }
-    /**
-   * Load a resource file.
-   * 
-   * @param string $fileResourceType : common and local resource
-   * @param string $filename : the filename to load
-   */
-  private function loadFile($fileResourceType, $filename) {
-  }
-
-  private function prepareParams($path) {
-  }
 
 }

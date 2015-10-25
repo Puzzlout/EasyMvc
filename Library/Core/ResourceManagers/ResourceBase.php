@@ -8,7 +8,7 @@
  * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
  * @link https://github.com/WebDevJL/EasyMvc
  * @since Version 1.0.0
- * @package ResxBase
+ * @package ResourceBase
  */
 
 namespace Library\Core\ResourceManagers;
@@ -17,7 +17,10 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-abstract class ResxBase {
+abstract class ResourceBase {
+
+  const FROM_XML = 'FROM_XML';
+  const FROM_DB = 'FROM_DB';
 
   const GroupKey = "GroupKey";
   const ModuleKey = "ModuleKey";
@@ -60,22 +63,7 @@ abstract class ResxBase {
       $this->ActionValue = $params[self::ActionKey];
       $this->IsCommon = FALSE;
     } else {
-      throw new Exception("You must specify either the group or the module/action.", 0, NULL); //todo: create error code
+      throw new Exception("You must specify either the group or the couple module/action.", 0, NULL); //todo: create error code
     }
   }
-
-  /**
-   * Method that retrieve the array of resources.
-   */
-  abstract function GetList();
-
-  /**
-   * Get the resource by group and key. See implementation the derived classes.
-   * 
-   * @param object $resxObj the instance of a derived class from ResxBase
-   * that hold the group key to search of the array of resource. See the derived 
-   * classes for more details.
-   * @param string $key the resource key to find
-   */
-  abstract public static function GetResource($resxObj, $key);
 }

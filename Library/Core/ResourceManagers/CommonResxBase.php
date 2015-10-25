@@ -22,17 +22,19 @@ class CommonResxBase extends ResxBase {
   /**
    * Method that retrieve the array of resources.
    */
-  public function GetList();
+  public function GetList() {
+    throw new \Library\Exceptions\NotImplementedException();
+  }
 
   /**
-   * Get the resource by group and key.
+   * Get the resource by moudle, action and key.
    * 
    * @param object $resxObj the instance of a derived class from CommonResxBase
-   * that hold the group key to search of the array of resource.
+   * that hold the module and action keys to search of the array of resource.
    * @param string $key the resource key to find
    */
-  public static function GetResource($resxObj, $key) {
-    
+  public function GetResource($resxObj, $key) {
+    throw new \Library\Exceptions\NotImplementedException();
   }
 
 }

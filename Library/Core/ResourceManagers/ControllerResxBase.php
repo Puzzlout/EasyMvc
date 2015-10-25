@@ -17,12 +17,14 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-class ControllerResxBase extends ResxBase {
+class ControllerResxBase extends ResourceLoaderBase implements IResource {
 
   /**
    * Method that retrieve the array of resources.
    */
-  public function GetList();
+  public function GetList() {
+    throw new \Library\Exceptions\NotImplementedException();
+  }
 
   /**
    * Get the resource by moudle, action and key.
@@ -31,8 +33,8 @@ class ControllerResxBase extends ResxBase {
    * that hold the module and action keys to search of the array of resource.
    * @param string $key the resource key to find
    */
-  public static function GetResource($resxObj, $key) {
-    
+  public function GetResource($resxObj, $key) {
+    throw new \Library\Exceptions\NotImplementedException();
   }
 
 }

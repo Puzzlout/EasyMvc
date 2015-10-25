@@ -27,8 +27,6 @@ class EasyMvcApplication extends \Library\Core\Application {
   }
 
   public function run() {
-    $this->i8n->Init();
-
     $controller = $this->getController();
 
     //Get add the Project Manager object to the page
