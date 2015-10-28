@@ -18,7 +18,6 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 }
 
 abstract class ConstantsClassEngineBase {
-
   /**
    * Holds the static values to build the class, like the namespace, the description, etc.
    * @var array
@@ -36,7 +35,7 @@ abstract class ConstantsClassEngineBase {
    * @var array list of filenames generated. 
    */
   public $filesGenerated = array();
-  
+
   public function __construct($classPrefix) {
     $this->GeneratedClassPrefix = $classPrefix;
   }
@@ -73,7 +72,9 @@ abstract class ConstantsClassEngineBase {
    * @param array $files list of filenames
    */
   protected function GenerateFrameworkFile($files) {
-    array_push($this->filesGenerated, $this->GenerateConstantsClass($files));
+    $className = $this->GenerateConstantsClass($files);
+    array_push($this->filesGenerated, $className);
+    return $className;
   }
 
   /**
@@ -82,7 +83,9 @@ abstract class ConstantsClassEngineBase {
    * @param array $files list of filenames
    */
   protected function GenerateApplicationFile($files) {
-    array_push($this->filesGenerated, $this->GenerateConstantsClass($files));
+    $className = $this->GenerateConstantsClass($files);
+    array_push($this->filesGenerated, $className);
+    return $className;
   }
 
 }

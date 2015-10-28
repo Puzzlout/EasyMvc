@@ -22,7 +22,7 @@ class ResourceLoaderBase extends ResourceBase {
     throw new \Library\Exceptions\NotImplementedException();
   }
   
-  public function GetResource($resxObj, $key) {
+  public function GetResource($key) {
     throw new \Library\Exceptions\NotImplementedException();
   }
   

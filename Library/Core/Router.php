@@ -18,7 +18,7 @@ class Router extends ApplicationComponent {
   private $routesXml;
 
   const NO_ROUTE = 1;
-
+  const CurrentRouteVarKey = "CurrentRoute";
   public function __construct(Application $app) {
     parent::__construct($app);
     //$this->InitRoutesFromXml();

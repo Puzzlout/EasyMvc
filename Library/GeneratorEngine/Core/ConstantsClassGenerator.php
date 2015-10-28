@@ -20,6 +20,12 @@ if (!FrameworkConstants_ExecutionAccessRestriction)
 
 class ConstantsClassGenerator extends BaseClassGenerator implements IClassGenerator, IConstantClass {
 
+  const DoGenerateConstantKeysKey = "DoGenerateConstantKeysKey";
+  const DoGenerateGetListMethodKey = "DoGenerateGetListMethodKey";
+  
+  protected $DoGenerateConstantKeys = TRUE;
+  protected $DoGenerateGetListMethod = TRUE;
+
   public function __construct($params, $data) {
     $this->fileName = $params[self::ClassNameKey] . ".php";
     $this->className = $params[self::ClassNameKey];

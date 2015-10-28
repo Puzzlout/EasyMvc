@@ -25,11 +25,8 @@ interface IResource {
     /**
    * Get the resource by group and key. See implementation the derived classes.
    * 
-   * @param object $resxObj the instance of a derived class from ResxBase
-   * that hold the group key to search of the array of resource. See the derived 
-   * classes for more details.
    * @param string $key the resource key to find
    */
-  public static function GetResource($resxObj, $key);
+  public function GetResource($key);
 
 }

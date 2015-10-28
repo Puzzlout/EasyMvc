@@ -19,6 +19,8 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 
 abstract class ResourceConstantsClassEngine extends ConstantsClassEngineBase {
 
+  public $IsGeneratingBaseClass;
+
   /**
    * Generate the Constant Class list the framework.
    * 
@@ -28,7 +30,7 @@ abstract class ResourceConstantsClassEngine extends ConstantsClassEngineBase {
     if (count($data) > 0) {
       $classGen = new ResourceConstantsClassGenerator($this->params, $data);
       $classGen->BuildClass();
-      return $classGen->fileName;
+      return str_replace(".php", "", $classGen->fileName);
     } else {
       return "No class to generate.";
     }

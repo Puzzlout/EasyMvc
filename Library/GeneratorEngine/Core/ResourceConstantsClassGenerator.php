@@ -23,22 +23,31 @@ class ResourceConstantsClassGenerator extends ConstantsClassGenerator implements
 
   public function __construct($params, $data) {
     parent::__construct($params, $data);
-    $this->fileName = $params[self::ClassNameKey] . 
-            "_" . 
-            $params[self::CultureKey] . 
-            ".php";
-    $this->className = str_replace(".php", "", $this->fileName) . 
-            " extends " . 
+    $this->fileName = !is_null($params[self::CultureKey]) ?
+            $params[self::ClassNameKey] . "_" . $params[self::CultureKey] . ".php" :
+            $params[self::ClassNameKey] . ".php";
+    $this->className = str_replace(".php", "", $this->fileName) .
+            " extends " .
             $params[self::ClassDerivation];
-    $params[self::ClassNameKey] = $this->className;
+    $params[self::ClassNameKey] = $this->className ;
     $this->placeholders = \Library\GeneratorEngine\Placeholders\PlaceholdersManager::InitPlaceholdersForPhpDoc($params);
+    $this->DoGenerateConstantKeys = array_key_exists(ConstantsClassGenerator::DoGenerateConstantKeysKey, $params) ?
+            $params[ConstantsClassGenerator::DoGenerateConstantKeysKey] :
+            FALSE;
+    $this->DoGenerateGetListMethod = array_key_exists(ConstantsClassGenerator::DoGenerateGetListMethodKey, $params) ?
+            $params[ConstantsClassGenerator::DoGenerateGetListMethodKey] :
+            FALSE;
   }
 
   public function BuildClass() {
     parent::OpenWriter();
     parent::WriteClassHeader();
-    $this->WriteConstants();
-    $this->WriteContent();
+    if ($this->DoGenerateConstantKeys) {
+      $this->WriteConstants();
+    }
+    if ($this->DoGenerateGetListMethod) {
+      $this->WriteContent();
+    }
     parent::ClassEnd();
     parent::CloseWriter();
   }
