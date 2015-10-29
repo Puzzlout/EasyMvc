@@ -9,33 +9,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-abstract class Application {
-
-  const CONTROLLER_NAME_PREFIX = "F_";
-  const CULTURES_ARRAY_KEY = "application_cultures";
-
-  public $HttpRequest;
-  protected $httpResponse;
-  public $name;
-  public $locale;
-  public $localeDefault;
-  public $pageTitle;
-  public $logoImageUrl;
-  public $globalResources;
-  public $relative_path;
-  public $user;
-  public $config;
-  public $i8n;
-  public $imageUtil;
-  public $jsManager;
-  public $cssManager;
-  public $auth;
-  public $dal;
-  public $toolTip;
-  protected $security;
-  public $error;
-  public $cultures = array();
-
+abstract class Application extends ApplicationBase{
   public function __construct(ErrorManager $errorManager) {
     $this->error = $errorManager;
     $this->httpRequest = new HttpRequest($this);
@@ -47,17 +21,26 @@ abstract class Application {
     $this->cultures = $this->GetCultureArray();
     $this->i8n = new Globalization($this);
     $this->imageUtil = new \Library\Utility\ImageUtility($this);
-
     $this->router = new Router($this);
     $this->locale = $this->httpRequest->initLanguage($this, "browser");
     $this->name = '';
     $this->auth = new \Library\Security\AuthenticationManager($this);
     $this->toolTip = new PopUpResourceManager($this);
     $this->security = new \Library\Security\Protect($this->config);
-//    $this->jsManager = new Core\Utility\JavascriptManager($this);
-//    $this->cssManager = new Core\Utility\CssManager($this);
   }
 
+  /**
+   * Retrieve the cultures from the database and transform the object list into
+   * an associative array of following structure:
+   * 
+   * array(
+   *    "xx-XX" => (array of F_culture_extension object),
+   *    "yy-YY" => (array of F_culture_extension object),
+   *    ...
+   * )
+   * 
+   * @return associative array the array of culture
+   */
   public function GetCultureArray() {
     $dal = $this->dal->getDalInstance();
     $dbFilters = new \Library\Dal\DbQueryFilters();
@@ -75,77 +58,10 @@ abstract class Application {
     return $cultureAssocArray[\Library\BO\F_culture_extension::FullArrayCultureKey];
   }
 
-  public function initConfig() {
-    
-  }
-
   public function getController() {
-
     $this->router->setCurrentRoute($this->FindRouteMatch());
-
     $controllerObject = $this->GetControllerObject($this->router->currentRoute());
-//    if ($controllerObject instanceof \Library\Controllers\ErrorController) {
-//      $this->httpResponse->displayError(new \Library\BO\Error);
-//    }
     return $controllerObject;
-  }
-
-  abstract public function run();
-
-  public function HttpRequest() {
-    return $this->httpRequest;
-  }
-
-  public function httpResponse() {
-    return $this->httpResponse;
-  }
-
-  public function user() {
-    return $this->user;
-  }
-
-  public function config() {
-    return $this->config;
-  }
-
-  public function context() {
-    return $this->context;
-  }
-
-  public function i8n() {
-    return $this->i8n;
-  }
-
-  public function router() {
-    return $this->router;
-  }
-
-  public function name() {
-    return $this->name;
-  }
-
-  public function css() {
-    return $this->cssManager;
-  }
-
-  public function js() {
-    return $this->jsManager;
-  }
-
-  public function auth() {
-    return $this->auth;
-  }
-
-  public function dal() {
-    return $this->dal;
-  }
-
-  public function toolTip() {
-    return $this->toolTip;
-  }
-
-  public function security() {
-    return $this->security;
   }
 
   private function FindRouteMatch() {

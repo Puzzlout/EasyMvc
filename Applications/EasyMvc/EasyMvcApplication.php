@@ -16,7 +16,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-class EasyMvcApplication extends \Library\Core\Application {
+class EasyMvcApplication extends \Library\Core\Application implements \Library\Interfaces\IApplication{
 
   public function __construct(\Library\Core\ErrorManager $errorManager) {
     parent::__construct($errorManager);
@@ -36,7 +36,7 @@ class EasyMvcApplication extends \Library\Core\Application {
     $controller->execute();
 
     $this->httpResponse->setPage($controller->page());
-    $this->httpResponse->send();
+    return $this->httpResponse->send();
   }
 
   private function AddGlobalAppVariables($controller) {
