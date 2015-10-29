@@ -32,7 +32,7 @@ class HttpResponse extends ApplicationComponent {
   public function send() {
     if (!$this->app->router->isWsCall) {
       //Return the content to page
-      exit($this->page->getGeneratedPage());
+      return $this->page->getGeneratedPage();
     } else {
       //Since we are doing a AJAX call, we just exit.
       die();
