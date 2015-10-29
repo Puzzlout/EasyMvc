@@ -10,12 +10,12 @@
  * @package AccountResx_en_GB extends AccountResx
  */
 
-namespace Applications\EasyMvc\Ressources\Controller;
+namespace Applications\EasyMvc\Resources\Controller;
 
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
 class AccountResx_en_GB extends AccountResx {
-  public static function GetList() {    return array(      self::createKey => array(        self::email_labelKey => array(        self::f_controller_resource_valueKey => "E-mail:",        self::f_controller_resource_commentKey => "The label for the email input",      ),        self::h1_titleKey => array(        self::f_controller_resource_valueKey => "Create account View",        self::f_controller_resource_commentKey => "The title of the H1 element",      ),      ),      self::loginKey => array(        self::email_labelKey => array(        self::f_controller_resource_valueKey => "E-mail:",        self::f_controller_resource_commentKey => "The label for the email input",      ),        self::h1_titleKey => array(        self::f_controller_resource_valueKey => "Login View",        self::f_controller_resource_commentKey => "The title of the H1 element",      ),      ),    );  }
+  public function GetList() {    return array(      self::createKey => array(        self::email_labelKey => array(        self::f_controller_resource_valueKey => "E-mail:",        self::f_controller_resource_commentKey => "The label for the email input",      ),        self::h1_titleKey => array(        self::f_controller_resource_valueKey => "Create account View",        self::f_controller_resource_commentKey => "The title of the H1 element",      ),      ),      self::loginKey => array(        self::email_labelKey => array(        self::f_controller_resource_valueKey => "E-mail:",        self::f_controller_resource_commentKey => "The label for the email input",      ),        self::h1_titleKey => array(        self::f_controller_resource_valueKey => "Login View",        self::f_controller_resource_commentKey => "The title of the H1 element",      ),      ),    );  }
 }

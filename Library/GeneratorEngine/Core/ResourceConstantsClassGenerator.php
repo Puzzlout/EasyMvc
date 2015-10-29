@@ -26,10 +26,10 @@ class ResourceConstantsClassGenerator extends ConstantsClassGenerator implements
     $this->fileName = !is_null($params[self::CultureKey]) ?
             $params[self::ClassNameKey] . "_" . $params[self::CultureKey] . ".php" :
             $params[self::ClassNameKey] . ".php";
-    $this->className = str_replace(".php", "", $this->fileName) .
-            " extends " .
-            $params[self::ClassDerivation];
-    $params[self::ClassNameKey] = $this->className ;
+    $this->className = !is_null($params[self::ClassDerivation]) ?
+            str_replace(".php", "", $this->fileName) . " extends " . $params[self::ClassDerivation] :
+            str_replace(".php", "", $this->fileName);
+    $params[self::ClassNameKey] = $this->className;
     $this->placeholders = \Library\GeneratorEngine\Placeholders\PlaceholdersManager::InitPlaceholdersForPhpDoc($params);
     $this->DoGenerateConstantKeys = array_key_exists(ConstantsClassGenerator::DoGenerateConstantKeysKey, $params) ?
             $params[ConstantsClassGenerator::DoGenerateConstantKeysKey] :
@@ -99,25 +99,27 @@ class ResourceConstantsClassGenerator extends ConstantsClassGenerator implements
    * $this->data array.
    */
   public function WriteConstants($valueToTrim = ".php") {
+    $listOfConstantsToWrite = $this->GetConstantsKeyValueFromArray($this->data, $valueToTrim);
     $output = "";
-    foreach ($this->data as $key => $value) {
-      if (!is_array($value)) {
-        $output .= $this->WriteConstant($this->BuildConstantKeyValue($key, $valueToTrim));
-      } else {
-        $output .= $this->WriteConstant($this->BuildConstantKeyValue($key));
-        $output .= $this->WriteConstantsFromArray($value, $valueToTrim);
-      }
+    foreach ($listOfConstantsToWrite as $constant) {
+      $output .= $this->WriteConstant($constant);
     }
     $output .= PhpCodeSnippets::LF;
     fwrite($this->writer, $output);
   }
 
-  public function WriteConstantsFromArray($array, $valueToTrim) {
-    $output = "";
+  public function GetConstantsKeyValueFromArray($array, $valueToTrim) {
+    $listOfConstantsToWrite = $anotherListOfConstantToWrite = array();
     foreach ($array as $key => $value) {
-      $output .= $this->WriteConstant($this->BuildConstantKeyValue($key));
+      if (!is_array($value) && !in_array($value, $listOfConstantsToWrite)) {
+        array_push($listOfConstantsToWrite, $this->BuildConstantKeyValue($key, $valueToTrim));
+      } else if (!in_array($key, $listOfConstantsToWrite)) {
+        array_push($listOfConstantsToWrite, $this->BuildConstantKeyValue($key));
+        $anotherListOfConstantToWrite = $this->GetConstantsKeyValueFromArray($value, $valueToTrim);
+      }
     }
-    return $output;
+    $mergedArray = array_merge($listOfConstantsToWrite, $anotherListOfConstantToWrite);
+    return $mergedArray;
   }
 
   /**
@@ -136,7 +138,7 @@ class ResourceConstantsClassGenerator extends ConstantsClassGenerator implements
   public function WriteGetListMethod() {
     $method = $this->GetMethodNameToGenerate(__FUNCTION__);
     $output = PhpCodeSnippets::TAB2 .
-            PhpCodeSnippets::PublicStaticFunction . $method . "() {" . PhpCodeSnippets::LF .
+            PhpCodeSnippets::PublicFunction . $method . "() {" . PhpCodeSnippets::LF .
             PhpCodeSnippets::TAB4 .
             "return array(" . PhpCodeSnippets::LF;
 

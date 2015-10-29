@@ -10,12 +10,12 @@
  * @package Group2Resx_fr_FR extends Group2Resx
  */
 
-namespace Applications\EasyMvc\Ressources\Common;
+namespace Applications\EasyMvc\Resources\Common;
 
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
 class Group2Resx_fr_FR extends Group2Resx {
-  public static function GetList() {    return array(      self::test2Key => array(        self::f_common_resource_valueKey => "C'est une valeur de test2",        self::f_common_resource_commentKey => "Testing purpose",      ),      self::test3Key => array(        self::f_common_resource_valueKey => "C'est une valeur de test3",        self::f_common_resource_commentKey => "Testing purpose",      ),    );  }
+  public function GetList() {    return array(      self::test2Key => array(        self::f_common_resource_valueKey => "C'est une valeur de test2",        self::f_common_resource_commentKey => "Testing purpose",      ),      self::test3Key => array(        self::f_common_resource_valueKey => "C'est une valeur de test3",        self::f_common_resource_commentKey => "Testing purpose",      ),    );  }
 }

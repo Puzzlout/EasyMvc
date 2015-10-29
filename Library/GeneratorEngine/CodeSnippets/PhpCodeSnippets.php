@@ -51,4 +51,10 @@ class PhpCodeSnippets {
    * public static function snippet
    */
   const PublicStaticFunction = "public static function ";
+
+    /**
+   * public function snippet
+   */
+  const PublicFunction = "public function ";
+
 }

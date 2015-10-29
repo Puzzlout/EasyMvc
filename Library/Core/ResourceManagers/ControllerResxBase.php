@@ -32,16 +32,15 @@ class ControllerResxBase extends ResourceLoaderBase implements IResource {
    * @param string $key the resource key to find
    */
   public function GetResource($key) {
-    $resourceFileName = 
-            "\\Applications\\" . 
-            FrameworkConstants_AppName . 
+    $resourceFileName = "\\Applications\\" .
+            FrameworkConstants_AppName .
             "\\Resources\\Controller\\" .
             ucfirst($this->ModuleValue) . "Resx_" . $this->CultureValue;
     $resourceFile = new $resourceFileName();
-    $resources= $resourceFile->GetList();
+    $resources = $resourceFile->GetList();
     return array_key_exists($key, $resources) ?
-            $resources[$this->ActionValue][$key] :
-            "Missing resource [$this->ActionValue][$key]";
+            $resources[$this->ActionValue][$key][$resourceFile::f_controller_resource_valueKey] :
+            "[Missing resource for Action => " . $this->ActionValue . " ; Key => " . $key . "]";
   }
 
 }

@@ -1,19 +1,20 @@
-<?php if (!FrameworkConstants_ExecutionAccessRestriction) {
+<?php
+if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
-} ?>
-<?php 
-  $resx = new Library\Core\ResourceManagers\ControllerResxBase(
-          array(
-              Library\Core\ResourceManagers\ResourceBase::ModuleKey => $CurrentRoute->module(),
-               Library\Core\ResourceManagers\ResourceBase::ActionKey => $CurrentRoute->action(),
-               Library\Core\ResourceManagers\ResourceBase::CultureKey => $culture));
-
-
+}
+?>
+<?php
+$logGuid = \Library\Utility\TimeLogger::StartLog($this->app(), __FILE__);
+$resx = new Library\Core\ResourceManagers\ControllerResxBase(
+        array(
+    Library\Core\ResourceManagers\ResourceBase::ModuleKey => $CurrentRoute->module(),
+    Library\Core\ResourceManagers\ResourceBase::ActionKey => $CurrentRoute->action(),
+    Library\Core\ResourceManagers\ResourceBase::CultureKey => $culture));
 ?>
 <section id="top_header">
   <section id="branding">
     <figure class="logo"><img src="<?php echo $this->app()->relative_path . $this->app()->logoImageUrl; ?>"></figure>
-<!--    <p class="brand"><?php //echo $resx_menu_left["brand"];   ?></p>-->
+<!--    <p class="brand"><?php //echo $resx_menu_left["brand"];    ?></p>-->
   </section>
 </section>
 <section  class="login-container">
@@ -51,7 +52,7 @@
 <!--        <input name="remember_me" type="checkbox" value="" />
       <?php echo "remember_me_label"; ?>
         <a href="#" name="forgot_pwd"  class="password">
-<?php echo "forgot_pwd_label"; ?>
+      <?php echo "forgot_pwd_label"; ?>
         </a>-->
       </p>
       <div class="login-btn">
@@ -66,4 +67,6 @@
     </div>
   </figure>
 </section >
-
+<?php
+\Library\Utility\TimeLogger::EndLog($this->app(), $logGuid);
+?>

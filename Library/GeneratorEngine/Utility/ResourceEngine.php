@@ -75,7 +75,7 @@ class ResourceEngine extends \Library\GeneratorEngine\Core\ResourceConstantsClas
   }
 
   private function GenerateCommonResxFiles($resources) {
-    $this->NamespaceApplicationRootGeneratedFolder = "Applications\\" . FrameworkConstants_AppName . "\Ressources\\Common";
+    $this->NamespaceApplicationRootGeneratedFolder = "Applications\\" . FrameworkConstants_AppName . "\Resources\\Common";
     $this->DestinationFolder = \Library\Enums\ApplicationFolderName::AppsFolderName . FrameworkConstants_AppName . \Library\Enums\ApplicationFolderName::ResourceCommonFolderName;
     foreach ($resources as $groupKey => $groupArray) {
       $this->IsGeneratingBaseClass = TRUE;
@@ -96,7 +96,7 @@ class ResourceEngine extends \Library\GeneratorEngine\Core\ResourceConstantsClas
   }
 
   private function GenerateControllerResxFiles($resources) {
-    $this->NamespaceApplicationRootGeneratedFolder = "Applications\\" . FrameworkConstants_AppName . "\Ressources\\Controller";
+    $this->NamespaceApplicationRootGeneratedFolder = "Applications\\" . FrameworkConstants_AppName . "\Resources\\Controller";
     $this->DestinationFolder = \Library\Enums\ApplicationFolderName::AppsFolderName . FrameworkConstants_AppName . \Library\Enums\ApplicationFolderName::ResourceControllerFolderName;
     foreach ($resources as $moduleKey => $moduleArray) {
       $this->IsGeneratingBaseClass = TRUE;
@@ -116,13 +116,13 @@ class ResourceEngine extends \Library\GeneratorEngine\Core\ResourceConstantsClas
 
   private function GenerateCommonBaseClass($groupKey, $cultureArray) {
     $this->UpdateTheParametersForGeneration($groupKey, NULL);
-    $this->params[\Library\GeneratorEngine\Core\BaseClassGenerator::ClassDerivation] = self::CommonClassDerivationNamespace;
+    $this->params[\Library\GeneratorEngine\Core\BaseClassGenerator::ClassDerivation] = NULL;//self::CommonClassDerivationNamespace;
     return $this->GenerateApplicationFile($cultureArray);
   }
 
   private function GenerateControllerBaseClass($moduleKey, $cultureArray) {
     $this->UpdateTheParametersForGeneration($moduleKey, NULL);
-    $this->params[\Library\GeneratorEngine\Core\BaseClassGenerator::ClassDerivation] = self::ControllerClassDerivationNamespace;
+    $this->params[\Library\GeneratorEngine\Core\BaseClassGenerator::ClassDerivation] = NULL;//self::ControllerClassDerivationNamespace;
     return $this->GenerateApplicationFile($cultureArray);
   }
 
