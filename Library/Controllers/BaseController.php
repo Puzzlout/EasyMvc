@@ -50,7 +50,7 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
   public function execute() {
     $action = $this->action();
     if (!is_callable(array($this, $action))) {
-      throw new \RuntimeException('The action "' . $action . '" is not defined for this module');
+      throw new \RuntimeException('The action <b>' . $this->action . '</b> is not defined for the module <b>' . ucfirst($this->module) . '</b>');
     }
     //
     if ($this->resxfile !== NULL) {

@@ -41,8 +41,8 @@ class AppSettings {
         \Library\Enums\AppSettingKeys::Mysql_pwd => "3ASY%mvc@2015",
         \Library\Enums\AppSettingKeys::Mysql_user => "easymvc",
         \Library\Enums\AppSettingKeys::PasswordSalt => "g496lJL683yFiDzju2K94f1751Lo7WSw",
-        \Library\Enums\AppSettingKeys::RootDocumentUpload => "Web/images/",
-        \Library\Enums\AppSettingKeys::RootImageFolderPath => "../ClienSide/uploads/",
+        \Library\Enums\AppSettingKeys::RootDocumentUpload => "ClientSide/upload/",
+        \Library\Enums\AppSettingKeys::RootImageFolderPath => "../Web/images/",
         \Library\Enums\AppSettingKeys::UseEmailLinkForFirstLogin => TRUE,
         \Library\Enums\AppSettingKeys::TooltipsXmlFileName => "Applications\{{app_name}}\Resources\Common\\tooltipandpopupstrings.{{culture}}.xml",
     );
