@@ -17,24 +17,45 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-class CommonResxBase extends ResxBase {
+class CommonResxBase extends ResourceBase implements \Library\Interfaces\IResource {
 
   /**
    * Method that retrieve the array of resources.
+   * @return array the array of ressources
    */
   public function GetList() {
-    throw new \Library\Exceptions\NotImplementedException();
+    $resourceFileName = "\\Applications\\" .
+            FrameworkConstants_AppName .
+            "\\Resources\\Common\\" .
+            ucfirst($this->GroupValue) . "Resx_" . $this->CultureValue;
+    $resourceFile = new $resourceFileName();
+    return $resourceFile->GetList();
   }
 
   /**
-   * Get the resource by moudle, action and key.
+   * Get the resource value by group and key.
    * 
-   * @param object $resxObj the instance of a derived class from CommonResxBase
-   * that hold the module and action keys to search of the array of resource.
    * @param string $key the resource key to find
+   * @return string the resource value
    */
-  public function GetResource($resxObj, $key) {
-    throw new \Library\Exceptions\NotImplementedException();
+  public function GetValue($key) {
+    $resources = $this->GetList();
+    return array_key_exists($key, $resources) ?
+            $resources[$key][$resourceFile::f_controller_resource_valueKey] :
+            "[Missing resource in Group => " . $this->GroupValue . " for Key => " . $key . "]";
+  }
+
+  /**
+   * Get the resource comment by group and key.
+   * 
+   * @param string $key the resource key to find
+   * @return string the resource comment
+   */
+  public function GetComment($key) {
+    $resources = $this->GetList();
+    return array_key_exists($key, $resources) ?
+            $resources[$key][$resourceFile::f_controller_resource_commentKey] :
+            "[No resource comment in Group => " . $this->GroupValue . " for Key => " . $key . "]";
   }
 
 }

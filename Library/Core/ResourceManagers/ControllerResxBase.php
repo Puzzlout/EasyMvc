@@ -17,30 +17,45 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-class ControllerResxBase extends ResourceLoaderBase implements IResource {
+class ControllerResxBase extends ResourceBase implements \Library\Interfaces\IResource {
 
   /**
    * Method that retrieve the array of resources.
+   * @return array the array of ressources
    */
   public function GetList() {
-    throw new \Library\Exceptions\NotImplementedException();
-  }
-
-  /**
-   * Get the resource by moudle, action and key.
-   * 
-   * @param string $key the resource key to find
-   */
-  public function GetResource($key) {
     $resourceFileName = "\\Applications\\" .
             FrameworkConstants_AppName .
             "\\Resources\\Controller\\" .
             ucfirst($this->ModuleValue) . "Resx_" . $this->CultureValue;
     $resourceFile = new $resourceFileName();
-    $resources = $resourceFile->GetList();
+    return $resourceFile->GetList();
+  }
+
+  /**
+   * Get the resource by module, action and key.
+   * 
+   * @param string $key the resource key to find
+   * @return string the resource value
+   */
+  public function GetValue($key) {
+    $resources = $this->GetList();
     return array_key_exists($key, $resources) ?
             $resources[$this->ActionValue][$key][$resourceFile::f_controller_resource_valueKey] :
             "[Missing resource for Action => " . $this->ActionValue . " ; Key => " . $key . "]";
+  }
+
+  /**
+   * Get the resource comment by module, action and key.
+   * 
+   * @param string $key the resource key to find
+   * @return string the resource comment
+   */
+  public function GetComment($key) {
+    $resources = $this->GetList();
+    return array_key_exists($key, $resources) ?
+            $resources[$this->ActionValue][$key][$resourceFile::f_controller_resource_commentKey] :
+            "[No resource comment in Module => " . $this->ModuleValue . " ; Action => " . $this->ActionValue . " and Key => " . $key . "]";
   }
 
 }

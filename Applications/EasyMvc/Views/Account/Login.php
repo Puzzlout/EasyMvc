@@ -19,16 +19,16 @@ $resx = new Library\Core\ResourceManagers\ControllerResxBase(
 </section>
 <section  class="login-container">
   <figure class="login-box">
-    <h1><?php echo $resx->GetResource("h1_title"); ?></h1>
+    <h1><?php echo $resx->GetValue("h1_title"); ?></h1>
     <div class="login-form login-box-small">
       <p style="display: none;">
-        <label><?php echo $resx->GetResource("email_label"); ?></label>
+        <label><?php echo $resx->GetValue("email_label"); ?></label>
         <input 
           autocomplete="on" 
           name="f_user_email" 
           type="text" 
           class="field" 
-          data-input-label="<?php echo $resx->GetResource("email_label"); ?>" 
+          data-input-label="<?php echo $resx->GetValue("email_label"); ?>" 
           placeholder="<?php echo "email_ph_text"; ?>">
       </p>
       <label><?php echo "username_label"; ?></label>

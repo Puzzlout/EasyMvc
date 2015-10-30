@@ -11,7 +11,7 @@
  * @package IResource
  */
 
-namespace Library\Core\ResourceManagers;
+namespace Library\Interfaces;
 
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
@@ -23,10 +23,16 @@ interface IResource {
    */
   public function GetList();
     /**
-   * Get the resource by group and key. See implementation the derived classes.
+   * Get the resource value by group and key. See implementation the derived classes.
    * 
    * @param string $key the resource key to find
    */
-  public function GetResource($key);
+  public function GetValue($key);
+    /**
+   * Get the resource comment by key. See implementation the derived classes.
+   * 
+   * @param string $key the resource key to find
+   */
+  public function GetComment($key);
 
 }
