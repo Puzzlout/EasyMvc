@@ -21,11 +21,12 @@ abstract class ResourceBase {
 
   const FROM_XML = 'FROM_XML';
   const FROM_DB = 'FROM_DB';
-
+  const Key = "Key";
   const GroupKey = "GroupKey";
   const ModuleKey = "ModuleKey";
   const ActionKey = "ActionKey";
   const CultureKey = "CultureKey";
+
   /**
    * Defines if the resources is a common resource or not. By default, it is true.
    * It becomes FALSE when the GroupValue is not specified.
@@ -56,6 +57,7 @@ abstract class ResourceBase {
    * @var string value is formatted as xx-XX
    */
   public $CultureValue;
+
   /**
    * 
    * @param associative array $params
@@ -72,4 +74,5 @@ abstract class ResourceBase {
       throw new Exception("You must specify either the group or the couple module/action.", 0, NULL); //todo: create error code
     }
   }
+
 }

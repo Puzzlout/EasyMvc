@@ -40,9 +40,14 @@ class CommonResxBase extends ResourceBase implements \Library\Interfaces\IResour
    */
   public function GetValue($key) {
     $resources = $this->GetList();
-    return array_key_exists($key, $resources) ?
-            $resources[$key][$resourceFile::f_controller_resource_valueKey] :
-            "[Missing resource in Group => " . $this->GroupValue . " for Key => " . $key . "]";
+    $keyExist = array_key_exists($key . ResourceBase::Key, $resources);
+    if ($keyExist) {
+      return $resources[$key . ResourceBase::Key]["f_common_resource_valueKey"];
+    } else {
+//      throw new \Library\Exceptions\ResourceNotFoundException(
+//      "The resource value doesn't exist for Group => " . $this->GroupValue . " and Key => " . $key, 0, NULL);
+      return "???";
+    }
   }
 
   /**
@@ -53,9 +58,14 @@ class CommonResxBase extends ResourceBase implements \Library\Interfaces\IResour
    */
   public function GetComment($key) {
     $resources = $this->GetList();
-    return array_key_exists($key, $resources) ?
-            $resources[$key][$resourceFile::f_controller_resource_commentKey] :
-            "[No resource comment in Group => " . $this->GroupValue . " for Key => " . $key . "]";
+    $keyExist = array_key_exists($key . ResourceBase::Key, $resources);
+    if ($keyExist) {
+      return $resources[$key . ResourceBase::Key]["f_common_resource_commentKey"];
+    } else {
+//      throw new \Library\Exceptions\ResourceNotFoundException(
+//      "The resource comment doesn't exist for Group => " . $this->GroupValue . " and Key => " . $key, 0, NULL);
+      return "???";
+    }
   }
 
 }

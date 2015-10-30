@@ -37,12 +37,25 @@ class ControllerResxBase extends ResourceBase implements \Library\Interfaces\IRe
    * 
    * @param string $key the resource key to find
    * @return string the resource value
+   * @todo create a error code for exception
    */
   public function GetValue($key) {
     $resources = $this->GetList();
-    return array_key_exists($key, $resources) ?
-            $resources[$this->ActionValue][$key][$resourceFile::f_controller_resource_valueKey] :
-            "[Missing resource for Action => " . $this->ActionValue . " ; Key => " . $key . "]";
+    $actionExists = array_key_exists($this->ActionValue . ResourceBase::Key, $resources);
+    $keyExist = $actionExists ?
+            array_key_exists($key . ResourceBase::Key, $resources[$this->ActionValue . ResourceBase::Key]) :
+            FALSE;
+    if ($keyExist) {
+      return $resources[$this->ActionValue . ResourceBase::Key][$key . ResourceBase::Key]["f_controller_resource_valueKey"];
+    } else if (!$actionExists) {
+//      throw new \Library\Exceptions\ResourceNotFoundException(
+//      "The resource value doesn't exist for Module => " . $this->ModuleValue . " and Action => " . $this->ActionValue, 0, NULL);
+      return "???";
+    } else {
+//      throw new \Library\Exceptions\ResourceNotFoundException(
+//      "The resource value doesn't exist for Module => " . $this->ModuleValue . ", Action => " . $this->ActionValue . " and Key => " . $key, 0, NULL);
+      return "???";
+    }
   }
 
   /**
@@ -50,12 +63,23 @@ class ControllerResxBase extends ResourceBase implements \Library\Interfaces\IRe
    * 
    * @param string $key the resource key to find
    * @return string the resource comment
+   * @todo create a error code for exception
    */
   public function GetComment($key) {
     $resources = $this->GetList();
-    return array_key_exists($key, $resources) ?
-            $resources[$this->ActionValue][$key][$resourceFile::f_controller_resource_commentKey] :
-            "[No resource comment in Module => " . $this->ModuleValue . " ; Action => " . $this->ActionValue . " and Key => " . $key . "]";
+    $actionExists = array_key_exists($this->ActionValue, $resources);
+    $keyExist = $actionExists ?
+            array_key_exists($key, $resources[$this->ActionValue]) :
+            FALSE;
+    if ($keyExist) {
+      return $resources[$this->ActionValue][$key]["f_controller_resource_commentKey"];
+    } else if (!$actionExists) {
+      throw new \Library\Exceptions\ResourceNotFoundException(
+      "The resource comment doesn't exist for Module => " . $this->ModuleValue . " and Action => " . $this->ActionValue, 0, NULL);
+    } else {
+      throw new \Library\Exceptions\ResourceNotFoundException(
+      "The resource comment doesn't exist for Module => " . $this->ModuleValue . ", Action => " . $this->ActionValue . " and Key => " . $key, 0, NULL);
+    }
   }
 
 }

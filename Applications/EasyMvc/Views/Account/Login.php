@@ -1,4 +1,5 @@
 <?php
+use Library\Core\ResourceManagers\ResourceBase;
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
