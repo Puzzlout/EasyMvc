@@ -53,6 +53,17 @@ class ResourceConstantsClassGenerator extends ConstantsClassGenerator implements
   }
 
   /**
+   * Build a string for a constant representing the key to find a folder in the
+   * array of constants.
+   * 
+   * @param string $value the value that will make the constant name with self::Key suffix
+   * @return string the computed value
+   */
+  public function BuildConstantKeyValue($value) {
+    return $value;
+  }
+
+  /**
    * Closes a opened array.
    * 
    * @param int $tabAmount the number of tabs or 2 spaces to print.
@@ -68,12 +79,27 @@ class ResourceConstantsClassGenerator extends ConstantsClassGenerator implements
    * Computes a value of an associative array.
    * 
    * @param string $value the value to use to compute the output
+   * @param int $tabAmount the amount of tabulations to print in the computed output
+   * @return string the computed string
+   */
+  public function WriteAssociativeArrayValue($value, $tabAmount = 0) {
+    $lineOfCode = str_repeat("  ", $tabAmount) .
+            "self::" .
+            $value . " => '" . $value . "'," .
+            PhpCodeSnippets::LF;
+    return $lineOfCode;
+  }
+
+  /**
+   * Computes a value of an associative array.
+   * 
+   * @param string $value the value to use to compute the output
    * @return string the computed string
    */
   public function WriteAssociativeArrayValueAsNewArray($value, $tabAmount = 0) {
     $lineOfCode = str_repeat("  ", $tabAmount) .
             "self::" .
-            $value . self::Key . " => array(" .
+            $value . " => array(" .
             PhpCodeSnippets::LF;
     return $lineOfCode;
   }
@@ -87,7 +113,7 @@ class ResourceConstantsClassGenerator extends ConstantsClassGenerator implements
   public function WriteAssociativeArrayValueWithKeyAndValue($key, $value, $tabAmount = 0) {
     $lineOfCode = str_repeat("  ", $tabAmount) .
             "self::" .
-            $key . self::Key . " => \"" . utf8_encode($value) . "\"," .
+            $key . " => \"" . utf8_encode($value) . "\"," .
             PhpCodeSnippets::LF;
     return $lineOfCode;
   }

@@ -17,5 +17,5 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 }
 
 class Group2Resx_en_US extends Group2Resx {
-  public function GetList() {    return array(      self::test1Key => array(        self::f_common_resource_valueKey => "This is a test value1",        self::f_common_resource_commentKey => "Testing purpose",      ),      self::test2Key => array(        self::f_common_resource_valueKey => "This is a test value2",        self::f_common_resource_commentKey => "Testing purpose",      ),    );  }
+  public function GetList() {    return array(      self::test1 => array(        self::f_common_resource_value => "This is a test value1",        self::f_common_resource_comment => "Testing purpose",      ),      self::test2 => array(        self::f_common_resource_value => "This is a test value2",        self::f_common_resource_comment => "Testing purpose",      ),    );  }
 }

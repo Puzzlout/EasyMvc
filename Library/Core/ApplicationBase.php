@@ -43,6 +43,7 @@ abstract class ApplicationBase {
   protected $security;
   public $error;
   public $cultures = array();
+  public $ResourceManager;
 
   public function HttpRequest() {
     return $this->httpRequest;
@@ -100,4 +101,7 @@ abstract class ApplicationBase {
     return $this->security;
   }
 
+  public function Resx() {
+    return $this->ResourceManager;
+  }
 }

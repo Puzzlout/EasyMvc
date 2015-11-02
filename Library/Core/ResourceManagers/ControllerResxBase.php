@@ -41,12 +41,12 @@ class ControllerResxBase extends ResourceBase implements \Library\Interfaces\IRe
    */
   public function GetValue($key) {
     $resources = $this->GetList();
-    $actionExists = array_key_exists($this->ActionValue . ResourceBase::Key, $resources);
+    $actionExists = array_key_exists($this->ActionValue, $resources);
     $keyExist = $actionExists ?
-            array_key_exists($key . ResourceBase::Key, $resources[$this->ActionValue . ResourceBase::Key]) :
+            array_key_exists($key, $resources[$this->ActionValue]) :
             FALSE;
     if ($keyExist) {
-      return $resources[$this->ActionValue . ResourceBase::Key][$key . ResourceBase::Key]["f_controller_resource_valueKey"];
+    return $resources[$this->ActionValue][$key][\Library\BO\F_controller_resource::F_CONTROLLER_RESOURCE_VALUE];
     } else if (!$actionExists) {
 //      throw new \Library\Exceptions\ResourceNotFoundException(
 //      "The resource value doesn't exist for Module => " . $this->ModuleValue . " and Action => " . $this->ActionValue, 0, NULL);
@@ -72,7 +72,7 @@ class ControllerResxBase extends ResourceBase implements \Library\Interfaces\IRe
             array_key_exists($key, $resources[$this->ActionValue]) :
             FALSE;
     if ($keyExist) {
-      return $resources[$this->ActionValue][$key]["f_controller_resource_commentKey"];
+      return $resources[$this->ActionValue][$key][\Library\BO\F_controller_resource::F_CONTROLLER_RESOURCE_COMMENT];
     } else if (!$actionExists) {
       throw new \Library\Exceptions\ResourceNotFoundException(
       "The resource comment doesn't exist for Module => " . $this->ModuleValue . " and Action => " . $this->ActionValue, 0, NULL);

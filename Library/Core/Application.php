@@ -11,6 +11,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 
 abstract class Application extends ApplicationBase{
   public function __construct(ErrorManager $errorManager) {
+    $this->ResourceManager = new ResourceManagers\ResourceBase($this);
     $this->error = $errorManager;
     $this->httpRequest = new HttpRequest($this);
     $this->httpResponse = new HttpResponse($this);

@@ -40,9 +40,9 @@ class CommonResxBase extends ResourceBase implements \Library\Interfaces\IResour
    */
   public function GetValue($key) {
     $resources = $this->GetList();
-    $keyExist = array_key_exists($key . ResourceBase::Key, $resources);
+    $keyExist = array_key_exists($key, $resources);
     if ($keyExist) {
-      return $resources[$key . ResourceBase::Key]["f_common_resource_valueKey"];
+      return $resources[$key][\Library\BO\F_common_resource::F_COMMON_RESOURCE_VALUE];
     } else {
 //      throw new \Library\Exceptions\ResourceNotFoundException(
 //      "The resource value doesn't exist for Group => " . $this->GroupValue . " and Key => " . $key, 0, NULL);
@@ -58,9 +58,9 @@ class CommonResxBase extends ResourceBase implements \Library\Interfaces\IResour
    */
   public function GetComment($key) {
     $resources = $this->GetList();
-    $keyExist = array_key_exists($key . ResourceBase::Key, $resources);
+    $keyExist = array_key_exists($key, $resources);
     if ($keyExist) {
-      return $resources[$key . ResourceBase::Key]["f_common_resource_commentKey"];
+      return $resources[$key][\Library\BO\F_common_resource::F_COMMON_RESOURCE_COMMENT];
     } else {
 //      throw new \Library\Exceptions\ResourceNotFoundException(
 //      "The resource comment doesn't exist for Group => " . $this->GroupValue . " and Key => " . $key, 0, NULL);

@@ -17,4 +17,4 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 }
 
 class AccountResx {
-  const createKey = 'createKey';  const loginKey = 'loginKey';  const email_labelKey = 'email_labelKey';  const h1_titleKey = 'h1_titleKey';  const f_controller_resource_valueKey = 'f_controller_resource_valueKey';  const f_controller_resource_commentKey = 'f_controller_resource_commentKey';}
+  const create = 'create';  const login = 'login';  const email_label = 'email_label';  const email_ph_text = 'email_ph_text';  const h1_title = 'h1_title';  const login_btn_text = 'login_btn_text';  const PageTitle = 'PageTitle';  const pwd_label = 'pwd_label';  const pwd_ph_text = 'pwd_ph_text';  const username_label = 'username_label';  const username_ph_text = 'username_ph_text';  const f_controller_resource_value = 'f_controller_resource_value';  const f_controller_resource_comment = 'f_controller_resource_comment';}

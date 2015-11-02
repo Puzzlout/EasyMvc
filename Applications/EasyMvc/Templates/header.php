@@ -5,7 +5,7 @@
 <html lang="<?php echo $this->app->locale; ?>">
   <head>
     <meta charset="utf-8" />
-    <title><?php echo $this->app->pageTitle; ?></title>
+    <title><?php echo $resx->GetValue("PageTitle"); ?></title>
     <link rel="stylesheet" type="text/css" href="<?php echo FrameworkConstants_BaseUrl; ?>Applications/<?php echo FrameworkConstants_AppName; ?>/ClientSide/css/app/reset.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo FrameworkConstants_BaseUrl; ?>Web/library/css/core/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo FrameworkConstants_BaseUrl; ?>Applications/<?php echo FrameworkConstants_AppName; ?>/ClientSide/css/addons/toastr.css" />

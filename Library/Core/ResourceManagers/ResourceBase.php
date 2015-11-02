@@ -17,7 +17,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-abstract class ResourceBase {
+class ResourceBase  extends \Library\Core\ApplicationComponent{
 
   const FROM_XML = 'FROM_XML';
   const FROM_DB = 'FROM_DB';
@@ -58,11 +58,14 @@ abstract class ResourceBase {
    */
   public $CultureValue;
 
+  public function __construct(\Library\Core\Application $app) {
+    parent::__construct($app);
+  }
   /**
    * 
    * @param associative array $params
    */
-  public function __construct($params) {
+  public function Instantiate($params) {
     $this->CultureValue = $params[self::CultureKey];
     if (is_array($params) && array_key_exists(self::GroupKey, $params)) {
       $this->GroupValue = $params[self::GroupKey];
@@ -73,6 +76,7 @@ abstract class ResourceBase {
     } else {
       throw new Exception("You must specify either the group or the couple module/action.", 0, NULL); //todo: create error code
     }
+    return $this;
   }
 
 }

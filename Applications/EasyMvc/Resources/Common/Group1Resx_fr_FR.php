@@ -17,5 +17,5 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 }
 
 class Group1Resx_fr_FR extends Group1Resx {
-  public function GetList() {    return array(      self::testKey => array(        self::f_common_resource_valueKey => "C'est une valeur de test",        self::f_common_resource_commentKey => "Testing purpose",      ),      self::test2Key => array(        self::f_common_resource_valueKey => "C'est une valeur de test2",        self::f_common_resource_commentKey => "Testing purpose",      ),    );  }
+  public function GetList() {    return array(      self::test => array(        self::f_common_resource_value => "C'est une valeur de test",        self::f_common_resource_comment => "Testing purpose",      ),      self::test2 => array(        self::f_common_resource_value => "C'est une valeur de test2",        self::f_common_resource_comment => "Testing purpose",      ),    );  }
 }
