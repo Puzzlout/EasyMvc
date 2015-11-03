@@ -12,7 +12,7 @@
  */
 
 namespace Applications\EasyMvc\Controllers;
-
+use Applications\EasyMvc\Resources\Enums\ViewVariablesKeys;
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
@@ -24,7 +24,8 @@ class AccountController extends \Library\Controllers\BaseController {
    */
   public function Login() {
     $this->Disconnect(FALSE);
-    $this->page()->addVar(\Applications\EasyMvc\Resources\Enums\ViewVariablesKeys::Vm, new \Applications\EasyMvc\ViewModels\Account\LoginVm());
+    $this->page()->addVar(ViewVariablesKeys::Vm, 
+        new \Applications\EasyMvc\ViewModels\Account\LoginVm($this->app));
   }
 
   /**
