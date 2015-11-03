@@ -1,7 +1,11 @@
 <?php
 
 use Applications\EasyMvc\Resources\Controller\AccountResx;
+use Applications\EasyMvc\ViewModels\Account\LoginVm;
 
+if ($Vm instanceof LoginVm) {
+  $ViewModel = new
+}
 $logGuid = \Library\Utility\TimeLogger::StartLog($this->app(), __FILE__);
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');

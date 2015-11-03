@@ -24,6 +24,7 @@ class AccountController extends \Library\Controllers\BaseController {
    */
   public function Login() {
     $this->Disconnect(FALSE);
+    $this->page()->addVar(\Applications\EasyMvc\Resources\Enums\ViewVariablesKeys::Vm, new \Applications\EasyMvc\ViewModels\Account\LoginVm());
   }
 
   /**
