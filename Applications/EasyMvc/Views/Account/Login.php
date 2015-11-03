@@ -2,7 +2,7 @@
 use Library\Exceptions\InvalidViewModelTypeException;
 use Applications\EasyMvc\Resources\Controller\AccountResx;
 use Applications\EasyMvc\ViewModels\Account\LoginVm;
-$ViewModel = new LoginVm();
+$ViewModel = new LoginVm($this->app);
 if (!($Vm instanceof LoginVm)) {
   throw new InvalidViewModelTypeException();
 } else {
