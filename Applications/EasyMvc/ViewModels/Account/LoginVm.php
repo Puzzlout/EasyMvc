@@ -22,8 +22,9 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
  */
 class LoginVm extends AccountBaseVm implements \Library\Interfaces\IViewModel {
 
-  public function GetResources() {
-    throw new \Library\Exceptions\NotImplementedException();
+  public function GetResources($action) {
+    $ressourcesList = $this->ResourceObject->GetList();
+    
   }
 
 }

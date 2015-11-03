@@ -8,19 +8,18 @@
  * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
  * @link https://github.com/WebDevJL/EasyMvc
  * @since Version 1.0.0
- * @package IViewModel
+ * @package InvalidViewModelTypeException
  */
 
-namespace Library\Interfaces;
+namespace Library\Exceptions;
 
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-interface IViewModel {
-  /**
-   * Get the resources for a given ViewModel.
-   * @return array The resources for the view model.
-   */
-  public function GetResources();
+class InvalidViewModelTypeException extends \Exception {
+
+  public function __construct($message = "Resource not found", $code = 0, $previous = null) {
+    parent::__construct($message, $code, $previous); //todo: generate error code.
+  }
 }

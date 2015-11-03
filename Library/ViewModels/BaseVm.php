@@ -17,8 +17,14 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-class BaseVm implements \Library\Interfaces\IViewModel {
+class BaseVm {
 
+  /**
+   * The instance of Application class.
+   * 
+   * @var \Library\Core\Application 
+   */
+  public $app;
   /**
    * The instance of the Error VM.
    * 
@@ -33,17 +39,25 @@ class BaseVm implements \Library\Interfaces\IViewModel {
   public $PageTitle = "";
 
   /**
-   *
+   * The resource object of the current module (e.g. Controller).
+   * 
    * @var array
    */
-  public $Resx;
+  public $ResourceObject;
 
+  /**
+   * The resources for a specific Action of the Controller
+   * @var array
+   */
+  public $ActionResx;
+  
   /**
    * Init the base VM object.
    */
-  public function __construct() {
+  public function __construct(\Library\Core\Application $app) {
     $this->errorVm = new ErrorVm();
-    $this->Resx = $this->GetResources();
+    $this->app = $app;
+    $this->ResourceObject = $this->GetResourceObject();
   }
 
   /**
@@ -64,22 +78,16 @@ class BaseVm implements \Library\Interfaces\IViewModel {
     $this->PageTitle = $PageTitle;
   }
 
-  public function GetResources() {
-    $culture = $this->context()->defaultLang[\Library\BO\F_culture::F_CULTURE_LANGUAGE] .
+  public function GetResourceObject() {
+    $culture = $this->app->context()->defaultLang[\Library\BO\F_culture::F_CULTURE_LANGUAGE] .
             "_" .
-            $this->context()->defaultLang[\Library\BO\F_culture::F_CULTURE_REGION];
+            $this->app->context()->defaultLang[\Library\BO\F_culture::F_CULTURE_REGION];
 
-    $resxController = new \Library\Core\ResourceManagers\ControllerResxBase($this);
+    $resxController = new \Library\Core\ResourceManagers\ControllerResxBase($this->app);
     $resxController->Instantiate(array(
-        \Library\Core\ResourceManagers\ResourceBase::ModuleKey => $this->app()->router()->currentRoute()->module(),
-        \Library\Core\ResourceManagers\ResourceBase::ActionKey => $this->app()->router()->currentRoute()->action(),
+        \Library\Core\ResourceManagers\ResourceBase::ModuleKey => $this->app->router()->currentRoute()->module(),
+        \Library\Core\ResourceManagers\ResourceBase::ActionKey => $this->app->router()->currentRoute()->action(),
         \Library\Core\ResourceManagers\ResourceBase::CultureKey => $culture));
     return $resxController;
   }
-  
-  public static function Copy($VmObject) {
-    $VmClassName = get_class($VmObject);
-    return new $VmClassName($VmObject);
-  }
-
 }
