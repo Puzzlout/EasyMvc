@@ -58,10 +58,12 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
     }
 
     $logGuid = \Library\Utility\TimeLogger::StartLogInfo($this->app(), get_class($this). "->".  ucfirst($action));
-    $result = $this->$action();
+    $viewModelObject = $this->$action();
     \Library\Utility\TimeLogger::EndLog($this->app(), $logGuid);
-    if ($result !== NULL) {
-      echo \Library\Core\HttpResponse::encodeJson($result);
+    if ($viewModelObject instanceof \Library\ViewModels\BaseAjaxVm) {
+      return $viewModelObject->EncodeToJson($viewModelObject);
+    } else {
+      return $viewModelObject;
     }
   }
 

@@ -1,9 +1,8 @@
 <?php
 use Library\Exceptions\InvalidViewModelTypeException;
 use Applications\EasyMvc\Resources\Controller\AccountResx;
-use Applications\EasyMvc\ViewModels\Account\LoginVm;
-$ViewModel = new LoginVm($this->app);
-if (!($Vm instanceof LoginVm)) {
+$ViewModel = new \Applications\EasyMvc\ViewModels\Account\LoginVm($this->app);
+if (!($Vm instanceof Applications\EasyMvc\ViewModels\Account\LoginVm)) {
   throw new InvalidViewModelTypeException();
 } else {
   $ViewModel = clone $Vm;
@@ -29,7 +28,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
           name="f_user_email" 
           type="text" 
           class="field" 
-          data-input-label="<?php echo $ViewModel->Resx->GetValue(AccountResx::email_label); ?>" 
+          data-input-label="<?php echo $ViewModel->ResxFor(AccountResx::email_label); ?>" 
           placeholder="<?php echo $ViewModel->ResxFor(AccountResx::email_ph_text); ?>">
       </p>
       <label><?php echo $ViewModel->ResxFor(AccountResx::username_label); ?></label>

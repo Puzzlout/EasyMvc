@@ -41,7 +41,7 @@ class ErrorVm {
    */
   public function __construct() {
     $this->errorId = 0;
-    $this->errorMessage = "N/A";
+    $this->errorMessage = "None";
   }
   
   /**
