@@ -20,10 +20,5 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 /**
  * @see \Library\ViewModels\Base for the guidelines to create a View Models.
  */
-class AccountBaseVm extends \Library\ViewModels\BaseVm implements \Library\Interfaces\IViewModel {
-
-  public function GetResources() {
-    throw new \Library\Exceptions\NotImplementedException();
-  }
-
+class AccountBaseVm extends \Library\ViewModels\BaseVm {
 }

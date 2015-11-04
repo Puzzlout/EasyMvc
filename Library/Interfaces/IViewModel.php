@@ -19,8 +19,14 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 
 interface IViewModel {
   /**
-   * Get the resources for a given ViewModel.
-   * @return array The resources for the view model.
+   * Get the Resource Object for a given ViewModel.
+   * @return Object The resource object for the view model.
    */
-  public function GetResources();
+  public function GetResourceObject();
+  
+  /**
+   * Get the resource for the given key.
+   * @param string $key
+   */
+  public function ResxFor($key);
 }

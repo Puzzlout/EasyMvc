@@ -29,15 +29,14 @@ class HttpResponse extends ApplicationComponent {
     $this->send();
   }
 
-  public function send() {
-    if (!$this->app->router->isWsCall) {
-      //Return the content to page
+  public function send(\Library\ViewModels\BaseVm $vm) {
+    $isAjaxRequest = $vm instanceof \Library\ViewModels\BaseAjaxVm;
+    if (!$isAjaxRequest) {
+      $this->page->addVar(\Applications\EasyMvc\Resources\Enums\ViewVariablesKeys::Vm, $vm);
       return $this->page->getGeneratedPage();
     } else {
-      //Since we are doing a AJAX call, we just exit.
-      die();
+      return $vm->EncodeToJson($vm);
     }
-    die();
   }
 
   public function setPage(Page $page) {
