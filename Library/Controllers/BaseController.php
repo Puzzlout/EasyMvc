@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Base controller to handle request and response from a web browser.
  * 
@@ -40,11 +41,8 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
     $this->setModule($module);
     $this->setAction($action);
     $this->setView($action);
-    $this->setResxFile($module);
     $this->setDataPost($this->app->httpRequest()->retrievePostAjaxData(FALSE));
-    //$this->resxData = array();//$this->app->i8n->getLocalResourceArray($module);
     $this->setUploadingFiles();
-    //$this->toolTips[\Library\Enums\Popup::ellipsis_tooltip_settings] = $this->app()->toolTip()->getTooltipEllipsisSettings('{"targetcontroller":"' . $this->module . '","targetaction": "' . $this->action . '"}');
   }
 
   public function execute() {
@@ -52,19 +50,14 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
     if (!is_callable(array($this, $action))) {
       throw new \RuntimeException('The action <b>' . $this->action . '</b> is not defined for the module <b>' . ucfirst($this->module) . '</b>');
     }
-    //
     if ($this->resxfile !== NULL) {
       $this->AddCommonVarsToPage();
     }
 
-    $logGuid = \Library\Utility\TimeLogger::StartLogInfo($this->app(), get_class($this). "->".  ucfirst($action));
+    $logGuid = \Library\Utility\TimeLogger::StartLogInfo($this->app(), get_class($this) . "->" . ucfirst($action));
     $viewModelObject = $this->$action();
     \Library\Utility\TimeLogger::EndLog($this->app(), $logGuid);
-    if ($viewModelObject instanceof \Library\ViewModels\BaseAjaxVm) {
-      return $viewModelObject->EncodeToJson($viewModelObject);
-    } else {
-      return $viewModelObject;
-    }
+    return $viewModelObject;
   }
 
   public function page() {
@@ -107,7 +100,7 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
   public function toolTips() {
     return $this->toolTips;
   }
-  
+
   /**
    * Returns the current request.
    * @return \Library\Core\HttpRequest
@@ -148,14 +141,6 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
             . ucfirst($this->view) . '.php');
   }
 
-  public function setResxFile($resxfile) {
-    if (!is_string($resxfile) || empty($resxfile)) {
-      throw new \InvalidArgumentException('The resx file must be a string and not be empty');
-    }
-
-    $this->resxfile = $resxfile;
-  }
-
   public function setDataPost($dataPost) {
     if (!is_array($dataPost) || empty($dataPost)) {
       $this->dataPost = array();
@@ -167,106 +152,20 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
   public function setUploadingFiles() {
     $this->files = $_FILES;
   }
+
   /**
    * Sets the current request.
    */
   public function setCurrentRequest() {
     $this->currentRequest = $this->app()->httpRequest();
   }
-  /**
-   * Set the default response from WS
-   * 
-   * @param string $resxKey
-   * @param string $step
-   * @param \Applications\EasyMvc\Models\Dao\Project_manager $user
-   * @return aeeay
-   */
-  public function InitResponseWS($params = array("resx_file" => "ws_defaults", "resx_key" => "", "step" => "error")) {
-    if ($params["step"] === "success") {
-      return array(
-          "result" => 1,
-          "message" => $params["resx_file"] === "ws_defaults" ?
-                  $this->app->i8n->getCommonResource($params["resx_file"], "message_success" . $params["resx_key"]) :
-                  $this->app->i8n->getLocalResource($params["resx_file"], "message_success" . $params["resx_key"])
-      );
-    } else {
-      return array(
-          "result" => 0,
-          "message" => $params["resx_file"] === "ws_defaults" ?
-                  $this->app->i8n->getCommonResource($params["resx_file"], "message_error" . $params["resx_key"]) :
-                  $this->app->i8n->getLocalResource($params["resx_file"], "message_error" . $params["resx_key"])
-      );
-    }
-  }
-
-  /**
-   * Set the default response from WS
-   * 
-   * @param string $resxKey
-   * @param string $step
-   * @param \Applications\EasyMvc\Models\Dao\Project_manager $user
-   * @return aeeay
-   */
-  public function SendResponseWS($result, $params) {
-    if ($params["step"] === "success") {
-      $result["result"] = 1;
-      $result["message"] = ($params["resx_file"] === "ws_defaults" || (array_key_exists("directory", $params) && $params["directory"] === "common")) ?
-              $this->app->i8n->getCommonResource($params["resx_file"], "message_success_" . $params["resx_key"]) :
-              $this->app->i8n->getLocalResource($params["resx_file"], "message_success_" . $params["resx_key"]);
-    } else {
-      $result["result"] = 0;
-      $result["message"] = ($params["resx_file"] === "ws_defaults" || (array_key_exists("directory", $params) && $params["directory"] === "common")) ?
-              $this->app->i8n->getCommonResource($params["resx_file"], "message_error_" . $params["resx_key"]) :
-              $this->app->i8n->getLocalResource($params["resx_file"], "message_error_" . $params["resx_key"]);
-    }
-    echo \Library\Core\HttpResponse::encodeJson($result);
-  }
-
-  /**
-   * Retrieve the objects from a list filtering them by a list of IDs
-   * 
-   * @param type $params
-   *    array(
-   *      "filter" => "property_name_of_object_type",
-    "ids" => ids_to_filter_objects,
-    "objects" => the_objects
-   *    )
-   * @return array of objects
-   */
-  public function FindObjectsFromIds($params) {
-    //TODO: use LINQ helper to loop array more efficiently
-    $matchedElements = array();
-    foreach ($params["objects"] as $object) {
-      foreach ($params["ids"] as $id) {
-        if (intval($object->$params["filter"]()) === intval($id)) {
-          array_push($matchedElements, $object);
-          break;
-        }
-      }
-    }
-    return $matchedElements;
-  }
-
+  
   /**
    * Add to the page object the common variables to use in the views
    * 
-   * Variables:
-   *    - left_menu
-   *    - resx
-   *    - logout_url
-   *    - pageTitle (not local variable but a variable in the application
+   * Variables: none yet
    */
   protected function AddCommonVarsToPage() {
-    //Get resources for the left menu
-    //$resx_left_menu = $this->app->i8n->getCommonResourceArray(\Library\Enums\ResourceKeys\ResxFileNameKeys::MenuLeft);
-    //Init left menu
-    //$leftMenu = new \Library\UC\LeftMenu($this->app(), $resx_left_menu);
-    //Add left menu to layout
-    //$this->page->addVar("leftMenu", $leftMenu->Build());
-    //$this->page->addVar('resx', $this->app->i8n->getLocalResourceArray($this->resxfile));
-    //$this->app->pageTitle = $this->app->i8n->getLocalResource($this->resxfile, "page_title") . " - " .  FrameworkConstants_AppName;
-    $this->page->addVar("logout_url", FrameworkConstants_BaseUrl . \Library\Enums\UrlKeys::LogoutUrl);
-    $this->page->addVar(\Library\Enums\Popup::toolTips, $this->toolTips);
   }
 
   protected function Redirect($urlPart) {
