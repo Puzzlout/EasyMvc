@@ -20,11 +20,5 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 /**
  * @see \Library\ViewModels\Base for the guidelines to create a View Models.
  */
-class LoginVm extends AccountBaseVm implements \Library\Interfaces\IViewModel {
-
-  public function GetResources($action) {
-    $ressourcesList = $this->ResourceObject->GetList();
-    
-  }
-
+class LoginVm extends AccountBaseVm {
 }

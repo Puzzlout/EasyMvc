@@ -17,7 +17,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-class BaseVm {
+class BaseVm implements \Library\Interfaces\IViewModel{
 
   /**
    * The instance of Application class.
@@ -89,5 +89,9 @@ class BaseVm {
         \Library\Core\ResourceManagers\ResourceBase::ActionKey => $this->app->router()->currentRoute()->action(),
         \Library\Core\ResourceManagers\ResourceBase::CultureKey => $culture));
     return $resxController;
+  }
+  
+  public function ResxFor($key) {
+    return $this->ResourceObject->GetValue($key);
   }
 }
