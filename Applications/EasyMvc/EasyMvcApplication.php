@@ -17,30 +17,27 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 
 class EasyMvcApplication extends \Library\Core\Application implements \Library\Interfaces\IApplication {
 
+  /**
+   * Initialize the custom application instance with its name, culture and branding logo.
+   * @param \Library\Core\ErrorManager $errorManager
+   */
   public function __construct(\Library\Core\ErrorManager $errorManager) {
     parent::__construct($errorManager);
-
     $this->name = FrameworkConstants_AppName;
     $this->context()->setLanguage();
     $this->logoImageUrl = $this->imageUtil->getImageUrl($this->config()->get(\Library\Enums\AppSettingKeys::LogoImageUrl));
   }
 
+  /**
+   * Run the request to produce the output.
+   * 
+   * @return string The output
+   */
   public function run() {
     $controller = $this->getController();
-    $this->AddGlobalAppVariables($controller);
-    $vm = $controller->execute();
+    $controller->AddGlobalAppVariables();
+    $controller->execute();
     $this->httpResponse->setPage($controller->page());
-    return $this->httpResponse->send($vm);
+    return $this->httpResponse->send($controller->vm);
   }
-
-  private function AddGlobalAppVariables($controller) {
-    $culture = $this->context()->defaultLang[\Library\BO\F_culture::F_CULTURE_LANGUAGE] .
-            "_" .
-            $this->context()->defaultLang[\Library\BO\F_culture::F_CULTURE_REGION];
-    $controller->page()->addVar('culture', $culture);
-    $user = $controller->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
-    $controller->page()->addVar('user', $user[0]);
-    $controller->page()->addVar(\Library\Core\Router::CurrentRouteVarKey, $controller->app()->router()->currentRoute());
-  }
-
 }

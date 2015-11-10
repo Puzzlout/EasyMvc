@@ -25,7 +25,7 @@ class AccountController extends \Library\Controllers\BaseController {
    */
   public function Login() {
     $this->Disconnect(FALSE);
-    return new ViewModels\Account\LoginVm($this->app);
+    $this->vm = new ViewModels\Account\LoginVm($this->app);
   }
 
   /**

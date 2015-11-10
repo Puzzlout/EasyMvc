@@ -27,8 +27,8 @@ class Router extends ApplicationComponent {
    * Set the route of the current request. 
    * @param \Library\Core\Route $route
    */
-  public function setCurrentRoute($currentRoute) {
-    $this->currentRoute = $currentRoute;
+  public function setCurrentRoute() {
+    $this->currentRoute = $this->FindRouteMatch();
   }
 
   /**
@@ -64,6 +64,18 @@ class Router extends ApplicationComponent {
     if (!in_array($route, $this->routes)) {
       $this->routes[] = $route;
     }
+  }
+
+  /**
+   * Instanciate the Route object from the current request.
+   * 
+   * @return \Library\Core\Route the Route instance
+   */  
+  private function FindRouteMatch() {
+    $route = new Route();
+    $route->setDefaultUrl($this->app->config->get(\Library\Enums\AppSettingKeys::DefaultUrl));
+    $this->getRoute($route, $this->app->httpRequest->requestURI());
+    return $route;
   }
 
   /**

@@ -17,4 +17,4 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 }
 
 class FrameworkViews {
-  const ConfigFolderKey = 'ConfigFolderKey';  const configRoutingKey = 'configRoutingKey';  public static function GetList() {    return array(      self::ConfigFolderKey => array(        self::configRoutingKey => 'configRouting',      ),    );  }}
+  const ConfigFolderKey = 'ConfigFolderKey';  const configRoutingKey = 'configRoutingKey';  const ErrorFolderKey = 'ErrorFolderKey';  const Http404Key = 'Http404Key';  public static function GetList() {    return array(      self::ConfigFolderKey => array(        self::configRoutingKey => 'configRouting',      ),      self::ErrorFolderKey => array(        self::Http404Key => 'Http404',      ),    );  }}

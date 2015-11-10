@@ -32,12 +32,15 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
   protected $user = null;
   protected $files = array();
   protected $toolTips = array();
-
+  
+  public $vm;
+  
   public function __construct(\Library\Core\Application $app, $module, $action) {
     parent::__construct($app);
     $this->managers = $app->dal();
     $this->page = new \Library\Core\Page($app);
     $this->user = $app->user();
+    $this->vm = new \Library\ViewModels\BaseVm($app);
     $this->setModule($module);
     $this->setAction($action);
     $this->setView($action);
@@ -48,7 +51,8 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
   public function execute() {
     $action = $this->action();
     if (!is_callable(array($this, $action))) {
-      throw new \RuntimeException('The action <b>' . $this->action . '</b> is not defined for the module <b>' . ucfirst($this->module) . '</b>');
+      //todo: create an error code
+      throw new \RuntimeException('The action <b>' . $this->action . '</b> is not defined for the module <b>' . ucfirst($this->module) . '</b>', 0, NULL);
     }
     if ($this->resxfile !== NULL) {
       $this->AddCommonVarsToPage();
@@ -125,12 +129,19 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
     $this->action = $action;
   }
 
-  public function setView($view) {
-    if (!is_string($view) || empty($view)) {
-      throw new \InvalidArgumentException('The view value must be a string and not be empty');
+  /**
+   * Set the view filename for the current request.
+   * 
+   * @param string $action the Action from which to build the view filename.
+   * @throws \InvalidArgumentException thrown when the $action parameter is null or empty.
+   * @todo create a error code.
+   */
+  public function setView($action) {
+    if (!is_string($action) || empty($action)) {
+      throw new \InvalidArgumentException('The action value must be a string and not be empty', 0);
     }
 
-    $this->view = $view;
+    $this->view = $action;
 
     $this->page->setContentFile(
             FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::AppsFolderName
@@ -160,6 +171,20 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
     $this->currentRequest = $this->app()->httpRequest();
   }
   
+
+  /**
+   * Add the context the variables that are used to generated the output from the Views.
+   */
+  public function AddGlobalAppVariables() {
+    $culture = $this->app->context()->defaultLang[\Library\BO\F_culture::F_CULTURE_LANGUAGE] .
+            "_" .
+            $this->app->context()->defaultLang[\Library\BO\F_culture::F_CULTURE_REGION];
+    $this->page()->addVar('culture', $culture);
+    $user = $this->app()->user->getAttribute(\Library\Enums\SessionKeys::UserConnected);
+    $this->page()->addVar('user', $user[0]);
+    $this->page()->addVar(\Library\Core\Router::CurrentRouteVarKey, $this->app()->router()->currentRoute());
+  }
+
   /**
    * Add to the page object the common variables to use in the views
    * 

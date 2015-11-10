@@ -22,6 +22,7 @@ class Route {
   protected $action;
   protected $module;
   protected $url;
+  protected $defaultUrl;
 
   const StartIndexNoVirtualPath = 1;
   const StartIndexWithVirtualPath = 2;
@@ -41,8 +42,12 @@ class Route {
     $startIndex = $baseUrlConstainsVirtualPath ? self::StartIndexWithVirtualPath : self::StartIndexNoVirtualPath;
 
     $this->setUrl($url);
-    $this->setModule($urlParts[$startIndex]);
-    $this->setAction($urlParts[$startIndex + 1]);
+    if(array_key_exists($startIndex, $urlParts) && array_key_exists($startIndex + 1, $urlParts)) {
+      $this->setModule($urlParts[$startIndex]);
+      $this->setAction($urlParts[$startIndex + 1]);
+    } else {
+      $this->Init($this->defaultUrl);
+    }
   }
 
   /**
@@ -53,6 +58,13 @@ class Route {
     return $this->url;
   }
 
+  /**
+   * Gets the default url.
+   * @return string
+   */
+  public function defaultUrl() {
+    return $this->defaultUrl;
+  }
   /**
    * Gets the action of the route.
    * @return string
@@ -78,7 +90,15 @@ class Route {
       $this->url = FrameworkConstants_BaseUrl . $url;
     }
   }
-
+  /**
+   * Sets default urlif the requested url is worng.
+   * @see Applications/EasyMvc/Config/AppSettings.php for DefaultUrl.
+   * @return string
+   */
+  public function setDefaultUrl($defaultUrl) {
+    $this->defaultUrl = FrameworkConstants_BaseUrl . $defaultUrl;
+  }
+  
   /**
    * Sets the action of the route.
    * @return string
