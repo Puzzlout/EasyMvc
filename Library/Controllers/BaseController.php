@@ -19,22 +19,25 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 
 abstract class BaseController extends \Library\Core\ApplicationComponent {
 
-  protected $currentRequest = null;
   protected $action = '';
   protected $module = '';
   protected $page = null;
   protected $view = '';
   protected $managers = null;
-  protected $resxfile = "";
-  protected $resxData = array();
   protected $dataPost = array();
   //shortcut from $app->user() also used as $this->app()->user() in controllers
   protected $user = null;
   protected $files = array();
   protected $toolTips = array();
-  
   public $vm;
-  
+
+  /**
+   * Instantiate the class.
+   * 
+   * @param \Library\Core\Application $app The application object
+   * @param string $module The current module
+   * @param string $action The current action
+   */
   public function __construct(\Library\Core\Application $app, $module, $action) {
     parent::__construct($app);
     $this->managers = $app->dal();
@@ -43,27 +46,34 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
     $this->vm = new \Library\ViewModels\BaseVm($app);
     $this->setModule($module);
     $this->setAction($action);
-    $this->setView($action);
+    $this->setView();
     $this->setDataPost($this->app->httpRequest()->retrievePostAjaxData(FALSE));
     $this->setUploadingFiles();
   }
 
+  /**
+   * Execute the Controller action.
+   * 
+   * @return \Library\ViewModels\BaseVm The output View Model
+   * @throws \RuntimeException Handle the non-existing action in the current controller
+   * @todo create an error code
+   */
   public function execute() {
+
     $action = $this->action();
     if (!is_callable(array($this, $action))) {
-      //todo: create an error code
       throw new \RuntimeException('The action <b>' . $this->action . '</b> is not defined for the module <b>' . ucfirst($this->module) . '</b>', 0, NULL);
     }
-    if ($this->resxfile !== NULL) {
-      $this->AddCommonVarsToPage();
-    }
-
     $logGuid = \Library\Utility\TimeLogger::StartLogInfo($this->app(), get_class($this) . "->" . ucfirst($action));
     $viewModelObject = $this->$action();
     \Library\Utility\TimeLogger::EndLog($this->app(), $logGuid);
     return $viewModelObject;
   }
 
+  /**
+   * Get the page instance.
+   * @return string
+   */
   public function page() {
     return $this->page;
   }
@@ -72,18 +82,34 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
     return $this->leftMenu;
   }
 
+  /**
+   * Get the managers for any DAL queries.
+   * @return string
+   */
   public function managers() {
     return $this->managers;
   }
 
+  /**
+   * Get the current route module.
+   * @return string
+   */
   public function module() {
     return $this->module;
   }
 
+  /**
+   * Get the current route action.
+   * @return string
+   */
   public function action() {
     return $this->action;
   }
 
+  /**
+   * Get the $_POST value store in the controller instance.
+   * @return array
+   */
   public function dataPost() {
     return $this->dataPost;
   }
@@ -97,6 +123,10 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
     return $this->user;
   }
 
+  /**
+   * Get the $_FILES value store in the controller instance.
+   * @return array
+   */
   public function files() {
     return $this->files;
   }
@@ -106,13 +136,12 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
   }
 
   /**
-   * Returns the current request.
-   * @return \Library\Core\HttpRequest
+   * Save the module in the instance.
+   * 
+   * @param string $module The module, a.k.a controller name
+   * @throws \InvalidArgumentException
+   * @todo create error code for exception
    */
-  public function currentRequest() {
-    return $this->currentRequest;
-  }
-
   public function setModule($module) {
     if (!is_string($module) || empty($module)) {
       throw new \InvalidArgumentException('The module value must be a string and not be empty');
@@ -121,6 +150,13 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
     $this->module = $module;
   }
 
+  /**
+   * Save the action value in the instance.
+   * 
+   * @param string $action The action
+   * @throws \InvalidArgumentException
+   * @todo create error code for exception
+   */
   public function setAction($action) {
     if (!is_string($action) || empty($action)) {
       throw new \InvalidArgumentException('The action value must be a string and not be empty');
@@ -132,26 +168,23 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
   /**
    * Set the view filename for the current request.
    * 
-   * @param string $action the Action from which to build the view filename.
    * @throws \InvalidArgumentException thrown when the $action parameter is null or empty.
    * @todo create a error code.
    */
-  public function setView($action) {
-    if (!is_string($action) || empty($action)) {
+  public function setView() {
+    if (!is_string($this->action) || empty($this->action)) {
       throw new \InvalidArgumentException('The action value must be a string and not be empty', 0);
     }
-
-    $this->view = $action;
-
-    $this->page->setContentFile(
-            FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::AppsFolderName
-            . $this->app->name()
-            . \Library\Enums\ApplicationFolderName::ViewsFolderName
-            . ucfirst($this->module)
-            . '/'
-            . ucfirst($this->view) . '.php');
+    $ViewLoader = new \Library\Core\ViewLoader($this);
+    $this->view = $ViewLoader->GetView();
+    $this->page->setContentFile($this->view);
   }
 
+  /**
+   * Stores the data of $_POST in the instance of controller.
+   * 
+   * @param array $dataPost The array of $_POST
+   */
   public function setDataPost($dataPost) {
     if (!is_array($dataPost) || empty($dataPost)) {
       $this->dataPost = array();
@@ -160,17 +193,12 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
     $this->dataPost = $dataPost;
   }
 
+  /**
+   * Stores the data $_FILES in the instance of controller.
+   */
   public function setUploadingFiles() {
     $this->files = $_FILES;
   }
-
-  /**
-   * Sets the current request.
-   */
-  public function setCurrentRequest() {
-    $this->currentRequest = $this->app()->httpRequest();
-  }
-  
 
   /**
    * Add the context the variables that are used to generated the output from the Views.
@@ -191,12 +219,7 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
    * Variables: none yet
    */
   protected function AddCommonVarsToPage() {
-  }
-
-  protected function Redirect($urlPart) {
-    $url = FrameworkConstants_BaseUrl . $urlPart;
-    header('Location: ' . $url);
-    exit();
+    
   }
 
 }
