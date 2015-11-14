@@ -19,16 +19,75 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 
 abstract class BaseController extends \Library\Core\ApplicationComponent {
 
-  protected $action = '';
-  protected $module = '';
-  protected $page = null;
-  protected $view = '';
-  protected $managers = null;
+  /**
+   * The Action.
+   * 
+   * @var string
+   */
+  protected $action;
+
+  /**
+   * The Module a.k.a. Controller.
+   * 
+   * @var string
+   */
+  protected $module;
+
+  /**
+   * The Page instance.
+   * 
+   * @var \Library\Core\Page 
+   * @see \Library\Core\Page
+   */
+  protected $page;
+
+  /**
+   * The filepath of the view.
+   * 
+   * @var string
+   */
+  protected $view;
+
+  /**
+   * Shortcut of $app->dal().
+   * 
+   * @var Object
+   * @see \Library\Dal\Managers
+   */
+  protected $managers;
+
+  /**
+   * Holds the $_POST value.
+   * 
+   * @var array
+   */
   protected $dataPost = array();
-  //shortcut from $app->user() also used as $this->app()->user() in controllers
-  protected $user = null;
+
+  /**
+   * Shortcut from $app->user() also used as $this->app()->user() in controllers.
+   * 
+   * @var \Library\BO\F_user 
+   */
+  protected $user;
+
+  /**
+   * Holds the $_FILES value.
+   * 
+   * @var array
+   */
   protected $files = array();
+
+  /**
+   * Holds the values of the tooltips xml file.
+   * @var array
+   * @todo implement the code to read and stores the xml into the array.
+   */
   protected $toolTips = array();
+
+  /**
+   * The View Model instance for the current request.
+   * @var \Library\ViewModels\BaseVm
+   */
   public $vm;
 
   /**

@@ -64,13 +64,15 @@ class ViewLoader implements \Library\Interfaces\IViewLoader {
   /**
    * Retrieve the partial view from either the Framework folder or the current Application folder.
    * 
+   * @param string $controller The name of the controller
+   * @param string $viewName The name of view to load
    * @throws \Library\Exceptions\ViewNotFoundException Throws an exception if the view is not found 
    * @see \Library\Core\ViewLoader::GetFrameworkRootDir()
    * @see \Library\Core\ViewLoader::GetApplicationRootDir()
    */
-  public static function GetPartialView($viewName) {
+  public static function GetPartialView($controller, $viewName) {
     $pathCommonPartialDir = self::GetFrameworkRootDir() . "Modules/";
-    $pathSpecificPartialDir = self::GetApplicationRootDir() . $this->controller->module() . "/Modules/";
+    $pathSpecificPartialDir = self::GetApplicationRootDir() . $controller . "/Modules/";
     $pathCommonPartialView = $pathCommonPartialDir . $viewName . self::VIEWFILEEXTENSION;
     $pathSpecificPartialView = $pathSpecificPartialDir . $viewName . self::VIEWFILEEXTENSION;
     if (file_exists($pathCommonPartialView)) {
