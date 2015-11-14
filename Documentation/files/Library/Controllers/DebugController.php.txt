@@ -21,14 +21,14 @@ class DebugController extends \Library\Controllers\BaseController {
 
   public function ViewSessionArrays() {
     $output = array();
-    switch ($this->currentRequest()->getData("type")) {
-      case "route":
-            \Library\Helpers\DebugHelper::WriteObject(
-                    $this->user->getAttribute(\Library\Enums\SessionKeys::SessionRoutes));
-        break;
-      default:
-        break;
-    }
+//    switch ($this->currentRequest()->getData("type")) {
+//      case "route":
+//            \Library\Helpers\DebugHelper::WriteObject(
+//                    $this->user->getAttribute(\Library\Enums\SessionKeys::SessionRoutes));
+//        break;
+//      default:
+//        break;
+//    }
     die();
   }
 

@@ -36,9 +36,9 @@ abstract class AppSettingKeys {
    */
   const ApplicationBaseUrl = "ApplicationBaseUrl";
   /**
-   * Default page to load.
+   * Default url to load.
    */
-  const DefaultPage = "DefaultPage";
+  const DefaultUrl = "DefaultUrl";
   /**
    * Path to the images in the project. 
    */

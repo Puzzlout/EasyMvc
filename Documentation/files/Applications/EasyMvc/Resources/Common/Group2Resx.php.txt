@@ -17,4 +17,4 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 }
 
 class Group2Resx {
-  const test1Key = 'test1Key';  const test2Key = 'test2Key';  const f_common_resource_valueKey = 'f_common_resource_valueKey';  const f_common_resource_commentKey = 'f_common_resource_commentKey';}
+  const test1 = 'test1';  const test2 = 'test2';  const f_common_resource_value = 'f_common_resource_value';  const f_common_resource_comment = 'f_common_resource_comment';}

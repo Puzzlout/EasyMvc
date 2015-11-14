@@ -29,7 +29,7 @@ class AppSettings {
         \Library\Enums\AppSettingKeys::ApplicationsDalFolderPath => "\Applications\{{app_name}}\Models\Dal\\",
         \Library\Enums\AppSettingKeys::DefaultCulture => "en-US",
         \Library\Enums\AppSettingKeys::DefaultEmailDomainValue => "apps-jl.net",
-        \Library\Enums\AppSettingKeys::DefaultPage => "login",
+        \Library\Enums\AppSettingKeys::DefaultUrl => "error/http404",
         \Library\Enums\AppSettingKeys::EncryptionKey => "4lx81277pVi606I4X77Q258bT7ua1GMZ",
         \Library\Enums\AppSettingKeys::ErrorLoggingMethod => "error-log-type-echo",
         \Library\Enums\AppSettingKeys::GoogleMapsCenterLat => "0.000000",

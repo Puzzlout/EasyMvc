@@ -33,7 +33,7 @@ const ResourceGeneratorText= "Refresh the resources from the database";
           <?php echo str_replace(PlaceholderMessageModule, strtolower(DalModule), $GeneratorDesc); ?>
         </a>
       </li>
-      <li>
+      <li style="display: none;">
         <a href="<?php echo str_replace(PlaceholderModule, ViewName, $GeneratorFileName); ?>">
           <?php echo str_replace(PlaceholderMessageModule, strtolower(ViewName), $GeneratorDesc); ?>
         </a>

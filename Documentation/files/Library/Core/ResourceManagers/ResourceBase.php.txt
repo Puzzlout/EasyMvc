@@ -17,15 +17,16 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-abstract class ResourceBase {
+class ResourceBase  extends \Library\Core\ApplicationComponent{
 
   const FROM_XML = 'FROM_XML';
   const FROM_DB = 'FROM_DB';
-
+  const Key = "Key";
   const GroupKey = "GroupKey";
   const ModuleKey = "ModuleKey";
   const ActionKey = "ActionKey";
   const CultureKey = "CultureKey";
+
   /**
    * Defines if the resources is a common resource or not. By default, it is true.
    * It becomes FALSE when the GroupValue is not specified.
@@ -56,11 +57,15 @@ abstract class ResourceBase {
    * @var string value is formatted as xx-XX
    */
   public $CultureValue;
+
+  public function __construct(\Library\Core\Application $app) {
+    parent::__construct($app);
+  }
   /**
    * 
    * @param associative array $params
    */
-  public function __construct($params) {
+  public function Instantiate($params) {
     $this->CultureValue = $params[self::CultureKey];
     if (is_array($params) && array_key_exists(self::GroupKey, $params)) {
       $this->GroupValue = $params[self::GroupKey];
@@ -71,6 +76,8 @@ abstract class ResourceBase {
     } else {
       throw new Exception("You must specify either the group or the couple module/action.", 0, NULL); //todo: create error code
     }
+    return $this;
   }
+
 }
 

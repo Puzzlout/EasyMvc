@@ -62,9 +62,6 @@ class Page extends ApplicationComponent {
   }
 
   public function setContentFile($contentFile) {
-    if (!is_string($contentFile) || empty($contentFile)) {
-      throw new \InvalidArgumentException('The view ' . $contentFile . ' doesn\'t exist.');
-    }
     $this->contentFile = $contentFile;
   }
 
