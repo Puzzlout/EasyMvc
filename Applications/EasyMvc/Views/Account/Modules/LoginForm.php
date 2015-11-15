@@ -1,6 +1,8 @@
 <?php
+
 use Library\Exceptions\InvalidViewModelTypeException;
 use Applications\EasyMvc\Resources\Controller\AccountResx;
+
 $ViewModel = new \Applications\EasyMvc\ViewModels\Account\LoginVm($this->app);
 if (!($Vm instanceof Applications\EasyMvc\ViewModels\Account\LoginVm)) {
   throw new InvalidViewModelTypeException();
@@ -45,6 +47,15 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 <!--        <input name="remember_me" type="checkbox" value="" />
   <?php echo "remember_me_label"; ?>
   <a href="#" name="forgot_pwd"  class="password">
-  <?php echo "forgot_pwd_label"; ?>
+<?php echo "forgot_pwd_label"; ?>
   </a>-->
 </p>
+<div class="login-btn">
+  <input 
+    id="btn_login" 
+    class="btn btn-primary btn-lg" 
+    role="button" 
+    type="button" 
+    value="<?php echo $ViewModel->ResxFor("login_btn_text"); ?>" />
+</p>
+</div> 

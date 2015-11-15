@@ -33,7 +33,7 @@ class HttpResponse extends ApplicationComponent {
     $isAjaxRequest = $vm instanceof \Library\ViewModels\BaseAjaxVm;
     if (!$isAjaxRequest) {
       $this->page->addVar(\Applications\EasyMvc\Resources\Enums\ViewVariablesKeys::Vm, $vm);
-      return $this->page->getGeneratedPage();
+      return $this->page->GetOutput();
     } else {
       return $vm->EncodeToJson($vm);
     }
@@ -71,7 +71,7 @@ class HttpResponse extends ApplicationComponent {
    */
   public static function encodeJson($response) {
     header('Content-Type: application/json');
-    return json_encode($response, 128); //Encode response to pretty JSON
+    return json_encode($response, JSON_PRETTY_PRINT); //Encode response to pretty JSON
   }
 
 }

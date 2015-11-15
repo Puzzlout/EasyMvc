@@ -13,7 +13,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 ?>
 <section id="top_header">
   <section id="branding">
-    <figure class="logo"><img src="<?php echo $this->app()->relative_path . $this->app()->logoImageUrl; ?>"></figure>
+    <figure class="logo"><img src="<?php echo $this->app->relative_path . $this->app->logoImageUrl; ?>"></figure>
   </section>
 </section>
 <section  class="login-container">
@@ -21,15 +21,6 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
     <h1><?php echo $ViewModel->ResxFor(AccountResx::h1_title); ?></h1>
     <div class="login-form login-box-small">
       <?php require Library\Core\ViewLoader::GetPartialView("Account","LoginForm"); ?>
-      <div class="login-btn">
-        <input 
-          id="btn_login" 
-          class="btn btn-primary btn-lg" 
-          role="button" 
-          type="button" 
-          value="<?php echo "login_btn_text"; ?>" />
-        </p>
-      </div> 
     </div>
   </figure>
 </section >

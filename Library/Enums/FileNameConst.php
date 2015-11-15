@@ -42,12 +42,7 @@ abstract class FileNameConst {
   /*
    * Templates file names
    */
-  const LayoutTemplate = "/Templates/layout.php";
-  const HeaderTemplate = "/Templates/header.php";
-  const ContenTemplate = "/Templates/content.php";
-  const FooterTemplate = "/Templates/footer.php";
+  const LayoutTemplate = "Shared/Layout.php";
   const MenuTopTemplate = "/Templates/menus/top.php";
   const MenuLeftTemplate = "/Templates/menus/left.php";
-  const BreadcrumbTemplate = "/Templates/breadcrumb.php";
-
 }
