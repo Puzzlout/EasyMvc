@@ -40,20 +40,31 @@ class ControllerNameConstantsEngine extends ConstantsClassEngineBase {
                     \Library\Enums\ApplicationFolderName::AppsFolderName .
                     FrameworkConstants_AppName .
                     \Library\Enums\ApplicationFolderName::ControllersFolderName);
+    $this->InitGenerateFrameworkFile($FrameworkControllers);
+    $this->InitGenerateApplicationFile($ApplicationControllers);
+  }
 
+  function InitGenerateFrameworkFile($FrameworkControllers) {
     $this->params = array(
         BaseClassGenerator::NameSpaceKey => "Library\Generated",
         BaseClassGenerator::ClassNameKey => "Framework" . $this->GeneratedClassPrefix,
         BaseClassGenerator::DestinationDirKey => \Library\Enums\FrameworkFolderName::GeneratedFolderName,
-        BaseClassGenerator::ClassDescriptionKey => "Lists the constants for framework controller classes to autocompletion and easy coding."
+        BaseClassGenerator::ClassDescriptionKey => "Lists the constants for framework controller classes to autocompletion and easy coding.",
+        ConstantsClassGenerator::DoGenerateConstantKeysKey => TRUE,
+        ConstantsClassGenerator::DoGenerateGetListMethodKey => TRUE
     );
     $this->GenerateFrameworkFile($FrameworkControllers);
+  }
+
+  function InitGenerateApplicationFile($ApplicationControllers) {
     $this->params = array(
         BaseClassGenerator::NameSpaceKey => "Applications\\" . FrameworkConstants_AppName . "\Generated",
         BaseClassGenerator::ClassNameKey => FrameworkConstants_AppName . $this->GeneratedClassPrefix,
         BaseClassGenerator::DestinationDirKey => \Library\Enums\ApplicationFolderName::AppsFolderName .
         FrameworkConstants_AppName . \Library\Enums\ApplicationFolderName::Generated,
-        BaseClassGenerator::ClassDescriptionKey => "Lists the constants for application controller classes to autocompletion and easy coding."
+        BaseClassGenerator::ClassDescriptionKey => "Lists the constants for application controller classes to autocompletion and easy coding.",
+        ConstantsClassGenerator::DoGenerateConstantKeysKey => TRUE,
+        ConstantsClassGenerator::DoGenerateGetListMethodKey => TRUE
     );
     $this->GenerateApplicationFile($ApplicationControllers);
   }

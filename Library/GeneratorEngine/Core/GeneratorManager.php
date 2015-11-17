@@ -50,5 +50,11 @@ class GeneratorManager extends \Library\Core\ApplicationComponent {
         \Library\Core\Globalization::CONTROLLER_RESX_ARRAY_KEY => $this->app()->i8n()->ControllerResources
     ));
   }
+  
+  public function GenerateControllerConstantsClass() {
+    $generator = new \Library\GeneratorEngine\Core\ControllerNameConstantsEngine("Controllers");
+    $generator->Run();
+    return $generator->filesGenerated;
+  }
 
 }

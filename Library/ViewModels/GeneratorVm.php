@@ -19,4 +19,5 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 
 class GeneratorVm extends BaseVm {
   public $links = array();
+  public $filesGenerated = array();
 }

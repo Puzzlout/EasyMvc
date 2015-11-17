@@ -50,7 +50,7 @@ abstract class ConstantsClassEngineBase {
     if (count($files) > 0) {
       $classGen = new ConstantsClassGenerator($this->params, $files);
       $classGen->BuildClass();
-      return $classGen->fileName;
+      return str_replace('\\', '/', "file://" . FrameworkConstants_RootDir . $this->params[BaseClassGenerator::NameSpaceKey] . "/" . $classGen->fileName);
     } else {
       return "No class to generate.";
     }
@@ -72,9 +72,9 @@ abstract class ConstantsClassEngineBase {
    * @param array $files list of filenames
    */
   protected function GenerateFrameworkFile($files) {
-    $className = $this->GenerateConstantsClass($files);
-    array_push($this->filesGenerated, $className);
-    return $className;
+    $filePath = $this->GenerateConstantsClass($files);
+    array_push($this->filesGenerated, $filePath);
+    return $filePath;
   }
 
   /**
@@ -83,9 +83,9 @@ abstract class ConstantsClassEngineBase {
    * @param array $files list of filenames
    */
   protected function GenerateApplicationFile($files) {
-    $className = $this->GenerateConstantsClass($files);
-    array_push($this->filesGenerated, $className);
-    return $className;
+    $filePath = $this->GenerateConstantsClass($files);
+    array_push($this->filesGenerated, $filePath);
+    return $filePath;
   }
 
 }

@@ -35,4 +35,23 @@ class GeneratorController extends \Library\Controllers\BaseController {
     $this->vm = new \Library\ViewModels\GeneratorVm($this->app);
   }
 
+  public function BuildControllerConstantsClass() {
+    $vm = new \Library\ViewModels\GeneratorVm($this->app);
+    $generator = new \Library\GeneratorEngine\Core\GeneratorManager($this->app());
+    $vm->filesGenerated = $generator->GenerateControllerConstantsClass();
+    $this->vm = $vm;
+  }
+
+  public function BuildDalModuleConstantsClass() {
+    $generator = new \Library\GeneratorEngine\Core\GeneratorManager($this->app());
+    $generator->GenerateResourceArrays();
+    $this->vm = new \Library\ViewModels\GeneratorVm($this->app);
+  }
+
+  public function BuildViewNameConstantsClass() {
+    $generator = new \Library\GeneratorEngine\Core\GeneratorManager($this->app());
+    $generator->GenerateResourceArrays();
+    $this->vm = new \Library\ViewModels\GeneratorVm($this->app);
+  }
+
 }
