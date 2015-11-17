@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class to generate php classes.
  * 
@@ -18,14 +19,20 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 
 class GeneratorController extends \Library\Controllers\BaseController {
 
+  public function Index() {
+    $this->vm = new \Library\ViewModels\GeneratorVm($this->app);
+    
+  }
   public function BuildDao() {
     $generator = new \Library\GeneratorEngine\Core\GeneratorManager($this->app());
     $generator->GenerateDaoClasses();
+    $this->vm = new \Library\ViewModels\GeneratorVm($this->app);
   }
 
   public function BuildResources() {
     $generator = new \Library\GeneratorEngine\Core\GeneratorManager($this->app());
     $generator->GenerateResourceArrays();
-    
+    $this->vm = new \Library\ViewModels\GeneratorVm($this->app);
   }
+
 }

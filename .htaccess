@@ -2,4 +2,4 @@ Options +FollowSymLinks
 
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^([^Web|web|ClientSide|clientside].*)$ /EasyMvc/mainHandler.php [QSA,L]
+RewriteRule ^.*$ /EasyMvc/mainHandler.php [QSA,L]

@@ -92,6 +92,6 @@ class BaseVm implements \Library\Interfaces\IViewModel{
   }
   
   public function ResxFor($key) {
-    return $this->ResourceObject->GetValue($key);
+    return $this->ResourceObject->GetValue(strtolower($key));
   }
 }

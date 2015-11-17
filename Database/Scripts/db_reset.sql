@@ -368,7 +368,7 @@ INSERT INTO `easymvc_db`.`f_common_resource` VALUES
 ('group2','test3', 'C\'est une valeur de test3', 'Testing purpose', '56');
 
 INSERT INTO `easymvc_db`.`f_controller_resource` VALUES 
-('PageTitle', 'account', 'login', 'EasyMvc - Login', 'The title of the page', '47'),
+('pagetitle', 'account', 'login', 'EasyMvc - Login', 'The title of the page', '47'),
 ('h1_title', 'account', 'login', 'Login View', 'The title of the H1 element', '47'),
 ('email_label', 'account', 'login', 'E-mail:', 'The label for the email input','47'),
 ('email_ph_text', 'account', 'login', 'e-mail address', 'The input placeholder for the e-mail','47'),
@@ -379,7 +379,7 @@ INSERT INTO `easymvc_db`.`f_controller_resource` VALUES
 ('login_btn_text', 'account', 'login', 'Login', 'The label for the Login button','47'),
 ('h1_title', 'account', 'create', 'Create account View', 'The title of the H1 element','47'),
 ('email_label', 'account', 'create', 'E-mail:', 'The label for the email input','47'),
-('PageTitle', 'account', 'login', 'EasyMvc - Login', 'The title of the page', '48'),
+('pagetitle', 'account', 'login', 'EasyMvc - Login', 'The title of the page', '48'),
 ('h1_title', 'account', 'login', 'Login View', 'The title of the H1 element','48'),
 ('email_label', 'account', 'login', 'E-mail:', 'The label for the email input','48'),
 ('email_ph_text', 'account', 'login', 'e-mail address', 'The input placeholder for the e-mail','48'),
@@ -390,11 +390,17 @@ INSERT INTO `easymvc_db`.`f_controller_resource` VALUES
 ('login_btn_text', 'account', 'login', 'Login', 'The label for the Login button','48'),
 ('h1_title', 'account', 'create', 'Create account View', 'The title of the H1 element','48'),
 ('email_label', 'account', 'create', 'E-mail:', 'The label for the email input','48'),
-('PageTitle', 'account', 'login', 'EasyMvc - Login', 'The title of the page', '56'),
+('pagetitle', 'account', 'login', 'EasyMvc - Login', 'The title of the page', '56'),
 ('h1_title', 'account', 'login', 'Vue Connexion', 'Le titre de l''élément H1','56'),
 ('email_label', 'account', 'login', 'E-mail :', 'Le libellé de l''input email','56'),
 ('h1_title', 'account', 'create', 'Vue Création de compte', 'Le titre de l''élément H1','56'),
-('email_label', 'account', 'create', 'E-mail :', 'Le libellé de l''input email','56');
+('email_label', 'account', 'create', 'E-mail :', 'Le libellé de l''input email','56'),
+('pagetitle', 'generator', 'buildresources', 'Code generation - Resources', 'Page title','47'),
+('pagetitle', 'generator', 'buildresources', 'Code generation - Resources', 'Page title','48'),
+('pagetitle', 'generator', 'builddao', 'Code generation - DAO', 'Page title','47'),
+('pagetitle', 'generator', 'builddao', 'Code generation - DAO', 'Page title','48'),
+('pagetitle', 'webide', 'createfile', 'IDE - Create a file or class', 'Page title','47'),
+('pagetitle', 'webide', 'createfile', 'IDE - Create a file or class', 'Page title','48');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

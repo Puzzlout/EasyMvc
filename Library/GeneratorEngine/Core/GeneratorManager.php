@@ -49,8 +49,6 @@ class GeneratorManager extends \Library\Core\ApplicationComponent {
         \Library\Core\Globalization::COMMON_RESX_ARRAY_KEY => $this->app()->i8n()->CommonResources,
         \Library\Core\Globalization::CONTROLLER_RESX_ARRAY_KEY => $this->app()->i8n()->ControllerResources
     ));
-
-    echo 'Done!';
   }
 
 }

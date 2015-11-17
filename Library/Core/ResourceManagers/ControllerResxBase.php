@@ -41,12 +41,14 @@ class ControllerResxBase extends ResourceBase implements \Library\Interfaces\IRe
    */
   public function GetValue($key) {
     $resources = $this->GetList();
-    $actionExists = array_key_exists($this->ActionValue, $resources);
+    $actionLower = strtolower($this->ActionValue);
+    $keyLower = strtolower($key);
+    $actionExists = array_key_exists($actionLower, $resources);
     $keyExist = $actionExists ?
-            array_key_exists($key, $resources[$this->ActionValue]) :
+            array_key_exists($keyLower, $resources[$actionLower]) :
             FALSE;
     if ($keyExist) {
-    return $resources[$this->ActionValue][$key][\Library\BO\F_controller_resource::F_CONTROLLER_RESOURCE_VALUE];
+    return $resources[$actionLower][$keyLower][\Library\BO\F_controller_resource::F_CONTROLLER_RESOURCE_VALUE];
     } else if (!$actionExists) {
 //      throw new \Library\Exceptions\ResourceNotFoundException(
 //      "The resource value doesn't exist for Module => " . $this->ModuleValue . " and Action => " . $this->ActionValue, 0, NULL);

@@ -1,9 +1,8 @@
 <?php
-use Library\Exceptions\InvalidViewModelTypeException;
 use Applications\EasyMvc\Resources\Controller\AccountResx;
 $ViewModel = new \Applications\EasyMvc\ViewModels\Account\LoginVm($this->app);
 if (!($Vm instanceof Applications\EasyMvc\ViewModels\Account\LoginVm)) {
-  throw new InvalidViewModelTypeException();
+  throw new Library\Exceptions\InvalidViewModelTypeException();
 } else {
   $ViewModel = clone $Vm;
 }

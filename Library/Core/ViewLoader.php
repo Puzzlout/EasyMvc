@@ -71,17 +71,19 @@ class ViewLoader implements \Library\Interfaces\IViewLoader {
    * @see \Library\Core\ViewLoader::GetApplicationRootDir()
    */
   public static function GetPartialView($controller, $viewName) {
-    $pathCommonPartialDir = self::GetFrameworkRootDir() . "Modules/";
-    $pathSpecificPartialDir = self::GetApplicationRootDir() . $controller . "/Modules/";
-    $pathCommonPartialView = $pathCommonPartialDir . $viewName . self::VIEWFILEEXTENSION;
-    $pathSpecificPartialView = $pathSpecificPartialDir . $viewName . self::VIEWFILEEXTENSION;
-    if (file_exists($pathCommonPartialView)) {
-      return $pathCommonPartialView;
-    } elseif (file_exists($pathSpecificPartialView)) {
-      return $pathSpecificPartialView;
-    } else {
-      throw new \Library\Exceptions\ViewNotFoundException("Partial view not found in " . $pathCommonPartialDir . " nor " . $pathSpecificPartialDir);
+    $ListOfPathToCheck = array(
+        self::GetFrameworkRootDir() . "Modules/",
+        self::GetFrameworkRootDir() . $controller . "/Modules/",
+        self::GetApplicationRootDir() . "/Modules/",
+        self::GetApplicationRootDir() . $controller . "/Modules/"
+    );
+    foreach ($ListOfPathToCheck as $path) {
+      $fileToCheck = $path . $viewName . self::VIEWFILEEXTENSION;
+      if (file_exists($fileToCheck)) {
+        return $fileToCheck;
+      }
     }
+    throw new \Library\Exceptions\ViewNotFoundException("Partial view not found in " . var_dump($ListOfPathToCheck));
   }
 
   /**
