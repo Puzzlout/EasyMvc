@@ -101,12 +101,12 @@ abstract class Application extends ApplicationBase {
     $FrameworkControllers = $FrameworkControllersListClass::GetList();
     $ApplicationControllers = $ApplicationControllersListClass::GetList();
     $controllerClass = "\Library\Controllers\ErrorController";
-    if (array_key_exists($controllerName . BaseClassGenerator::Key, $FrameworkControllers)) {
+    if (array_key_exists($controllerName, $FrameworkControllers)) {
       $frameworkControllerFolderPath = \Library\Enums\NameSpaceName::LibFolderName
               . \Library\Enums\NameSpaceName::LibControllersFolderName;
       $controllerClass = $frameworkControllerFolderPath . $controllerName;
       $this->router()->isWsCall = TRUE;
-    } else if (array_key_exists($controllerName . BaseClassGenerator::Key, $ApplicationControllers)) {
+    } else if (array_key_exists($controllerName, $ApplicationControllers)) {
       $applicationControllerFolderPath = \Library\Enums\NameSpaceName::AppsFolderName . "\\"
               . $this->name
               . \Library\Enums\NameSpaceName::AppsControllersFolderName;

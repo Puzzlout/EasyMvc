@@ -118,10 +118,14 @@ class ControllerConstantsClassGenerator extends ConstantsClassGenerator implemen
    * $this->data array.
    */
   public function WriteConstants($valueToTrim = ".php") {
-    $listOfConstantsToWrite = $this->GetConstantsKeyValueFromArray($this->data, $valueToTrim);
     $output = "";
-    foreach ($listOfConstantsToWrite as $constant) {
-      $output .= $this->WriteConstant($constant);
+    foreach ($this->data as $key => $value) {
+      if (!is_array($value) && preg_match("`^.*php$`", $value)) {
+        $output .= $this->WriteConstant($this->CleanAndBuildConstantKeyValue($value, $valueToTrim));
+      } else {
+        $output .= $this->WriteConstant($this->BuildConstantFolderKeyValue($key));
+        $output .= $this->WriteConstantsFromArray($value, $valueToTrim);
+      }
     }
     $output .= PhpCodeSnippets::LF;
     fwrite($this->writer, $output);
@@ -157,7 +161,7 @@ class ControllerConstantsClassGenerator extends ConstantsClassGenerator implemen
   public function WriteGetListMethod() {
     $method = $this->GetMethodNameToGenerate(__FUNCTION__);
     $output = PhpCodeSnippets::TAB2 .
-            PhpCodeSnippets::PublicFunction . $method . "() {" . PhpCodeSnippets::LF .
+            PhpCodeSnippets::PublicStaticFunction . $method . "() {" . PhpCodeSnippets::LF .
             PhpCodeSnippets::TAB4 .
             "return array(" . PhpCodeSnippets::LF;
 

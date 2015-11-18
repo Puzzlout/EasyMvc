@@ -17,4 +17,5 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 }
 
 class EasyMvcControllers {
-  const AccountControllerKey = 'AccountControllerKey';  public static function GetList() {    return array(      self::AccountControllerKey => 'AccountController',    );  }}
+  const AccountController = 'AccountController';  public static function GetList() {    return array(      self::AccountController => 'AccountController',    );  }
+}

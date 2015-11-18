@@ -69,4 +69,20 @@ class ControllerNameConstantsEngine extends ConstantsClassEngineBase {
     $this->GenerateApplicationFile($ApplicationControllers);
   }
 
-}
+    /**
+   * Generate the Constant Class.
+   * 
+   * @param array(of String) $data the array of data that will be used to build the list of constants
+   */
+  protected function GenerateConstantsClass($data) {
+    if (count($data) > 0) {
+      $classGen = new ControllerConstantsClassGenerator($this->params, $data);
+      $classGen->BuildClass();
+      return str_replace(".php", "", $classGen->fileName);
+    } else {
+      return "No class to generate.";
+    }
+  }
+
+
+  }
