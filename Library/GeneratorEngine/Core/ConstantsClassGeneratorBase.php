@@ -1,59 +1,50 @@
 <?php
 
 /**
- * Class that build the class with a list of constants representing the names of
- * each controller.
+ * Class that build the class with the array of files names as constants.
  * 
  * @author Jeremie Litzler
  * @copyright Copyright (c) 2015
  * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
  * @link https://github.com/WebDevJL/EasyMvc
  * @since Version 1.0.0
- * @package ControllerConstantsClassGenerator
+ * @package ConstantsClassGeneratorBase
  */
 
 namespace Library\GeneratorEngine\Core;
 
 use Library\GeneratorEngine\CodeSnippets\PhpCodeSnippets;
 
-if (!FrameworkConstants_ExecutionAccessRestriction) {
+if (!FrameworkConstants_ExecutionAccessRestriction)
   exit('No direct script access allowed');
-}
 
-class ControllerConstantsClassGenerator extends ConstantsClassGenerator implements IClassGenerator, IConstantClass {
+class ConstantsClassGeneratorBase extends BaseClassGenerator implements IClassGenerator, IConstantClass {
+
+  const DoGenerateConstantKeysKey = "DoGenerateConstantKeysKey";
+  const DoGenerateGetListMethodKey = "DoGenerateGetListMethodKey";
+  
+  protected $DoGenerateConstantKeys = TRUE;
+  protected $DoGenerateGetListMethod = TRUE;
 
   public function __construct($params, $data) {
+    $this->fileName = $params[self::ClassNameKey] . ".php";
+    $this->className = $params[self::ClassNameKey];
     parent::__construct($params, $data);
-    $this->DoGenerateConstantKeys = array_key_exists(ConstantsClassGenerator::DoGenerateConstantKeysKey, $params) ?
-            $params[ConstantsClassGenerator::DoGenerateConstantKeysKey] :
-            FALSE;
-    $this->DoGenerateGetListMethod = array_key_exists(ConstantsClassGenerator::DoGenerateGetListMethodKey, $params) ?
-            $params[ConstantsClassGenerator::DoGenerateGetListMethodKey] :
-            FALSE;
   }
-
+  
   public function BuildClass() {
-    parent::OpenWriter();
-    parent::WriteClassHeader();
-    if ($this->DoGenerateConstantKeys) {
-      $this->WriteConstants();
-    }
-    if ($this->DoGenerateGetListMethod) {
-      $this->WriteContent();
-    }
-    parent::ClassEnd();
-    parent::CloseWriter();
+    parent::BuildClass();
   }
 
   /**
    * Build a string for a constant representing the key to find a folder in the
    * array of constants.
    * 
-   * @param string $value the value that will make the constant name with self::Key suffix
-   * @return string the computed value
+   * @param srting $folderValue the value is a folder name
+   * @return string
    */
-  public function BuildConstantKeyValue($value) {
-    return $value;
+  public function BuildConstantFolderKeyValue($folderValue) {
+    return $folderValue . BaseClassGenerator::FolderKey;
   }
 
   /**
@@ -68,47 +59,12 @@ class ControllerConstantsClassGenerator extends ConstantsClassGenerator implemen
             "),";
   }
 
-  /**
-   * Computes a value of an associative array.
-   * 
-   * @param string $value the value to use to compute the output
-   * @param int $tabAmount the amount of tabulations to print in the computed output
-   * @return string the computed string
-   */
-  public function WriteAssociativeArrayValue($value, $tabAmount = 0) {
-    $lineOfCode = str_repeat("  ", $tabAmount) .
-            "self::" .
-            $value . " => '" . $value . "'," .
-            PhpCodeSnippets::LF;
-    return $lineOfCode;
-  }
-
-  /**
-   * Computes a value of an associative array.
-   * 
-   * @param string $value the value to use to compute the output
-   * @return string the computed string
-   */
   public function WriteAssociativeArrayValueAsNewArray($value, $tabAmount = 0) {
-    $lineOfCode = str_repeat("  ", $tabAmount) .
-            "self::" .
-            $value . " => array(" .
-            PhpCodeSnippets::LF;
-    return $lineOfCode;
+    return parent::WriteAssociativeArrayValueAsNewArray($value, $tabAmount);
   }
 
-  /**
-   * Computes a value of an associative array.
-   * 
-   * @param string $value the value to use to compute the output
-   * @return string the computed string
-   */
   public function WriteAssociativeArrayValueWithKeyAndValue($key, $value, $tabAmount = 0) {
-    $lineOfCode = str_repeat("  ", $tabAmount) .
-            "self::" .
-            $key . " => \"" . utf8_encode($value) . "\"," .
-            PhpCodeSnippets::LF;
-    return $lineOfCode;
+    throw new \Library\Exceptions\NotImplementedException();
   }
 
   /**
@@ -131,18 +87,17 @@ class ControllerConstantsClassGenerator extends ConstantsClassGenerator implemen
     fwrite($this->writer, $output);
   }
 
-  public function GetConstantsKeyValueFromArray($array, $valueToTrim) {
-    $listOfConstantsToWrite = $anotherListOfConstantToWrite = array();
+  public function WriteConstantsFromArray($array, $valueToTrim) {
+    $output = "";
     foreach ($array as $key => $value) {
-      if (!is_array($value) && !in_array($value, $listOfConstantsToWrite)) {
-        array_push($listOfConstantsToWrite, $this->BuildConstantKeyValue($key, $valueToTrim));
-      } else if (!in_array($key, $listOfConstantsToWrite)) {
-        array_push($listOfConstantsToWrite, $this->BuildConstantKeyValue($key));
-        $anotherListOfConstantToWrite = $this->GetConstantsKeyValueFromArray($value, $valueToTrim);
+      if (is_array($value)) {
+        $output .= $this->WriteConstant($this->BuildConstantFolderKeyValue($key));
+        $output .= $this->WriteConstantsFromArray($value, $valueToTrim);
+      } else {
+        $output .= $this->WriteConstant($this->CleanAndBuildConstantKeyValue($value, $valueToTrim));
       }
     }
-    $mergedArray = array_merge($listOfConstantsToWrite, $anotherListOfConstantToWrite);
-    return $mergedArray;
+    return $output;
   }
 
   /**
@@ -150,7 +105,6 @@ class ControllerConstantsClassGenerator extends ConstantsClassGenerator implemen
    */
   public function WriteContent() {
     $output = $this->WriteGetListMethod();
-    $output .= PhpCodeSnippets::CRLF;
     fwrite($this->writer, $output);
   }
 
@@ -200,7 +154,7 @@ class ControllerConstantsClassGenerator extends ConstantsClassGenerator implemen
         $output .= $this->WriteAssociativeArrayValueAsNewArray($key, $tabAmount); //new array opened
         $output .= $this->WriteNewArrayAndItsContents($value, TRUE, $tabAmount);
       } else {
-        $output .= $this->WriteAssociativeArrayValueWithKeyAndValue($key, $value, $tabAmount);
+        $output .= $this->WriteAssociativeArrayValue($this->RemoveExtensionFileName($value, ".php"), $tabAmount);
       }
     }
     if ($arrayOpened) {

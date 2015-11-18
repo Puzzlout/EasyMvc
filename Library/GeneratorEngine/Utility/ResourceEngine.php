@@ -47,8 +47,8 @@ class ResourceEngine extends \Library\GeneratorEngine\Core\ResourceConstantsClas
         \Library\GeneratorEngine\Core\BaseClassGenerator::ClassDescriptionKey => NULL,
         \Library\GeneratorEngine\Core\BaseClassGenerator::CultureKey => NULL,
         \Library\GeneratorEngine\Core\BaseClassGenerator::ClassDerivation => NULL,
-        \Library\GeneratorEngine\Core\ConstantsClassGenerator::DoGenerateConstantKeysKey => TRUE,
-        \Library\GeneratorEngine\Core\ConstantsClassGenerator::DoGenerateGetListMethodKey => TRUE,
+        \Library\GeneratorEngine\Core\ConstantsClassGeneratorBase::DoGenerateConstantKeysKey => TRUE,
+        \Library\GeneratorEngine\Core\ConstantsClassGeneratorBase::DoGenerateGetListMethodKey => TRUE,
     );
   }
 
@@ -66,11 +66,11 @@ class ResourceEngine extends \Library\GeneratorEngine\Core\ResourceConstantsClas
             NULL :
             $culture[\Library\BO\F_culture::F_CULTURE_LANGUAGE] . "_" . $culture[\Library\BO\F_culture::F_CULTURE_REGION];
     if ($this->IsGeneratingBaseClass) {
-      $this->params[\Library\GeneratorEngine\Core\ConstantsClassGenerator::DoGenerateConstantKeysKey] = TRUE;
-      $this->params[\Library\GeneratorEngine\Core\ConstantsClassGenerator::DoGenerateGetListMethodKey] = FALSE;
+      $this->params[\Library\GeneratorEngine\Core\ConstantsClassGeneratorBase::DoGenerateConstantKeysKey] = TRUE;
+      $this->params[\Library\GeneratorEngine\Core\ConstantsClassGeneratorBase::DoGenerateGetListMethodKey] = FALSE;
     } else {
-      $this->params[\Library\GeneratorEngine\Core\ConstantsClassGenerator::DoGenerateConstantKeysKey] = FALSE;
-      $this->params[\Library\GeneratorEngine\Core\ConstantsClassGenerator::DoGenerateGetListMethodKey] = TRUE;
+      $this->params[\Library\GeneratorEngine\Core\ConstantsClassGeneratorBase::DoGenerateConstantKeysKey] = FALSE;
+      $this->params[\Library\GeneratorEngine\Core\ConstantsClassGeneratorBase::DoGenerateGetListMethodKey] = TRUE;
     }
   }
 

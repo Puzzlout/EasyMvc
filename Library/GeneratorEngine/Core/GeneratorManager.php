@@ -57,4 +57,10 @@ class GeneratorManager extends \Library\Core\ApplicationComponent {
     return $generator->filesGenerated;
   }
 
+  public function GenerateDalModuleConstantsClass() {
+    $generator = new \Library\GeneratorEngine\Core\DalModuleNameConstantsEngine("DalModules");
+    $generator->Run();
+    return $generator->filesGenerated;
+  }
+
 }

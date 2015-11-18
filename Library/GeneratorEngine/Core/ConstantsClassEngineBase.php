@@ -8,7 +8,7 @@
  * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
  * @link https://github.com/WebDevJL/EasyMvc
  * @since Version 1.0.0
- * @package ConstantsClassGeneratorBase
+ * @package ConstantsClassEngineBase
  */
 
 namespace Library\GeneratorEngine\Core;
@@ -48,7 +48,7 @@ abstract class ConstantsClassEngineBase {
    */
   protected function GenerateConstantsClass($files) {
     if (count($files) > 0) {
-      $classGen = new ConstantsClassGenerator($this->params, $files);
+      $classGen = new ConstantsClassGeneratorBase($this->params, $files);
       $classGen->BuildClass();
       return str_replace('\\', '/', "file://" . FrameworkConstants_RootDir . $this->params[BaseClassGenerator::NameSpaceKey] . "/" . $classGen->fileName);
     } else {

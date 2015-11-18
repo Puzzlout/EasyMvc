@@ -17,4 +17,4 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 }
 
 class FrameworkDalModules {
-  const CommonDalKey = 'CommonDalKey';  const DocumentDalKey = 'DocumentDalKey';  const LogDalKey = 'LogDalKey';  const UserDalKey = 'UserDalKey';  const _TemplateDalKey = '_TemplateDalKey';  public static function GetList() {    return array(      self::CommonDalKey => 'CommonDal',      self::DocumentDalKey => 'DocumentDal',      self::LogDalKey => 'LogDal',      self::UserDalKey => 'UserDal',      self::_TemplateDalKey => '_TemplateDal',    );  }}
+  const CommonDal = 'CommonDal';  const DocumentDal = 'DocumentDal';  const LogDal = 'LogDal';  const UserDal = 'UserDal';  const _TemplateDal = '_TemplateDal';  public static function GetList() {    return array(      self::CommonDal => 'CommonDal',      self::DocumentDal => 'DocumentDal',      self::LogDal => 'LogDal',      self::UserDal => 'UserDal',      self::_TemplateDal => '_TemplateDal',    );  }}

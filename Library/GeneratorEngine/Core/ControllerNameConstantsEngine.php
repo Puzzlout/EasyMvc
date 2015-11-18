@@ -50,8 +50,8 @@ class ControllerNameConstantsEngine extends ConstantsClassEngineBase {
         BaseClassGenerator::ClassNameKey => "Framework" . $this->GeneratedClassPrefix,
         BaseClassGenerator::DestinationDirKey => \Library\Enums\FrameworkFolderName::GeneratedFolderName,
         BaseClassGenerator::ClassDescriptionKey => "Lists the constants for framework controller classes to autocompletion and easy coding.",
-        ConstantsClassGenerator::DoGenerateConstantKeysKey => TRUE,
-        ConstantsClassGenerator::DoGenerateGetListMethodKey => TRUE
+        ConstantsClassGeneratorBase::DoGenerateConstantKeysKey => TRUE,
+        ConstantsClassGeneratorBase::DoGenerateGetListMethodKey => TRUE
     );
     $this->GenerateFrameworkFile($FrameworkControllers);
   }
@@ -63,26 +63,24 @@ class ControllerNameConstantsEngine extends ConstantsClassEngineBase {
         BaseClassGenerator::DestinationDirKey => \Library\Enums\ApplicationFolderName::AppsFolderName .
         FrameworkConstants_AppName . \Library\Enums\ApplicationFolderName::Generated,
         BaseClassGenerator::ClassDescriptionKey => "Lists the constants for application controller classes to autocompletion and easy coding.",
-        ConstantsClassGenerator::DoGenerateConstantKeysKey => TRUE,
-        ConstantsClassGenerator::DoGenerateGetListMethodKey => TRUE
+        ConstantsClassGeneratorBase::DoGenerateConstantKeysKey => TRUE,
+        ConstantsClassGeneratorBase::DoGenerateGetListMethodKey => TRUE
     );
     $this->GenerateApplicationFile($ApplicationControllers);
   }
 
-    /**
+  /**
    * Generate the Constant Class.
    * 
    * @param array(of String) $data the array of data that will be used to build the list of constants
    */
   protected function GenerateConstantsClass($data) {
     if (count($data) > 0) {
-      $classGen = new ControllerConstantsClassGenerator($this->params, $data);
+      $classGen = new ConstantsAndListClassGenerator($this->params, $data);
       $classGen->BuildClass();
       return str_replace(".php", "", $classGen->fileName);
     } else {
       return "No class to generate.";
     }
   }
-
-
-  }
+}
