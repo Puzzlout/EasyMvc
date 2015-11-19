@@ -19,7 +19,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   <figure class="login-box">
     <h1><?php echo $ViewModel->ResxFor(AccountResx::h1_title); ?></h1>
     <div class="login-form login-box-small">
-      <?php require Library\Core\ViewLoader::GetPartialView("Account","LoginForm"); ?>
+      <?php require Library\Core\ViewLoader::Init($this->app->controller())->GetPartialView(\Applications\EasyMvc\Generated\EasyMvcViewnames::LoginForm); ?>
     </div>
   </figure>
 </section >

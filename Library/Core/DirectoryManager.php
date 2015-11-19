@@ -31,6 +31,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 class DirectoryManager {
 
   const DIRECTORY_SEPARATOR = "/";
+
   /**
    * Get the file paths for the current directory
    * 
@@ -57,11 +58,10 @@ class DirectoryManager {
    * List of SplFileInfo objects scanned in the top-level directory.
    */
   public static function GetFilesNamesRecursively($dirName, $extension = "") {
-      $files = self::RecursiveScanDir($dirName);
+    $files = self::RecursiveScanDir($dirName);
     return $files;
   }
 
-  
   public static function RecursiveScanDir($dir) {
 
     $result = array();
@@ -136,6 +136,26 @@ class DirectoryManager {
       //todo: log that the call was made but that $valuesToRemove was not an array.
     }
     return $targetArray;
+  }
+
+  /**
+   * Get the directory where are stored the Framework views.
+   * 
+   * @return string The directory
+   */
+  public static function GetFrameworkRootDir() {
+    return \Library\Enums\FrameworkFolderName::ViewsFolderName;
+  }
+
+  /**
+   * Get the directory where are stored the current Application views.
+   * 
+   * @return string The directory
+   */
+  public static function GetApplicationRootDir() {
+    return \Library\Enums\ApplicationFolderName::AppsFolderName .
+            FrameworkConstants_AppName .
+            \Library\Enums\ApplicationFolderName::ViewsFolderName;
   }
 
 }

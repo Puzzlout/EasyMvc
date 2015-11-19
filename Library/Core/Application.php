@@ -66,6 +66,7 @@ abstract class Application extends ApplicationBase {
   public function getController() {
     $this->router->setCurrentRoute();
     $controllerObject = $this->GetControllerObject($this->router->currentRoute());
+    $this->controller = $controllerObject;
     return $controllerObject;
   }
 

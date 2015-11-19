@@ -44,6 +44,7 @@ abstract class ApplicationBase {
   public $error;
   public $cultures = array();
   public $ResourceManager;
+  public $controller;
 
   public function HttpRequest() {
     return $this->httpRequest;
@@ -103,5 +104,9 @@ abstract class ApplicationBase {
 
   public function Resx() {
     return $this->ResourceManager;
+  }
+  
+  public function controller() {
+    return $this->controller;
   }
 }

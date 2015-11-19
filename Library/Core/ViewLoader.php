@@ -25,21 +25,28 @@ class ViewLoader implements \Library\Interfaces\IViewLoader {
   const VIEWFILEEXTENSION = ".php";
 
   /**
-   * The controller object to use to look for a view.
+   *
+   * @var Application The current app 
+   */
+  public $app;
+  
+  /**
    * 
    * @var \Library\Controllers\BaseController $controller The controller object 
    */
   public $controller;
-
+  
   /**
-   * Instanciate the class to find the view filepath.
+   * Instantiate the class.
    * 
-   * @param \Library\Controllers\BaseController $controller The controller object
+   * @param \Library\Controllers\BaseController $controller The controller to find the view.
+   * @return \Library\Core\ViewLoader The instance of the class.
    */
-  public function __construct(\Library\Controllers\BaseController $controller) {
-    $this->controller = $controller;
+  public static function Init(\Library\Controllers\BaseController $controller) {
+    $viewLoader = new ViewLoader();
+    $viewLoader->controller = $controller;
+    return $viewLoader;
   }
-
   /**
    * Retrieve the view from either the Framework folder or the current Application folder.
    * 
@@ -49,8 +56,8 @@ class ViewLoader implements \Library\Interfaces\IViewLoader {
    * @todo create error code.
    */
   public function GetView() {
-    $FrameworkView = $this->GetPathForView(self::GetFrameworkRootDir());
-    $ApplicationView = $this->GetPathForView(self::GetApplicationRootDir());
+    $FrameworkView = $this->GetPathForView(DirectoryManager::GetFrameworkRootDir());
+    $ApplicationView = $this->GetPathForView(DirectoryManager::GetApplicationRootDir());
 
     if (file_exists($FrameworkView)) {
       return $FrameworkView;
@@ -64,18 +71,17 @@ class ViewLoader implements \Library\Interfaces\IViewLoader {
   /**
    * Retrieve the partial view from either the Framework folder or the current Application folder.
    * 
-   * @param string $controller The name of the controller
    * @param string $viewName The name of view to load
    * @throws \Library\Exceptions\ViewNotFoundException Throws an exception if the view is not found 
    * @see \Library\Core\ViewLoader::GetFrameworkRootDir()
    * @see \Library\Core\ViewLoader::GetApplicationRootDir()
    */
-  public static function GetPartialView($controller, $viewName) {
+  public function GetPartialView($viewName) {
     $ListOfPathToCheck = array(
-        self::GetFrameworkRootDir() . "Modules/",
-        self::GetFrameworkRootDir() . $controller . "/Modules/",
-        self::GetApplicationRootDir() . "/Modules/",
-        self::GetApplicationRootDir() . $controller . "/Modules/"
+        DirectoryManager::GetFrameworkRootDir() . "Modules/",
+        DirectoryManager::GetFrameworkRootDir() . $this->controller->module() . "/Modules/",
+        DirectoryManager::GetApplicationRootDir() . "/Modules/",
+        DirectoryManager::GetApplicationRootDir() . $this->controller->module() . "/Modules/"
     );
     foreach ($ListOfPathToCheck as $path) {
       $fileToCheck = $path . $viewName . self::VIEWFILEEXTENSION;
@@ -83,7 +89,7 @@ class ViewLoader implements \Library\Interfaces\IViewLoader {
         return $fileToCheck;
       }
     }
-    throw new \Library\Exceptions\ViewNotFoundException("Partial view not found in " . var_dump($ListOfPathToCheck));
+    throw new \Library\Exceptions\ViewNotFoundException("Partial view \"" . $viewName . "\" not found in " . var_dump($ListOfPathToCheck));
   }
 
   /**
@@ -103,25 +109,4 @@ class ViewLoader implements \Library\Interfaces\IViewLoader {
             self::VIEWFILEEXTENSION;
     return $path;
   }
-
-  /**
-   * Get the directory where are stored the Framework views.
-   * 
-   * @return string The directory
-   */
-  protected static function GetFrameworkRootDir() {
-    return \Library\Enums\FrameworkFolderName::ViewsFolderName;
-  }
-
-  /**
-   * Get the directory where are stored the current Application views.
-   * 
-   * @return string The directory
-   */
-  protected static function GetApplicationRootDir() {
-    return \Library\Enums\ApplicationFolderName::AppsFolderName .
-            FrameworkConstants_AppName .
-            \Library\Enums\ApplicationFolderName::ViewsFolderName;
-  }
-
 }

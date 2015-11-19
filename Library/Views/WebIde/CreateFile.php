@@ -2,6 +2,7 @@
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
+use Library\Generated\FrameworkViewnames;
 $ViewModel = new Library\ViewModels\WebIdeVm($this->app);
 if (!($Vm instanceof Library\ViewModels\WebIdeVm)) {
   throw new Library\Exceptions\InvalidViewModelTypeException();
@@ -15,6 +16,6 @@ if (!($Vm instanceof Library\ViewModels\WebIdeVm)) {
   <input type="text" placeholder="Type file description" />
   <input type="text" placeholder="Type class name" />
   <input type="text" placeholder="Type class destination" />
-  <?php  include_once Library\Core\ViewLoader::GetPartialView("WebIde", "ClassPropertiesForm"); ?>
-  <?php  include_once Library\Core\ViewLoader::GetPartialView("WebIde", "ClassMethodsForm"); ?>
+  <?php  include_once Library\Core\ViewLoader::Init($this->app->controller())->GetPartialView(FrameworkViewnames::ClassPropertiesForm); ?>
+  <?php  include_once Library\Core\ViewLoader::Init($this->app->controller())->GetPartialView(FrameworkViewnames::ClassMethodsForm); ?>
 </form>

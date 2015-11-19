@@ -2,6 +2,7 @@
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
+use Library\Generated\FrameworkViewnames;
 $ViewModel = new Library\ViewModels\WebIdeVm($this->app);
 if (!($Vm instanceof Library\ViewModels\WebIdeVm)) {
   throw new Library\Exceptions\InvalidViewModelTypeException();
@@ -13,7 +14,7 @@ if (!($Vm instanceof Library\ViewModels\WebIdeVm)) {
   <legend>List of methods</legend>
   <input type="text" placeholder="Type your method name" />
   <input type="text" placeholder="Type your return type" />
-  <?php include_once Library\Core\ViewLoader::GetPartialView("WebIde", "MethodParameters"); ?>
+  <?php include_once Library\Core\ViewLoader::Init($this->app->controller())->GetPartialView(FrameworkViewnames::MethodParameters); ?>
   <div class="add-a-property"></div>
 </fieldset>
 
