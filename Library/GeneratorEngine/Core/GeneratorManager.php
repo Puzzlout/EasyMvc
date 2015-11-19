@@ -63,4 +63,10 @@ class GeneratorManager extends \Library\Core\ApplicationComponent {
     return $generator->filesGenerated;
   }
 
+  public function GenerateViewnameConstantsClass() {
+    $generator = new \Library\GeneratorEngine\Core\ViewnameConstantsEngine("Viewnames");
+    $generator->Run();
+    return $generator->filesGenerated;
+  }
+
 }

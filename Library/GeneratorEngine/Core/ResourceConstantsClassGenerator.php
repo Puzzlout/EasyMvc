@@ -59,7 +59,7 @@ class ResourceConstantsClassGenerator extends ConstantsClassGeneratorBase implem
    * @param string $value the value that will make the constant name with self::Key suffix
    * @return string the computed value
    */
-  public function BuildConstantKeyValue($value) {
+  public function BuildConstantKeyValue($value, $valueToRemove = "") {
     return $value;
   }
 
@@ -125,27 +125,15 @@ class ResourceConstantsClassGenerator extends ConstantsClassGeneratorBase implem
    * $this->data array.
    */
   public function WriteConstants($valueToTrim = ".php") {
-    $listOfConstantsToWrite = $this->GetConstantsKeyValueFromArray($this->data, $valueToTrim);
+    $extrator = \Library\Helpers\ArrayExtractionHelper::Init()->ExtractDistinctValues($this->data);
     $output = "";
-    foreach ($listOfConstantsToWrite as $constant) {
-      $output .= $this->WriteConstant($constant);
+    foreach ($extrator->List as $constant) {
+      if(\Library\Helpers\RegexHelper::Init($constant)->IsResoureKeyValid()) {
+        $output .= $this->WriteConstant($constant);
+      }
     }
     $output .= PhpCodeSnippets::LF;
     fwrite($this->writer, $output);
-  }
-
-  public function GetConstantsKeyValueFromArray($array, $valueToTrim) {
-    $listOfConstantsToWrite = $anotherListOfConstantToWrite = array();
-    foreach ($array as $key => $value) {
-      if (!is_array($value) && !in_array($value, $listOfConstantsToWrite)) {
-        array_push($listOfConstantsToWrite, $this->BuildConstantKeyValue($key, $valueToTrim));
-      } else if (!in_array($key, $listOfConstantsToWrite)) {
-        array_push($listOfConstantsToWrite, $this->BuildConstantKeyValue($key));
-        $anotherListOfConstantToWrite = $this->GetConstantsKeyValueFromArray($value, $valueToTrim);
-      }
-    }
-    $mergedArray = array_merge($listOfConstantsToWrite, $anotherListOfConstantToWrite);
-    return $mergedArray;
   }
 
   /**

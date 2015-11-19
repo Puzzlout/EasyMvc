@@ -22,16 +22,17 @@ class ConstantsClassGeneratorBase extends BaseClassGenerator implements IClassGe
 
   const DoGenerateConstantKeysKey = "DoGenerateConstantKeysKey";
   const DoGenerateGetListMethodKey = "DoGenerateGetListMethodKey";
-  
+
   protected $DoGenerateConstantKeys = TRUE;
   protected $DoGenerateGetListMethod = TRUE;
+  protected $ExtractedConstantsList = array();
 
   public function __construct($params, $data) {
     $this->fileName = $params[self::ClassNameKey] . ".php";
     $this->className = $params[self::ClassNameKey];
     parent::__construct($params, $data);
   }
-  
+
   public function BuildClass() {
     parent::BuildClass();
   }
@@ -40,11 +41,11 @@ class ConstantsClassGeneratorBase extends BaseClassGenerator implements IClassGe
    * Build a string for a constant representing the key to find a folder in the
    * array of constants.
    * 
-   * @param srting $folderValue the value is a folder name
+   * @param string $folderValue The value is a folder name
    * @return string
    */
-  public function BuildConstantFolderKeyValue($folderValue) {
-    return $folderValue . BaseClassGenerator::FolderKey;
+  public function BuildConstantForFolderValue($folderValue) {
+    return $folderValue . BaseClassGenerator::FolderSuffix;
   }
 
   /**
@@ -74,13 +75,13 @@ class ConstantsClassGeneratorBase extends BaseClassGenerator implements IClassGe
    * $this->data array.
    */
   public function WriteConstants($valueToTrim = ".php") {
+    $extractor = \Library\Helpers\ArrayExtractionHelper::Init()->ExtractDistinctValues($this->data);
     $output = "";
-    foreach ($this->data as $key => $value) {
-      if (!is_array($value) && preg_match("`^.*php$`", $value)) {
-        $output .= $this->WriteConstant($this->CleanAndBuildConstantKeyValue($value, $valueToTrim));
+    foreach ($extractor->List as $constant) {
+      if (preg_match("`^.*php$`", $constant)) {
+        $output .= $this->WriteConstant($this->BuildConstantKeyValue($constant, $valueToTrim));      
       } else {
-        $output .= $this->WriteConstant($this->BuildConstantFolderKeyValue($key));
-        $output .= $this->WriteConstantsFromArray($value, $valueToTrim);
+        $output .= $this->WriteConstant($this->BuildConstantForFolderValue($constant));      
       }
     }
     $output .= PhpCodeSnippets::LF;
@@ -91,7 +92,7 @@ class ConstantsClassGeneratorBase extends BaseClassGenerator implements IClassGe
     $output = "";
     foreach ($array as $key => $value) {
       if (is_array($value)) {
-        $output .= $this->WriteConstant($this->BuildConstantFolderKeyValue($key));
+        $output .= $this->WriteConstant($this->BuildConstantForFolderValue($key));
         $output .= $this->WriteConstantsFromArray($value, $valueToTrim);
       } else {
         $output .= $this->WriteConstant($this->CleanAndBuildConstantKeyValue($value, $valueToTrim));

@@ -71,15 +71,17 @@ class BaseClassGenerator extends BaseTemplateProcessor implements IClassGenerato
   }
 
   /**
-   * Build a string for a constant representing the key to find a folder in the
+   * Build a string for a constant representing the key in the
    * array of constants.
    * 
-   * @param string $value the value that will make the constant name with self::Key suffix
+   * @param string $value The value that will make the constant name with self::Key suffix
+   * @param string $valueToRemove The string to remove from $value.
    * @return string the computed value
    */
-  public function BuildConstantKeyValue($value) {
-    return $value . self::Key;
+  public function BuildConstantKeyValue($value, $valueToRemove = "") {
+    return str_replace($valueToRemove, "", $value);
   }
+
 
   /**
    * Closes the class.
@@ -138,7 +140,7 @@ class BaseClassGenerator extends BaseTemplateProcessor implements IClassGenerato
   public function WriteAssociativeArrayValueAsNewArray($value, $tabAmount = 0) {
     $lineOfCode = str_repeat("  ", $tabAmount) .
             "self::" .
-            $value . self::FolderKey . " => array(" .
+            $value . self::FolderSuffix . " => array(" .
             PhpCodeSnippets::LF;
     return $lineOfCode;
   }

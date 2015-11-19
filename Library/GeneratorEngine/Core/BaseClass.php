@@ -23,7 +23,7 @@ class BaseClass {
   const ClassNameKey = "ClassNameKey";
   const DestinationDirKey = "DestinationDirKey";
   const Key = "Key";
-  const FolderKey = "FolderKey";
+  const FolderSuffix = "Folder";
   const ClassDescriptionKey = "ClassDescriptionKey";
   const CultureKey = "CultureKey";
   const ClassDerivation = "ClassDerivationKey";

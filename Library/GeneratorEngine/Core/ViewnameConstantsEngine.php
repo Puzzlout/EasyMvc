@@ -1,15 +1,15 @@
 <?php
 
 /**
- * Class to retrieve the controller files and build a class that holds an array 
- * of controller names.
+ * Class to retrieve the view files and build a class that holds all the viewname
+ * constants and an array to search one.
  * 
  * @author Jeremie Litzler
  * @copyright Copyright (c) 2015
  * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
- * @link https://github.com/WebDevJL/EasyMvc
+ * @link https://github.com/WebDevJL/EasyMVC
  * @since Version 1.0.0
- * @package ControllerListsGenerator
+ * @package ViewnameConstantsEngine
  */
 
 namespace Library\GeneratorEngine\Core;
@@ -20,27 +20,23 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-class ControllerNameConstantsEngine extends ConstantsClassEngineBase {
+class ViewnameConstantsEngine extends ConstantsClassEngineBase {
 
   /**
-   * Retrieve the lists of controller filenames.
-   * Generate the Classes that list the Controller names available in the
+   * Retrieve the lists of filenames.
+   * Generate the Classes that list the Dal Modules names available in the
    * solution.
-   * 
-   * @param assoc array $data depending on the situation, some data can be passed
-   * on to generate the files desired.
    */
   public function Run($data = NULL) {
-    $FrameworkControllers = DirectoryManager::GetFileNames(
-                    FrameworkConstants_RootDir . \Library\Enums\FrameworkFolderName::ControllersFolderName, array("BaseController.php"));
-
-    $ApplicationControllers = DirectoryManager::GetFileNames(
+    $FrameworkList = DirectoryManager::GetFilesNamesRecursively(
+                    FrameworkConstants_RootDir . \Library\Enums\FrameworkFolderName::ViewsFolderName);
+    $ApplicationList = DirectoryManager::GetFilesNamesRecursively(
                     FrameworkConstants_RootDir .
                     \Library\Enums\ApplicationFolderName::AppsFolderName .
                     FrameworkConstants_AppName .
-                    \Library\Enums\ApplicationFolderName::ControllersFolderName);
-    $this->InitGenerateFrameworkFile($FrameworkControllers);
-    $this->InitGenerateApplicationFile($ApplicationControllers);
+                    \Library\Enums\ApplicationFolderName::ViewsFolderName);
+    $this->InitGenerateFrameworkFile($FrameworkList);
+    $this->InitGenerateApplicationFile($ApplicationList);
   }
 
   function InitGenerateFrameworkFile($FrameworkControllers) {
@@ -48,7 +44,7 @@ class ControllerNameConstantsEngine extends ConstantsClassEngineBase {
         BaseClassGenerator::NameSpaceKey => "Library\Generated",
         BaseClassGenerator::ClassNameKey => "Framework" . $this->GeneratedClassPrefix,
         BaseClassGenerator::DestinationDirKey => \Library\Enums\FrameworkFolderName::GeneratedFolderName,
-        BaseClassGenerator::ClassDescriptionKey => "Lists the constants for framework controller classes to autocompletion and easy coding.",
+        BaseClassGenerator::ClassDescriptionKey => "Lists the constants for framework viewnames to use for autocompletion and easy coding.",
         ConstantsClassGeneratorBase::DoGenerateConstantKeysKey => TRUE,
         ConstantsClassGeneratorBase::DoGenerateGetListMethodKey => TRUE
     );
@@ -61,7 +57,7 @@ class ControllerNameConstantsEngine extends ConstantsClassEngineBase {
         BaseClassGenerator::ClassNameKey => FrameworkConstants_AppName . $this->GeneratedClassPrefix,
         BaseClassGenerator::DestinationDirKey => \Library\Enums\ApplicationFolderName::AppsFolderName .
         FrameworkConstants_AppName . \Library\Enums\ApplicationFolderName::Generated,
-        BaseClassGenerator::ClassDescriptionKey => "Lists the constants for application controller classes to autocompletion and easy coding.",
+        BaseClassGenerator::ClassDescriptionKey => "Lists the constants for application viewnames to use for autocompletion and easy coding.",
         ConstantsClassGeneratorBase::DoGenerateConstantKeysKey => TRUE,
         ConstantsClassGeneratorBase::DoGenerateGetListMethodKey => TRUE
     );
@@ -82,4 +78,5 @@ class ControllerNameConstantsEngine extends ConstantsClassEngineBase {
       return "No class to generate.";
     }
   }
+
 }

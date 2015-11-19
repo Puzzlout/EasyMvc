@@ -50,9 +50,10 @@ class GeneratorController extends \Library\Controllers\BaseController {
   }
 
   public function BuildViewNameConstantsClass() {
+    $vm = new \Library\ViewModels\GeneratorVm($this->app);
     $generator = new \Library\GeneratorEngine\Core\GeneratorManager($this->app());
-    $generator->GenerateResourceArrays();
-    $this->vm = new \Library\ViewModels\GeneratorVm($this->app);
+    $vm->filesGenerated = $generator->GenerateViewnameConstantsClass();
+    $this->vm = $vm;
   }
 
 }

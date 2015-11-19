@@ -17,4 +17,4 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 }
 
 class Group2Resx {
-  const test1 = 'test1';  const test2 = 'test2';  const f_common_resource_value = 'f_common_resource_value';  const f_common_resource_comment = 'f_common_resource_comment';}
+  const test1 = 'test1';  const f_common_resource_value = 'f_common_resource_value';  const f_common_resource_comment = 'f_common_resource_comment';  const test2 = 'test2';}

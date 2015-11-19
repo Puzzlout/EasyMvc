@@ -46,17 +46,6 @@ class ConstantsAndListClassGenerator extends ConstantsClassGeneratorBase impleme
   }
 
   /**
-   * Build a string for a constant representing the key to find a folder in the
-   * array of constants.
-   * 
-   * @param string $value the value that will make the constant name with self::Key suffix
-   * @return string the computed value
-   */
-  public function BuildConstantKeyValue($value) {
-    return $value;
-  }
-
-  /**
    * Computes a value of an associative array.
    * 
    * @param string $value the value to use to compute the output
@@ -68,40 +57,6 @@ class ConstantsAndListClassGenerator extends ConstantsClassGeneratorBase impleme
             "self::" .
             $value . " => '" . $value . "',";
     return $lineOfCode;
-  }
-  
-  /**
-   * Write the constants of the class to the output file.
-   * 
-   * @param string $valueToTrim the string value to remove from each value in
-   * $this->data array.
-   */
-  public function WriteConstants($valueToTrim = ".php") {
-    $output = "";
-    foreach ($this->data as $key => $value) {
-      if (!is_array($value) && preg_match("`^.*php$`", $value)) {
-        $output .= $this->WriteConstant($this->CleanAndBuildConstantKeyValue($value, $valueToTrim));
-      } else {
-        $output .= $this->WriteConstant($this->BuildConstantFolderKeyValue($key));
-        $output .= $this->WriteConstantsFromArray($value, $valueToTrim);
-      }
-    }
-    $output .= PhpCodeSnippets::LF;
-    fwrite($this->writer, $output);
-  }
-
-  public function GetConstantsKeyValueFromArray($array, $valueToTrim) {
-    $listOfConstantsToWrite = $anotherListOfConstantToWrite = array();
-    foreach ($array as $key => $value) {
-      if (!is_array($value) && !in_array($value, $listOfConstantsToWrite)) {
-        array_push($listOfConstantsToWrite, $this->BuildConstantKeyValue($key, $valueToTrim));
-      } else if (!in_array($key, $listOfConstantsToWrite)) {
-        array_push($listOfConstantsToWrite, $this->BuildConstantKeyValue($key));
-        $anotherListOfConstantToWrite = $this->GetConstantsKeyValueFromArray($value, $valueToTrim);
-      }
-    }
-    $mergedArray = array_merge($listOfConstantsToWrite, $anotherListOfConstantToWrite);
-    return $mergedArray;
   }
 
   /**
