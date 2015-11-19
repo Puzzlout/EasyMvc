@@ -78,7 +78,7 @@ class ConstantsClassGeneratorBase extends BaseClassGenerator implements IClassGe
     $extractor = \Library\Helpers\ArrayExtractionHelper::Init()->ExtractDistinctValues($this->data);
     $output = "";
     foreach ($extractor->List as $constant) {
-      if (preg_match("`^.*php$`", $constant)) {
+      if (\Library\Helpers\RegexHelper::Init($constant)->IsAPhpFilename()) {
         $output .= $this->WriteConstant($this->BuildConstantKeyValue($constant, $valueToTrim));      
       } else {
         $output .= $this->WriteConstant($this->BuildConstantForFolderValue($constant));      

@@ -49,4 +49,8 @@ class RegexHelper {
     return $result;
   }
 
+  public function IsAPhpFilename() {
+    $result = preg_match(CommonRegexes::SearchPhpExtension, $this->valueToTest);
+    return $result;
+  }
 }

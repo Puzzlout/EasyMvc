@@ -19,5 +19,6 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 
 class CommonRegexes {
   const SearchWhiteSpace = "`/\s/`";
+  const SearchPhpExtension = "`^.*php$`";
   const ResourceKeyValidation = "`^[a-zA-Z0-9_]+$`";
 }
