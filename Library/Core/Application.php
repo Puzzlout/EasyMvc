@@ -3,7 +3,7 @@
 namespace Library\Core;
 
 use Library\Enums;
-use Library\GeneratorEngine\Core\BaseClassGenerator;
+use Library\Enums\NameSpaceName;
 
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
@@ -25,7 +25,6 @@ abstract class Application extends ApplicationBase {
     $this->imageUtil = new \Library\Utility\ImageUtility($this);
     $this->router = new Router($this);
     $this->locale = $this->httpRequest->initLanguage($this, "browser");
-    $this->name = '';
     $this->auth = new \Library\Security\AuthenticationManager($this);
     $this->toolTip = new PopUpResourceManager($this);
     $this->security = new \Library\Security\Protect($this->config);
@@ -103,14 +102,11 @@ abstract class Application extends ApplicationBase {
     $ApplicationControllers = $ApplicationControllersListClass::GetList();
     $controllerClass = "\Library\Controllers\ErrorController";
     if (array_key_exists($controllerName, $FrameworkControllers)) {
-      $frameworkControllerFolderPath = \Library\Enums\NameSpaceName::LibFolderName
-              . \Library\Enums\NameSpaceName::LibControllersFolderName;
+      $frameworkControllerFolderPath = NameSpaceName::LibFolderName . NameSpaceName::LibControllersFolderName;
       $controllerClass = $frameworkControllerFolderPath . $controllerName;
       $this->router()->isWsCall = TRUE;
     } else if (array_key_exists($controllerName, $ApplicationControllers)) {
-      $applicationControllerFolderPath = \Library\Enums\NameSpaceName::AppsFolderName . "\\"
-              . $this->name
-              . \Library\Enums\NameSpaceName::AppsControllersFolderName;
+      $applicationControllerFolderPath = NameSpaceName::AppsFolderName . NameSpaceName::AppsControllersFolderName;
       $controllerClass = $applicationControllerFolderPath . $controllerName;
     } else {
       error_log("The controller requested '$controllerClass' doesn't exist.");

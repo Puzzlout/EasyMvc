@@ -1,6 +1,7 @@
 <?php
 
 namespace Library\Core;
+
 use Library\FrameworkConstants;
 
 if (!FrameworkConstants_ExecutionAccessRestriction) {
@@ -14,60 +15,39 @@ class Config extends ApplicationComponent {
 
   public function __construct(Application $app) {
     parent::__construct($app);
-    $this->BuildSettingsArray();
-  }
-
-  /**
-   * Build the settings associative array per application (FrameworkConstants_AppName, __TESTED_APPNAME__)
-   * if the globla vars are defined and that the application setting class 
-   * exists.
-   * @see Library\Core\Config->AssignSettingsToArray()
-   */
-  private function BuildSettingsArray() {
-    $appSettingsNamespace = "\Applications\{{appname}}\Config\AppSettings";
-    if (defined(FrameworkConstants::FrameworkConstants_AppName)) {
-      $appConfigClass = str_replace("{{appname}}", FrameworkConstants_AppName, $appSettingsNamespace);
-      $this->AssignSettingsToArray(FrameworkConstants_AppName, $appConfigClass);
-    }
-    if (defined(FrameworkConstants::FrameworkConstants_TestAppName)) {
-      $testedAppConfigClass = str_replace("{{appname}}", FrameworkConstants_TestAppName, $appSettingsNamespace);
-      $this->AssignSettingsToArray(FrameworkConstants_TestAppName, $testedAppConfigClass);
-    }
+    $this->AssignSettingsToArray();
   }
 
   /**
    * Sets the appsettings to the $settings array associatively.
-   * @param string $appName
-   * @param string $appConfigClass
+   * 
+   * @param string $SettingsClass
    */
-  private function AssignSettingsToArray($appName, $appConfigClass) {
+  private function AssignSettingsToArray() {
     try {
-      $this->settings[$appName] = $appConfigClass::Get();
+      $SettingsClass = "\\Applications\\" . FrameworkConstants_AppName . "\\Config\\AppSettings";
+      $this->settings[$this->app->name] = $SettingsClass::Init()->GetSettings();
     } catch (\ErrorException $exc) {
-      error_log($exc->getTraceAsString());
-      $this->settings[$appName] = FALSE;
+      throw new \RuntimeException("Couldn't execute the method $GetMethod in $SettingsClass", 0, $exc);
     }
   }
 
   /**
    * Gets the value for the given key.
    * @param string $key
+   * @param string $appName Optional parameter when we need to access another Application settings
    * @return boolean|string : The value associated to the key given. Otherwise FALSE
    */
-  public function get($key, $appName = FrameworkConstants_AppName, $getValueFromTestingApp = FALSE) {
-    $isTestAppNameUsed = defined(FrameworkConstants::FrameworkConstants_TestAppName);
-    $appName = (!$getValueFromTestingApp && $isTestAppNameUsed) ? FrameworkConstants_TestAppName : $appName;
-    if (
-            !$getValueFromTestingApp &&
-            (!$this->settings || !isset($this->settings[$appName]) || !isset($this->settings[$appName][$key]))) {
-      return FALSE;
-    } elseif (
-            ($getValueFromTestingApp && $isTestAppNameUsed) &&
-            (!$this->settings || !isset($this->settings[FrameworkConstants_TestAppName]) || !isset($this->settings[FrameworkConstants_TestAppName][$key]))) {
-      return FALSE;
-    } else {
-      return $this->settings[$appName][$key];
+  public function Get($key, $appName = NULL) {
+    if (!is_null($appName) && (!$this->settings || !isset($this->settings[$appName]) || !isset($this->settings[$appName][$key]))) {
+      throw new \RuntimeException("$key was not found in the Settings for " . $appName . ". See above array. " . var_dump($this->settings), 0, NULL);
     }
+    if ((!$this->settings || !isset($this->settings[$this->app->name]) || !isset($this->settings[$this->app->name][$key]))) {
+      throw new \RuntimeException("$key was not found in the Settings for " . $this->app->name . ". See above array. " . var_dump($this->settings), 0, NULL);
+    } else {
+      $appName = $this->app->name;
+    }
+    return $this->settings[$appName][$key];
   }
 
 }

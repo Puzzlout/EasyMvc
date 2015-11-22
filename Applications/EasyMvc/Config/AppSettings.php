@@ -16,13 +16,19 @@ if (!FrameworkConstants_ExecutionAccessRestriction)
  * @package AppSettings
  */
 class AppSettings {
+  
+  public static function Init() {
+    $configSettings = new AppSettings();
+    return $configSettings;
+  }
+
   /**
    * Retrieve the appsettings.
    * 
    * @return associative array : key/value array.
    * @see \Library\Enums\AppSettingKeys : list of keys used in the array.
    */
-  public static function Get() {
+  public function GetSettings() {
     return array(
         \Library\Enums\AppSettingKeys::ApplicationBaseUrl => "/{{app_name}}/",
         \Library\Enums\AppSettingKeys::ApplicationMode => "DEV",

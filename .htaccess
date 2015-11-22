@@ -2,4 +2,4 @@ Options +FollowSymLinks
 
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^.*$ /EasyMvc/mainHandler.php [QSA,L]
+RewriteRule ^.*$ /EasyMvc/dispatcher.php [QSA,L]

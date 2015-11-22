@@ -130,10 +130,9 @@ class PopUpResourceManager extends \Library\Core\ApplicationComponent {
 
   public function loadToolTipMessagefromXML() {
     $placeholders = array(
-        "{{app_name}}" => FrameworkConstants_AppName,
         "{{culture}}" => $this->app()->locale
     );
-    $filePath = FrameworkConstants_RootDir . strtr($this->app()->config()->get(\Library\Enums\AppSettingKeys::TooltipsXmlFileName), $placeholders);
+    $filePath = FrameworkConstants_RootDir . strtr($this->app()->config()->Get(\Library\Enums\AppSettingKeys::TooltipsXmlFileName), $placeholders);
     $xmlReader = new \Library\Core\XmlReader($filePath);
     if(!$this->xmlContent) {
       $this->xmlContent = $xmlReader->ReturnFileContents("resource");

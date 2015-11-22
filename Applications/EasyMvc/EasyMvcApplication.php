@@ -22,8 +22,8 @@ class EasyMvcApplication extends \Library\Core\Application implements \Library\I
    * @param \Library\Core\ErrorManager $errorManager
    */
   public function __construct(\Library\Core\ErrorManager $errorManager) {
-    parent::__construct($errorManager);
     $this->name = FrameworkConstants_AppName;
+    parent::__construct($errorManager);
     $this->context()->setLanguage();
     $this->logoImageUrl = $this->imageUtil->getImageUrl($this->config()->get(\Library\Enums\AppSettingKeys::LogoImageUrl));
   }
