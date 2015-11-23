@@ -22,9 +22,18 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 class WebIdeController extends \Library\Controllers\BaseController {
 
   public function CreateFile() {
-    //$generator = new Core\GenericFileGenerator();
-
-    $this->vm = new \Library\ViewModels\WebIdeVm($this->app);
+    $Vm = new \Library\ViewModels\WebIdeVm($this->app);
+    $Vm->SolutionPathListArray = 
+            \Library\Core\DirectoryManager\DirectorySearchWithRegex::Init()->RecursiveScanOf(
+                    FrameworkConstants_RootDir,
+                    \Library\Enums\CommonRegexes::DirectoryExcludePattern);
+    var_dump($Vm->SolutionPathListArray);
+    $this->vm = $Vm;
+  }
+  
+  public function ProcessFileCreationRequest() {
+    
+    $this->vm = new \Library\ViewModels\BaseAjaxVm($this->app);
   }
 
 }

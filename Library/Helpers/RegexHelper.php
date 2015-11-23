@@ -53,4 +53,9 @@ class RegexHelper {
     $result = preg_match(CommonRegexes::SearchPhpExtension, $this->valueToTest);
     return $result;
   }
+  
+  public function IsMatch($pattern) {
+    $result = preg_match($pattern, $this->valueToTest);
+    return $result;
+  }
 }

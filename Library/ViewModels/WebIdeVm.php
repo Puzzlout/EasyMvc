@@ -18,5 +18,5 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 }
 
 class WebIdeVm extends BaseVm {
-
+  public $SolutionPathListArray;
 }

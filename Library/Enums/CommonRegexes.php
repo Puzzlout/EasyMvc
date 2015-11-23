@@ -21,4 +21,5 @@ class CommonRegexes {
   const SearchWhiteSpace = "`/\s/`";
   const SearchPhpExtension = "`^.*php$`";
   const ResourceKeyValidation = "`^[a-zA-Z0-9_]+$`";
+  const DirectoryExcludePattern = "`^[^..]+[^.]+[^Documentation]+$`";
 }

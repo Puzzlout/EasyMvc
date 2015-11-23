@@ -68,7 +68,7 @@ class DirectoryManager {
 
     $cdir = scandir($dir);
     foreach ($cdir as $key => $value) {
-      if (!in_array($value, array(".", ".."))) {
+      if (!in_array($value, array(".", "..", "Documentation"))) {
         if (is_dir($dir . DIRECTORY_SEPARATOR . $value)) {
           $result[$value] = self::RecursiveScanDir($dir . DIRECTORY_SEPARATOR . $value);
         } else {
