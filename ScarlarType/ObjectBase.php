@@ -13,48 +13,36 @@
  */
 
 namespace ScalarType;
+use Library\Interfaces;
 
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
-class ObjectBase {
-  public $value;
-  
-  /**
-   * Return the string representation of the object by cast or var_dump.
-   * 
-   * @param bool $useVarDump 
-   * @return string the string value of the object
-   */
-  protected function ToString($useVarDump = FALSE) {
-    if ($useVarDump) {
-     return var_dump($this->value);
-    } else {
-     return (string) $this->value;
-    }
-  }
-  
-  /**
-   * Return the object value.
-   * 
-   * @return mixed the value of the instance
-   */
-  protected function GetValue() {
-    return $this->value;
-  }
-  
+class ObjectBase implements Interfaces\IObject, Interfaces\IString {
+  protected $value;
+
   /**
    * 
-   * @return string the string representation of the object type
+   * @return string The type of the instance.
+   * @see http://php.net/manual/en/function.gettype.php
    */
-  protected function GetType() {
+  public function GetType() {
     return gettype($this);
   }
   /**
    * 
-   * @return string the string representation of the object value type
+   * @return string The class name of the instance
+   * @see http://php.net/manual/en/function.get-class.php (go to Example #2)
    */
-  protected function GetValueType() {
-    return gettype($this->value);
+  public function GetClass() {
+    return get_class();
+  }
+
+  /**
+   * 
+   * @return string The string cast of $value field of the instance.
+   */
+  public function ToString() {
+    return (string) $this->value;
   }
 }
