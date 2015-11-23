@@ -19,4 +19,9 @@ interface IObject {
    * Method that retrieve the instance type.
    */
   public function GetType();
+  /**
+   * Method that retrieve the instance type.
+   */
+  public function GetClass();
+
 }
