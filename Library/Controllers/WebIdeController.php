@@ -12,8 +12,8 @@
  */
 
 namespace Library\Controllers;
-
-use Library\GeneratorEngine\Core;
+use Library\Core\DirectoryManager\RegexFilterDirectorySearch;
+use Library\Core\DirectoryManager\ArrayFilterDirectorySearch;
 
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
@@ -23,10 +23,13 @@ class WebIdeController extends \Library\Controllers\BaseController {
 
   public function CreateFile() {
     $Vm = new \Library\ViewModels\WebIdeVm($this->app);
-    $Vm->SolutionPathListArray = 
-            \Library\Core\DirectoryManager\DirectorySearchWithRegex::Init()->RecursiveScanOf(
+    $Vm->SolutionPathListArray = RegexFilterDirectorySearch::Init()->RecursiveScanOf(
                     FrameworkConstants_RootDir,
                     \Library\Enums\CommonRegexes::DirectoryExcludePattern);
+//    $Vm->SolutionPathListArray = ArrayFilterDirectorySearch::Init()->RecursiveScanOf(
+//            FrameworkConstants_RootDir, 
+//            \Library\Core\DirectoryManager\Algorithms\ArrayListAlgorithm::ExcludeList());
+            
     var_dump($Vm->SolutionPathListArray);
     $this->vm = $Vm;
   }

@@ -19,6 +19,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 }
 
 interface IRecursiveDirectorySearch {
+  
   /**
    * Scan a directory recursively applying an algorithm and return the filtered 
    * resulting list that is an array of following structure:
@@ -38,8 +39,8 @@ interface IRecursiveDirectorySearch {
    * ).
    * 
    * @param string $directory The directory to scan
-   * @param mixed $algorithm The filter to apply to the search
+   * @param mixed $algorithmFilter The filter to apply to the search
    * @return array
    */
-  public function RecursiveScanOf($directory, $algorithm);
+  public function RecursiveScanOf($directory, $algorithmFilter);
 }

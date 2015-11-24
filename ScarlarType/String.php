@@ -18,7 +18,7 @@ use \Library\Interfaces;
 if (!defined('__EXECUTION_ACCESS_RESTRICTION__'))
   exit('No direct script access allowed');
 
-class String extends ObjectBase implements IString {
+class String extends ObjectBase implements Interfaces\IString {
   public $value;
   
   /**
