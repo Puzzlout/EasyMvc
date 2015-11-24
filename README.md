@@ -1,4 +1,4 @@
-EasyMvc [![Build Status](https://travis-ci.org/WebDevJL/EasyMvc.svg?branch=master)](https://travis-ci.org/WebDevJL/EasyMvc)
+EasyMvc [![Build Status](https://travis-ci.org/WebDevJL/EasyMvc.svg?branch=master)](https://travis-ci.org/WebDevJL/EasyMvc) (PHPUNIT not setup yet...)
 =====================
 a PHP framework built from scratch to learn the MVC architecture for PHP web apps.
 
