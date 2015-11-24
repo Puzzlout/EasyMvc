@@ -19,10 +19,23 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 
 class ArrayFilterDirectorySearch extends BaseDirectorySearch implements \Library\Interfaces\IObjectInitialization, \Library\Interfaces\IRecursiveDirectorySearch {
 
+  /**
+   * @see \Library\Interfaces\IObjectInitialization
+   * @return \Library\Core\DirectoryManager\ArrayFilterDirectorySearch
+   */
   public static function Init() {
     $instance = new ArrayFilterDirectorySearch();
     $instance->DirectoryList = array();
     return $instance;
+  }
+  
+  /**
+   * @see \Library\Interfaces\IObjectInitialization
+   * @param mixed $value
+   * @throws \Library\Exceptions\NotImplementedException
+   */
+  public static function InitWith($value) {
+    throw new \Library\Exceptions\NotImplementedException();
   }
 
   public function RecursiveScanOf($directory, $algorithmFilter) {
