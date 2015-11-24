@@ -18,4 +18,11 @@ interface IObjectInitialization {
    * Method that creates the instance of a class.
    */
   public static function Init();
+  
+  /**
+   * Method that creates the instance of a class where $value can be used during
+   * instantiation.
+   * @param mixed $value The value that is used during instantiation.
+   */
+  public static function InitWith($value);
 }
