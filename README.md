@@ -6,4 +6,5 @@ https://github.com/WebDevJL/EasyMvc/wiki
 
 =====================
 [Waffle](https://waffle.io/WebDevJL/EasyMvc) Throughput Graph
+
 [![Throughput Graph](https://graphs.waffle.io/WebDevJL/EasyMvc/throughput.svg)](https://waffle.io/WebDevJL/EasyMvc/metrics)
