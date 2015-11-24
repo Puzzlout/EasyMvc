@@ -30,13 +30,19 @@ class HttpResponse extends ApplicationComponent {
   }
 
   public function send(\Library\ViewModels\BaseVm $vm) {
-    $isAjaxRequest = $vm instanceof \Library\ViewModels\BaseAjaxVm;
-    if (!$isAjaxRequest) {
+    if (!$this->app()->httpRequest()->IsPost()) {
       $this->page->addVar(\Applications\EasyMvc\Resources\Enums\ViewVariablesKeys::Vm, $vm);
       return $this->page->GetOutput();
-    } else {
-      return $vm->EncodeToJson($vm);
     }
+
+    if (!($vm instanceof \Library\ViewModels\BaseJsonVm)) {
+      throw new \InvalidArgumentException('$vm must be a valid \Library\ViewModels\BaseJsonVm object. See above dump.'. var_dump($vm), 0, NULL);
+    }
+    
+    $VmJson = new \Library\ViewModels\BaseJsonVm($this->app());
+    $VmJson = clone $vm;
+    self::SetJsonResponseHeader();
+    return $VmJson->Response();
   }
 
   public function setPage(Page $page) {
@@ -64,14 +70,10 @@ class HttpResponse extends ApplicationComponent {
   }
 
   /**
-   * Set content type to JSON when replying to AJAX call and encode the data sent back.
-   * 
-   * @param array $response
-   * @return json
+   * Set content type to JSON when replying to AJAX call.
    */
-  public static function encodeJson($response) {
+  public static function SetJsonResponseHeader() {
     header('Content-Type: application/json');
-    return json_encode($response, JSON_PRETTY_PRINT); //Encode response to pretty JSON
   }
 
 }

@@ -51,7 +51,27 @@ class HttpRequest {
   }
 
   public function requestURI() {
-    return strtok($_SERVER['REQUEST_URI'], '?');
+    $key = 'REQUEST_URI';
+    if (!array_key_exists($key, $_SERVER)) {
+      throw new Exception($key . ' is not set in $_SERVER. See dump above.' . var_dump($_SERVER), 0, NULL);
+    }
+    return strtok($_SERVER[$key], '?');
+  }
+
+  protected function requestType() {
+    $key = 'REQUEST_METHOD';
+    if (!array_key_exists($key, $_SERVER)) {
+      throw new Exception($key . ' is not set in $_SERVER. See dump above.' . var_dump($_SERVER), 0, NULL);
+    }
+    return $_SERVER[$key];
+  }
+
+  public function IsPost() {
+    if ($this->requestType() === "POST") {
+      return TRUE;
+    } else {
+      return FALSE;
+    }
   }
 
   public function initLanguage(Application $currentApp, $type) {
@@ -63,7 +83,8 @@ class HttpRequest {
       $culture = substr(strtok($_SERVER['HTTP_ACCEPT_LANGUAGE'], '?'), 0, 5);
       //Check if the first culture is a short or long version, i.e. en ou en-US.
       //If it is the short version, we update the culture to return.
-      if(!strpos($culture, "-")) $culture = substr ($culture, 0, 2);
+      if (!strpos($culture, "-"))
+        $culture = substr($culture, 0, 2);
       return $culture;
     }
   }

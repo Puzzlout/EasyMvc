@@ -8,7 +8,7 @@
  * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
  * @link https://github.com/WebDevJL/EasyMvc
  * @since Version 1.0.0
- * @package IAjaxViewModel
+ * @package IJsonViewModel
  */
 
 namespace Library\Interfaces;
@@ -17,10 +17,10 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-interface IAjaxViewModel {
+interface IJsonViewModel {
   /**
    * Transform the Vm object given to a JSON object.
    * @return JSON The JSON object for the view model.
    */
-  public function EncodeToJson($vm);
+  //public function EncodeToJson($vm);
 }

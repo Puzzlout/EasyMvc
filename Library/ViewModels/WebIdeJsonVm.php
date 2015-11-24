@@ -17,6 +17,19 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-class WebIdeVm extends BaseVm {
-  public $SolutionPathListArray;
+class WebIdeJsonVm extends BaseJsonVm implements \Library\Interfaces\IJsonViewModel {
+  
+  public static function Init(\Library\Core\Application $app) {
+    $instance = new WebIdeJsonVm($app);
+    return $instance;
+  }
+  
+  public function __construct(\Library\Core\Application $app) {
+    parent::__construct($app);
+  }
+  
+  public function Fill($value) {
+    $this->Response = json_encode($value, JSON_PRETTY_PRINT);
+    return $this;
+  }
 }

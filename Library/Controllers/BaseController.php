@@ -233,6 +233,10 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
     if (!is_string($this->action) || empty($this->action)) {
       throw new \InvalidArgumentException('The action value must be a string and not be empty', 0);
     }
+    if ($this->app()->httpRequest()->IsPost()) {
+      //No view needed for Ajax calls.
+      return;
+    }
     $this->view = \Library\Core\ViewLoader::Init($this)->GetView();
     $this->page->setContentFile($this->view);
   }
