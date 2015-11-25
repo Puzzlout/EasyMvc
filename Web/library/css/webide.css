@@ -1,0 +1,19 @@
+#fileCreationForm {
+  margin: 0 10px !important;
+}
+#fileCreationForm > div > label {
+  text-decoration: underline;
+}
+.ui-menu-item {
+  line-height: 40px !important;
+  background-color: #fff !important;
+  color: #999 !important;
+  border-bottom: 1px solid #999;
+  border-left: 1px solid #999;
+  border-right: 1px solid #999;
+  margin: 0 10px;
+  padding: 0 2px;
+}
+.ui-helper-hidden-accessible {
+  display: none !important;
+}

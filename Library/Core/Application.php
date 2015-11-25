@@ -106,7 +106,7 @@ abstract class Application extends ApplicationBase {
       $controllerClass = $frameworkControllerFolderPath . $controllerName;
       $this->router()->isWsCall = TRUE;
     } else if (array_key_exists($controllerName, $ApplicationControllers)) {
-      $applicationControllerFolderPath = NameSpaceName::AppsFolderName . NameSpaceName::AppsControllersFolderName;
+      $applicationControllerFolderPath = NameSpaceName::AppsFolderName . "\\" . $this->name . NameSpaceName::AppsControllersFolderName;
       $controllerClass = $applicationControllerFolderPath . $controllerName;
     } else {
       error_log("The controller requested '$controllerClass' doesn't exist.");

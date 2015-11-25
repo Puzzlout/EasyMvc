@@ -22,7 +22,11 @@ class WebIdeAjaxController extends \Library\Controllers\BaseController {
   public function GetSolutionFolders() {
     $SolutionPathListArray = ArrayFilterDirectorySearch::Init()->RecursiveScanOf(
             FrameworkConstants_RootDir, \Library\Core\DirectoryManager\Algorithms\ArrayListAlgorithm::ExcludeList());
-    $Vm = \Library\ViewModels\WebIdeJsonVm::Init($this->app)->Fill($SolutionPathListArray);
+    $AutocompletedFormattedList = array();
+    foreach ($SolutionPathListArray as $key => $path) {
+      array_push($AutocompletedFormattedList, \Library\BO\ListItem::Init($key, $path));
+    }
+    $Vm = \Library\ViewModels\WebIdeJsonVm::Init($this->app)->Fill($AutocompletedFormattedList);
     $this->vm = $Vm;
   }
 

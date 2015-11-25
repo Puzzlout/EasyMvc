@@ -22,13 +22,8 @@ $(function() {
       });
     },
     select: function(event, ui) {
-      $("#fileDirPath").val(ui.item.label).prop('disabled', true);
+      $("#fileDirPath").val(ui.item.label);
       return false;
-    },
-    _renderItem: function(ul, item) {
-      return $("<li class=\"autocomplete-item\">")
-              .append("<a title=\"item.label\">" + item.label + "</a>")
-              .appendTo(ul);
     }
   });
 });

@@ -32,7 +32,7 @@ abstract class NameSpaceName {
 
   const LibFolderName = "Library";
   const LibControllersFolderName = "\\Controllers\\";
-  const AppsFolderName = "Application";
+  const AppsFolderName = "Applications";
   const AppsControllersFolderName = "\\Controllers\\";
 
 }
