@@ -21,6 +21,7 @@ class FileTypes {
   public static function RetrieveList() {
     return array(
         "GenericClass" => "Generic class",
+        "Controller" => "Controller",
         "View" => "View",
         "ViewModel" => "View model",
         "Helper" => "Helper class",

@@ -12,8 +12,8 @@
  */
 
 namespace Library\GeneratorEngine\Core;
-
 use Library\GeneratorEngine\CodeSnippets\PhpCodeSnippets;
+use Library\GeneratorEngine\Templates\TemplateFileNameConstants;
 
 if (!FrameworkConstants_ExecutionAccessRestriction)
   exit('No direct script access allowed');
@@ -30,7 +30,7 @@ class BaseClassGenerator extends BaseTemplateProcessor implements IClassGenerato
     $this->destinationDir = FrameworkConstants_RootDir . $params[BaseClassGenerator::DestinationDirKey];
     $this->placeholders = \Library\GeneratorEngine\Placeholders\PlaceholdersManager::InitPlaceholdersForPhpDoc($params);
     $this->data = $data;
-    $templateHeader = \Library\GeneratorEngine\Templates\TemplateFileNameConstants::GetFullNameForConst(\Library\GeneratorEngine\Templates\TemplateFileNameConstants::ClassHeaderTemplate);
+    $templateHeader = TemplateFileNameConstants::GetFullNameForConst(TemplateFileNameConstants::ClassHeaderTemplate);
     $this->classHeaderTemplateContents = file_exists($templateHeader) ?
             file_get_contents($templateHeader) : FALSE;
   }

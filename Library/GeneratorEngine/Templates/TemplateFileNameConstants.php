@@ -20,6 +20,7 @@ class TemplateFileNameConstants {
   const RootLocation = "CodeGenerators/templates/";
   const TemplateExtension = ".tt";
   const ClassHeaderTemplate = "ClassHeaderTemplate";
+  const ViewTemplate = "ViewTemplate";
   
   public static function GetFullNameForConst($constant)
   {
