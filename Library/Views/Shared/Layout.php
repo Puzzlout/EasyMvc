@@ -14,19 +14,23 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <meta name="apple-touch-fullscreen" content="yes">
     <title><?php echo $Vm->ResxFor("PageTitle"); ?></title>
-    <link rel="stylesheet" type="text/css" href="<?php echo FrameworkConstants_BaseUrl; ?>Applications/<?php echo FrameworkConstants_AppName; ?>/ClientSide/css/app/reset.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo FrameworkConstants_BaseUrl; ?>Web/library/css/core/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo FrameworkConstants_BaseUrl; ?>Applications/<?php echo FrameworkConstants_AppName; ?>/ClientSide/css/addons/toastr.css" />
-    <script type="application/javascript" src="<?php echo FrameworkConstants_BaseUrl; ?>Web/library/js/core/jquery.js"></script>
-    <script type="application/javascript" src="<?php echo FrameworkConstants_BaseUrl; ?>Web/library/js/core/jquery-ui.js"></script>
+    <?php
+    echo Library\UC\StylesheetControl::Init()->ForInternalResource("Applications/" . FrameworkConstants_AppName . "/ClientSide/css/app/reset.css");
+    echo Library\UC\StylesheetControl::Init()->ForInternalResource("Web/library/css/core/bootstrap.css");
+    echo Library\UC\StylesheetControl::Init()->ForInternalResource("Applications/" . FrameworkConstants_AppName . "/ClientSide/css/addons/toastr.css");
+    echo Library\UC\ScriptControl::Init()->ForInternalResource("Web/library/js/core/jquery.js");
+    echo Library\UC\ScriptControl::Init()->ForInternalResource("Web/library/js/core/jquery-ui.js");
+    ?>
   </head>
   <body id="home">
     <?php echo $content; ?>
-    <!--<script type="application/javascript" src="<?php echo FrameworkConstants_BaseUrl; ?>Web/library/js/core/parsexml.js"></script>-->
-    <!--<script type="application/javascript" src="<?php echo FrameworkConstants_BaseUrl; ?>Web/library/js/core/bootbox.min.js"></script>-->
-    <script type="application/javascript" src="<?php echo FrameworkConstants_BaseUrl; ?>Applications/<?php echo FrameworkConstants_AppName; ?>/ClientSide/js/addons/toastr.js"></script>  
-    <script type="application/javascript" src="<?php echo FrameworkConstants_BaseUrl; ?>Web/library/js/services/config.js"></script>
-    <script type="application/javascript" src="<?php echo FrameworkConstants_BaseUrl; ?>Web/library/js/services/dataservice.js"></script>
-    <script type="application/javascript" src="<?php echo FrameworkConstants_BaseUrl; ?>Web/library/js/services/utils.js"></script>
+    <?php
+    //echo Library\UC\ScriptControl::Init()->ForInternalResource("Web/library/js/core/parsexml.js");
+    //echo Library\UC\ScriptControl::Init()->ForInternalResource("Web/library/js/core/bootbox.min.js");
+    echo Library\UC\ScriptControl::Init()->ForInternalResource("Applications/" . FrameworkConstants_AppName . "/ClientSide/js/addons/toastr.js");
+    echo Library\UC\ScriptControl::Init()->ForInternalResource("Web/library/js/services/config.js");
+    echo Library\UC\ScriptControl::Init()->ForInternalResource("Web/library/js/services/dataservice.js");
+    echo Library\UC\ScriptControl::Init()->ForInternalResource("Web/library/js/services/utils.js");
+    ?>
   </body>
 </html>
