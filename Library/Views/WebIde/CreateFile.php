@@ -12,7 +12,7 @@ if (!($Vm instanceof Library\ViewModels\WebIdeVm)) {
   $ViewModel = clone $Vm;
 }
 ?>
-<?php echo Library\UC\StylesheetControl::Init()->Basic("Web/library/css/webide.css"); ?>
+<?php echo Library\UC\StylesheetControl::Init()->ForInternalResource("Web/library/css/webide.css"); ?>
 <h1>Create a file</h1>
 <?php echo Library\UC\LinkControl::Init()->Simple("../Generator/Index", "Go to Code generator"); ?>
 <form id="fileCreationForm" action="WebIde/ProcessFileCreationRequest" method="POST">

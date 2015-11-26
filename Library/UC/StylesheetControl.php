@@ -19,7 +19,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-class StylesheetControl extends HtmlControlBase{
+class StylesheetControl extends HtmlControlBase implements \Library\Interfaces\IHtmlControlUrlBuilder{
 
   public function __construct() {
     $this->Attributes = array();
@@ -31,10 +31,20 @@ class StylesheetControl extends HtmlControlBase{
     return $control;
   }
   
-  public function Basic($cssFilePath) {
-    array_push($this->Attributes, HtmlAttribute::Instanciate(HtmlAttributeConstants::Href, FrameworkConstants_BaseUrl . $cssFilePath));
-    $this->HtmlOutput = '<link rel="stylesheet" type="text/css" {0} />';
-    HtmlControlBuildHelper::Init()->FillAttributes($this);
+  public function ForInternalResource($cssFilePath) {
+    $href = FrameworkConstants_BaseUrl . $cssFilePath;
+    $this->GenerateOutput($href);
     return $this->HtmlOutput;
+  }
+  
+  public function ForExternalResource($cssFileUrl) {
+    $this->GenerateOutput($cssFileUrl);
+    return $this->HtmlOutput;
+  }
+  
+  private function GenerateOutput($href) {
+    array_push($this->Attributes, HtmlAttribute::Instanciate(HtmlAttributeConstants::Href, $href));
+    $this->HtmlOutput = '<link rel="stylesheet" type="text/css" {0} />';
+    HtmlControlBuildHelper::Init()->GenerateAttributes($this);
   }
 }

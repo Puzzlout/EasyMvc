@@ -39,7 +39,7 @@ class HtmlControlBuildHelper {
    * @todo create error codes for exceptions
    * @todo create custom exception class for exceptions
    */
-  public function FillAttributes(\Library\UC\HtmlControlBase $control) {
+  public function GenerateAttributes(\Library\UC\HtmlControlBase $control) {
     foreach ($control->Attributes as $index => $attribute) {
       if (!preg_match('`[\{' . $index . '\}]`', $control->HtmlOutput)) {
         throw new \Exception(

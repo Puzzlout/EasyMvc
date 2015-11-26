@@ -36,7 +36,7 @@ class LinkControl extends HtmlControlBase{
     array_push($this->Attributes, HtmlAttribute::Instanciate(HtmlAttributeConstants::Href, $linkUrl));
     array_push($this->Attributes, HtmlAttribute::Instanciate(LinkAttributeConstants::Target, "_BLANK"));
     $this->HtmlOutput = '<a {0} {1}>'. $linkText . '</a>';
-    HtmlControlBuildHelper::Init()->FillAttributes($this);
+    HtmlControlBuildHelper::Init()->GenerateAttributes($this);
     return $this->HtmlOutput;
   }
 }
