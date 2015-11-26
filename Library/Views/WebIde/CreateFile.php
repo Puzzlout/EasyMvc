@@ -16,15 +16,10 @@ if (!($Vm instanceof Library\ViewModels\WebIdeVm)) {
 <?php echo Library\UC\LinkControl::Init()->Simple("../Generator/Index", "Go to Code generator"); ?>
 <form id="fileCreationForm" action="WebIde/ProcessFileCreationRequest" method="POST">
   <?php include_once Library\Core\ViewLoader::Init($this->app->controller())->GetPartialView(FrameworkViewnames::FileTypeInput); ?>
-  <div class="form-group">
-    <label for="fileDesc">Type file description</label>
-    <textarea id="fileDesc" class="form-control" rows="3"></textarea>
-  </div>
-  <div class="form-group">
-    <label for="fileName">Type the file name</label>
-    <input id="fileName" class="form-control" type="text" />
-  </div>
+  <?php include_once Library\Core\ViewLoader::Init($this->app->controller())->GetPartialView(FrameworkViewnames::FileDescriptionInput); ?>
   <?php include_once Library\Core\ViewLoader::Init($this->app->controller())->GetPartialView(FrameworkViewnames::FileDestinationPathInput); ?>
+  <?php include_once Library\Core\ViewLoader::Init($this->app->controller())->GetPartialView(FrameworkViewnames::ClassDerivationInput); ?>
+  <?php include_once Library\Core\ViewLoader::Init($this->app->controller())->GetPartialView(FrameworkViewnames::ClassImplementationInput); ?>
   <?php //include_once Library\Core\ViewLoader::Init($this->app->controller())->GetPartialView(FrameworkViewnames::ClassPropertiesForm); ?>
   <?php //include_once Library\Core\ViewLoader::Init($this->app->controller())->GetPartialView(FrameworkViewnames::ClassMethodsForm); ?>
   <button type="submit" class="btn btn-info">Create File</button>

@@ -6,5 +6,5 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 <script type="application/javascript" src="<?php echo FrameworkConstants_BaseUrl; ?>Web/library/js/webide.solution.folderpaths.js"></script>
 <div class="form-group">
   <label for="fileDirPath">Type file destination</label>
-  <input id="fileDirPath" class="form-control" type="text" />
+  <input id="fileDirPath" class="form-control" type="text" placeholder="Starting typing to autocomplete..." />
 </div>
