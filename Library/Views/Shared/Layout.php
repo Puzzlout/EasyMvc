@@ -22,8 +22,8 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   </head>
   <body id="home">
     <?php echo $content; ?>
-    <script type="application/javascript" src="<?php echo FrameworkConstants_BaseUrl; ?>Web/library/js/core/parsexml.js"></script>
-    <script type="application/javascript" src="<?php echo FrameworkConstants_BaseUrl; ?>Web/library/js/core/bootbox.min.js"></script>
+    <!--<script type="application/javascript" src="<?php echo FrameworkConstants_BaseUrl; ?>Web/library/js/core/parsexml.js"></script>-->
+    <!--<script type="application/javascript" src="<?php echo FrameworkConstants_BaseUrl; ?>Web/library/js/core/bootbox.min.js"></script>-->
     <script type="application/javascript" src="<?php echo FrameworkConstants_BaseUrl; ?>Applications/<?php echo FrameworkConstants_AppName; ?>/ClientSide/js/addons/toastr.js"></script>  
     <script type="application/javascript" src="<?php echo FrameworkConstants_BaseUrl; ?>Web/library/js/services/config.js"></script>
     <script type="application/javascript" src="<?php echo FrameworkConstants_BaseUrl; ?>Web/library/js/services/dataservice.js"></script>
