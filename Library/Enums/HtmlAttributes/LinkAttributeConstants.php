@@ -18,6 +18,5 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 }
 
 class LinkAttributeConstants {
-  const Href = 'href';
   const Target = 'target';
 }
