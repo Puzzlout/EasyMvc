@@ -12,7 +12,9 @@
  */
 
 namespace Library\Controllers;
+
 use Library\Core\DirectoryManager\ArrayFilterDirectorySearch;
+
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
@@ -20,12 +22,16 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 class WebIdeAjaxController extends \Library\Controllers\BaseController {
 
   public function GetSolutionFolders() {
+    $filter = "";
+    if (array_key_exists("filter", $this->dataPost())) {
+      $filterRegex = '`.*' . $this->dataPost["filter"] . '.*$`';
+    } else {
+      $filterRegex = '`^.*$`';
+    }
     $SolutionPathListArray = ArrayFilterDirectorySearch::Init()->RecursiveScanOf(
             FrameworkConstants_RootDir, \Library\Core\DirectoryManager\Algorithms\ArrayListAlgorithm::ExcludeList());
-    $AutocompletedFormattedList = array();
-    foreach ($SolutionPathListArray as $key => $path) {
-      array_push($AutocompletedFormattedList, \Library\BO\ListItem::Init($key, $path));
-    }
+    $AutocompletedFormattedList = \Library\Helpers\WebIdeAjaxHelper::Init()->ExtractListItemsFrom($SolutionPathListArray, $filterRegex);
+
     $Vm = \Library\ViewModels\WebIdeJsonVm::Init($this->app)->Fill($AutocompletedFormattedList);
     $this->vm = $Vm;
   }

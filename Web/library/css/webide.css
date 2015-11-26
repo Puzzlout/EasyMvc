@@ -14,6 +14,11 @@
   margin: 0 25px 0 5px;
   text-indent: 5px;
 }
+.ui-state-focus {
+  background-color: #548BF7 !important;
+  color: #FFF !important;
+  font-weight: bold;
+}
 .ui-helper-hidden-accessible {
   display: none !important;
 }
