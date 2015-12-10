@@ -1,8 +1,4 @@
 <?php
-namespace Library\Enums;
-
-if (!FrameworkConstants_ExecutionAccessRestriction)
-  exit('No direct script access allowed');
 
 /**
  * List of cache keys.
@@ -14,17 +10,17 @@ if (!FrameworkConstants_ExecutionAccessRestriction)
  * @since Version 1.0.0
  * @package CacheKeys
  */
+
+namespace Library\Enums;
+
+if (!FrameworkConstants_ExecutionAccessRestriction)
+  exit('No direct script access allowed');
+
 abstract class CacheKeys {
+
   /**
-   * Stores the routes.
+   * Retrieve the list of folders in the solution
    */
-  const AllApplicationsRoutes = "app_routes";
-  /**
-   * Stores the last modification time of the routes.xml
-   */
-  const SessionRoutesXmlLastModified = "app_routes_last_modified";
-  /**
-   * Stores the xml reader instances of each xml file.
-   */
-  const XmlFilesLoaded = "XmlFilesLoaded";
+  const FrameworkSolutionFolder = "FrameworkSolutionFolder";
+
 }

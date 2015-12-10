@@ -112,4 +112,9 @@ abstract class AppSettingKeys {
    * Boolean value to use when changing password at first line
    */
   const UseEmailLinkForFirstLogin = "UseEmailLinkForFirstLogin";
+  
+  /**
+   * Time to Live in seconds for the cache values (default value) 
+   */
+  const CacheTtl = "CacheTtl";
 }

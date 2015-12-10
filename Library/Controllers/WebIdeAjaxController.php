@@ -14,6 +14,8 @@
 namespace Library\Controllers;
 
 use Library\Core\DirectoryManager\ArrayFilterDirectorySearch;
+use Library\Core\Cache\ApcCacher;
+use Library\Enums\CacheKeys;
 
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
@@ -28,10 +30,17 @@ class WebIdeAjaxController extends \Library\Controllers\BaseController {
     } else {
       $filterRegex = '`^.*$`';
     }
-    $SolutionPathListArray = ArrayFilterDirectorySearch::Init()->RecursiveScanOf(
-            FrameworkConstants_RootDir, \Library\Core\DirectoryManager\Algorithms\ArrayListAlgorithm::ExcludeList());
-    $AutocompletedFormattedList = \Library\Helpers\WebIdeAjaxHelper::Init()->ExtractListItemsFrom($SolutionPathListArray, $filterRegex);
+    $config = $this->app->config;
+    //ApcCacher::Init($config)->Remove(CacheKeys::FrameworkSolutionFolder);
+    if (!ApcCacher::Init($config)->KeyExists(CacheKeys::FrameworkSolutionFolder)) {
+      $SolutionPathListArray = ArrayFilterDirectorySearch::Init()->RecursiveScanOf(
+              FrameworkConstants_RootDir, \Library\Core\DirectoryManager\Algorithms\ArrayListAlgorithm::ExcludeList());
+      ApcCacher::Init($config)->Create(CacheKeys::FrameworkSolutionFolder, $SolutionPathListArray);
 
+    } else {
+      $SolutionPathListArray = ApcCacher::Init($this->app->config)->Read(CacheKeys::FrameworkSolutionFolder, array());
+    }
+    $AutocompletedFormattedList = \Library\Helpers\WebIdeAjaxHelper::Init()->ExtractListItemsFrom($SolutionPathListArray, $filterRegex);
     $Vm = \Library\ViewModels\WebIdeJsonVm::Init($this->app)->Fill($AutocompletedFormattedList);
     $this->vm = $Vm;
   }

@@ -51,6 +51,7 @@ class AppSettings {
         \Library\Enums\AppSettingKeys::RootImageFolderPath => "../Web/images/",
         \Library\Enums\AppSettingKeys::UseEmailLinkForFirstLogin => TRUE,
         \Library\Enums\AppSettingKeys::TooltipsXmlFileName => "Applications\{{app_name}}\Resources\Common\\tooltipandpopupstrings.{{culture}}.xml",
+        \Library\Enums\AppSettingKeys::CacheTtl => 21600,//6 hours
     );
   }  
 }
