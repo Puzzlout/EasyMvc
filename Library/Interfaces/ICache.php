@@ -8,12 +8,12 @@
  * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
  * @link https://github.com/WebDevJL/EasyMvc
  * @since Version 1.0.0
- * @package ICacher
+ * @package ICache
  */
 
 namespace Library\Interfaces;
 
-interface ICacher {
+interface ICache {
 
   /**
    * The instanciater of the cache class using the config instance in order to 

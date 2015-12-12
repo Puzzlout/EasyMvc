@@ -52,6 +52,7 @@ class AppSettings {
         \Library\Enums\AppSettingKeys::UseEmailLinkForFirstLogin => TRUE,
         \Library\Enums\AppSettingKeys::TooltipsXmlFileName => "Applications\{{app_name}}\Resources\Common\\tooltipandpopupstrings.{{culture}}.xml",
         \Library\Enums\AppSettingKeys::CacheTtl => 21600,//6 hours
+        \Library\Enums\AppSettingKeys::CACHETYPEUSED => "TYPE_APC", //See possible value in constants of Library\Core\Cache\BaseCache.php
     );
   }  
 }

@@ -19,4 +19,5 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 
 class BaseDirectorySearch {
   protected $DirectoryList;
+  protected $ContextApp;
 }

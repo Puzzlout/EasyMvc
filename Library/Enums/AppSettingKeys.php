@@ -117,4 +117,9 @@ abstract class AppSettingKeys {
    * Time to Live in seconds for the cache values (default value) 
    */
   const CacheTtl = "CacheTtl";
+  
+  /**
+   * The class partial name of the cache to use
+   */
+  const CACHETYPEUSED = "CacheTypeUsed";
 }

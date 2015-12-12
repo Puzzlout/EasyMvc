@@ -8,7 +8,7 @@
  * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
  * @link https://github.com/WebDevJL/EasyMvc
  * @since Version 1.0.0
- * @package ApcCacher
+ * @package ApcCache
  */
 
 namespace Library\Core\Cache;
@@ -17,7 +17,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-class ApcCacher implements \Library\Interfaces\ICacher {
+class ApcCache implements \Library\Interfaces\ICache {
   protected $config;
 
   public function __construct(\Library\Core\Config $config) {
@@ -25,7 +25,7 @@ class ApcCacher implements \Library\Interfaces\ICacher {
   }
   
   public static function Init(\Library\Core\Config $config) {
-    $cacher = new ApcCacher($config);
+    $cacher = new ApcCache($config);
     return $cacher;
   }
   

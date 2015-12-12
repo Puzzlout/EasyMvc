@@ -17,15 +17,16 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-class ArrayFilterDirectorySearch extends BaseDirectorySearch implements \Library\Interfaces\IObjectInitialization, \Library\Interfaces\IRecursiveDirectorySearch {
+class ArrayFilterDirectorySearch extends BaseDirectorySearch implements \Library\Interfaces\IRecursiveDirectorySearch {
 
   /**
    * @see \Library\Interfaces\IObjectInitialization
    * @return \Library\Core\DirectoryManager\ArrayFilterDirectorySearch
    */
-  public static function Init() {
+  public static function Init(\Library\Core\Application $app) {
     $instance = new ArrayFilterDirectorySearch();
     $instance->DirectoryList = array();
+    $instance->ContextApp = $app;
     return $instance;
   }
   
@@ -65,5 +66,4 @@ class ArrayFilterDirectorySearch extends BaseDirectorySearch implements \Library
     }
     return TRUE;
   }
-
 }

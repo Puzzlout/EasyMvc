@@ -12,6 +12,9 @@
  */
 
 namespace Library\Helpers;
+use Library\Core\DirectoryManager\ArrayFilterDirectorySearch;
+use Library\Enums\CacheKeys;
+
 
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
@@ -24,6 +27,26 @@ class WebIdeAjaxHelper {
   public static function Init() {
     $helper = new WebIdeAjaxHelper();
     return $helper;
+  }
+  
+  /**
+   * Retrieves the solution directory list. It caches the result if not already
+   * done so that it retrieves it faster the next occurrences.
+   * 
+   * @param \Library\Core\Application $app The current application instance.
+   * @return array(of String)
+   */
+  public function GetSolutionDirectoryList(\Library\Core\Application $app) {
+    $Cacher = \Library\Core\Cache\BaseCache::Init($app->config);
+    //$Cacher->Remove(CacheKeys::FrameworkSolutionFolder);
+    if (!$Cacher->KeyExists(CacheKeys::FrameworkSolutionFolder)) {
+      $SolutionPathListArray = ArrayFilterDirectorySearch::Init($this->app())->RecursiveScanOf(
+              FrameworkConstants_RootDir, \Library\Core\DirectoryManager\Algorithms\ArrayListAlgorithm::ExcludeList());
+      $Cacher->Create(CacheKeys::FrameworkSolutionFolder, $SolutionPathListArray);
+    } else {
+      $SolutionPathListArray = $Cacher->Read(CacheKeys::FrameworkSolutionFolder, array());
+    }
+    return $SolutionPathListArray;
   }
 
   /**

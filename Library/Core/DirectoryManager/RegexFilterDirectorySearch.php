@@ -19,9 +19,10 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 
 class RegexFilterDirectorySearch extends BaseDirectorySearch implements \Library\Interfaces\IRecursiveDirectorySearch {
 
-  public static function Init() {
+  public static function Init(\Library\Core\Application $app) {
     $instance = new RegexFilterDirectorySearch();
     $instance->DirectoryList = array();
+    $instance->ContextApp = $app;
     return $instance;
   }
 
