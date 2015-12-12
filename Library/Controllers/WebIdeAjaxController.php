@@ -22,12 +22,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 class WebIdeAjaxController extends \Library\Controllers\BaseController {
 
   public function GetSolutionFolders() {
-    $filter = "";
-    if (array_key_exists("filter", $this->dataPost())) {
-      $filterRegex = '`.*' . $this->dataPost["filter"] . '.*$`';
-    } else {
-      $filterRegex = '`^.*$`';
-    }
+    $filterRegex = WebIdeAjaxHelper::Init()->GetFilterRegex($this->dataPost());
     $SolutionPathListArray = WebIdeAjaxHelper::Init()->GetSolutionDirectoryList($this->app);
     $AutocompletedFormattedList = WebIdeAjaxHelper::Init()->ExtractListItemsFrom($SolutionPathListArray, $filterRegex);
     $Vm = \Library\ViewModels\WebIdeJsonVm::Init($this->app)->Fill($AutocompletedFormattedList);

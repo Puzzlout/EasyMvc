@@ -12,9 +12,9 @@
  */
 
 namespace Library\Helpers;
+
 use Library\Core\DirectoryManager\ArrayFilterDirectorySearch;
 use Library\Enums\CacheKeys;
-
 
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
@@ -28,7 +28,7 @@ class WebIdeAjaxHelper {
     $helper = new WebIdeAjaxHelper();
     return $helper;
   }
-  
+
   /**
    * Retrieves the solution directory list. It caches the result if not already
    * done so that it retrieves it faster the next occurrences.
@@ -60,7 +60,7 @@ class WebIdeAjaxHelper {
   public function ExtractListItemsFrom($FolderPathArray, $regexFilter) {
     $this->ListItemArray = array();
     foreach ($FolderPathArray as $key => $path) {
-      if($this->IsFolderMatchingFilter($path, $regexFilter)) {
+      if ($this->IsFolderMatchingFilter($path, $regexFilter)) {
         $this->AddFolderPathToListItems($key, $path);
       }
     }
@@ -76,7 +76,7 @@ class WebIdeAjaxHelper {
   public function IsFolderMatchingFilter($path, $regexFilter) {
     return \Library\Helpers\RegexHelper::Init($path)->IsMatch($regexFilter);
   }
-  
+
   /**
    * Add a ListItem object to the field ListItemArray.
    * 
@@ -85,6 +85,16 @@ class WebIdeAjaxHelper {
    */
   public function AddFolderPathToListItems($key, $path) {
     array_push($this->ListItemArray, \Library\BO\ListItem::Init($key, $path));
+  }
+
+  public function GetFilterRegex($dataPost) {
+    $filterKey = "filter";
+    if (array_key_exists($filterKey, $dataPost)) {
+      $filterRegex = '`.*' . $dataPost[$filterKey] . '.*$`';
+    } else {
+      $filterRegex = '`^.*$`';
+    }
+    return $filterRegex;
   }
 
 }
