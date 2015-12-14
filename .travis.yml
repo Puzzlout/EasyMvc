@@ -30,9 +30,9 @@ php:
 
 # optionally specify a list of environments, for example to test different RDBMS
 
-#env:
+env:
 
-#  - DB=mysql
+  - DB=mysql
 
 # - DB=pgsql
 
