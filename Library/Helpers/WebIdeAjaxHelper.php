@@ -38,15 +38,28 @@ class WebIdeAjaxHelper {
    */
   public function GetSolutionDirectoryList(\Library\Core\Application $app) {
     $Cacher = \Library\Core\Cache\BaseCache::Init($app->config);
-    //$Cacher->Remove(CacheKeys::FrameworkSolutionFolder);
-    if (!$Cacher->KeyExists(CacheKeys::FrameworkSolutionFolder)) {
+    //$Cacher->Remove(CacheKeys::SOLUTION_FOLDERS);
+    if (!$Cacher->KeyExists(CacheKeys::SOLUTION_FOLDERS)) {
       $SolutionPathListArray = ArrayFilterDirectorySearch::Init($this->app())->RecursiveScanOf(
               FrameworkConstants_RootDir, \Library\Core\DirectoryManager\Algorithms\ArrayListAlgorithm::ExcludeList());
-      $Cacher->Create(CacheKeys::FrameworkSolutionFolder, $SolutionPathListArray);
+      $Cacher->Create(CacheKeys::SOLUTION_FOLDERS, $SolutionPathListArray);
     } else {
-      $SolutionPathListArray = $Cacher->Read(CacheKeys::FrameworkSolutionFolder, array());
+      $SolutionPathListArray = $Cacher->Read(CacheKeys::SOLUTION_FOLDERS, array());
     }
     return $SolutionPathListArray;
+  }
+  
+  public function GetSolutionFilesOnly(\Library\Core\Application $app) {
+    $Cacher = \Library\Core\Cache\BaseCache::Init($app->config);
+    //$Cacher->Remove(CacheKeys::SOLUTION_CLASSES);
+    if (!$Cacher->KeyExists(CacheKeys::SOLUTION_CLASSES)) {
+      $ArrayResult = \Library\Core\FileManager\ArrayFilterFileSearch::Init($app)->RecursiveFileTreeScanOf(
+              FrameworkConstants_RootDir . \Library\Enums\FrameworkFolderName::CORE, \Library\Core\FileManager\Algorithms\ArrayListAlgorithm::ExcludeList());
+      $Cacher->Create(CacheKeys::SOLUTION_CLASSES, $ArrayResult);
+    } else {
+      $ArrayResult = $Cacher->Read(CacheKeys::SOLUTION_CLASSES, array());
+    }
+    return $ArrayResult;
   }
 
   /**
@@ -87,13 +100,21 @@ class WebIdeAjaxHelper {
     array_push($this->ListItemArray, \Library\BO\ListItem::Init($key, $path));
   }
 
+  /**
+   * Builds a regex value using a filter found in $dataPost array. If not found,
+   * it return the regex that matches any string.
+   * 
+   * @param array $dataPost The $_POST array
+   * @return string The regex computed.
+   */
   public function GetFilterRegex($dataPost) {
     $filterKey = "filter";
     if (array_key_exists($filterKey, $dataPost)) {
       $filterRegex = '`.*' . $dataPost[$filterKey] . '.*$`';
-    } else {
-      $filterRegex = '`^.*$`';
-    }
+      return $filterRegex;
+    } 
+    
+    $filterRegex = '`^.*$`';
     return $filterRegex;
   }
 

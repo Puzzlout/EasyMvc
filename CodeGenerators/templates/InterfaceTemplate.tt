@@ -10,12 +10,13 @@
  * @package {{class_name}}
  */
 
-namespace {{namespace_class}};
+namespace Library\Interfaces;
 
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-class {{class_name}} extends {{parent_class}} implements {{interface_name}} {
+interface {{interface_name}} {
+
   
 }

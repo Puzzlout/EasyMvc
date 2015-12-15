@@ -10,12 +10,16 @@
  * @package {{class_name}}
  */
 
-namespace {{namespace_class}};
+namespace Library\Controllers;
 
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-class {{class_name}} extends {{parent_class}} implements {{interface_name}} {
-  
+class {{class_name}} extends \Library\Controllers\BaseController {
+
+  public function AnAction() {
+    $Vm = new \Library\ViewModels\BaseVm($this->app)
+    $this->vm = $Vm;
+  }
 }

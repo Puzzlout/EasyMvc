@@ -16,6 +16,13 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-class {{class_name}} extends {{parent_class}} implements {{interface_name}} {
+class {{class_name}}  {
+  /**
+   * Instantiate the helper
+   */
+  public static function Init() {
+    $helper = new {{helper_class}}();
+    return $helper;
+  }
   
 }

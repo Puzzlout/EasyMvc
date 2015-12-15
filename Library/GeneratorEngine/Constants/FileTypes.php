@@ -20,14 +20,16 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 class FileTypes {
   public static function RetrieveList() {
     return array(
-        "GenericClass" => "Generic class",
-        "Controller" => "Controller",
-        "View" => "View",
-        "ViewModel" => "View model",
-        "Helper" => "Helper class",
-        "Constants" => "Constants list",
-        "Css" => "Style sheet",
-        "Js" => "JavaScript file"
+        "Class" => "A class",
+        "Interface" => "An interface",
+        "F_Controller" => "A framework controller",
+        "Controller" => "An application controller",
+        "View" => "A view",
+        "ViewModel" => "A viewmodel",
+        "Helper" => "A helper class",
+        "Constants" => "A constants list",
+        //"Css" => "Style sheet",
+        //"Js" => "JavaScript file"
     );
   }
 }

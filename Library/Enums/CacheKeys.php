@@ -21,6 +21,8 @@ abstract class CacheKeys {
   /**
    * Retrieve the list of folders in the solution
    */
-  const FrameworkSolutionFolder = "FrameworkSolutionFolder";
+  const SOLUTION_FOLDERS = "SOLUTION_FOLDERS";
+  
+  const SOLUTION_CLASSES = "SOLUTION_CLASSES";
 
 }

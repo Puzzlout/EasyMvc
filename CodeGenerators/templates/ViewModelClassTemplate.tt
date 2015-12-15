@@ -16,6 +16,6 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-class {{class_name}} extends {{parent_class}} implements {{interface_name}} {
+class {{class_name}} extends {{parent_class}} {
   
 }

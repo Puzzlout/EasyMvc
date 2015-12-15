@@ -28,6 +28,14 @@ class WebIdeAjaxController extends \Library\Controllers\BaseController {
     $Vm = \Library\ViewModels\WebIdeJsonVm::Init($this->app)->Fill($AutocompletedFormattedList);
     $this->vm = $Vm;
   }
+  
+  public function GetSolutionFilesOnly() {
+    $filterRegex = WebIdeAjaxHelper::Init()->GetFilterRegex($this->dataPost());
+    $Files = WebIdeAjaxHelper::Init()->GetSolutionFilesOnly($this->app);
+    $AutocompletedFormattedList = WebIdeAjaxHelper::Init()->ExtractListItemsFrom($Files, $filterRegex);
+    $Vm = \Library\ViewModels\WebIdeJsonVm::Init($this->app)->Fill($AutocompletedFormattedList);
+    $this->vm = $Vm;
+  }
 
   public function ProcessFileCreationRequest() {
     $Vm = new \Library\ViewModels\WebIdeJsonVm($this->app);

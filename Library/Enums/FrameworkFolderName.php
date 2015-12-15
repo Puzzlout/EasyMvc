@@ -23,4 +23,5 @@ abstract class FrameworkFolderName {
   const DalModulesFolderName = "Library/Dal/Modules/";
   const ViewsFolderName = "Library/Views/";
   const GeneratedFolderName = "Library/Generated/";
+  const CORE = "Library/Core";
 }
