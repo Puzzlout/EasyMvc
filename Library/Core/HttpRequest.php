@@ -23,11 +23,22 @@ class HttpRequest {
   }
 
   public function cookieData($key) {
-    return isset($_COOKIE[$key]) ? $_COOKIE[$key] : null;
+    $isKeyFound = $this->cookieExists($key);
+    if(!$isKeyFound) {
+      throw \Exception($key . ' is not present in the $_COOKIE', 0, null);
+    }
+    
+    $result = filter_input(INPUT_COOKIE,$key);
+    return $result;
   }
 
   public function cookieExists($key) {
-    return isset($_COOKIE[$key]);
+    $result = filter_input(INPUT_COOKIE,$key);
+    if(is_null($result)) {
+      return false;
+    }
+    
+    return isset($result);
   }
 
   public function getData($key) {
