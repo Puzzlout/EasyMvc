@@ -5,5 +5,5 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 ?>
 <div class="form-group">
   <label for="fileName">Select an interface that the class must implement</label>
-  <input id="fileName" class="form-control" type="text" placeholder="Starting typing to autocomplete..." />
+  <input class="form-control autocomplete-item" data-ctrl="WebIdeAjax" data-action="GetSolutionInterfaces" type="text" placeholder="Starting typing to autocomplete..." />
 </div>

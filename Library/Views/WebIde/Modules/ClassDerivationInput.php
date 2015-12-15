@@ -5,5 +5,5 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 ?>
 <div class="form-group">
   <label for="fileName">Select a class that the new class must extend from</label>
-  <input id="fileName" class="form-control" type="text" placeholder="Starting typing to autocomplete..." />
+  <input class="form-control autocomplete-item" data-ctrl="WebIdeAjax" data-action="GetSolutionFilesOnly" type="text" placeholder="Starting typing to autocomplete..." />
 </div>

@@ -1,7 +1,8 @@
-function getFolderPaths(callback) {
+function getFolderPaths(request, callback) {
+  var autocompleteSelected = $(':focus');
   var dataValue = {};
-  var urlValue = "../WebIdeAjax/GetSolutionFolders";
-  dataValue = {"filter": $('#fileDirPath').val()};
+  var urlValue = "../" + $(autocompleteSelected).attr("data-ctrl") + "/" + $(autocompleteSelected).attr("data-action");
+  dataValue = {"filter": request.term};
 
   $.ajax({
     url: urlValue,
@@ -14,10 +15,10 @@ function getFolderPaths(callback) {
 }
 ;
 $(function() {
-  $('#fileDirPath').autocomplete({
+  $('.autocomplete-item').autocomplete({
     minLength: 0,
     source: function(request, response) {
-      getFolderPaths(function(folderPaths) {
+      getFolderPaths(request, function(folderPaths) {
         response(folderPaths);
       });
     },
