@@ -160,12 +160,12 @@ class FileController extends \Library\Controllers\BaseController {
   }
 
   private function getHostUrl() {
-    $ssl = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? true : false;
-    $sp = strtolower($_SERVER['SERVER_PROTOCOL']);
+    $ssl = (!empty(filter_input(INPUT_SERVER,'HTTPS')) && filter_input(INPUT_SERVER,'HTTPS') == 'on') ? true : false;
+    $sp = strtolower(filter_input(INPUT_SERVER,'SERVER_PROTOCOL'));
     $protocol = substr($sp, 0, strpos($sp, '/')) . (($ssl) ? 's' : '');
-    $port = $_SERVER['SERVER_PORT'];
+    $port = filter_input(INPUT_SERVER,'SERVER_PORT');
     $port = ((!$ssl && $port == '80') || ($ssl && $port == '443')) ? '' : ':' . $port;
-    $host = isset($host) ? $host : $_SERVER['SERVER_NAME'] . $port;
+    $host = isset($host) ? $host : filter_input(INPUT_SERVER,'SERVER_NAME') . $port;
     return $protocol . '://' . $host;
   }
 
