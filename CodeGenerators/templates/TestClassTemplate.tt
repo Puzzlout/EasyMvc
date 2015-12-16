@@ -10,11 +10,12 @@
  * @package {{class_name}}
  */
 
-namespace {{namespace_class}};
+namespace Tests;
 
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-class {{class_name}} {
-
+class {{class_name}} extends \PHPUnit_Framework_TestCase {
+  
+}

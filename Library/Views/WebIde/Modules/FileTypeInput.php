@@ -7,7 +7,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   <label for="fileType">Select the file type</label>
   <select class="form-control">
     <?php
-    foreach (Library\GeneratorEngine\Constants\FileTypes::RetrieveList() as $key => $displayedText) {
+    foreach (Library\GeneratorEngine\Constants\FileTypes::Init()->RetrieveList() as $key => $displayedText) {
       echo '<option data-id="' . $key . '">' . $displayedText . '</option>';
     }
     ?>

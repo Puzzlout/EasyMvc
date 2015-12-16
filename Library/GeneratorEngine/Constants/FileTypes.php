@@ -18,7 +18,21 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 }
 
 class FileTypes {
-  public static function RetrieveList() {
+  
+  /***
+   * Instantiate the class
+   */
+  public static function Init() {
+    $instance = new FileTypes();
+    return $instance;
+  }
+  
+  /**
+   * Retrieve the associative array representing the list of file types.
+   * 
+   * @return array The Types of file.
+   */
+  public function RetrieveList() {
     return array(
         "Class" => "A class",
         "Interface" => "An interface",
@@ -28,6 +42,7 @@ class FileTypes {
         "ViewModel" => "A viewmodel",
         "Helper" => "A helper class",
         "Constants" => "A constants list",
+        "TestClass" => "A test class",
         //"Css" => "Style sheet",
         //"Js" => "JavaScript file"
     );
