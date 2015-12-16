@@ -19,9 +19,6 @@ if (!($Vm instanceof Library\ViewModels\WebIdeVm)) {
   <?php include_once Library\Core\ViewLoader::Init($this->app->controller())->GetPartialView(FrameworkViewnames::FileTypeInput); ?>
   <?php include_once Library\Core\ViewLoader::Init($this->app->controller())->GetPartialView(FrameworkViewnames::FileDescriptionInput); ?>
   <?php include_once Library\Core\ViewLoader::Init($this->app->controller())->GetPartialView(FrameworkViewnames::FileDestinationPathInput); ?>
-  <?php include_once Library\Core\ViewLoader::Init($this->app->controller())->GetPartialView(FrameworkViewnames::ClassDerivationInput); ?>
-  <?php include_once Library\Core\ViewLoader::Init($this->app->controller())->GetPartialView(FrameworkViewnames::ClassImplementationInput); ?>
-  <?php //include_once Library\Core\ViewLoader::Init($this->app->controller())->GetPartialView(FrameworkViewnames::ClassPropertiesForm); ?>
-  <?php //include_once Library\Core\ViewLoader::Init($this->app->controller())->GetPartialView(FrameworkViewnames::ClassMethodsForm); ?>
+  <?php include_once Library\Core\ViewLoader::Init($this->app->controller())->GetPartialView(FrameworkViewnames::FileContents); ?>
   <button type="submit" class="btn btn-info">Create File</button>
 </form>

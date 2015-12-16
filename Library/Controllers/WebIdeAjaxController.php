@@ -21,6 +21,11 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 
 class WebIdeAjaxController extends \Library\Controllers\BaseController {
 
+  /**
+   * Retrieve the list of ListItem objects containing the folders found in the 
+   * solution. The full list is filtered by the $filterRegex sent via the POST
+   * request.
+   */
   public function GetSolutionFolders() {
     $filterRegex = WebIdeAjaxHelper::Init()->GetFilterRegex($this->dataPost());
     $SolutionPathListArray = WebIdeAjaxHelper::Init()->GetSolutionDirectoryList($this->app);
@@ -29,6 +34,11 @@ class WebIdeAjaxController extends \Library\Controllers\BaseController {
     $this->vm = $Vm;
   }
   
+  /**
+   * Retrieve the list of ListItem objects containing the files found in the 
+   * solution. The full list is filtered by the $filterRegex sent via the POST
+   * request.
+   */
   public function GetSolutionFilesOnly() {
     $filterRegex = WebIdeAjaxHelper::Init()->GetFilterRegex($this->dataPost());
     $Files = WebIdeAjaxHelper::Init()->GetSolutionFilesOnly($this->app);
@@ -37,6 +47,15 @@ class WebIdeAjaxController extends \Library\Controllers\BaseController {
     $this->vm = $Vm;
   }
 
+  /**
+   * Retrieves a template contents from a fileType value sent in the POST request.
+   */
+  public function GetTemplateContents() {
+    $fileType = WebIdeAjaxHelper::Init()->GetFileType($this->dataPost());
+    $Vm = \Library\ViewModels\WebIdeJsonVm::Init($this->app)->Fill($fileType);
+    $this->vm = $Vm;
+  }
+  
   public function ProcessFileCreationRequest() {
     $Vm = new \Library\ViewModels\WebIdeJsonVm($this->app);
     $this->vm = $Vm;

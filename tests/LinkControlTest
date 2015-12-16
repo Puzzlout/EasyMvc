@@ -20,10 +20,9 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 }
 
 class LinkControlTest extends \PHPUnit_Framework_TestCase {
-  public function testInitMethod()
-    {
-        $result = LinkControl::Init();
-        $this->assertInstanceOf('Library\UC\LinkControl', $result);
-    }
 
+  public function testInitMethod() {
+    $result = LinkControl::Init();
+    $this->assertInstanceOf('Library\UC\LinkControl', $result);
+  }
 }

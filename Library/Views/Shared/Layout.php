@@ -20,6 +20,9 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
     echo Library\UC\StylesheetControl::Init()->ForInternalResource("Applications/" . FrameworkConstants_AppName . "/ClientSide/css/addons/toastr.css");
     echo Library\UC\ScriptControl::Init()->ForInternalResource("Web/library/js/core/jquery.js");
     echo Library\UC\ScriptControl::Init()->ForInternalResource("Web/library/js/core/jquery-ui.js");
+    echo Library\UC\ScriptControl::Init()->ForInternalResource("Web/library/js/services/config.js");
+    echo Library\UC\ScriptControl::Init()->ForInternalResource("Web/library/js/services/dataservice.js");
+    echo Library\UC\ScriptControl::Init()->ForInternalResource("Web/library/js/services/utils.js");
     ?>
   </head>
   <body id="home">
