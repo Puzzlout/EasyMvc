@@ -145,7 +145,7 @@ class FileController extends \Library\Controllers\BaseController {
     $directory = str_replace("_id", "", $dataPost['itemCategory']);
     $manager->setObjectDirectory($directory);
     if ($dataPost['itemReplace'] === "true") {
-      $list = $manager->selectManyByCategoryAndId($dataPost['itemCategory'], $dataPost['itemId']);
+      $manager->selectManyByCategoryAndId($dataPost['itemCategory'], $dataPost['itemId']);
     }
     $manager->setFilenamePrefix($dataPost['itemId'] . '_');
     $document = new \Applications\EasyMvc\Models\Dao\Document();
