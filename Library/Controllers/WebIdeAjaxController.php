@@ -30,8 +30,8 @@ class WebIdeAjaxController extends \Library\Controllers\BaseController {
     $filterRegex = WebIdeAjaxHelper::Init()->GetFilterRegex($this->dataPost());
     $SolutionPathListArray = WebIdeAjaxHelper::Init()->GetSolutionDirectoryList($this->app);
     $AutocompletedFormattedList = WebIdeAjaxHelper::Init()->ExtractListItemsFrom($SolutionPathListArray, $filterRegex);
-    $Vm = \Library\ViewModels\WebIdeJsonVm::Init($this->app)->Fill($AutocompletedFormattedList);
-    $this->viewModel = $Vm;
+    $Viewmodel = \Library\ViewModels\WebIdeJsonVm::Init($this->app)->Fill($AutocompletedFormattedList);
+    $this->viewModel = $Viewmodel;
   }
   
   /**
@@ -43,8 +43,8 @@ class WebIdeAjaxController extends \Library\Controllers\BaseController {
     $filterRegex = WebIdeAjaxHelper::Init()->GetFilterRegex($this->dataPost());
     $Files = WebIdeAjaxHelper::Init()->GetSolutionFilesOnly($this->app);
     $AutocompletedFormattedList = WebIdeAjaxHelper::Init()->ExtractListItemsFrom($Files, $filterRegex);
-    $Vm = \Library\ViewModels\WebIdeJsonVm::Init($this->app)->Fill($AutocompletedFormattedList);
-    $this->viewModel = $Vm;
+    $Viewmodel = \Library\ViewModels\WebIdeJsonVm::Init($this->app)->Fill($AutocompletedFormattedList);
+    $this->viewModel = $Viewmodel;
   }
 
   /**
@@ -52,13 +52,13 @@ class WebIdeAjaxController extends \Library\Controllers\BaseController {
    */
   public function GetTemplateContents() {
     $fileType = WebIdeAjaxHelper::Init()->GetFileType($this->dataPost());
-    $Vm = \Library\ViewModels\WebIdeJsonVm::Init($this->app)->Fill($fileType);
-    $this->viewModel = $Vm;
+    $Viewmodel = \Library\ViewModels\WebIdeJsonVm::Init($this->app)->Fill($fileType);
+    $this->viewModel = $Viewmodel;
   }
   
   public function ProcessFileCreationRequest() {
-    $Vm = new \Library\ViewModels\WebIdeJsonVm($this->app);
-    $this->viewModel = $Vm;
+    $Viewmodel = new \Library\ViewModels\WebIdeJsonVm($this->app);
+    $this->viewModel = $Viewmodel;
   }
 
 }
