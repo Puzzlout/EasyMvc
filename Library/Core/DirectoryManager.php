@@ -57,7 +57,7 @@ class DirectoryManager {
    * @return array(of SplFileInfo)
    * List of SplFileInfo objects scanned in the top-level directory.
    */
-  public static function GetFilesNamesRecursively($dirName, $extension = "") {
+  public static function GetFilesNamesRecursively($dirName) {
     $files = self::RecursiveScanDir($dirName);
     return $files;
   }

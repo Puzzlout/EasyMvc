@@ -38,8 +38,6 @@ class JavascriptManager extends \Library\Core\ApplicationComponent {
 
   public function __construct(\Library\Core\Application $app) {
     parent::__construct($app);
-    $this->files = \Library\Core\DirectoryManager::GetFilesNamesRecursively(
-                    FrameworkConstants_RootDir . \Library\Enums\ApplicationFolderName::WebJs, "js");
   }
 
 }
