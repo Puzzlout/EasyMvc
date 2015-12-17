@@ -16,6 +16,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction)
 
 class DatabaseToPhpTypeHelper {
   public static function GetPhpTypeFromDatabaseColumnType($columnType) {
-    return;
+    var_dump($columnType);
+    throw new \Library\Exceptions\NotImplementedException();   
   } 
 }

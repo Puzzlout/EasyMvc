@@ -160,7 +160,7 @@ class CommonHelper {
   public static function FindIndexInObjectListById($id, $prop_name, $sessionArray, $sessionKey) {
     $match = array();
     $list = $sessionArray[$sessionKey];
-    foreach (array_keys($list) as $index => $key) {
+    foreach (array_keys($list) => $key) {
       if (intval($list[$key]->$prop_name()) === intval($id)) {
         $match["object"] = $list[$key];
         $match["key"] = $key;
@@ -220,7 +220,7 @@ class CommonHelper {
     return $user->getAttribute($sessionKey);
   }
 
-  public static function GetObjectListFromSessionArrayBySessionKey(\Library\Core\User $user, $sessionArray, $sessionKey) {
+  public static function GetObjectListFromSessionArrayBySessionKey($sessionArray, $sessionKey) {
     $list = array();
     foreach ($sessionArray as $array) {
       array_push($list, $array[$sessionKey]);
@@ -333,7 +333,7 @@ class CommonHelper {
    * @return array
    */
   public static function FindArrayFromAContainingValue($arrayToSearch, $assocArrayKeyValue, $assocArrayValue) {
-    foreach ($arrayToSearch as $key => $subArray) {
+    foreach ($arrayToSearch => $subArray) {
       if (array_key_exists($assocArrayKeyValue, $subArray) &&
               $subArray[$assocArrayKeyValue] === (string)$assocArrayValue) {
         return $subArray;
