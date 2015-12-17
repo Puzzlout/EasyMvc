@@ -18,9 +18,4 @@ class ImageUtility extends \Library\Core\ApplicationComponent {
     }
     throw \InvalidArgumentException("Missing Image name!");
   }
-
-  public function buildImageTag($params) {
-    
-  }
-
 }

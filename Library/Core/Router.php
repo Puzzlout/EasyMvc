@@ -15,7 +15,6 @@ class Router extends ApplicationComponent {
   protected $routes = array();
   protected $lastModified = 0; //of the routes xml file
   protected $currentRoute;
-  private $routesXml;
 
   const NO_ROUTE = 1;
   const CurrentRouteVarKey = "CurrentRoute";

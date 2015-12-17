@@ -172,8 +172,8 @@ class UserHelper {
     }
   }
 
-  public static function EditUser($caller, $type) {
-    $dataPost = $caller->dataPost();
+  //public static function EditUser($caller, $type) {
+    //$dataPost = $caller->dataPost();
     //Get user from Session
     //
     //
@@ -181,10 +181,10 @@ class UserHelper {
     //$user = new \Applications\EasyMvc\Models\Dao\User();
     //
     //$user->setUser_email($dataPost[$type + "_email"]);
-  }
+  //}
 
-  public static function GetGeneratedPostArray($originalPost) {
-    
-  }
+  //public static function GetGeneratedPostArray($originalPost) {
+  //  
+  //}
 
 }

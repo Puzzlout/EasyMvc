@@ -31,7 +31,8 @@ class BaseManager extends \Library\Dal\Manager {
    * @param array $item array containing the data to use to build the SQL statement
    */
   public function selectOne($item) {
-    
+    var_dump($item);
+    throw new \Library\Exceptions\NotImplementedException();    
   }
 
   /**
@@ -40,7 +41,8 @@ class BaseManager extends \Library\Dal\Manager {
    * @param array $item array containing the data to use to build the SQL statement
    */
   public function update($item) {
-    
+    var_dump($item);
+    throw new \Library\Exceptions\NotImplementedException();    
   }
 
   /**
@@ -101,7 +103,8 @@ class BaseManager extends \Library\Dal\Manager {
    * @param int $id
    */
   public function countById($id) {
-    
+    var_dump($id);
+    throw new \Library\Exceptions\NotImplementedException();    
   }
 
   /**
