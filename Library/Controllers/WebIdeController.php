@@ -21,12 +21,12 @@ class WebIdeController extends \Library\Controllers\BaseController {
 
   public function CreateFile() {
     $Vm = new \Library\ViewModels\WebIdeVm($this->app);
-    $this->vm = $Vm;
+    $this->viewModel = $Vm;
   }
   
   public function ProcessFileCreationRequest() {
     
-    $this->vm = new \Library\ViewModels\BaseJsonVm($this->app);
+    $this->viewModel = new \Library\ViewModels\BaseJsonVm($this->app);
   }
 
 }

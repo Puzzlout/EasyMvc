@@ -88,7 +88,7 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
    * The View Model instance for the current request.
    * @var \Library\ViewModels\BaseVm
    */
-  public $vm;
+  public $viewModel;
 
   /**
    * Instantiate the class.
@@ -102,7 +102,7 @@ abstract class BaseController extends \Library\Core\ApplicationComponent {
     $this->managers = $app->dal();
     $this->page = new \Library\Core\Page($app);
     $this->user = $app->user();
-    $this->vm = new \Library\ViewModels\BaseVm($app);
+    $this->viewModel = new \Library\ViewModels\BaseVm($app);
     $this->setModule($module);
     $this->setAction($action);
     $this->setView();

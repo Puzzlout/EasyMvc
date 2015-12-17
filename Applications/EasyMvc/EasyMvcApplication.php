@@ -38,6 +38,6 @@ class EasyMvcApplication extends \Library\Core\Application implements \Library\I
     $controller->AddGlobalAppVariables();
     $controller->execute();
     $this->httpResponse->setPage($controller->page());
-    return $this->httpResponse->send($controller->vm);
+    return $this->httpResponse->send($controller->viewModel);
   }
 }

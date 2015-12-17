@@ -38,7 +38,7 @@ class TestApplication extends \Library\Core\Application implements \Library\Inte
     $controller->AddGlobalAppVariables();
     $controller->execute();
     $this->httpResponse->setPage($controller->page());
-    return $this->httpResponse->send($controller->vm);
+    return $this->httpResponse->send($controller->viewModel);
   }
 
 }

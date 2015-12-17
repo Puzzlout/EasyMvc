@@ -20,40 +20,40 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 class GeneratorController extends \Library\Controllers\BaseController {
 
   public function Index() {
-    $this->vm = new \Library\ViewModels\GeneratorVm($this->app);
+    $this->viewModel = new \Library\ViewModels\GeneratorVm($this->app);
     
   }
   public function BuildDao() {
     $generator = new \Library\GeneratorEngine\Core\GeneratorManager($this->app());
     $generator->GenerateDaoClasses();
-    $this->vm = new \Library\ViewModels\GeneratorVm($this->app);
+    $this->viewModel = new \Library\ViewModels\GeneratorVm($this->app);
   }
 
   public function BuildResources() {
     $generator = new \Library\GeneratorEngine\Core\GeneratorManager($this->app());
     $generator->GenerateResourceArrays();
-    $this->vm = new \Library\ViewModels\GeneratorVm($this->app);
+    $this->viewModel = new \Library\ViewModels\GeneratorVm($this->app);
   }
 
   public function BuildControllerConstantsClass() {
     $vm = new \Library\ViewModels\GeneratorVm($this->app);
     $generator = new \Library\GeneratorEngine\Core\GeneratorManager($this->app());
     $vm->filesGenerated = $generator->GenerateControllerConstantsClass();
-    $this->vm = $vm;
+    $this->viewModel = $vm;
   }
 
   public function BuildDalModuleConstantsClass() {
     $vm = new \Library\ViewModels\GeneratorVm($this->app);
     $generator = new \Library\GeneratorEngine\Core\GeneratorManager($this->app());
     $vm->filesGenerated = $generator->GenerateDalModuleConstantsClass();
-    $this->vm = $vm;
+    $this->viewModel = $vm;
   }
 
   public function BuildViewNameConstantsClass() {
     $vm = new \Library\ViewModels\GeneratorVm($this->app);
     $generator = new \Library\GeneratorEngine\Core\GeneratorManager($this->app());
     $vm->filesGenerated = $generator->GenerateViewnameConstantsClass();
-    $this->vm = $vm;
+    $this->viewModel = $vm;
   }
 
 }

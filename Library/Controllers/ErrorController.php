@@ -20,14 +20,14 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 class ErrorController extends \Library\Controllers\BaseController {
 
   public function ControllerNotFound() {
-    $this->vm->errorVm->errorId(0);
-    $this->vm->errorVm->errorMessage("Controller Not Found");
+    $this->viewModel->errorVm->errorId(0);
+    $this->viewModel->errorVm->errorMessage("Controller Not Found");
   }
 
   public function Http404() {
-    $this->vm = new \Library\ViewModels\HttpErrorVm($this->app());
-    $this->vm->errorVm->errorId(404);
-    $this->vm->errorVm->errorMessage("Page not found");
+    $this->viewModel = new \Library\ViewModels\HttpErrorVm($this->app());
+    $this->viewModel->errorVm->errorId(404);
+    $this->viewModel->errorVm->errorMessage("Page not found");
   }
 
 }
