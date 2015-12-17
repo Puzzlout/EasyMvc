@@ -17,4 +17,3 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 }
 
 class {{class_name}} {
-
