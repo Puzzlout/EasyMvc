@@ -11,6 +11,4 @@
     //success
     toastr.success(reply.message);
   });
-  }
-
 })(jQuery);

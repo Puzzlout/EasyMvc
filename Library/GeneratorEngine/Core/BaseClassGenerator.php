@@ -162,8 +162,9 @@ class BaseClassGenerator extends BaseTemplateProcessor implements IClassGenerato
    * @return string a line of code representing a constant declaration
    */
   public function WriteConstant($value) {
+    $constantName = strtoupper($value);
     $lineOfCode = PhpCodeSnippets::TAB2 .
-            "const " . $value .
+            "const " . $constantName .
             " = '" .
             $value . "';" .
             PhpCodeSnippets::LF;

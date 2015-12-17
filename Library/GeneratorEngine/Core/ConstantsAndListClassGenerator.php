@@ -53,9 +53,10 @@ class ConstantsAndListClassGenerator extends ConstantsClassGeneratorBase impleme
    * @return string the computed string
    */
   public function WriteAssociativeArrayValue($value, $tabAmount = 0) {
+    $constantName = strtoupper($value);
     $lineOfCode = str_repeat("  ", $tabAmount) .
             "self::" .
-            $value . " => '" . $value . "',";
+            $constantName . " => '" . $value . "',";
     return $lineOfCode;
   }
 

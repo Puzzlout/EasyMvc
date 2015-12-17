@@ -17,4 +17,4 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 }
 
 class EasyMvcControllers {
-  const AccountController = 'AccountController';  public static function GetList() {    return array(      self::AccountController => 'AccountController',    );  }}
+  const ACCOUNTCONTROLLER = 'AccountController';  public static function GetList() {    return array(      self::ACCOUNTCONTROLLER => 'AccountController',    );  }}

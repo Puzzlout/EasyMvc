@@ -17,4 +17,4 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 }
 
 class EasyMvcDalModules {
-  const LoginDal = 'LoginDal';  const _TemplateDal = '_TemplateDal';  public static function GetList() {    return array(      self::LoginDal => 'LoginDal',      self::_TemplateDal => '_TemplateDal',    );  }}
+  const LOGINDAL = 'LoginDal';  const _TEMPLATEDAL = '_TemplateDal';  public static function GetList() {    return array(      self::LOGINDAL => 'LoginDal',      self::_TEMPLATEDAL => '_TemplateDal',    );  }}
