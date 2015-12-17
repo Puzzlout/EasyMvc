@@ -156,7 +156,7 @@ class FileController extends \Library\Controllers\BaseController {
       $document->setDocument_title($files['file']['name']);
     }
 
-    $result["dataOut"] = $manager->copyWithFile($document, $files['file']);
+    $manager->copyWithFile($document, $files['file']);
   }
 
   private function getHostUrl() {
