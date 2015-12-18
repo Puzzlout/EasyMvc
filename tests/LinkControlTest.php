@@ -13,7 +13,7 @@
 
 namespace Tests;
 
-use Library\UC\LinkControl;
+use \Library\UC\LinkControl;
 
 class LinkControlTest extends \PHPUnit_Framework_TestCase {
 
