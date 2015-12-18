@@ -40,7 +40,7 @@ class WebIdeAjaxHelper {
     $Cacher = \Library\Core\Cache\BaseCache::Init($app->config);
     //$Cacher->Remove(CacheKeys::SOLUTION_FOLDERS);
     if (!$Cacher->KeyExists(CacheKeys::SOLUTION_FOLDERS)) {
-      $SolutionPathListArray = ArrayFilterDirectorySearch::Init($this->app())->RecursiveScanOf(
+      $SolutionPathListArray = ArrayFilterDirectorySearch::Init($app)->RecursiveScanOf(
               FrameworkConstants_RootDir, \Library\Core\DirectoryManager\Algorithms\ArrayListAlgorithm::ExcludeList());
       $Cacher->Create(CacheKeys::SOLUTION_FOLDERS, $SolutionPathListArray);
     } else {
