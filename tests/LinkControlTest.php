@@ -15,10 +15,6 @@ namespace Tests;
 
 use Library\UC\LinkControl;
 
-if (!FrameworkConstants_ExecutionAccessRestriction) {
-  exit('No direct script access allowed');
-}
-
 class LinkControlTest extends \PHPUnit_Framework_TestCase {
 
   public function testInitMethod() {
