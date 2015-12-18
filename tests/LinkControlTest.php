@@ -13,12 +13,10 @@
 
 namespace Tests;
 
-use \Library\UC\LinkControl;
-
 class LinkControlTest extends \PHPUnit_Framework_TestCase {
 
   public function testInitMethod() {
-    $result = LinkControl::Init();
+    $result = \Library\UC\LinkControl::Init();
     $this->assertInstanceOf('Library\UC\LinkControl', $result);
   }
 }
