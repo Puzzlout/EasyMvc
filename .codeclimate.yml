@@ -1,0 +1,9 @@
+languages:
+   JavaScript: true
+   PHP: true
+exclude_paths:
+- "tests/*"
+- "Documentation/*"
+- "vendor/*"
+- "Web/library/js/core/*"
+- "Web/library/css/core/*"
