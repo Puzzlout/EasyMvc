@@ -14,6 +14,7 @@
 namespace Library\Controllers;
 
 use Library\Helpers\WebIdeAjaxHelper;
+use Library\Helpers\WebIde\CreateFileHelper;
 
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
@@ -51,8 +52,11 @@ class WebIdeAjaxController extends \Library\Controllers\BaseController {
    * Retrieves a template contents from a fileType value sent in the POST request.
    */
   public function GetTemplateContents() {
-    $fileType = WebIdeAjaxHelper::Init()->GetFileType($this->dataPost());
-    $Viewmodel = \Library\ViewModels\WebIdeJsonVm::Init($this->app)->Fill($fileType);
+    $templateContents = 
+            CreateFileHelper::Init()
+            ->GetFileType($this->dataPost())
+            ->GetTemplateContents();
+    $Viewmodel = \Library\ViewModels\WebIdeJsonVm::Init($this->app)->Fill($templateContents);
     $this->viewModel = $Viewmodel;
   }
   

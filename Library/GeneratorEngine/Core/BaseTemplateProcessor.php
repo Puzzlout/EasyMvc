@@ -26,9 +26,9 @@ class BaseTemplateProcessor extends BaseClass {
   protected $writer;
 
   /**
-   * @var string : the content of /EasyMVC/CodeGenerators/templates/ClassHeaderTemplate.tt
+   * @var string : the content of /EasyMVC/CodeGenerators/templates/ClassTemplate.tt
    */
-  public $classHeaderTemplateContents;
+  public $classTemplateContents;
 
   /**
    * The list of placeholders for the various code snippets.
@@ -38,7 +38,7 @@ class BaseTemplateProcessor extends BaseClass {
   public $placeholders;
 
   protected function ProcessTemplate() {
-    $output = strtr($this->classHeaderTemplateContents, $this->placeholders);
+    $output = strtr($this->classTemplateContents, $this->placeholders);
     fwrite($this->writer, $output);
   }
 

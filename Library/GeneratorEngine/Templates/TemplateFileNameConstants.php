@@ -19,7 +19,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction)
 class TemplateFileNameConstants {
   const RootLocation = "CodeGenerators/templates/";
   const TemplateExtension = ".tt";
-  const ClassHeaderTemplate = "ClassHeaderTemplate";
+  const ClassTemplate = "ClassTemplate";
   const ViewTemplate = "ViewTemplate";
   
   public static function GetFullNameForConst($constant)

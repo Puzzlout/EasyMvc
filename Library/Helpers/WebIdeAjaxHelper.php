@@ -116,14 +116,5 @@ class WebIdeAjaxHelper {
     
     $filterRegex = '`^.*$`';
     return $filterRegex;
-  }
-
-  public function GetFileType($dataPost) {
-    $fileTypeKey = "fileType";
-    if(!array_key_exists($fileTypeKey, $dataPost)) {
-      throw \Exception("The POST data doesn't contain the value $fileTypeKey. See dump" . var_dump($dataPost), 0, NULL);
-    }
-    
-    return $dataPost[$fileTypeKey];
-  }
+  }  
 }

@@ -36,12 +36,12 @@ class FileTypes {
     return array(
         "Class" => "A class",
         "Interface" => "An interface",
-        "F_Controller" => "A framework controller",
-        "Controller" => "An application controller",
+        "FrameworkController" => "A framework controller",
+        "AppController" => "An application controller",
         "View" => "A view",
-        "ViewModel" => "A viewmodel",
-        "Helper" => "A helper class",
-        "Constants" => "A constants list",
+        "ViewModelClass" => "A viewmodel",
+        "HelperClass" => "A helper class",
+        "EnumClass" => "A constants list",
         "TestClass" => "A test class",
         //"Css" => "Style sheet",
         //"Js" => "JavaScript file"
