@@ -1,10 +1,10 @@
 <?php
 use Applications\EasyMvc\Resources\Controller\AccountResx;
 $ViewModel = new \Applications\EasyMvc\ViewModels\Account\LoginVm($this->app);
-if (!($Vm instanceof Applications\EasyMvc\ViewModels\Account\LoginVm)) {
+if (!($ControllerVm instanceof Applications\EasyMvc\ViewModels\Account\LoginVm)) {
   throw new Library\Exceptions\InvalidViewModelTypeException();
 } else {
-  $ViewModel = clone $Vm;
+  $ViewModel = clone $ControllerVm;
 }
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');

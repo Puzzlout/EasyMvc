@@ -3,10 +3,10 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 $ViewModel = new Library\ViewModels\GeneratorVm($this->app);
-if (!($Vm instanceof Library\ViewModels\GeneratorVm)) {
+if (!($ControllerVm instanceof Library\ViewModels\GeneratorVm)) {
   throw new Library\Exceptions\InvalidViewModelTypeException();
 } else {
-  $ViewModel = clone $Vm;
+  $ViewModel = clone $ControllerVm;
 }
 ?>
     <div class="top-bar">

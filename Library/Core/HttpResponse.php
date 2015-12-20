@@ -29,18 +29,18 @@ class HttpResponse extends ApplicationComponent {
     $this->send();
   }
 
-  public function send(\Library\ViewModels\BaseVm $vm) {
+  public function send(\Library\ViewModels\BaseVm $ControllerVm) {
     if (!$this->app()->httpRequest()->IsPost()) {
-      $this->page->addVar(\Applications\EasyMvc\Resources\Enums\ViewVariablesKeys::Vm, $vm);
+      $this->page->addVar(\Applications\EasyMvc\Resources\Enums\ViewVariablesKeys::ControllerVm, $ControllerVm);
       return $this->page->GetOutput();
     }
 
-    if (!($vm instanceof \Library\ViewModels\BaseJsonVm)) {
-      throw new \InvalidArgumentException('$vm must be a valid \Library\ViewModels\BaseJsonVm object. See above dump.'. var_dump($vm), 0, NULL);
+    if (!($ControllerVm instanceof \Library\ViewModels\BaseJsonVm)) {
+      throw new \InvalidArgumentException('$ControllerVm must be a valid \Library\ViewModels\BaseJsonVm object. See above dump.'. var_dump($ControllerVm), 0, NULL);
     }
     
     $VmJson = new \Library\ViewModels\BaseJsonVm($this->app());
-    $VmJson = clone $vm;
+    $VmJson = clone $ControllerVm;
     self::SetJsonResponseHeader();
     return $VmJson->Response();
   }

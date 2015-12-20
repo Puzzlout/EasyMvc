@@ -3,10 +3,10 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 $ViewModel = new Library\ViewModels\WebIdeVm($this->app);
-if (!($Vm instanceof Library\ViewModels\WebIdeVm)) {
+if (!($ControllerVm instanceof Library\ViewModels\WebIdeVm)) {
   throw new Library\Exceptions\InvalidViewModelTypeException();
 } else {
-  $ViewModel = clone $Vm;
+  $ViewModel = clone $ControllerVm;
 }
 ?>
 <fieldset>

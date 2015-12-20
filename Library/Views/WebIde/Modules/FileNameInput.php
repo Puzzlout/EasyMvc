@@ -5,5 +5,5 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 ?>
 <div class="form-group">
   <label for="fileName">Type the file name</label>
-  <input id="fileName" class="form-control" type="text" />
+  <input id="fileName" class="form-control" type="text" value="ResourceListController"/>
 </div>

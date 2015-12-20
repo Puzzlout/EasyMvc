@@ -13,7 +13,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <meta name="apple-touch-fullscreen" content="yes">
-    <title><?php echo $Vm->ResxFor("PageTitle"); ?></title>
+    <title><?php echo $ControllerVm->ResxFor("PageTitle"); ?></title>
     <?php
     echo Library\UC\StylesheetControl::Init()->ForInternalResource("Applications/" . FrameworkConstants_AppName . "/ClientSide/css/app/reset.css");
     echo Library\UC\StylesheetControl::Init()->ForInternalResource("Web/library/css/core/bootstrap.css");

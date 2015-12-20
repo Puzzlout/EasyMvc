@@ -30,5 +30,5 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 
 class ViewVariablesKeys {
   const Resx = "Resx";
-  const Vm = "Vm";
+  const ControllerVm = "ControllerVm";
 }

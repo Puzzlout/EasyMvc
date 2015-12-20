@@ -19,7 +19,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 class {{class_name}} extends \Library\Controllers\BaseController {
 
   public function AnAction() {
-    $Vm = new \Library\ViewModels\BaseVm($this->app)
-    $this->vm = $Vm;
+    $ControllerVm = new \Library\ViewModels\BaseVm($this->app)
+    $this->vm = $ControllerVm;
   }
 }

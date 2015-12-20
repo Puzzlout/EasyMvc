@@ -6,5 +6,11 @@ echo Library\UC\ScriptControl::Init()->ForInternalResource("Web/library/js/webid
 ?>
 <div class="form-group">
   <label for="fileDirPath">Type file destination</label>
-  <input class="form-control autocomplete-item" data-ctrl="WebIdeAjax" data-action="GetSolutionFolders" type="text" placeholder="Starting typing to autocomplete..." />
+  <input 
+    id="fileDirPath" 
+    class="form-control autocomplete-item" 
+    data-ctrl="WebIdeAjax" 
+    data-action="GetSolutionFolders" 
+    type="text" 
+    placeholder="Starting typing to autocomplete..." />
 </div>

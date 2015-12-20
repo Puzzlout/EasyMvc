@@ -10,16 +10,16 @@
  * @package {{class_name}}
  */
 
-namespace Applications\EasyMvc\Controllers;
+namespace Library\Controllers;
 
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
 
-class {{class_name}} extends \Library\Controllers\BaseController {
+class {{class_name}} extends BaseController {
 
   public function AnAction() {
-    $Vm = new \Library\ViewModels\BaseVm($this->app)
-    $this->vm = $Vm;
+    $ControllerVm = new \Library\ViewModels\BaseVm($this->app)
+    $this->vm = $ControllerVm;
   }
 }

@@ -60,7 +60,7 @@ class WebIdeAjaxController extends \Library\Controllers\BaseController {
     $this->viewModel = $Viewmodel;
   }
   
-  public function ProcessFileCreationRequest() {
+  public function ProcessFileCreation() {
     $Viewmodel = new \Library\ViewModels\WebIdeJsonVm($this->app);
     $this->viewModel = $Viewmodel;
   }

@@ -1,11 +1,15 @@
-/**
+/** 
  * Set the template in the textarea
+ *
+ * @param {string} templateType
+ * @returns {undefined}
  */
 function LoadTemplate(templateType) {
-  datacx.post("WebIdeAjax/GetTemplateContents", {"templateType": templateType}).then(function(reply) {
+  var url = "WebIdeAjax/GetTemplateContents";
+  datacx.post(url, {"templateType": templateType}).then(function(reply) {
     if (reply === null || reply.result === 0) {//has an error
       toastr.error(reply.message);
-      return undefined;
+      throw "Call to " + url + " failed! Reason: " + reply.message;
     }
     //success
     toastr.success("Success");
@@ -19,11 +23,11 @@ function GetType() {
     throw "fileType is null or empty";
   }
   LoadTemplate(fileType);
-
 }
+
 (function($) {
-  GetType();
+  GetType();//on page load
   $("#fileType").change(function() {
-    GetType();
+    GetType();//on change on select #fileType
   });
 })(jQuery);
