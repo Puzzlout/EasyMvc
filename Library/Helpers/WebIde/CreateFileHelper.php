@@ -27,13 +27,6 @@ class CreateFileHelper extends \Library\Helpers\WebIdeAjaxHelper{
    * @var string The value to find the template to get
    */
   private $templateType;
-  
-  /**
-   *
-   * @var string The template contents. 
-   */
-  private $fileTemplateContent;
-
 
   public static function Init() {
     $helper = new CreateFileHelper();

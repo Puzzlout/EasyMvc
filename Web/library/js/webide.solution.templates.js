@@ -13,7 +13,7 @@ function LoadTemplate(templateType) {
   });
 
 }
-function GetType(element) {
+function GetType() {
   var fileType = $("#fileType").find(":selected").attr("data-id");
   if (utils.isNullOrEmpty(fileType)) {
     throw "fileType is null or empty";
