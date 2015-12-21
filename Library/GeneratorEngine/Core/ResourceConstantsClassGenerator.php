@@ -59,7 +59,7 @@ class ResourceConstantsClassGenerator extends ConstantsClassGeneratorBase implem
    * @param string $value the value that will make the constant name with self::Key suffix
    * @return string the computed value
    */
-  public function BuildConstantKeyValue($value, $valueToRemove = "") {
+  public function BuildConstantKeyValue($value) {
     return $value;
   }
 
