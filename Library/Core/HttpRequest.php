@@ -113,7 +113,7 @@ class HttpRequest {
     $post_cleaned = array();
     if (file_get_contents('php://input') != "") {
       // Create an array from the JSON object in the POST request
-      $json_decode2 = json_decode(file_get_contents('php://input'), TRUE);
+      //$json_decode2 = json_decode(file_get_contents('php://input'), TRUE);
       $json_decode = json_decode(file_get_contents('php://input'));
       if (!is_null($json_decode)) {
         $post_raw = get_object_vars($json_decode);
