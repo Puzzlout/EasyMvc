@@ -83,9 +83,10 @@ class ResourceConstantsClassGenerator extends ConstantsClassGeneratorBase implem
    * @return string the computed string
    */
   public function WriteAssociativeArrayValue($value, $tabAmount = 0) {
+    $constantName = strtoupper($value);
     $lineOfCode = str_repeat("  ", $tabAmount) .
             "self::" .
-            $value . " => '" . $value . "'," .
+            $constantName . " => '" . $value . "'," .
             PhpCodeSnippets::LF;
     return $lineOfCode;
   }
@@ -97,9 +98,10 @@ class ResourceConstantsClassGenerator extends ConstantsClassGeneratorBase implem
    * @return string the computed string
    */
   public function WriteAssociativeArrayValueAsNewArray($value, $tabAmount = 0) {
+    $constantName = strtoupper($value);
     $lineOfCode = str_repeat("  ", $tabAmount) .
             "self::" .
-            $value . " => array(" .
+            $constantName . " => array(" .
             PhpCodeSnippets::LF;
     return $lineOfCode;
   }
@@ -111,9 +113,10 @@ class ResourceConstantsClassGenerator extends ConstantsClassGeneratorBase implem
    * @return string the computed string
    */
   public function WriteAssociativeArrayValueWithKeyAndValue($key, $value, $tabAmount = 0) {
+    $constantName = strtoupper($key);
     $lineOfCode = str_repeat("  ", $tabAmount) .
             "self::" .
-            $key . " => \"" . utf8_encode($value) . "\"," .
+            $constantName . " => \"" . utf8_encode($value) . "\"," .
             PhpCodeSnippets::LF;
     return $lineOfCode;
   }

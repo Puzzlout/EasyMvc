@@ -8,7 +8,7 @@
  * @licence http://opensource.org/licenses/gpl-license.php GNU Public License
  * @link https://github.com/WebDevJL/EasyMvc
  * @since Version 1.0.0
- * @package CommonResxBase
+ * @package CommonResxBase
  */
 
 namespace Library\Core\ResourceManagers;
@@ -24,11 +24,12 @@ class CommonResxBase extends ResourceBase implements \Library\Interfaces\IResour
    * @return array the array of ressources
    */
   public function GetList() {
-    $resourceFileName = "\\Applications\\" .
-            FrameworkConstants_AppName .
-            "\\Resources\\Common\\" .
-            ucfirst($this->GroupValue) . "Resx_" . $this->CultureValue;
-    $resourceFile = new $resourceFileName();
+    $namespacePrefix = 
+      "\\Applications\\" .
+      FrameworkConstants_AppName .
+      "\\Resources\\Common\\";
+    $resourceNamespace = $this->GetResourceNamespace($namespacePrefix, $this->GroupValue);
+    $resourceFile = new $resourceNamespace();
     return $resourceFile->GetList();
   }
 

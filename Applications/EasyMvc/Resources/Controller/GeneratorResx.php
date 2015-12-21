@@ -17,4 +17,4 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 }
 
 class GeneratorResx {
-  const builddao = 'builddao';  const pagetitle = 'pagetitle';  const f_controller_resource_value = 'f_controller_resource_value';  const f_controller_resource_comment = 'f_controller_resource_comment';  const buildresources = 'buildresources';}
+  const BUILDDAO = 'builddao';  const PAGETITLE = 'pagetitle';  const F_CONTROLLER_RESOURCE_VALUE = 'f_controller_resource_value';  const F_CONTROLLER_RESOURCE_COMMENT = 'f_controller_resource_comment';  const BUILDRESOURCES = 'buildresources';}

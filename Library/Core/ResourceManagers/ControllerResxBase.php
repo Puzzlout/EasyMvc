@@ -21,17 +21,19 @@ class ControllerResxBase extends ResourceBase implements \Library\Interfaces\IRe
 
   /**
    * Method that retrieve the array of resources.
+   * 
    * @return array the array of ressources
    */
   public function GetList() {
-    $resourceFileName = "\\Applications\\" .
-            FrameworkConstants_AppName .
-            "\\Resources\\Controller\\" .
-            ucfirst($this->ModuleValue) . "Resx_" . $this->CultureValue;
-    $resourceFile = new $resourceFileName();
+    $namespacePrefix = 
+      "\\Applications\\" .
+      FrameworkConstants_AppName .
+      "\\Resources\\Controller\\";
+    $resourceNamespace = $this->GetResourceNamespace($namespacePrefix, $this->ModuleValue);
+    $resourceFile = new $resourceNamespace();
     return $resourceFile->GetList();
   }
-
+  
   /**
    * Get the resource by module, action and key.
    * 

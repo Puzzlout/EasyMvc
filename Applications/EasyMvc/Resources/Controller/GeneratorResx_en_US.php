@@ -17,5 +17,5 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 }
 
 class GeneratorResx_en_US extends GeneratorResx {
-  public function GetList() {    return array(      self::builddao => array(        self::pagetitle => array(        self::f_controller_resource_value => "Code generation - DAO",        self::f_controller_resource_comment => "Page title",      ),      ),      self::buildresources => array(        self::pagetitle => array(        self::f_controller_resource_value => "Code generation - Resources",        self::f_controller_resource_comment => "Page title",      ),      ),    );  }
+  public function GetList() {    return array(      self::BUILDDAO => array(        self::PAGETITLE => array(        self::F_CONTROLLER_RESOURCE_VALUE => "Code generation - DAO",        self::F_CONTROLLER_RESOURCE_COMMENT => "Page title",      ),      ),      self::BUILDRESOURCES => array(        self::PAGETITLE => array(        self::F_CONTROLLER_RESOURCE_VALUE => "Code generation - Resources",        self::F_CONTROLLER_RESOURCE_COMMENT => "Page title",      ),      ),    );  }
 }

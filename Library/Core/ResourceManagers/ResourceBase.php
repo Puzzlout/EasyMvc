@@ -79,4 +79,17 @@ class ResourceBase  extends \Library\Core\ApplicationComponent{
     return $this;
   }
 
+  /**
+   * Computes the resource namespace from the context.
+   * 
+   * @param string $prefix The namespace prefix to the resource class.
+   * @param string  $resourceKey The key to build the namespace from.
+   * @return string The resource namespace.
+   */
+  protected function GetResourceNamespace($prefix, $resourceKey) {
+    $resourceNamespace = 
+      $prefix . ucfirst(strtolower($resourceKey)) . "Resx_" . $this->CultureValue;
+    return $resourceNamespace;
+  }
+
 }
