@@ -1,6 +1,6 @@
 (function($) {
   $("button#createFile").click(function() {
-    var inputsRequired = ["fileName", "fileDesc", "fileDirPath", "fileContents"];
+    //var inputsRequired = ["fileName", "fileDesc", "fileDirPath", "fileContents"];
     var data = {};//utils.retrieveInputs("fileCreationForm", inputsRequired);
     datacx.post($(this).attr("action"), {"form": utils.stringifyJson(data)}).then(function(reply) {
       if (reply === null || reply.result === 0) {//has an error
