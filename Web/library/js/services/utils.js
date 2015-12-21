@@ -27,11 +27,11 @@ $(document).ready(function() {
         switch ($(this).attr("type")) {
           case "text":
           case "password":
-            json.inputs[$(this).attr("name")] = $(this).val().replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+            json.inputs[$(this).attr("id")] = $(this).val().replace(/^\s\s*/, '').replace(/\s\s*$/, '');
 
             break;
           case "checkbox":
-            json.inputs[$(this).attr("name")] = ($(this).val() === "1") || ($(this).val() === "true") || $(this).prop("checked");
+            json.inputs[$(this).attr("id")] = ($(this).val() === "1") || ($(this).val() === "true") || $(this).prop("checked");
 
             break;
           case "button":
