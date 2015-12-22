@@ -101,30 +101,30 @@ class HttpRequest {
   }
 
   /**
-   * Fetch an item from the php://input array which is compatible with post requests.
-   * We keep the old $_POST source for the time being, even if it will be depreaced.
+   * Fetch the POST data from the php://input array which is compatible with 
+   * modern post requests.
+   * We keep the old $_POST source for the time being, even if it will be 
+   * depreaced.
    *
    * @access	public
-   * @param	string
    * @param	bool
-   * @return	string
+   * @return array The POST data (associative array if necessary)
    */
   public function retrievePostAjaxData($xss_clean = TRUE) {
-    $postDataCleaned = $this->ParseDataInput();
-    $postDataFromGlobal = filter_input_array(INPUT_POST);
-    if (!count($postDataCleaned) > 0 && !count($postDataFromGlobal) > 0) {
-      return array();
+    $postData = $this->ParseDataFromGlobalVar();
+    if (count($postData) > 0) {
+      return $postData;
     }
-    if(count($postDataCleaned) === 0) {
-      foreach (array_keys($postDataFromGlobal) as $key) {
-        $postDataCleaned[$key] = $this->FetchData($postDataFromGlobal, $key, TRUE);
-      }
-    }
-    return $postDataCleaned;
+    $postData = $this->ParseDataFromPhpInput();
+    return $postData;
   }
 
-  private function ParseDataInput() {
-    if (!file_get_contents('php://input') != "") {
+  /**
+   * Retrieve the POST data from php://input
+   * @return array The POST data (associative array if necessary)
+   */
+  private function ParseDataFromPhpInput() {
+    if (file_get_contents('php://input') == "") {
       return array();
     }
     $jsonDecodedData = json_decode(file_get_contents('php://input'));
@@ -135,11 +135,21 @@ class HttpRequest {
     if (empty($postDataRaw)) {
       return array();
     }
-    $postDataCleaned = $this->FetchData($postDataRaw);
     return $postDataCleaned;
   }
-
+  
+  /**
+   * Retrieve the POST data from $_POST super global
+   * @return array The POST data (associative array if necessary)
+   */
+  private function ParseDataFromGlobalVar() {
+    $postData = filter_input_array(INPUT_POST);
+    $postDataCleaned = $this->FetchData($postData);
+    return $postDataCleaned;
+  }
+  
   private function FetchData($postDataRaw) {
+    $postDataCleaned = array();
     foreach (array_keys($postDataRaw) as $key) {
       $postDataCleaned[$key] = $this->ValidateData($postDataRaw, $key, TRUE);
     }
