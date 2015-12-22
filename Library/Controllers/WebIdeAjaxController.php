@@ -61,12 +61,9 @@ class WebIdeAjaxController extends \Library\Controllers\BaseController {
   }
   
   public function ProcessFileCreation() {
-    if(count($this->dataPost()) === 0) {
-      throw new Exception("dataPost is empty! Please the form submission", 0, NULL);
-    }
-    $newFile = \Library\BO\NewFileItem::Init()->Fill($this->dataPost());
+    $result = \Library\Helpers\WebIde\CreateFileHelper::Init()->SaveFile($this);
     $Viewmodel = new \Library\ViewModels\WebIdeJsonVm($this->app);
-    $Viewmodel->Fill($newFile);
+    $Viewmodel->Fill($result);
     $this->viewModel = $Viewmodel;
   }
 

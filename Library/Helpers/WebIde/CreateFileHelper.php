@@ -13,8 +13,8 @@
 
 namespace Library\Helpers\WebIde;
 
-use Library\Core\DirectoryManager\ArrayFilterDirectorySearch;
-use Library\Enums\CacheKeys;
+use Library\BO\NewFileItem;
+use Library\BO\JsonResult;
 
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
@@ -76,4 +76,13 @@ class CreateFileHelper extends \Library\Helpers\WebIdeAjaxHelper{
     return $contents;
   }
   
+  public function SaveFile(\Library\Controllers\BaseController $controller) {
+    $result = true;
+    if(count($controller->dataPost()) === 0) {
+      throw new Exception("dataPost is empty! Please the form submission", 0, NULL);
+    }
+    $newFile = NewFileItem::Init()->Fill($controller->dataPost());
+    
+    return JsonResult::Init()->Fill(JsonResult::STATE_SUCCESS, $newFile);
+  }
 }

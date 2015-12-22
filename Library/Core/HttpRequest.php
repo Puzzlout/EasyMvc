@@ -144,12 +144,14 @@ class HttpRequest {
    */
   private function ParseDataFromGlobalVar() {
     $postData = filter_input_array(INPUT_POST);
+    if(is_null($postData)) {
+      return array();
+    }
     $postDataCleaned = $this->FetchData($postData);
     return $postDataCleaned;
   }
   
   private function FetchData($postDataRaw) {
-    $postDataCleaned = array();
     foreach (array_keys($postDataRaw) as $key) {
       $postDataCleaned[$key] = $this->ValidateData($postDataRaw, $key, TRUE);
     }
