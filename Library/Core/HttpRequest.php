@@ -111,11 +111,11 @@ class HttpRequest {
    * @return array The POST data (associative array if necessary)
    */
   public function retrievePostAjaxData($xss_clean = TRUE) {
-    $postData = $this->ParseDataFromGlobalVar();
+    $postData = $this->ParseDataFromPhpInput();
     if (count($postData) > 0) {
       return $postData;
     }
-    $postData = $this->ParseDataFromPhpInput();
+    $postData = $this->ParseDataFromGlobalVar();
     return $postData;
   }
 
@@ -131,11 +131,11 @@ class HttpRequest {
     if (is_null($jsonDecodedData)) {
       return array();
     }
-    $postDataRaw = get_object_vars($jsonDecodedData);
-    if (empty($postDataRaw)) {
+    $postData = get_object_vars($jsonDecodedData);
+    if (empty($postData)) {
       return array();
     }
-    return $postDataCleaned;
+    return $postData;
   }
   
   /**
