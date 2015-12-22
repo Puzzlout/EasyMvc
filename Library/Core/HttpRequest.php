@@ -110,15 +110,17 @@ class HttpRequest {
    * @return	string
    */
   public function retrievePostAjaxData($xss_clean = TRUE) {
-    $post_cleaned = $this->ParseDataInput();
+    $postDataCleaned = $this->ParseDataInput();
     $postDataFromGlobal = filter_input_array(INPUT_POST);
-    if ((count($post_cleaned) > 0) || count($postDataFromGlobal) > 0) {
-      foreach (array_keys($postDataFromGlobal) as $key) {
-        $post_cleaned[$key] = $this->FetchData($postDataFromGlobal, $key, TRUE);
-      }
-      return $post_cleaned;
+    if (!count($postDataCleaned) > 0 && !count($postDataFromGlobal) > 0) {
+      return array();
     }
-    return FALSE; // Nothing in post request
+    if(count($postDataCleaned) === 0) {
+      foreach (array_keys($postDataFromGlobal) as $key) {
+        $postDataCleaned[$key] = $this->FetchData($postDataFromGlobal, $key, TRUE);
+      }
+    }
+    return $postDataCleaned;
   }
 
   private function ParseDataInput() {

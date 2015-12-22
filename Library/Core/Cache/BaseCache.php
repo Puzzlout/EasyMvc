@@ -48,6 +48,11 @@ class BaseCache implements \Library\Interfaces\ICache {
   const TYPE_MEMCACHE = 2;
 
   /**
+   * @var bool Specify if the cache used is enable.
+   */
+  public $enabled = false;
+  
+  /**
    * Instanciate the class
    * 
    * 
@@ -63,6 +68,22 @@ class BaseCache implements \Library\Interfaces\ICache {
     $cacher = new BaseCache($config);
     return $cacher;
   }
+  /**
+   * 
+   * @throws \Library\Exceptions\NotImplementedException
+   */
+  public function IsEnabled() {
+    $result = FALSE;
+    switch ($this->cacheType) {
+      case BaseCache::TYPE_APC:
+        $result = extension_loaded('apc') && ini_get('apc.enabled');
+        break;
+      default:
+        throw new \Library\Exceptions\NotImplementedException();
+    }
+    return $result;
+  }
+
 
   /**
    * 
@@ -70,6 +91,10 @@ class BaseCache implements \Library\Interfaces\ICache {
    * @throws \Library\Exceptions\NotImplementedException
    */
   public function KeyExists($key) {
+    if(!$this->IsEnabled()) {
+      return FALSE;
+    }
+    
     $result = FALSE;
     switch ($this->cacheType) {
       case BaseCache::TYPE_APC:
@@ -88,6 +113,10 @@ class BaseCache implements \Library\Interfaces\ICache {
    * @throws \Library\Exceptions\NotImplementedException
    */
   public function Create($key, $value) {
+    if(!$this->IsEnabled()) {
+      return FALSE;
+    }
+    
     $result = FALSE;
     switch ($this->cacheType) {
       case BaseCache::TYPE_APC:
@@ -106,6 +135,10 @@ class BaseCache implements \Library\Interfaces\ICache {
    * @throws \Library\Exceptions\NotImplementedException
    */
   public function Read($key, $default) {
+    if(!$this->IsEnabled()) {
+      return $default;
+    }
+    
     $result = $default;
     switch ($this->cacheType) {
       case BaseCache::TYPE_APC:
@@ -124,6 +157,10 @@ class BaseCache implements \Library\Interfaces\ICache {
    * @throws \Library\Exceptions\NotImplementedException
    */
   public function Update($key, $value) {
+    if(!$this->IsEnabled()) {
+      return FALSE;
+    }
+    
     $result = FALSE;
     switch ($this->cacheType) {
       case BaseCache::TYPE_APC:
@@ -141,6 +178,10 @@ class BaseCache implements \Library\Interfaces\ICache {
    * @throws \Library\Exceptions\NotImplementedException
    */
   public function Remove($key) {
+    if(!$this->IsEnabled()) {
+      return FALSE;
+    }
+    
     $result = FALSE;
     switch ($this->cacheType) {
       case BaseCache::TYPE_APC:

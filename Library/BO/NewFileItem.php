@@ -23,21 +23,21 @@ class NewFileItem {
   public $fileDirPath;
   public $fileContents;
   
-  public static function Init($dataAssocArray) {
-    $instance = new NewFileItem($dataAssocArray);
+  public static function Init() {
+    $instance = new NewFileItem();
     return $instance;
   }
   /**
    * 
-   * @param type $id
-   * @param type $type
-   * @param type $title
-   * @param type $dynamicValue
+   * @param array $dataAssocArray
    */
-  public function __construct($dataAssocArray) {
+  public function Fill($dataAssocArray) {
     foreach ($dataAssocArray as $key => $value) {
+      if(!property_exists($this, $key)) {
+        throw new \Exception("Property $key doesn't exist in the class ". __CLASS__, 0, NULL);
+      }
       $this->$key = $value;
     }
+    return $this;
   }
-
 }
