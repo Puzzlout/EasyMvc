@@ -16,7 +16,7 @@ namespace Library\BO;
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
-class NewFileItem {
+class NewFileItem implements \JsonSerializable {
 
   public $fileName;
   public $fileDesc;
@@ -39,5 +39,10 @@ class NewFileItem {
       $this->$key = $value;
     }
     return $this;
+  }
+  
+  public function jsonSerialize() {
+    $serializedThis = (array) $this;
+    return $serializedThis;
   }
 }

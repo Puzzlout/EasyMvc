@@ -16,7 +16,7 @@ namespace Library\BO;
 if (!FrameworkConstants_ExecutionAccessRestriction) {
   exit('No direct script access allowed');
 }
-class JsonResult {
+class JsonResult implements \JsonSerializable {
 
   /**
    * The key of the type in the $State member
@@ -34,12 +34,12 @@ class JsonResult {
   /**
    * @var int The state of the response, whether it was successful or in error. 
    */
-  protected $State;
+  public $State;
   
   /**
    * @var mixed The result to use in the response.
    */
-  protected $Result;
+  public $Result;
   
   public static function Init() {
     $instance = new JsonResult();
@@ -56,5 +56,10 @@ class JsonResult {
     $this->State = $state;
     $this->Result = $result;
     return $this;
+  }
+  
+  public function jsonSerialize() {
+    $serializedThis = (array) $this;
+    return $serializedThis;
   }
 }

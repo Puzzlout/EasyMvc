@@ -29,6 +29,10 @@ class WebIdeJsonVm extends BaseJsonVm implements \Library\Interfaces\IJsonViewMo
   }
   
   public function Fill($value) {
+    if(is_array($value)) {
+      $this->Response = json_encode($value, JSON_PRETTY_PRINT);
+      return $this;
+    }
     $this->Response = json_encode($value, JSON_PRETTY_PRINT);
     return $this;
   }

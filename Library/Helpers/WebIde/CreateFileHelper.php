@@ -77,7 +77,7 @@ class CreateFileHelper extends \Library\Helpers\WebIdeAjaxHelper{
   }
   
   public function SaveFile(\Library\Controllers\BaseController $controller) {
-    $result = JsonResult:Init()->SetDefault();
+    $result = JsonResult::Init()->SetDefault();
     if(count($controller->dataPost()) === 0) {
       throw new Exception("dataPost is empty! Please the form submission", 0, NULL);
     }
