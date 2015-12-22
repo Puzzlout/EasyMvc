@@ -23,7 +23,8 @@ class JsonResult {
    */
   const STATE_TYPE = "stateType";
 
-  const STATE_ERROR = 0;
+  const STATE_DEFAULT = 0;
+  const STATE_ERROR = -1;
   const STATE_SUCCESS = 1;
   /**
    * The key of the message in the $State member
@@ -41,13 +42,19 @@ class JsonResult {
   protected $Result;
   
   public static function Init() {
-      $instance = new JsonResult();
-      return $instance;
+    $instance = new JsonResult();
+    return $instance;
   }
   
-  public function Fill($state, $result) {
-      $this->State = $state;
-      $this->Result = $result;
-      return $this;
+  public function SetDefault() {
+    $this->State = self::STATE_DEFAULT;
+    $this->Result = "";
+    return $this;
+  }
+  
+  public function UpdateResult($state, $result) {
+    $this->State = $state;
+    $this->Result = $result;
+    return $this;
   }
 }
