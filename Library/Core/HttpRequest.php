@@ -24,20 +24,20 @@ class HttpRequest {
 
   public function cookieData($key) {
     $isKeyFound = $this->cookieExists($key);
-    if(!$isKeyFound) {
+    if (!$isKeyFound) {
       throw \Exception($key . ' is not present in the $_COOKIE', 0, null);
     }
-    
-    $result = filter_input(INPUT_COOKIE,$key);
+
+    $result = filter_input(INPUT_COOKIE, $key);
     return $result;
   }
 
   public function cookieExists($key) {
-    $result = filter_input(INPUT_COOKIE,$key);
-    if(is_null($result)) {
+    $result = filter_input(INPUT_COOKIE, $key);
+    if (is_null($result)) {
       return false;
     }
-    
+
     return isset($result);
   }
 
@@ -101,8 +101,8 @@ class HttpRequest {
   }
 
   /**
-   * Fetch an item from the php://input array which is compatible with ajax post requests
-   * FYI, the regular post method doesn't work with ajax 
+   * Fetch an item from the php://input array which is compatible with post requests.
+   * We keep the old $_POST source for the time being, even if it will be depreaced.
    *
    * @access	public
    * @param	string
@@ -110,28 +110,38 @@ class HttpRequest {
    * @return	string
    */
   public function retrievePostAjaxData($xss_clean = TRUE) {
-    $post_cleaned = array();
-    if (file_get_contents('php://input') != "") {
-      // Create an array from the JSON object in the POST request
-      //$json_decode2 = json_decode(file_get_contents('php://input'), TRUE);
-      $json_decode = json_decode(file_get_contents('php://input'));
-      if (!is_null($json_decode)) {
-        $post_raw = get_object_vars($json_decode);
-      }
-      // Check if a field has been provided
-      if (!empty($post_raw)) {
-        foreach (array_keys($post_raw) as $key) {
-          $post_cleaned[$key] = $this->_fetch_from_array($post_raw, $key, TRUE);
-        }
-      }
-    }
-    if ((count($post_cleaned) > 0) || count($_POST) > 0) {
-      foreach (array_keys($_POST) as $key) {
-        $post_cleaned[$key] = $this->_fetch_from_array($_POST, $key, TRUE);
+    $post_cleaned = $this->ParseDataInput();
+    $postDataFromGlobal = filter_input_array(INPUT_POST);
+    if ((count($post_cleaned) > 0) || count($postDataFromGlobal) > 0) {
+      foreach (array_keys($postDataFromGlobal) as $key) {
+        $post_cleaned[$key] = $this->FetchData($postDataFromGlobal, $key, TRUE);
       }
       return $post_cleaned;
     }
     return FALSE; // Nothing in post request
+  }
+
+  private function ParseDataInput() {
+    if (!file_get_contents('php://input') != "") {
+      return array();
+    }
+    $jsonDecodedData = json_decode(file_get_contents('php://input'));
+    if (is_null($jsonDecodedData)) {
+      return array();
+    }
+    $postDataRaw = get_object_vars($jsonDecodedData);
+    if (empty($postDataRaw)) {
+      return array();
+    }
+    $postDataCleaned = $this->FetchData($postDataRaw);
+    return $postDataCleaned;
+  }
+
+  private function FetchData($postDataRaw) {
+    foreach (array_keys($postDataRaw) as $key) {
+      $postDataCleaned[$key] = $this->ValidateData($postDataRaw, $key, TRUE);
+    }
+    return $postDataCleaned;
   }
 
   // --------------------------------------------------------------------
@@ -147,12 +157,12 @@ class HttpRequest {
    * @param	bool
    * @return	string
    */
-  private function _fetch_from_array(&$array, $index = '', $xss_clean = FALSE) {
+  private function ValidateData(&$array, $index = '', $xss_clean = FALSE) {
     if (!isset($array[$index])) {
       return FALSE;
     }
 
-    if($xss_clean === TRUE && !($array[$index] instanceof \stdClass)) {
+    if ($xss_clean === TRUE && !($array[$index] instanceof \stdClass)) {
       $array[$index] = strip_tags($array[$index]);
       $array[$index] = filter_var($array[$index]);
 //$security = new BL\Security\Security();

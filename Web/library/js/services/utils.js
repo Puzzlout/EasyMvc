@@ -36,8 +36,8 @@ $(document).ready(function() {
             break;
           case "button":
             break;
-          default:
-            $.error("Input type not handled => " + $(this).attr("type"));
+          default://textarea
+            json.inputs[$(this).attr("id")] = $(this).val().replace(/^\s\s*/, '').replace(/\s\s*$/, '');
         }
       } else {
         toastr.error("The field " + $(this).attr("data-input-label").replace(":", "") + " is empty. Please fill out all fields.");
