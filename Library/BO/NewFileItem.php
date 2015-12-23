@@ -18,6 +18,7 @@ if (!FrameworkConstants_ExecutionAccessRestriction) {
 }
 class NewFileItem implements \JsonSerializable {
 
+  public $fileType;
   public $fileName;
   public $fileDesc;
   public $fileDirPath;
