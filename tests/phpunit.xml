@@ -1,7 +1,7 @@
 <phpunit backupGlobals="true" bootstrap="./bootstrap.php">
 	<filter>		
 -		<whitelist>		
--			<directory>/Library</directory>		
+-			<directory>../</directory>		
 -		</whitelist>		
 -	</filter>
 	<testsuite>
