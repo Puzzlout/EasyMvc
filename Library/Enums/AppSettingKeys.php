@@ -1,7 +1,8 @@
 <?php
 
 /**
- * Lists the constants of the Application settings keys. 
+ * Lists the constants of the Applications settings keys that are common to all
+ * applications. 
  * 
  * @author Jeremie Litzler
  * @copyright Copyright (c) 2015

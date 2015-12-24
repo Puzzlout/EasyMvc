@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * {{class_description}}
+ * 
+ * @author {{phpdoc_author}}
+ * @copyright Copyright (c) {{phpdoc_copyright_year}}
+ * @licence {{phpdoc_licence}}
+ * @link {{phpdoc_link}}
+ * @since Version {{phpdoc_version_number}}
+ * @package {{class_name}}
+ */
+
+namespace {{namespace_class}};
+
+if (!FrameworkConstants_ExecutionAccessRestriction)
+  exit('No direct script access allowed');
+
+class AppSettingKeysExtended extends \Library\Enums\AppSettingKeys {
+  
+}
