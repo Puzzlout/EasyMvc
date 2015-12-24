@@ -31,19 +31,18 @@ class ControllerNameConstantsEngine extends ConstantsClassEngineBase {
    * on to generate the files desired.
    */
   public function Run($data = NULL) {
+    $this->ProcessFrameworkData();
+    
+    $ApplicationList = \Library\GeneratorEngine\Constants\ApplicationList::Init()->GetList();
+    foreach ($ApplicationList as $Appname) {
+      $this->ProcessApplicationData($Appname);
+    }
+  }
+
+  private function ProcessFrameworkData() {
     $FrameworkControllers = DirectoryManager::GetFileNames(
                     FrameworkConstants_RootDir . \Library\Enums\FrameworkFolderName::ControllersFolderName, array("BaseController.php"));
 
-    $ApplicationControllers = DirectoryManager::GetFileNames(
-                    FrameworkConstants_RootDir .
-                    \Library\Enums\ApplicationFolderName::AppsFolderName .
-                    FrameworkConstants_AppName .
-                    \Library\Enums\ApplicationFolderName::ControllersFolderName);
-    $this->InitGenerateFrameworkFile($FrameworkControllers);
-    $this->InitGenerateApplicationFile($ApplicationControllers);
-  }
-
-  function InitGenerateFrameworkFile($FrameworkControllers) {
     $this->params = array(
         BaseClassGenerator::NameSpaceKey => "Library\Generated",
         BaseClassGenerator::ClassNameKey => "Framework" . $this->GeneratedClassPrefix,
@@ -55,12 +54,23 @@ class ControllerNameConstantsEngine extends ConstantsClassEngineBase {
     $this->GenerateFrameworkFile($FrameworkControllers);
   }
 
-  function InitGenerateApplicationFile($ApplicationControllers) {
+  /**
+   * Generate the files for an app.
+   * 
+   * @param string $Appname
+   */
+  function ProcessApplicationData($Appname) {
+    $ApplicationControllers = DirectoryManager::GetFileNames(
+                    FrameworkConstants_RootDir .
+                    \Library\Enums\ApplicationFolderName::AppsFolderName .
+                    $Appname .
+                    \Library\Enums\ApplicationFolderName::ControllersFolderName);
+
     $this->params = array(
-        BaseClassGenerator::NameSpaceKey => "Applications\\" . FrameworkConstants_AppName . "\Generated",
-        BaseClassGenerator::ClassNameKey => FrameworkConstants_AppName . $this->GeneratedClassPrefix,
+        BaseClassGenerator::NameSpaceKey => "Applications\\" . $Appname . "\Generated",
+        BaseClassGenerator::ClassNameKey => $Appname . $this->GeneratedClassPrefix,
         BaseClassGenerator::DestinationDirKey => \Library\Enums\ApplicationFolderName::AppsFolderName .
-        FrameworkConstants_AppName . \Library\Enums\ApplicationFolderName::Generated,
+        $Appname . \Library\Enums\ApplicationFolderName::Generated,
         BaseClassGenerator::ClassDescriptionKey => "Lists the constants for application controller classes to autocompletion and easy coding.",
         ConstantsClassGeneratorBase::DoGenerateConstantKeysKey => TRUE,
         ConstantsClassGeneratorBase::DoGenerateGetListMethodKey => TRUE
@@ -82,4 +92,5 @@ class ControllerNameConstantsEngine extends ConstantsClassEngineBase {
       return "No class to generate.";
     }
   }
+
 }
