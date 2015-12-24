@@ -11,6 +11,9 @@
  */
 function autoload($className) {
   $file = FrameworkConstants_RootDir . str_replace('\\', '/', $className) . '.php';
+  //if(!opcache_is_script_cached($file)) {
+  //  opcache_compile_file($file);
+  //}
   $calculateExeTime = defined(FrameworkConstants_EnableBenchmark) ? FrameworkConstants_EnableBenchmark : FALSE;
   try {
     $fileExists = file_exists($file);
