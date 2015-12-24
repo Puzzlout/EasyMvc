@@ -3,7 +3,6 @@
 echo "Begin database initialization"
 echo "Folder to db_reset.sql is: "$2
 echo "Connecting to MySQL with user > "$1
-echo "Command is => mysql -u "$1
+echo "Command is => mysql -u "$1" -p"
 echo "Running the database initialization:"
-echo "Command is => mysql -u $1 -p '' .\ $2\"db_reset.sql\""
-echo "Finished database initialization!"
+echo "Command is => \. "$2"db_reset.sql"
